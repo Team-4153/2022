@@ -19,7 +19,12 @@ Notes
     - Assuming no added force from storage system (The 3rd motor at the end adds speed) 0.5 second wait time before wheels back up to speed
 
  - Sensors/Controllers Needed
-    - Distnace Sensor (Shooting Process #2,3)
+    - Motors
+        - 3 are planned 
+            - 2 for shooter
+            - 1 for storage
+    - 3 Motor Controllers
+    - Distnace Sensor (Shooting Process #2,3) (Ultrasonic maybe?)
         - Detect distance to hub for shooting processs #2 and #3
         - Might need to be aimed upwards because the bottom section is not uniform maybe aim for middle of the lower hoop from edge of the field?
     - Machine Vision
@@ -38,7 +43,7 @@ Notes
         - Wait ~0.5 Seconds
         - Turn Storage Motor to release first Ball
         - Wait ~0.1 Seconds
-        - Stop Storsge Motor
+        - Stop Storage Motor
         - Use Color Sensor to detect if there is still a ball in the first slot
         - If there is a ball
             - Wait for wheels to regain lost speed ~0.5s
@@ -120,6 +125,13 @@ public class ShooterSubsystem extends SubsystemBase{
 
         //Run ShootingProcess1 to shoot all the balls in the robot
         shootingProcess1();
+    }
+
+    //Distance sensor
+    public int distanceFront() {
+        //Get distance infront of robot
+        int distance = 5;
+        return distance;
     }
 
     //Color Sensor Functions
