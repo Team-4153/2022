@@ -39,36 +39,22 @@ public class RobotContainer {
 
     public RobotContainer() {
 
-/*        if (controller.getRightXAxis().get(true) == 0) {
-        CommandScheduler.getInstance().setDefaultCommand(drivetrain, new DriveWithSetRotationCommand(
-                drivetrain,
-                () -> controller.getLeftXAxis().get(true),
-                () -> -controller.getLeftYAxis().get(true),
-                0.0
-        ));
-        }
-        else {*/
+        // set the drivetrain's default command to the driver's controller values
         CommandScheduler.getInstance().setDefaultCommand(drivetrain, new DriveCommand(
                 drivetrain,
                 () -> controller.getLeftXAxis().get(true),
                 () -> -controller.getLeftYAxis().get(true),
                 () -> controller.getRightXAxis().get(true)
         ));
-//        }
 
 
-        /*        CommandScheduler.getInstance().setDefaultCommand(drivetrain, new DriveCommand(
-            drivetrain, 
-            () -> 0.1, 
-            () -> 0, 
-            () -> 0.1));
-*/
         updateManager.startLoop(5.0e-3);
 
         configureButtonBindings();
     }
 
     private void configureButtonBindings() {
+        // reset gyro angle
         controller.getBackButton().whenPressed(
                 () -> drivetrain.resetGyroAngle(Rotation2.ZERO)
         );
