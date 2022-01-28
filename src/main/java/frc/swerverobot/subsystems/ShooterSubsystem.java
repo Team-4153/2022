@@ -77,7 +77,8 @@ Notes
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase{
-    
+
+    //Shooting Processes
     public void shootingProcess1() {
         //No Aim Assist
 
@@ -85,7 +86,7 @@ public class ShooterSubsystem extends SubsystemBase{
         //Wait 0.5 Seconds for weels to gain speed
         //Release First Ball
         //Detect if there is a second ball
-        if (balls > 1) {
+        if (ballCount() < 1) {
             //Wait 0.5 Seconds
             //Release Second Ball
         }
@@ -120,72 +121,68 @@ public class ShooterSubsystem extends SubsystemBase{
         //Run ShootingProcess1 to shoot all the balls in the robot
         shootingProcess1();
     }
+
+    //Color Sensor Functions
+    public static final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);//TODO: Fix when know sensor port for color sensor
+    private final ColorSensorV3 colorSensor2 = new ColorSensorV3(i2cPort);//TODO: Fix when know sensor port for color sensor
+
     public int ballCount() {
-        private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);//TODO: Fix when know sensor port for color sensor
-        Color detectedColor = m_colorSensor.getColor();//Detected Color from first color sensor
+        //Detected Color from Color Sensor 1
+        Color detectedColor = colorSensor.getColor();//Detected Color from first color sensor
+
+        //Detected Color from Color Sensor 2
+        Color detectedColor2 = colorSensor2.getColor();//Detected Color from first color sensor
 
         int ballCount = 0;//Starts the count of balls at 0
 
+        //Look for first ball
         if (detectedColor.red > 1/*Red Min Value*/ && detectedColor.red < 5/*Red Max Value*/ || detectedColor.blue > 1/*Blue Min Value*/ && detectedColor.blue < 5/*Blue Max Value*/) {
-            //1 Ball Found Look for next one
+            //1 Ball Found
             ballCount = 1;
-            if (detectedColor.red > 1/*Red Min Value*/ && detectedColor.red < 5/*Red Max Value*/ || detectedColor.blue > 1/*Blue Min Value*/ && detectedColor.blue < 5/*Blue Max Value*/) {
-                //1 Ball Found Look for next one
+
+            //Look for second ball
+            if (detectedColor2.red > 1/*Red Min Value*/ && detectedColor2.red < 5/*Red Max Value*/ || detectedColor2.blue > 1/*Blue Min Value*/ && detectedColor2.blue < 5/*Blue Max Value*/) {
+                //2 Balls found
                 ballCount = 2;
             } 
-            return ballCount;
         }
-        else {
-            //No Balls in storage
-            return 0;
-        }
+        //No else statment because value is initalized at 0
         return ballCount;
     }
-    public int ballcolor() {
-        int ballCount = 0;//Starts the count of balls at 0
+    public String ball1color() {
+        String ballColor1 = "none";//Starts the first ball color at none
         
-        return ballCount;
+        //Detected Color from Color Sensor 1
+        Color detectedColor = colorSensor.getColor();//Detected Color from first color sensor
+
+        //Check ball color
+        if (detectedColor.red > 1/*Red Min Value*/ && detectedColor.red < 5/*Red Max Value*/) {
+            //Red Ball Found
+            ballColor1 = "Red";
+        }
+        else if (detectedColor.blue > 1/*Blue Min Value*/ && detectedColor.blue < 5/*Blue Max Value*/) {
+            //Red Ball Found
+            ballColor1 = "Blue";
+        }
+        
+        return ballColor1;
     }
-    public int updateBallData() {
-        private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);//TODO: Fix when know sensor port for color sensor
+    public String ball2color() {
+        String ballColor2 = "none";//Starts the second ball color at none
 
-        String ball1Color;
+        //Detected Color from Color Sensor 2
+        Color detectedColor2 = colorSensor.getColor();//Detected Color from first color sensor
 
-        Color detectedColor = m_colorSensor.getColor();//Detected Color from first color sensor
-
-        if (detectedColor.red > 1/*Replace with Red Min Value*/ || detectedColor.red < 5/*Replace with Red Max Value*/) {
-            //1 Red Ball Found Look for next one
-            ball1Color = "Red";
-        } 
-        else if (detectedColor.blue > 1/*Replace with Blue Min Value*/ || detectedColor.red < 5/*Replace with Blue Max Value*/) {
-            //1 Blue Ball Found Look for next one
-            ball1Color = "Blue";
-            updateBallData2(ball1Color);
+        //Check ball color
+        if (detectedColor2.red > 1/*Red Min Value*/ && detectedColor2.red < 5/*Red Max Value*/) {
+            //Red Ball Found
+            ballColor2 = "Red";
         }
-        else {
-            //No Balls in storage
-            return;
+        else if (detectedColor2.blue > 1/*Blue Min Value*/ && detectedColor2.blue < 5/*Blue Max Value*/) {
+            //Red Ball Found
+            ballColor2 = "Blue";
         }
-    }
-    public string updateBallData2(String ball1Color) {
-        private final ColorSensorV3 m_colorSensor2 = new ColorSensorV3(i2cPort);//TODO: Fix when know sensor port for color sensor
-
-        String ball2Color;
-
-        Color detectedColor2 = m_colorSensor2.getColor();//Detected Color from second color sensor
-
-        if (detectedColor2.red > 1/*Replace with Red Min Value*/ || detectedColor2.red < 5/*Replace with Red Max Value*/) {
-            //2nd Red Ball Found
-            ball2Color = "Red";
-        } 
-        else if (detectedColor2.blue > 1/*Replace with Blue Min Value*/ || detectedColor2.red < 5/*Replace with Blue Max Value*/) {
-            //2nd Blue Ball Found
-            ball2Color = "Blue";
-            return ball1Color;
-        }
-        else {
-            //No Second Ball Found
-            return ball1Color;
-        }
+        
+        return ballColor2;
     }
 }
