@@ -7,7 +7,14 @@ public class Robot extends TimedRobot {
     private final RobotContainer container = new RobotContainer();
 
     @Override
+    public void robotInit() {
+        
+    }
+
+    @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
     }
+
+
 }
