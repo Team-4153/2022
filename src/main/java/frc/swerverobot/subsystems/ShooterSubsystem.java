@@ -2,9 +2,12 @@ package frc.swerverobot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.frcteam2910.common.robot.UpdateManager;
 
+//Robot Map
+import static frc.swerverobot.RobotMap.*;
+
 //Motors - Motor/Controller Type Not Decided Yet
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
+import edu.wpi.first.wpilibj.motorcontrol.PWMMotorController;
+import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
 
 //Color Sensor
 import edu.wpi.first.wpilibj.util.Color;
@@ -101,76 +104,116 @@ import com.revrobotics.ColorSensorV3;
     - End
 */
 
+
 public class ShooterSubsystem extends SubsystemBase{
     float bottomMotorPower = 0;
     float topMotorPower = 0;
 
+    //Shooter Motors
+    Jaguar topShooterMotor = new Jaguar(TopMotorPort);// Value from Robot Map
+    Jaguar bottomShooterMotor = new Jaguar(BottomMotorPort);  // The Number is the RIO PWM port
+    Jaguar storageMotor = new Jaguar(StorageMotorPort);  // The Number is the RIO PWM port
+    
     //      ----Shooting Functions----
-    public void shootingProcess1() {
+    public Boolean shootingProcess1() {
         //No Aim Assist
 
-        //Set Bottom Motor to bottomMotorPower
         //Set Top Motor to topMotorPower
+        topShooterMotor.set(topMotorPower);
+        //Set Bottom Motor to bottomMotorPower
+        bottomShooterMotor.set(bottomMotorPower);
 
         Thread.sleep(500);//Wait 0.5 Seconds = 500 MS
         
         //Set Storage Motor to 0.2(20%)(Releases first ball)
+        storageMotor.set(0.2);
 
         Thread.sleep(100);//Wait 0.1 Seconds = 100 MS
 
         //Set Storage Motor to 0
+        storageMotor.stopMotor();
 
         //Detect if there is a second ball
         if (ballCount() < 1) {
             Thread.sleep(500);//Wait 0.5 Seconds = 500 MS
 
             //Set Storage Motor to 0.2(20%)
+            storageMotor.set(0.2);
             
             Thread.sleep(100);//Wait 0.1 Seconds = 100 MS
         }
-        //Set Storage Motor to 0
-        //Set Bottom Motor to 0
-        //Set Top Motor to 0
+        //Stop All Motors
+        storageMotor.stopMotor();
+        topShooterMotor.stopMotor();
+        bottomShooterMotor.stopMotor();
     }
-    public void shootingProcess2(Boolean highLow) {
+    public Boolean shootingProcess2(Boolean highLow) {
         //Aim Assist (No Shoot)
         
         //Machine vision to find reflective tape on high goal
         //Rotate Robot to face hub
         //Wait Until Facing Hub
         if (highLow) {
-            //High Goal = true
-
-            //Use distance sensor or Machine Vision to get distance to hub (Robot should already be facing hub)
+            //true = High Goal
 
             //TODO: When Shooter Built Get Values for Distances
 
             //Set bottomMotorPower & topMotorPower variables to needed to get into high goal
-            bottomMotorPower = 0.6f;
-            topMotorPower = 0.6f;
-            //Notify Driver of the turret will not be able to get enough power to get it in
+            if (distanceFront() > 3) {
+                bottomMotorPower = 0.3f;
+                topMotorPower = 0.3f;
+                //Return true to signal program completion
+                return true;
+            }
+            else if (distanceFront() > 5) {
+                bottomMotorPower = 0.5f;
+                topMotorPower = 0.5f;
+                //Return true to signal program completion
+                return true;
+            }
+            else if (distanceFront() > 10) {
+                //Out of Bounds
+                //Set Motors to max just incase driver needs to shoot
+                bottomMotorPower = 1f;
+                topMotorPower = 1f;
+                //Return false to notify driver of error
+                return false;
+            } 
         }
         else {
-            //Low Goal = false
-
-            //Use distance sensor to get distance to hub (Robot should already be facing hub)
+            //false = Low Goal
 
             //TODO: When Shooter Built Get Values for Distances
 
-            //Set bottomMotorPower & topMotorPower variables to needed to get into high goal
-            bottomMotorPower = 0.3f;
-            topMotorPower = 0.3f;
-            //Notify Driver of the turret will not be able to get enough power to get it in
+            //Set bottomMotorPower & topMotorPower variables to needed to get into low goal
+            if (distanceFront() > 3) {
+                bottomMotorPower = 0.2f;
+                topMotorPower = 0.2f;
+                //Return true to signal program completion
+                return true;
+            }
+            else if (distanceFront() > 5) {
+                bottomMotorPower = 0.3f;
+                topMotorPower = 0.3f;
+                //Return true to signal program completion
+                return true;
+            }
+            else if (distanceFront() > 10) {
+                //Out of Bounds
+                //Set Motors to max just incase driver needs to shoot
+                bottomMotorPower = 1f;
+                topMotorPower = 1f;
+                //Return false to notify driver of error
+                return false;
+            } 
         }
     }
-    public void shootingProcess3(Boolean highLow) {
-        //Auto Aim/Auto Shoot
-
+    public Boolean shootingProcess3(Boolean highLow) {
         //Run ShootingProcess2 with highlow boolean to aim the robot
-        shootingProcess2(highLow);
-
-        //Run ShootingProcess1 to shoot all the balls in the robot
-        shootingProcess1();
+        if (shootingProcess2(highLow) != false) {
+            //Run ShootingProcess1 to shoot all the balls in the robot after done aiming
+            shootingProcess1();
+        }
     }
 
     //      ----Distance sensor----
@@ -200,7 +243,9 @@ public class ShooterSubsystem extends SubsystemBase{
 
             //Look for second ball
             if (detectedColor2.red > 1/*Red Min Value*/ && detectedColor2.red < 5/*Red Max Value*/ || detectedColor2.blue > 1/*Blue Min Value*/ && detectedColor2.blue < 5/*Blue Max Value*/) {
-                //2 Balls found
+                //2 Balls foun
+                
+                
                 ballCount = 2;
             } 
         }
