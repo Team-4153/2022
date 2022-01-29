@@ -33,4 +33,9 @@ public class RobotMap {
     public static final int DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_MOTOR = 8;
     public static final double DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_OFFSET = -Math.toRadians(357.2);
     public static final int DRIVETRAIN_BACK_LEFT_MODULE_DRIVE_MOTOR = 7;
+
+    //Climber Stuff
+    public static final int CLIMBER_MOTOR = 9;
+    public static final int CLIMBER_PISTON = 1;
+    public static final int CLIMBER_SWITCH = 0;
 }
