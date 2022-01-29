@@ -1,6 +1,7 @@
 package frc.swerverobot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.frcteam2910.common.robot.UpdateManager;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 //Robot Map
 import static frc.swerverobot.RobotMap.*;
@@ -114,14 +115,27 @@ public class ShooterSubsystem extends SubsystemBase{
     Jaguar bottomShooterMotor = new Jaguar(BottomMotorPort);  // The Number is the RIO PWM port
     Jaguar storageMotor = new Jaguar(StorageMotorPort);  // The Number is the RIO PWM port
     
+    //Used for wait FUnctions
+    double startTime;
+    
     //      ----Shooting Functions----
     public Boolean shootingProcess1() {
         //No Aim Assist
+        int ballcount = ballCount();
+
+        if (ballcount == 0) {
+            //If there are not balls in the shooter stop the program.
+            return false;
+        }
 
         //Set Top Motor to topMotorPower
         topShooterMotor.set(topMotorPower);
         //Set Bottom Motor to bottomMotorPower
         bottomShooterMotor.set(bottomMotorPower);
+        
+        startTime = System.currentTimeMillis(); 
+
+        // WaitCommand(500);
 
         Thread.sleep(500);//Wait 0.5 Seconds = 500 MS
         
@@ -134,7 +148,7 @@ public class ShooterSubsystem extends SubsystemBase{
         storageMotor.stopMotor();
 
         //Detect if there is a second ball
-        if (ballCount() < 1) {
+        if (ballcount < 1) {
             Thread.sleep(500);//Wait 0.5 Seconds = 500 MS
 
             //Set Storage Motor to 0.2(20%)
@@ -146,6 +160,8 @@ public class ShooterSubsystem extends SubsystemBase{
         storageMotor.stopMotor();
         topShooterMotor.stopMotor();
         bottomShooterMotor.stopMotor();
+        // Log("Shooter Subsystem: No Balls");
+        return true;
     }
     public Boolean shootingProcess2(Boolean highLow) {
         //Aim Assist (No Shoot)
@@ -207,12 +223,17 @@ public class ShooterSubsystem extends SubsystemBase{
                 return false;
             } 
         }
+        return false;
     }
     public Boolean shootingProcess3(Boolean highLow) {
         //Run ShootingProcess2 with highlow boolean to aim the robot
         if (shootingProcess2(highLow) != false) {
             //Run ShootingProcess1 to shoot all the balls in the robot after done aiming
             shootingProcess1();
+            return true;
+        }
+        else {
+            return false;
         }
     }
 
@@ -225,27 +246,24 @@ public class ShooterSubsystem extends SubsystemBase{
 
     //      ----Color Sensor Functions----
     public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);//TODO: Fix when know sensor port for color sensor
-    public final ColorSensorV3 colorSensor2 = new ColorSensorV3(i2cPort);//TODO: Fix when know sensor port for color sensor
 
     public int ballCount() {
         //Detected Color from Color Sensor 1
         Color detectedColor = colorSensor.getColor();//Detected Color from first color sensor
 
-        //Detected Color from Color Sensor 2
-        Color detectedColor2 = colorSensor2.getColor();//Detected Color from first color sensor
+        //Detected true/false from photoeye
+        Boolean photoeye = true; //Placeholder Value
 
         int ballCount = 0;//Starts the count of balls at 0
 
-        //Look for first ball
+        //Look for first ball with color sensor
         if (detectedColor.red > 1/*Red Min Value*/ && detectedColor.red < 5/*Red Max Value*/ || detectedColor.blue > 1/*Blue Min Value*/ && detectedColor.blue < 5/*Blue Max Value*/) {
             //1 Ball Found
             ballCount = 1;
 
-            //Look for second ball
-            if (detectedColor2.red > 1/*Red Min Value*/ && detectedColor2.red < 5/*Red Max Value*/ || detectedColor2.blue > 1/*Blue Min Value*/ && detectedColor2.blue < 5/*Blue Max Value*/) {
-                //2 Balls foun
-                
-                
+            //Look for second ball with photo eye
+            if (photoeye) {
+                //2 Balls found
                 ballCount = 2;
             } 
         }
@@ -269,23 +287,5 @@ public class ShooterSubsystem extends SubsystemBase{
         }
         
         return ballColor1;
-    }
-    public String ball2color() {
-        String ballColor2 = "none";//Starts the second ball color at none
-
-        //Detected Color from Color Sensor 2
-        Color detectedColor2 = colorSensor.getColor();//Detected Color from first color sensor
-
-        //Check ball color
-        if (detectedColor2.red > 1/*Red Min Value*/ && detectedColor2.red < 5/*Red Max Value*/) {
-            //Red Ball Found
-            ballColor2 = "Red";
-        }
-        else if (detectedColor2.blue > 1/*Blue Min Value*/ && detectedColor2.blue < 5/*Blue Max Value*/) {
-            //Red Ball Found
-            ballColor2 = "Blue";
-        }
-        
-        return ballColor2;
     }
 }
