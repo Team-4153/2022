@@ -1,7 +1,16 @@
 package frc.swerverobot;
 
+//Shooter Subsystem - Color Sensor
+import edu.wpi.first.wpilibj.I2C;
+
 public class RobotMap {
 // define all ports and constants
+
+//Shooter Subsytem
+    public static final int TopMotorPort = 1; // The Number is the RIO PWM port
+    public static final int BottomMotorPort = 2; // The Number is the RIO PWM port
+    public static final int StorageMotorPort = 3; // The Number is the RIO PWM port
+    public static final I2C.Port i2cPort = I2C.Port.kOnboard;
 
 
 // EVEN numbers are angle motors, ODD numbers are drive motors
@@ -24,5 +33,4 @@ public class RobotMap {
     public static final int DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_MOTOR = 8;
     public static final double DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_OFFSET = -Math.toRadians(161.0+180);
     public static final int DRIVETRAIN_BACK_LEFT_MODULE_DRIVE_MOTOR = 7;
-
 }
