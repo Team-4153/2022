@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import org.frcteam2910.common.drivers.SwerveModule;
 import org.frcteam2910.common.kinematics.ChassisVelocity;
 import org.frcteam2910.common.kinematics.SwerveKinematics;
@@ -27,6 +26,10 @@ import org.frcteam2910.common.util.HolonomicDriveSignal;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.frcteam2910.common.control.*;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+
 import static frc.swerverobot.RobotMap.*;
 
 public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.Updatable {
@@ -34,11 +37,13 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
     private static final double TRACKWIDTH = 1.0;
     private static final double WHEELBASE = 1.0;
 
+
+
     // define the pid constants for each rotation motor
-    private static final PidConstants rotation1 = new PidConstants(.5, 0.0, 0.0001);
-    private static final PidConstants rotation2 = new PidConstants(.5, 0.0, 0.0001/*0.2*/);
-    private static final PidConstants rotation3 = new PidConstants(.5, 0.0, 0.0001);
-    private static final PidConstants rotation4 = new PidConstants(.5, 0.0, 0.0001);
+    private static final PidConstants rotation1 = new PidConstants(0, 0.0, 0.0001);
+    private static final PidConstants rotation2 = new PidConstants(0.8, 0.0001, 0.1);
+    private static final PidConstants rotation3 = new PidConstants(0.8, 0.0001, 0.1);
+    private static final PidConstants rotation4 = new PidConstants(0.8, 0.0001, 0.1);
 
     //
     // initialize each module using Mk2SwerveModuleBuilder
@@ -238,6 +243,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
 
         RigidTransform2 pose = odometry.update(angle, dt, moduleVelocities); // set the "pose" to the robot's actual pose
         SmartDashboard.putNumber(String.format("gyro reading"), angle.toDegrees());     // put the gyro reading into the smartdashboard
+
 
         synchronized (kinematicsLock) {
             this.pose = pose;
