@@ -10,6 +10,10 @@ import com.revrobotics.CANSparkMaxLowLevel;
 //Solenoids
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
+
+//Compressor
+import edu.wpi.first.wpilibj.Compressor;
 
 /*      ----Electronics Needed----
 - Motors (2)
@@ -32,6 +36,12 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 public class IntakeSubsystem extends SubsystemBase implements UpdateManager.Updatable {
     public boolean intakeout = false;
     public void IntakeMove() {
+        Compressor phCompressor = new Compressor(1, PneumaticsModuleType.REVPH);
+
+        phCompressor.enableDigital();
+        phCompressor.disable();
+
+        boolean enabled = phCompressor.enabled();
         //pushes out intake when button pressed
        if(IntakeButton=Pressed&& !intakeout){//fix when buttons known
            //Solenoid out
