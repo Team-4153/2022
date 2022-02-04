@@ -128,11 +128,10 @@ public class ShooterSubsystem extends SubsystemBase{
         topShooterMotor.set(topMotorPower);
         //Set Bottom Motor to bottomMotorPower
         bottomShooterMotor.set(bottomMotorPower);
-        
-        // WaitCommand(500);
 
         // Thread.sleep(500);
         new WaitCommand(500);//Wait 0.5 Seconds = 500
+        //TODO: Replace all wait commands with working ones.
 
         //Set Storage Motor to 0.2(20%)(Releases first ball)
         storageMotor.set(0.2);
@@ -301,6 +300,8 @@ public class ShooterSubsystem extends SubsystemBase{
         //Detected Color from Color Sensor 1
         Color detectedColor = colorSensor.getColor();//Detected Color from first color sensor
 
+
+        //TODO: Update min and max red & blue colors
         //Check ball color
         if (detectedColor.red > 1/*Red Min Value*/ && detectedColor.red < 5/*Red Max Value*/) {
             //Red Ball Found
