@@ -1,13 +1,11 @@
 package frc.swerverobot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import org.frcteam2910.common.robot.UpdateManager;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 //Robot Map
 import static frc.swerverobot.RobotMap.*;
 
 //Motors - Motor/Controller Type Not Decided Yet
-import edu.wpi.first.wpilibj.motorcontrol.PWMMotorController;
 import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
 
 //Color Sensor
@@ -45,8 +43,10 @@ import com.revrobotics.ColorSensorV3;
 - Distnace Sensor (Shooting Process #2,3) (Ultrasonic maybe?) (Might be replaced with Machine Vision)
     - Detect distance to hub for shooting processs #2 and #3
     - Might need to be aimed upwards because the bottom section is not uniform maybe aim for middle of the lower hoop from edge of the field?
-- Color Sensor (2)
+- Color Sensor (1)
     - Detect ball color and count
+- Photo Eye
+    - Detect if there is a second ball
 - PID Controller (Maybe)
     - Keep flywheels at constant speed
     - Might not be needed
@@ -105,7 +105,6 @@ import com.revrobotics.ColorSensorV3;
     - End
 */
 
-
 public class ShooterSubsystem extends SubsystemBase{
     float bottomMotorPower = 0;
     float topMotorPower = 0;
@@ -117,7 +116,6 @@ public class ShooterSubsystem extends SubsystemBase{
     
     //Used for wait FUnctions
     double startTime;
-    
     //      ----Shooting Functions----
     public Boolean shootingProcess1() {
         //No Aim Assist
@@ -133,28 +131,28 @@ public class ShooterSubsystem extends SubsystemBase{
         //Set Bottom Motor to bottomMotorPower
         bottomShooterMotor.set(bottomMotorPower);
         
-        startTime = System.currentTimeMillis(); 
-
         // WaitCommand(500);
 
-        Thread.sleep(500);//Wait 0.5 Seconds = 500 MS
-        
+        // Thread.sleep(500);
+        new WaitCommand(500);//Wait 0.5 Seconds = 500
+
         //Set Storage Motor to 0.2(20%)(Releases first ball)
         storageMotor.set(0.2);
 
-        Thread.sleep(100);//Wait 0.1 Seconds = 100 MS
+        // Thread.sleep(100);
+        new WaitCommand(100);//Wait 0.1 Seconds = 100 MS
 
         //Set Storage Motor to 0
         storageMotor.stopMotor();
 
         //Detect if there is a second ball
         if (ballcount < 1) {
-            Thread.sleep(500);//Wait 0.5 Seconds = 500 MS
+            new WaitCommand(500);//Wait 0.5 Seconds = 500 MS
 
             //Set Storage Motor to 0.2(20%)
             storageMotor.set(0.2);
             
-            Thread.sleep(100);//Wait 0.1 Seconds = 100 MS
+            new WaitCommand(100);//Wait 0.1 Seconds = 100 MS
         }
         //Stop All Motors
         storageMotor.stopMotor();
