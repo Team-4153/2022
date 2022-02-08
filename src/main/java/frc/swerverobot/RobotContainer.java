@@ -18,7 +18,7 @@ import org.frcteam2910.common.robot.input.Controller;
 import org.frcteam2910.common.robot.input.XboxController;
 
 public class RobotContainer {
-    private final Controller controller = new XboxController(0);
+    private final Controller controller = RobotMap.Driver_controller;
     private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
     private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem shooter = new ShooterSubsystem();
@@ -51,8 +51,7 @@ public class RobotContainer {
     }
 
     private void initRobot() {
-        intake.Sol_init();
-        intake.Motor_init();
+       intake.init();
     }
 
     private void configureButtonBindings() {
@@ -76,20 +75,7 @@ public class RobotContainer {
                 new Climb(climber)
         );
 
-        //[Intake Subystem]
-        controller.getLeftBumperButton().whenPressed(
-                //[Intake Subystem] Toggle Intake with Solenoid
-                () ->  intake.Sol_toggle()
-        );
-        controller.getRightBumperButton().whileHeld(
-                //[Intake Subystem] Start Motor
-                () ->  intake.Motor_Start()
-        );
-        controller.getRightBumperButton().whenReleased(
-                //[Intake Subystem] Stop Motor
-                () ->  intake.Motor_Stop()
-        );
-
+        
         //[Shooter Subystem]
         controller.getAButton().whenPressed(
                 //[Shooter Subystem] Low Goal Auto Aim
