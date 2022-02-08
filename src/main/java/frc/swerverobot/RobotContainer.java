@@ -29,8 +29,7 @@ public class RobotContainer {
     private final Vector2 vector1 = new Vector2(0, 1);
 
     private final UpdateManager updateManager = new UpdateManager(
-            drivetrain
-//            shooter
+        drivetrain
     );
 
     
