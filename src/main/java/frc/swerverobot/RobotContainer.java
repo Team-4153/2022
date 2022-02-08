@@ -16,6 +16,7 @@ import org.frcteam2910.common.math.Vector2;
 import org.frcteam2910.common.robot.UpdateManager;
 import org.frcteam2910.common.robot.input.Controller;
 import org.frcteam2910.common.robot.input.XboxController;
+import org.frcteam2910.common.robot.input.DPadButton.Direction;
 
 public class RobotContainer {
     private final Controller controller = new XboxController(0);
@@ -90,6 +91,15 @@ public class RobotContainer {
         );
 
         //[Shooter Subsystem]
+          //shootingProcess1(Right Trigger) - Shoots balls this will use values from auto aim to shoot, The driver can also manually change these values with 
+          //shootingProcess2(X for High Goal | A for Low Goal) - Auto aims the robot but doesent shoot, the boolean is for aiming for the high or low goal (true = High || false = Low)
+          //shootingProcess3(Not A Button Yet) - Auto aims the robot and shoots, the boolean is for aiming for the high or low goal (true = High || false = Low)
+          //manualShooterDistanceIncrease(D-Pad Up) - Increases the power to both shooter motors by 5%, doesent shoot balls
+          //manualShooterDistanceDecrease(D-Pad Down) - Decrease the power to both shooter motors by 5%, doesent shoot balls
+        if (controller.getRightTriggerAxis().getScale() > 0) {
+                //[Shooter Subsystem] Shoot Balls
+                shooter.shootingProcess1();
+        }
         controller.getAButton().whenPressed(
                 //[Shooter Subsystem] Low Goal Auto Aim
                 () ->  shooter.shootingProcess2(false)
@@ -98,9 +108,13 @@ public class RobotContainer {
                 //[Shooter Subsystem] High Goal Auto Aim 
                 () ->  shooter.shootingProcess2(true)
         );
-        if (controller.getRightTriggerAxis().getScale() > 0) {
-                //[Shooter Subsystem] Shoot Balls
-                shooter.shootingProcess1();
-        }
+        controller.getDPadButton(Direction.UP).whenPressed(
+                //[Shooter Subsystem] Manually Increase Shooter Distance by 5%
+                () ->  shooter.manualShooterDistanceIncrease()
+        );
+        controller.getDPadButton(Direction.DOWN).whenPressed(
+                //[Shooter Subsystem] Manually Decrease Shooter Distance by 5%
+                () ->  shooter.manualShooterDistanceDecrease()
+        );
     }
 }

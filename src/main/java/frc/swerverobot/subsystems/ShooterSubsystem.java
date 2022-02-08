@@ -55,10 +55,13 @@ import com.revrobotics.ColorSensorV3;
 
 
 /*      ----Driver Interaction----
-- Button to Activate Shooting Process #1 (Shoot Balls)
-- Button to Activate Shooting Process #2 in either high or low (Aim Assist)
-- Button to Activate Shooting Process #3 in either high or low (Auto Aim & Shoot)
-- 2 Buttons to change aiming distance manually
+- shootingProcess1(Right Trigger) - Shoots balls this will use values from auto aim to shoot, The driver can also manually change these values with 
+- shootingProcess2(X for High Goal | A for Low Goal) - Auto aims the robot but doesent shoot, the boolean is for aiming for the high or low goal (true = High || false = Low)
+- shootingProcess3(Not A Button Yet) - Auto aims the robot and shoots, the boolean is for aiming for the high or low goal (true = High || false = Low)
+- manualShooterDistanceIncrease(D-Pad Up) - Increases the power to both shooter motors by 5%, doesent shoot balls
+- manualShooterDistanceDecrease(D-Pad Down) - Decrease the power to both shooter motors by 5%, doesent shoot balls
+
+- TODO:Add Shooting Process 3 to Keybindings
 */
 
 
@@ -230,26 +233,30 @@ public class ShooterSubsystem extends SubsystemBase{
 
     //      ----Manual Adjustments Functions----
     public void manualShooterDistanceIncrease() {
+        //Top Motor
         if (topMotorPower < 1) {
             topMotorPower = 1f;
         }
         else {
-            topMotorPower = 0.1f + topMotorPower;
+            topMotorPower = 0.05f + topMotorPower;
         }
+        //Bottom Motor
         if (bottomMotorPower < 1) {
             bottomMotorPower = 1f;
         }
         else {
-            bottomMotorPower = 0.1f + bottomMotorPower;
+            bottomMotorPower = 0.05f + bottomMotorPower;
         }
     }
     public void manualShooterDistanceDecrease() {
+        //Top Motor
         if (topMotorPower > 0) {
             topMotorPower = 0f;
         }
         else {
             topMotorPower = -0.1f + topMotorPower;
         }
+        //Bottom Motor
         if (bottomMotorPower > 0) {
             bottomMotorPower = 0f;
         }
