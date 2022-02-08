@@ -16,6 +16,7 @@ import org.frcteam2910.common.math.Vector2;
 import org.frcteam2910.common.robot.UpdateManager;
 import org.frcteam2910.common.robot.input.Controller;
 import org.frcteam2910.common.robot.input.XboxController;
+import org.frcteam2910.common.robot.input.DPadButton.Direction;
 
 public class RobotContainer {
     private final Controller controller = RobotMap.Driver_controller;
@@ -29,8 +30,7 @@ public class RobotContainer {
     private final Vector2 vector1 = new Vector2(0, 1);
 
     private final UpdateManager updateManager = new UpdateManager(
-            drivetrain
-//            shooter
+        drivetrain
     );
 
     
@@ -55,39 +55,43 @@ public class RobotContainer {
     }
 
     private void configureButtonBindings() {
-        //[Drive Subystem]
+        //[Drive Subsystem]
         controller.getBackButton().whenPressed(
-                //[Drive Subystem]  Reset Gyro (Update if this is wrong I dont know)
+                //[Drive Subsystem]  Reset Gyro (Update if this is wrong I dont know)
                 () -> drivetrain.resetGyroAngle(Rotation2.ZERO)
         );
         controller.getAButton().whenPressed(
-                //[Drive Subystem]  Drive (Update if this is wrong I dont know)
+                //[Drive Subsystem]  Drive (Update if this is wrong I dont know)
                 () -> drivetrain.drive(vector0, 0, false)
         );
         controller.getBButton().whenPressed(
-                //[Drive Subystem]  Drives in Square (Update if this is wrong I dont know)
+                //[Drive Subsystem]  Drives in Square (Update if this is wrong I dont know)
                 new SquareCommand(drivetrain, 0.4, 1)
         );
 
-        //[Climber Subystem]
+        //[Climber Subsystem]
         controller.getYButton().whenPressed(
-                //[Climber Subystem] Climb
+                //[Climber Subsystem] Climb
                 new Climb(climber)
         );
 
         
         //[Shooter Subystem]
         controller.getAButton().whenPressed(
-                //[Shooter Subystem] Low Goal Auto Aim
-                () ->  shooter.shootingProcess2(true)
-        );
-        controller.getXButton().whenPressed(
-                //[Shooter Subystem] High Goal Auto Aim 
+                //[Shooter Subsystem] Low Goal Auto Aim
                 () ->  shooter.shootingProcess2(false)
         );
-        if (controller.getRightTriggerAxis().getScale() > 0) {
-                //[Shooter Subystem] Shoot Balls
-                shooter.shootingProcess1();
-        }
+        controller.getXButton().whenPressed(
+                //[Shooter Subsystem] High Goal Auto Aim 
+                () ->  shooter.shootingProcess2(true)
+        );
+        controller.getDPadButton(Direction.UP).whenPressed(
+                //[Shooter Subsystem] Manually Increase Shooter Distance by 5%
+                () ->  shooter.manualShooterDistanceIncrease()
+        );
+        controller.getDPadButton(Direction.DOWN).whenPressed(
+                //[Shooter Subsystem] Manually Decrease Shooter Distance by 5%
+                () ->  shooter.manualShooterDistanceDecrease()
+        );
     }
 }
