@@ -92,11 +92,11 @@ public class RobotContainer {
         //[Shooter Subsystem]
         controller.getAButton().whenPressed(
                 //[Shooter Subsystem] Low Goal Auto Aim
-                () ->  shooter.shootingProcess2(true)
+                () ->  shooter.shootingProcess2(false)
         );
         controller.getXButton().whenPressed(
                 //[Shooter Subsystem] High Goal Auto Aim 
-                () ->  shooter.shootingProcess2(false)
+                () ->  shooter.shootingProcess2(true)
         );
         if (controller.getRightTriggerAxis().getScale() > 0) {
                 //[Shooter Subsystem] Shoot Balls
