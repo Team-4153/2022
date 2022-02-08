@@ -21,7 +21,7 @@ public class RobotMap {
 //Intake Subsystem
     public static final int Intake_Motor_PWM = 3; // PWM for intake motor
 
-    // controls
+//Controls
     public static final Controller Driver_controller = new XboxController(0);
     public static final Button Intake_Extension = Driver_controller.getLeftBumperButton();
     public static final Button Intake_Roller = Driver_controller.getRightBumperButton();
