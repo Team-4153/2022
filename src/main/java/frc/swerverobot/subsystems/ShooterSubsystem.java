@@ -119,7 +119,7 @@ public class ShooterSubsystem extends SubsystemBase{
 
     //      ----Shooting Functions----
     public Boolean shootingProcess1() {
-        //No Aim Assist
+        //Get Number of balls at the start of shooting and saves it to a variable
         int ballcount = ballCount();
 
         if (ballcount == 0) {
@@ -127,36 +127,35 @@ public class ShooterSubsystem extends SubsystemBase{
             return false;
         }
 
-        //Set Top Motor to topMotorPower
+        //Set Top Motor to topMotorPower (This is from manual adjustment or the autoaim program)
         topShooterMotor.set(topMotorPower);
-        //Set Bottom Motor to bottomMotorPower
+        //Set Bottom Motor to bottomMotorPower (This is from manual adjustment or the autoaim program)
         bottomShooterMotor.set(bottomMotorPower);
 
-        new WaitCommand(0.5);//Wait 0.5 Seconds
-        //TODO: Replace all wait commands with working ones.
+        //TODO: Fix Wait Commands - Only exist in shooting subsystem 1
+        new WaitCommand(0.2);//Wait 0.2 Seconds for front wheels to get up to speed
 
-        //Set Storage Motor to 0.2(20%)(Releases first ball)
+        //Set Storage Motor to 0.2(20%)(Releases first ball into shooter)
         storageMotor.set(0.2);
 
-        new WaitCommand(0.1);//Wait 0.1 Seconds
+        new WaitCommand(0.1);//Wait 0.1 Seconds for ball to exit shooter
 
-        //Set Storage Motor to 0
+        //Set Storage Motor to 0 (Stops any more balls from entering the shooter until front wheels are at speed)
         storageMotor.stopMotor();
 
-        //Detect if there is a second ball
+        //If there were 2 balls at the start
         if (ballcount < 1) {
-            new WaitCommand(0.5);//Wait 0.5 Seconds
+            new WaitCommand(0.2);//Wait 0.2 Seconds for front wheels to get up to speed
 
-            //Set Storage Motor to 0.2(20%)
+            //Set Storage Motor to 0.2(20%)(Releases first ball into shooter)
             storageMotor.set(0.2);
             
-            new WaitCommand(0.1);//Wait 0.1 Seconds
+            new WaitCommand(0.1);//Wait 0.1 Seconds for ball to exit shooter
         }
         //Stop All Motors
         storageMotor.stopMotor();
         topShooterMotor.stopMotor();
         bottomShooterMotor.stopMotor();
-        // Log("Shooter Subsystem: No Balls");
         return true;
     }
     public Boolean shootingProcess2(Boolean highLow) {
@@ -305,14 +304,12 @@ public class ShooterSubsystem extends SubsystemBase{
         //Detected Color from Color Sensor 1
         Color detectedColor = colorSensor.getColor();//Detected Color from first color sensor
 
-
-        //TODO: Update min and max red & blue colors
         //Check ball color
-        if (detectedColor.red > 1/*Red Min Value*/ && detectedColor.red < 5/*Red Max Value*/) {
+        if (detectedColor.red > detectedColor.blue && detectedColor.red > detectedColor.green) {
             //Red Ball Found
             ballColor1 = "Red";
         }
-        else if (detectedColor.blue > 1/*Blue Min Value*/ && detectedColor.blue < 5/*Blue Max Value*/) {
+        else if (detectedColor.blue > detectedColor.red && detectedColor.blue > detectedColor.green) {
             //Red Ball Found
             ballColor1 = "Blue";
         }
