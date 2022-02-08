@@ -1,78 +1,77 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package frc.swerverobot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import org.frcteam2910.common.robot.UpdateManager;
 
-//Motors - Motor/Controller Type Not Decided Yet
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
-
-//Solenoids
+// Pneumatics
+//import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
-//Compressor
-import edu.wpi.first.wpilibj.Compressor;
+//Motors
+//import edu.wpi.first.wpilibj.motorcontrol.PWMMotorController;
+import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 
-/*      ----Electronics Needed----
-- Motors (2)
-- Solenoids (2)
-- Pnuematics Control Module (1)
-*/
+//Robot Map
+import static frc.swerverobot.RobotMap.*;
 
-/*      ----Driver Interaction----
-- Button to extend/retract(toggle)
+public class IntakeSubsystem extends SubsystemBase {
+  /** Creates a new IntakeSubsystem. */
+  public IntakeSubsystem() {}
 
-*/
-/*      ----Processes----
-- IntakeMove
-    - extend/rectract intake
-- IntakeMotor
-    - activates intake motors
-- IntakeFull
-    -Turns off intake motors when two balls are in the intake
-*/
-public class IntakeSubsystem extends SubsystemBase implements UpdateManager.Updatable {
-    public boolean intakeout = false;
-    public void IntakeMove() {
-        Compressor phCompressor = new Compressor(1, PneumaticsModuleType.REVPH);
+  //public final Compressor phCompressor = new Compressor(1, PneumaticsModuleType.REVPH);
+  private DoubleSolenoid exampleSolenoidPH = new DoubleSolenoid(1, PneumaticsModuleType.REVPH, 1, 2);
+  private PWMVictorSPX victor = new PWMVictorSPX(Intake_Motor_PWM);
 
-        phCompressor.enableDigital();
-        phCompressor.disable();
 
-        boolean enabled = phCompressor.enabled();
-        //pushes out intake when button pressed
-       if(IntakeButton=Pressed&& !intakeout){//fix when buttons known
-           //Solenoid out
-           intakeout = true;
-       }
-       //pulls in intake when button pressed 
-       if(IntakeButton=Pressed&& intakeout){//fix when buttons known
-            //Solenoid in
-            intakeout = false;
-       }
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
+
+  @Override
+  public void simulationPeriodic() {
+    // This method will be called once per scheduler run during simulation
+  }
+  public void Motor_init ()
+  {
+    victor.setSafetyEnabled(false);
+  }
+  public void Motor_Start ()
+  {
+    if (exampleSolenoidPH.get() == DoubleSolenoid.Value.kForward)
+    {
+    victor.set(.2);
     }
-    
-    public void IntakeMotor(){
-        if(intakeout=true){
-            //set motor speed 0.8(80%)
-        }
-        if(intakeout=false){
-            //set motor speed 0(0%)
-        }
+    else
+    {
+    victor.set(0);
     }
 
-    public void IntakeFull(){
-        if(ballCount()=2){
-            //set motor speed 0(0%)
-            //Solenoid in
-            intakeout = false;
-        }
-    }
+  }
+  public void Motor_Stop ()
+  {
+    victor.set(0);
+  }
 
-    public void update(double timestamp, double dt) {
-
+  public void Sol_toggle () {
+    // This method turns the whenPressed into a toggle command
+    if (exampleSolenoidPH.get() == DoubleSolenoid.Value.kReverse)
+    {
+      exampleSolenoidPH.set(DoubleSolenoid.Value.kForward);
+    } else {
+      exampleSolenoidPH.set(DoubleSolenoid.Value.kReverse);
     }
+      
+      
+  }
+
+  public void Sol_init () {
+    // This method sets the solonoid to a position on bootup
+    exampleSolenoidPH.set(DoubleSolenoid.Value.kReverse);
+  }
 
 }

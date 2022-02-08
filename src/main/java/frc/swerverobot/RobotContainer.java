@@ -7,6 +7,8 @@ import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import frc.swerverobot.subsystems.IntakeSubsystem;
 import frc.swerverobot.subsystems.ShooterSubsystem;
 
+
+
 import java.util.function.DoubleSupplier;
 
 import org.frcteam2910.common.math.Rotation2;
@@ -15,10 +17,8 @@ import org.frcteam2910.common.robot.UpdateManager;
 import org.frcteam2910.common.robot.input.Controller;
 import org.frcteam2910.common.robot.input.XboxController;
 
-
 public class RobotContainer {
     private final Controller controller = new XboxController(0);
-
     private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
     private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem shooter = new ShooterSubsystem();
@@ -33,7 +33,7 @@ public class RobotContainer {
 //            shooter
     );
 
-
+    
     public RobotContainer() {
 
         // set the drivetrain's default command to the driver's controller values
@@ -46,9 +46,15 @@ public class RobotContainer {
 
 
         updateManager.startLoop(5.0e-3);
-
+        initRobot();
         configureButtonBindings();
     }
+
+    private void initRobot()
+{
+  intake.Sol_init();
+  intake.Motor_init();
+}
 
     private void configureButtonBindings() {
         // reset gyro angle
@@ -63,6 +69,15 @@ public class RobotContainer {
         );
         controller.getYButton().whenPressed(
                 new Climb(climber)
+        );
+        controller.getLeftBumperButton().whenPressed(
+                () ->  intake.Sol_toggle()
+        );
+        controller.getRightBumperButton().whileHeld(
+                () ->  intake.Motor_Start()
+        );
+        controller.getRightBumperButton().whenReleased(
+                () ->  intake.Motor_Stop()
         );
     }
 }

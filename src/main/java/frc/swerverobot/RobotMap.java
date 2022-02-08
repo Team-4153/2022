@@ -7,11 +7,12 @@ public class RobotMap {
 // define all ports and constants
 
 //Shooter Subsytem
-    public static final int TopMotorPort = 1; // The Number is the RIO PWM port
-    public static final int BottomMotorPort = 2; // The Number is the RIO PWM port
-    public static final int StorageMotorPort = 3; // The Number is the RIO PWM port
+    public static final int TopMotorPort = 0; // The Number is the RIO PWM port
+    public static final int BottomMotorPort = 1; // The Number is the RIO PWM port
+    public static final int StorageMotorPort = 2; // The Number is the RIO PWM port
     public static final I2C.Port i2cPort = I2C.Port.kOnboard;
 
+    public static final int Intake_Motor_PWM = 3; // PWM for intake motor
 
 // EVEN numbers are angle motors, ODD numbers are drive motors
     public static final int DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_ENCODER = -1;
