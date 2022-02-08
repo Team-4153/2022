@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import static frc.swerverobot.RobotMap.*;
 
 //Motors - Motor/Controller Type Not Decided Yet
-import edu.wpi.first.wpilibj.motorcontrol.Jaguar;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 //Color Sensor
 import edu.wpi.first.wpilibj.util.Color;
@@ -110,12 +110,10 @@ public class ShooterSubsystem extends SubsystemBase{
     float topMotorPower = 0;
 
     //Shooter Motors
-    Jaguar topShooterMotor = new Jaguar(TopMotorPort);// Value from Robot Map
-    Jaguar bottomShooterMotor = new Jaguar(BottomMotorPort);  // The Number is the RIO PWM port
-    Jaguar storageMotor = new Jaguar(StorageMotorPort);  // The Number is the RIO PWM port
-    
-    //Used for wait FUnctions
-    double startTime;
+    Spark topShooterMotor = new Spark(TopMotorPort);// Value from Robot Map
+    Spark bottomShooterMotor = new Spark(BottomMotorPort);  // The Number is the RIO PWM port
+    Spark storageMotor = new Spark(StorageMotorPort);  // The Number is the RIO PWM port
+
     //      ----Shooting Functions----
     public Boolean shootingProcess1() {
         //No Aim Assist
@@ -130,11 +128,10 @@ public class ShooterSubsystem extends SubsystemBase{
         topShooterMotor.set(topMotorPower);
         //Set Bottom Motor to bottomMotorPower
         bottomShooterMotor.set(bottomMotorPower);
-        
-        // WaitCommand(500);
 
         // Thread.sleep(500);
         new WaitCommand(500);//Wait 0.5 Seconds = 500
+        //TODO: Replace all wait commands with working ones.
 
         //Set Storage Motor to 0.2(20%)(Releases first ball)
         storageMotor.set(0.2);
@@ -164,13 +161,13 @@ public class ShooterSubsystem extends SubsystemBase{
     public Boolean shootingProcess2(Boolean highLow) {
         //Aim Assist (No Shoot)
         
+        //TODO: When Shooter Built Get Values for Distances
+        
         //Machine vision to find reflective tape on high goal
         //Rotate Robot to face hub
         //Wait Until Facing Hub
         if (highLow) {
             //true = High Goal
-
-            //TODO: When Shooter Built Get Values for Distances
 
             //Set bottomMotorPower & topMotorPower variables to needed to get into high goal
             if (distanceFront() > 3) {
@@ -196,8 +193,6 @@ public class ShooterSubsystem extends SubsystemBase{
         }
         else {
             //false = Low Goal
-
-            //TODO: When Shooter Built Get Values for Distances
 
             //Set bottomMotorPower & topMotorPower variables to needed to get into low goal
             if (distanceFront() > 3) {
@@ -235,22 +230,53 @@ public class ShooterSubsystem extends SubsystemBase{
         }
     }
 
+    //      ----Manual Adjustments Functions----
+    public void manualShooterDistanceIncrease() {
+        if (topMotorPower < 1) {
+            topMotorPower = 1f;
+        }
+        else {
+            topMotorPower = 0.1f + topMotorPower;
+        }
+        if (bottomMotorPower < 1) {
+            bottomMotorPower = 1f;
+        }
+        else {
+            bottomMotorPower = 0.1f + bottomMotorPower;
+        }
+    }
+    public void manualShooterDistanceDecrease() {
+        if (topMotorPower > 0) {
+            topMotorPower = 0f;
+        }
+        else {
+            topMotorPower = -0.1f + topMotorPower;
+        }
+        if (bottomMotorPower > 0) {
+            bottomMotorPower = 0f;
+        }
+        else {
+            bottomMotorPower = -0.1f + bottomMotorPower;
+        }
+    }
+
+
     //      ----Distance sensor----
     public int distanceFront() {
         //Get distance infront of robot
-        int distance = 5;
+        int distance = 5;//Placeholder Value TODO: Replace with working distance sensor
         return distance;
     }
 
     //      ----Color Sensor Functions----
-    public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);//TODO: Fix when know sensor port for color sensor
+    public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
     public int ballCount() {
         //Detected Color from Color Sensor 1
         Color detectedColor = colorSensor.getColor();//Detected Color from first color sensor
 
         //Detected true/false from photoeye
-        Boolean photoeye = true; //Placeholder Value
+        Boolean photoeye = true; //Placeholder Value TODO:Figure out how photo eyes work
 
         int ballCount = 0;//Starts the count of balls at 0
 
@@ -274,6 +300,8 @@ public class ShooterSubsystem extends SubsystemBase{
         //Detected Color from Color Sensor 1
         Color detectedColor = colorSensor.getColor();//Detected Color from first color sensor
 
+
+        //TODO: Update min and max red & blue colors
         //Check ball color
         if (detectedColor.red > 1/*Red Min Value*/ && detectedColor.red < 5/*Red Max Value*/) {
             //Red Ball Found
