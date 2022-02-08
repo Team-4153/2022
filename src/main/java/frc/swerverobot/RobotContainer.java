@@ -56,51 +56,51 @@ public class RobotContainer {
     }
 
     private void configureButtonBindings() {
-        //[Drive Susystem]
+        //[Drive Subystem]
         controller.getBackButton().whenPressed(
-                //[Drive Susystem]  Reset Gyro (Update if this is wrong I dont know)
+                //[Drive Subystem]  Reset Gyro (Update if this is wrong I dont know)
                 () -> drivetrain.resetGyroAngle(Rotation2.ZERO)
         );
         controller.getAButton().whenPressed(
-                //[Drive Susystem]  Drive (Update if this is wrong I dont know)
+                //[Drive Subystem]  Drive (Update if this is wrong I dont know)
                 () -> drivetrain.drive(vector0, 0, false)
         );
         controller.getBButton().whenPressed(
-                //[Drive Susystem]  Drives in Square (Update if this is wrong I dont know)
+                //[Drive Subystem]  Drives in Square (Update if this is wrong I dont know)
                 new SquareCommand(drivetrain, 0.4, 1)
         );
 
-        //[Climber Susystem]
+        //[Climber Subystem]
         controller.getYButton().whenPressed(
-                //[Climber Susystem] Climb
+                //[Climber Subystem] Climb
                 new Climb(climber)
         );
 
-        //[Intake Susystem]
+        //[Intake Subystem]
         controller.getLeftBumperButton().whenPressed(
-                //[Intake Susystem] Toggle Intake with Solenoid
+                //[Intake Subystem] Toggle Intake with Solenoid
                 () ->  intake.Sol_toggle()
         );
         controller.getRightBumperButton().whileHeld(
-                //[Intake Susystem] Start Motor
+                //[Intake Subystem] Start Motor
                 () ->  intake.Motor_Start()
         );
         controller.getRightBumperButton().whenReleased(
-                //[Intake Susystem] Stop Motor
+                //[Intake Subystem] Stop Motor
                 () ->  intake.Motor_Stop()
         );
 
-        //[Shooter Susystem]
+        //[Shooter Subystem]
         controller.getAButton().whenPressed(
-                //[Shooter Susystem] Low Goal Auto Aim
+                //[Shooter Subystem] Low Goal Auto Aim
                 () ->  shooter.shootingProcess2(true)
         );
         controller.getXButton().whenPressed(
-                //[Shooter Susystem] High Goal Auto Aim 
+                //[Shooter Subystem] High Goal Auto Aim 
                 () ->  shooter.shootingProcess2(false)
         );
         if (controller.getRightTriggerAxis().getScale() > 0) {
-                //[Shooter Susystem] Shoot Balls
+                //[Shooter Subystem] Shoot Balls
                 shooter.shootingProcess1();
         }
     }
