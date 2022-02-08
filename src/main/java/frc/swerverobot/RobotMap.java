@@ -10,7 +10,7 @@ public class RobotMap {
     public static final int TopMotorPort = 0; // The Number is the RIO PWM port
     public static final int BottomMotorPort = 1; // The Number is the RIO PWM port
     public static final int StorageMotorPort = 2; // The Number is the RIO PWM port
-    public static final I2C.Port i2cPort = I2C.Port.kOnboard;
+    public static final I2C.Port i2cPort = I2C.Port.kOnboard; //Color Sensor (Only one I2C port on the robot)
 
     public static final int Intake_Motor_PWM = 3; // PWM for intake motor
 
