@@ -18,8 +18,6 @@ import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 //Robot Map
 import static frc.swerverobot.RobotMap.*;
 
-import org.frcteam2910.common.robot.input.Controller;
-import org.frcteam2910.common.robot.input.XboxController;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
