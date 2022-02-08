@@ -18,6 +18,9 @@ import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 //Robot Map
 import static frc.swerverobot.RobotMap.*;
 
+import org.frcteam2910.common.robot.input.Controller;
+import org.frcteam2910.common.robot.input.XboxController;
+
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {}
@@ -57,7 +60,7 @@ public class IntakeSubsystem extends SubsystemBase {
     victor.set(0);
   }
 
-  public void Sol_toggle () {
+    public void Sol_toggle () {
     // This method turns the whenPressed into a toggle command
     if (exampleSolenoidPH.get() == DoubleSolenoid.Value.kReverse)
     {
@@ -69,9 +72,29 @@ public class IntakeSubsystem extends SubsystemBase {
       
   }
 
-  public void Sol_init () {
+    public void Sol_init () {
     // This method sets the solonoid to a position on bootup
     exampleSolenoidPH.set(DoubleSolenoid.Value.kReverse);
-  }
+    }
 
+public void Button_Binding (){
+    Intake_Extension.whenPressed(
+        //[Intake Subystem] Toggle Intake with Solenoid
+        () ->  this.Sol_toggle()
+);
+    Intake_Roller.whileHeld(
+        //[Intake Subystem] Start Motor
+        () ->  this.Motor_Start()
+);
+    Intake_Roller.whenReleased(
+        //[Intake Subystem] Stop Motor
+        () ->  this.Motor_Stop()
+);
+}
+
+public void init(){
+    this.Sol_init();
+    this.Motor_init();
+    this.Button_Binding();
+}
 }

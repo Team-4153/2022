@@ -19,7 +19,7 @@ import org.frcteam2910.common.robot.input.XboxController;
 import org.frcteam2910.common.robot.input.DPadButton.Direction;
 
 public class RobotContainer {
-    private final Controller controller = new XboxController(0);
+    private final Controller controller = RobotMap.Driver_controller;
     private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
     private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem shooter = new ShooterSubsystem();
@@ -51,8 +51,7 @@ public class RobotContainer {
     }
 
     private void initRobot() {
-        intake.Sol_init();
-        intake.Motor_init();
+       intake.init();
     }
 
     private void configureButtonBindings() {
@@ -76,21 +75,8 @@ public class RobotContainer {
                 new Climb(climber)
         );
 
-        //[Intake Subsystem]
-        controller.getLeftBumperButton().whenPressed(
-                //[Intake Subsystem] Toggle Intake with Solenoid
-                () ->  intake.Sol_toggle()
-        );
-        controller.getRightBumperButton().whileHeld(
-                //[Intake Subsystem] Start Motor
-                () ->  intake.Motor_Start()
-        );
-        controller.getRightBumperButton().whenReleased(
-                //[Intake Subsystem] Stop Motor
-                () ->  intake.Motor_Stop()
-        );
-
-        //[Shooter Subsystem]
+        
+        //[Shooter Subystem]
           //shootingProcess1(Right Trigger) - Shoots balls this will use values from auto aim to shoot, The driver can also manually change these values with D-Pad Up || D-Pad Down
           //shootingProcess2(X for High Goal | A for Low Goal) - Auto aims the robot but doesent shoot, the boolean is for aiming for the high or low goal (true = High || false = Low)
           //shootingProcess3(Not A Button Yet) - Auto aims the robot and shoots, the boolean is for aiming for the high or low goal (true = High || false = Low)

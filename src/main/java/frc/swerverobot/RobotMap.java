@@ -3,6 +3,12 @@ package frc.swerverobot;
 //Shooter Subsystem - Color Sensor
 import edu.wpi.first.wpilibj.I2C;
 
+
+
+import org.frcteam2910.common.robot.input.Controller;
+import org.frcteam2910.common.robot.input.XboxController;
+import edu.wpi.first.wpilibj2.command.button.Button;
+
 public class RobotMap {
 // define all ports and constants
 
@@ -14,6 +20,13 @@ public class RobotMap {
 
 //Intake Subsystem
     public static final int Intake_Motor_PWM = 3; // PWM for intake motor
+
+    // controls
+    public static final Controller Driver_controller = new XboxController(0);
+    public static final Button Intake_Extension = Driver_controller.getLeftBumperButton();
+    public static final Button Intake_Roller = Driver_controller.getRightBumperButton();
+
+
 
 // EVEN numbers are angle motors, ODD numbers are drive motors
     public static final int DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_ENCODER = -1;
