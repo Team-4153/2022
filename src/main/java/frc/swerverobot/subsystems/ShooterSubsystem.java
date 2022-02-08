@@ -129,27 +129,25 @@ public class ShooterSubsystem extends SubsystemBase{
         //Set Bottom Motor to bottomMotorPower
         bottomShooterMotor.set(bottomMotorPower);
 
-        // Thread.sleep(500);
-        new WaitCommand(500);//Wait 0.5 Seconds = 500
+        new WaitCommand(0.5);//Wait 0.5 Seconds
         //TODO: Replace all wait commands with working ones.
 
         //Set Storage Motor to 0.2(20%)(Releases first ball)
         storageMotor.set(0.2);
 
-        // Thread.sleep(100);
-        new WaitCommand(100);//Wait 0.1 Seconds = 100 MS
+        new WaitCommand(0.1);//Wait 0.1 Seconds
 
         //Set Storage Motor to 0
         storageMotor.stopMotor();
 
         //Detect if there is a second ball
         if (ballcount < 1) {
-            new WaitCommand(500);//Wait 0.5 Seconds = 500 MS
+            new WaitCommand(0.5);//Wait 0.5 Seconds
 
             //Set Storage Motor to 0.2(20%)
             storageMotor.set(0.2);
             
-            new WaitCommand(100);//Wait 0.1 Seconds = 100 MS
+            new WaitCommand(0.1);//Wait 0.1 Seconds
         }
         //Stop All Motors
         storageMotor.stopMotor();

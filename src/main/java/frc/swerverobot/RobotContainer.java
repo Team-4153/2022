@@ -50,34 +50,48 @@ public class RobotContainer {
         configureButtonBindings();
     }
 
-    private void initRobot()
-{
-  intake.Sol_init();
-  intake.Motor_init();
-}
+    private void initRobot() {
+        intake.Sol_init();
+        intake.Motor_init();
+    }
 
     private void configureButtonBindings() {
         // reset gyro angle
         controller.getBackButton().whenPressed(
+                //[Drive Susystem]  Reset Gyro (Update if this is wrong I dont know)
                 () -> drivetrain.resetGyroAngle(Rotation2.ZERO)
         );
         controller.getAButton().whenPressed(
+                //[Drive Susystem]  Drive (Update if this is wrong I dont know)
                 () -> drivetrain.drive(vector0, 0, false)
         );
         controller.getBButton().whenPressed(
+                //[Drive Susystem]  Drives in Square (Update if this is wrong I dont know)
                 new SquareCommand(drivetrain, 0.4, 1)
         );
         controller.getYButton().whenPressed(
+                //[Climber Susystem] Climb
                 new Climb(climber)
         );
         controller.getLeftBumperButton().whenPressed(
+                //[Intake Susystem] Toggle Intake with Solenoid
                 () ->  intake.Sol_toggle()
         );
         controller.getRightBumperButton().whileHeld(
+                //[Intake Susystem] Start Motor
                 () ->  intake.Motor_Start()
         );
         controller.getRightBumperButton().whenReleased(
+                //[Intake Susystem] Stop Motor
                 () ->  intake.Motor_Stop()
+        );
+        controller.getAButton().whenPressed(
+                //[Shooter Susystem] Low Goal Auto Aim
+                () ->  shooter.shootingProcess2(true)
+        );
+        controller.getXButton().whenPressed(
+                //[Shooter Susystem] High Goal Auto Aim 
+                () ->  shooter.shootingProcess2(false)
         );
     }
 }
