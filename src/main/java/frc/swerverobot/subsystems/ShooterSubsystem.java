@@ -35,17 +35,17 @@ import com.revrobotics.ColorSensorV3;
 - Motor Controllers (3)
     - 1 for each motor in the shooter
 - Machine Vision
-    - Camera 
-    - Rasberry Pie
-    - Detect high goal for auto aim
-    - Distance Maybe?
+    - Camera (1?)
+    - Rasberry Pie (1)
+    - Used to detect high goal and rotate robot towrds hub 
+    - Distance?
         - If we can get reliable distance from Machine Vision relace distance sensor with Machine Vision.
 - Distnace Sensor (Shooting Process #2,3) (Ultrasonic maybe?) (Might be replaced with Machine Vision)
     - Detect distance to hub for shooting processs #2 and #3
     - Might need to be aimed upwards because the bottom section is not uniform maybe aim for middle of the lower hoop from edge of the field?
 - Color Sensor (1)
     - Detect ball color and count
-- Photo Eye
+- Photo Eye (1)
     - Detect if there is a second ball
 - PID Controller (Maybe)
     - Keep flywheels at constant speed
@@ -166,7 +166,7 @@ public class ShooterSubsystem extends SubsystemBase{
     public Boolean shootingProcess2(Boolean highLow) {
         //Aim Assist (No Shoot)
         
-        //TODO: When Shooter Built Get Values for Distances
+        //TODO: When Shooter is Built calibrate if statments for distances
         
         //Machine vision to find reflective tape on high goal
         //Rotate Robot to face hub
@@ -289,7 +289,7 @@ public class ShooterSubsystem extends SubsystemBase{
 
         int ballCount = 0;//Starts the count of balls at 0
 
-        //Look for first ball with color sensor
+        //Look for first ball with color sensor TODO: Test Color Sensor Logic
         if (detectedColor.red > detectedColor.blue && detectedColor.red > detectedColor.green || detectedColor.blue > detectedColor.red && detectedColor.blue > detectedColor.green) {
             //1 Ball Found
             ballCount = 1;
