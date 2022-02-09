@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 //Robot Map
 import static frc.swerverobot.RobotMap.*;
 
-//Motors - Motor/Controller Type Not Decided Yet
+//Motors - Motor/Controller (Spark Motor Controllers)
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 //Color Sensor
@@ -290,7 +290,7 @@ public class ShooterSubsystem extends SubsystemBase{
         int ballCount = 0;//Starts the count of balls at 0
 
         //Look for first ball with color sensor
-        if (detectedColor.red > 1/*Red Min Value*/ && detectedColor.red < 5/*Red Max Value*/ || detectedColor.blue > 1/*Blue Min Value*/ && detectedColor.blue < 5/*Blue Max Value*/) {
+        if (detectedColor.red > detectedColor.blue && detectedColor.red > detectedColor.green || detectedColor.blue > detectedColor.red && detectedColor.blue > detectedColor.green) {
             //1 Ball Found
             ballCount = 1;
 
