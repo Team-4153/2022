@@ -27,11 +27,10 @@ import com.revrobotics.ColorSensorV3;
 */
 
 
-
 /*      ----Electronics Needed----
 - Motors (3)
     - 2 for shooter
-    - 1 for storage
+    - 1 for feed
 - Motor Controllers (3)
     - 1 for each motor in the shooter
 - Machine Vision
@@ -53,7 +52,6 @@ import com.revrobotics.ColorSensorV3;
 */
 
 
-
 /*      ----Driver Interaction----
 - shootingProcess1(Right Trigger) - Shoots balls this will use values from auto aim to shoot, The driver can also manually change these values with 
 - shootingProcess2(X for High Goal | A for Low Goal) - Auto aims the robot but doesent shoot, the boolean is for aiming for the high or low goal (true = High || false = Low)
@@ -65,19 +63,18 @@ import com.revrobotics.ColorSensorV3;
 */
 
 
-
 /*      ----Processes----
 - Shooting Process #1 (No Aim Assist & 2 Balls)
     - Driver Preses Shoot Button or Activated by code (Start Function)
     - Spin bottom & top Motors to variables (This value can be changed by the driver manually or buy the aim program)
     - Wait ~0.5 Seconds
-    - Activate Storage Motor to release first Ball (20% power worked in testing)
+    - Activate Feed Motor to release first Ball (20% power worked in testing)
     - Wait ~0.1 Seconds
-    - Stop Storage Motor
+    - Stop Feed Motor
     - Use Color Sensor to detect if there is still a ball in the first slot
     - If there is a ball
         - Wait for wheels to regain lost speed ~0.5s
-        - Turn Storage Motor to release second Ball
+        - Turn Feed Motor to release second Ball
         - Wait for ball to exit shooter ~0.1s
     - Stop both intake motors
     - End
@@ -115,7 +112,7 @@ public class ShooterSubsystem extends SubsystemBase{
     //Shooter Motors
     Spark topShooterMotor = new Spark(TopMotorPort);// The Number is the RIO PWM port from the RobotMap.java
     Spark bottomShooterMotor = new Spark(BottomMotorPort);// The Number is the RIO PWM port from the RobotMap.java
-    Spark storageMotor = new Spark(StorageMotorPort);// The Number is the RIO PWM port from the RobotMap.java
+    Spark feedMotor = new Spark(FeedMotorPort);// The Number is the RIO PWM port from the RobotMap.java
 
     //Color Sensor
     public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);// The Number is the I2C port from the RobotMap.java
@@ -137,27 +134,27 @@ public class ShooterSubsystem extends SubsystemBase{
 
         float initTime = System.currentTimeMillis() / 1000f;
         while (System.currentTimeMillis() / 1000f < initTime + 0.2f) {//Wait 0.2 Seconds for front wheels to get up to speed
-            //Set Storage Motor to 0.2(20%)(Releases first ball into shooter)
-            storageMotor.set(0.2);
+            //Set Feed Motor to 0.2(20%)(Releases first ball into shooter)
+            feedMotor.set(0.2);
 
             float initTime2 = System.currentTimeMillis() / 1000f;
             while (System.currentTimeMillis() / 1000f < initTime2 + 0.1f) {//Wait 0.1 Seconds for ball to leave shooter
-                //Set Storage Motor to 0 (Stops any more balls from entering the shooter until front wheels are at speed)
-                storageMotor.stopMotor();
+                //Set Feed Motor to 0 (Stops any more balls from entering the shooter until front wheels are at speed)
+                feedMotor.stopMotor();
 
                 //If there were 2 balls at the start
                 if (ballcount < 1) {
                     float initTime3 = System.currentTimeMillis() / 1000f;
                     while (System.currentTimeMillis() / 1000f < initTime3 + 0.2f) {//Wait 0.2 Seconds for front wheels to get up to speed
-                        //Set Storage Motor to 0.2(20%)(Releases first ball into shooter)
-                        storageMotor.set(0.2);
+                        //Set Feed Motor to 0.2(20%)(Releases first ball into shooter)
+                        feedMotor.set(0.2);
                     }
                     new WaitCommand(0.1);//Wait 0.1 Seconds for ball to exit shooter
                 }
                 float initTime4 = System.currentTimeMillis() / 1000f;
                 while (System.currentTimeMillis() / 1000f < initTime4 + 0.1f) {//Wait 0.1 Seconds for ball to leave shooter
                     //Stop All Motors
-                    storageMotor.stopMotor();
+                    feedMotor.stopMotor();
                     topShooterMotor.stopMotor();
                     bottomShooterMotor.stopMotor();
                     return true;

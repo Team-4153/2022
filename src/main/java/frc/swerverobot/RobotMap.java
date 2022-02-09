@@ -19,7 +19,7 @@ public class RobotMap {
 //Motors
     public static final int TopMotorPort = 0; //[Shooter Subsystem] The Number is the RIO PWM port 
     public static final int BottomMotorPort = 1; //[Shooter Subsystem] The Number is the RIO PWM port
-    public static final int StorageMotorPort = 2; //[Shooter Subsystem] The Number is the RIO PWM port
+    public static final int FeedMotorPort = 2; //[Shooter Subsystem] The Number is the RIO PWM port
     public static final int Intake_Motor_PWM = 3; //[Intake Subsystem] PWM for intake motor
     public static final int CLIMBER_MOTOR = 9; //[Climber Subsystem] The Number is the RIO PWM port
 //Controls
