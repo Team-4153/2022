@@ -81,7 +81,7 @@ public class RobotContainer {
           //shootingProcess3(Not A Button Yet) - Auto aims the robot and shoots, the boolean is for aiming for the high or low goal (true = High || false = Low)
           //manualShooterDistanceIncrease(D-Pad Up) - Increases the power to both shooter motors by 5%, doesent shoot balls
           //manualShooterDistanceDecrease(D-Pad Down) - Decrease the power to both shooter motors by 5%, doesent shoot balls
-        if (controller.getRightTriggerAxis().getScale() > 0) {
+        if (controller.getRightTriggerAxis().getScale() > 0.1) {
                 //[Shooter Subsystem] Shoot Balls
                 shooter.shootingProcess1();
         }

@@ -77,8 +77,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
 public void Button_Binding (){
     Intake_Extension.whenPressed(
-        //[Intake Subystem] Toggle Intake with Solenoid
-        () ->  this.Sol_toggle()
+        () -> this.Sol_toggle()
 );
     Intake_Roller.whileHeld(
         //[Intake Subystem] Start Motor

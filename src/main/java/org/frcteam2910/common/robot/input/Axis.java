@@ -67,4 +67,7 @@ public abstract class Axis {
 			}
 		};
 	}
+
+    public void getRaw(Object object) {
+    }
 }

@@ -3,8 +3,7 @@ package frc.swerverobot;
 //Shooter Subsystem - Color Sensor
 import edu.wpi.first.wpilibj.I2C;
 
-
-
+import org.frcteam2910.common.robot.input.Axis;
 import org.frcteam2910.common.robot.input.Controller;
 import org.frcteam2910.common.robot.input.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Button;
