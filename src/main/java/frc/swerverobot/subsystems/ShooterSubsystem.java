@@ -161,8 +161,7 @@ public class ShooterSubsystem extends SubsystemBase{
                 }
             }
         }
-        
-        
+        return true;
     }
     public Boolean shootingProcess2(Boolean highLow) {
         //Aim Assist (No Shoot)
