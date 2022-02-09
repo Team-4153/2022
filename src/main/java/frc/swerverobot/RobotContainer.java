@@ -1,5 +1,6 @@
 package frc.swerverobot;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.swerverobot.commands.*;
 import frc.swerverobot.subsystems.ClimberSubsystem;
@@ -23,7 +24,7 @@ public class RobotContainer {
     private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
     private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem shooter = new ShooterSubsystem();
-    private final ClimberSubsystem climber = new ClimberSubsystem(RobotMap.CLIMBER_MOTOR, RobotMap.CLIMBER_PISTON, RobotMap.CLIMBER_SWITCH);
+    private final ClimberSubsystem climber = new ClimberSubsystem(RobotMap.CLIMBER_MOTOR, RobotMap.CLIMBER_PISTON, RobotMap.WINCH_PISTON, RobotMap.CLIMBER_SWITCH);
 
 
     private final Vector2 vector0 = new Vector2(1, 0);
@@ -72,7 +73,7 @@ public class RobotContainer {
         //[Climber Subsystem]
         controller.getYButton().whenPressed(
                 //[Climber Subsystem] Climb
-                new Climb(climber)
+                (Command) new Climb1Command(climber)
         );
 
         //[Shooter Subystem]
@@ -81,7 +82,7 @@ public class RobotContainer {
           //shootingProcess3(Not A Button Yet) - Auto aims the robot and shoots, the boolean is for aiming for the high or low goal (true = High || false = Low)
           //manualShooterDistanceIncrease(D-Pad Up) - Increases the power to both shooter motors by 5%, doesent shoot balls
           //manualShooterDistanceDecrease(D-Pad Down) - Decrease the power to both shooter motors by 5%, doesent shoot balls
-        if (controller.getRightTriggerAxis().getScale() > 0) {
+        if (controller.getRightTriggerAxis().getScale() > 0.1) {
                 //[Shooter Subsystem] Shoot Balls
                 shooter.shootingProcess1();
         }
