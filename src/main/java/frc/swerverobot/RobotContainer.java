@@ -1,5 +1,6 @@
 package frc.swerverobot;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.swerverobot.commands.*;
 import frc.swerverobot.subsystems.ClimberSubsystem;
@@ -23,7 +24,7 @@ public class RobotContainer {
     private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
     private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem shooter = new ShooterSubsystem();
-    private final ClimberSubsystem climber = new ClimberSubsystem(RobotMap.CLIMBER_MOTOR, RobotMap.CLIMBER_PISTON, RobotMap.CLIMBER_SWITCH);
+    private final ClimberSubsystem climber = new ClimberSubsystem(RobotMap.CLIMBER_MOTOR, RobotMap.CLIMBER_PISTON, RobotMap.WINCH_PISTON, RobotMap.CLIMBER_SWITCH);
 
 
     private final Vector2 vector0 = new Vector2(1, 0);
@@ -72,7 +73,7 @@ public class RobotContainer {
         //[Climber Subsystem]
         controller.getYButton().whenPressed(
                 //[Climber Subsystem] Climb
-                new Climb(climber)
+                (Command) new Climb1Command(climber)
         );
 
         //[Shooter Subystem]
