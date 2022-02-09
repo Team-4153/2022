@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 //Robot Map
 import static frc.swerverobot.RobotMap.*;
 
-//Motors - Motor/Controller Type Not Decided Yet
+//Motors - Motor/Controller (Spark Motor Controllers)
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 //Color Sensor
@@ -132,30 +132,35 @@ public class ShooterSubsystem extends SubsystemBase{
         //Set Bottom Motor to bottomMotorPower (This is from manual adjustment or the autoaim program)
         bottomShooterMotor.set(bottomMotorPower);
 
-        //TODO: Fix Wait Commands - Only exist in shooting subsystem 1
-        new WaitCommand(0.2);//Wait 0.2 Seconds for front wheels to get up to speed
-
-        //Set Storage Motor to 0.2(20%)(Releases first ball into shooter)
-        storageMotor.set(0.2);
-
-        new WaitCommand(0.1);//Wait 0.1 Seconds for ball to exit shooter
-
-        //Set Storage Motor to 0 (Stops any more balls from entering the shooter until front wheels are at speed)
-        storageMotor.stopMotor();
-
-        //If there were 2 balls at the start
-        if (ballcount < 1) {
-            new WaitCommand(0.2);//Wait 0.2 Seconds for front wheels to get up to speed
-
+        float initTime = System.currentTimeMillis() / 1000f;
+        while (System.currentTimeMillis() / 1000f < initTime + 0.2f) {//Wait 0.2 Seconds for front wheels to get up to speed
             //Set Storage Motor to 0.2(20%)(Releases first ball into shooter)
             storageMotor.set(0.2);
-            
-            new WaitCommand(0.1);//Wait 0.1 Seconds for ball to exit shooter
+
+            float initTime2 = System.currentTimeMillis() / 1000f;
+            while (System.currentTimeMillis() / 1000f < initTime2 + 0.1f) {//Wait 0.1 Seconds for ball to leave shooter
+                //Set Storage Motor to 0 (Stops any more balls from entering the shooter until front wheels are at speed)
+                storageMotor.stopMotor();
+
+                //If there were 2 balls at the start
+                if (ballcount < 1) {
+                    float initTime3 = System.currentTimeMillis() / 1000f;
+                    while (System.currentTimeMillis() / 1000f < initTime3 + 0.2f) {//Wait 0.2 Seconds for front wheels to get up to speed
+                        //Set Storage Motor to 0.2(20%)(Releases first ball into shooter)
+                        storageMotor.set(0.2);
+                    }
+                    new WaitCommand(0.1);//Wait 0.1 Seconds for ball to exit shooter
+                }
+                float initTime4 = System.currentTimeMillis() / 1000f;
+                while (System.currentTimeMillis() / 1000f < initTime4 + 0.1f) {//Wait 0.1 Seconds for ball to leave shooter
+                    //Stop All Motors
+                    storageMotor.stopMotor();
+                    topShooterMotor.stopMotor();
+                    bottomShooterMotor.stopMotor();
+                    return true;
+                }
+            }
         }
-        //Stop All Motors
-        storageMotor.stopMotor();
-        topShooterMotor.stopMotor();
-        bottomShooterMotor.stopMotor();
         return true;
     }
     public Boolean shootingProcess2(Boolean highLow) {
@@ -285,7 +290,7 @@ public class ShooterSubsystem extends SubsystemBase{
         int ballCount = 0;//Starts the count of balls at 0
 
         //Look for first ball with color sensor
-        if (detectedColor.red > 1/*Red Min Value*/ && detectedColor.red < 5/*Red Max Value*/ || detectedColor.blue > 1/*Blue Min Value*/ && detectedColor.blue < 5/*Blue Max Value*/) {
+        if (detectedColor.red > detectedColor.blue && detectedColor.red > detectedColor.green || detectedColor.blue > detectedColor.red && detectedColor.blue > detectedColor.green) {
             //1 Ball Found
             ballCount = 1;
 
