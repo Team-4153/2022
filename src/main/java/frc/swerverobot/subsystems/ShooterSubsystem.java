@@ -109,13 +109,16 @@ import com.revrobotics.ColorSensorV3;
 */
 
 public class ShooterSubsystem extends SubsystemBase{
-    float bottomMotorPower = 0;
-    float topMotorPower = 0;
+    float bottomMotorPower = 0.3f; //Start the Bottom motor at low power
+    float topMotorPower = 0.3f; //Start the Top motor at low power
 
     //Shooter Motors
-    Spark topShooterMotor = new Spark(TopMotorPort);// Value from Robot Map
-    Spark bottomShooterMotor = new Spark(BottomMotorPort);  // The Number is the RIO PWM port
-    Spark storageMotor = new Spark(StorageMotorPort);  // The Number is the RIO PWM port
+    Spark topShooterMotor = new Spark(TopMotorPort);// The Number is the RIO PWM port from the RobotMap.java
+    Spark bottomShooterMotor = new Spark(BottomMotorPort);// The Number is the RIO PWM port from the RobotMap.java
+    Spark storageMotor = new Spark(StorageMotorPort);// The Number is the RIO PWM port from the RobotMap.java
+
+    //Color Sensor
+    public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);// The Number is the I2C port from the RobotMap.java
 
     //      ----Shooting Functions----
     public Boolean shootingProcess1() {
@@ -270,16 +273,14 @@ public class ShooterSubsystem extends SubsystemBase{
     }
 
 
-    //      ----Distance sensor----
+    //      ----Distance Sensor Functions----
     public int distanceFront() {
         //Get distance infront of robot
         int distance = 5;//Placeholder Value TODO: Replace with working distance sensor
         return distance;
     }
 
-    //      ----Color Sensor Functions----
-    public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
-
+    //      ----Ball Count & Color Functions----
     public int ballCount() {
         //Detected Color from Color Sensor 1
         Color detectedColor = colorSensor.getColor();//Detected Color from first color sensor
