@@ -5,7 +5,7 @@
 package frc.swerverobot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.swerverobot.RobotMap;
 // Pneumatics
 //import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -24,7 +24,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public IntakeSubsystem() {}
 
   //public final Compressor phCompressor = new Compressor(1, PneumaticsModuleType.REVPH);
-  private DoubleSolenoid exampleSolenoidPH = new DoubleSolenoid(1, PneumaticsModuleType.REVPH, 1, 2);
+  private DoubleSolenoid exampleSolenoidPH = new DoubleSolenoid(1, PneumaticsModuleType.REVPH, RobotMap.INTAKE_SOLa, RobotMap.INTAKE_SOLb);
   private PWMVictorSPX victor = new PWMVictorSPX(Intake_Motor_PWM);
 
 
