@@ -132,31 +132,37 @@ public class ShooterSubsystem extends SubsystemBase{
         //Set Bottom Motor to bottomMotorPower (This is from manual adjustment or the autoaim program)
         bottomShooterMotor.set(bottomMotorPower);
 
-        //TODO: Fix Wait Commands - Only exist in shooting subsystem 1
-        new WaitCommand(0.2);//Wait 0.2 Seconds for front wheels to get up to speed
-
-        //Set Storage Motor to 0.2(20%)(Releases first ball into shooter)
-        storageMotor.set(0.2);
-
-        new WaitCommand(0.1);//Wait 0.1 Seconds for ball to exit shooter
-
-        //Set Storage Motor to 0 (Stops any more balls from entering the shooter until front wheels are at speed)
-        storageMotor.stopMotor();
-
-        //If there were 2 balls at the start
-        if (ballcount < 1) {
-            new WaitCommand(0.2);//Wait 0.2 Seconds for front wheels to get up to speed
-
+        float initTime = System.currentTimeMillis() / 1000f;
+        while (System.currentTimeMillis() / 1000f < initTime + 0.2f) {//Wait 0.2 Seconds for front wheels to get up to speed
             //Set Storage Motor to 0.2(20%)(Releases first ball into shooter)
             storageMotor.set(0.2);
-            
-            new WaitCommand(0.1);//Wait 0.1 Seconds for ball to exit shooter
+
+            float initTime2 = System.currentTimeMillis() / 1000f;
+            while (System.currentTimeMillis() / 1000f < initTime2 + 0.1f) {//Wait 0.1 Seconds for ball to leave shooter
+                //Set Storage Motor to 0 (Stops any more balls from entering the shooter until front wheels are at speed)
+                storageMotor.stopMotor();
+
+                //If there were 2 balls at the start
+                if (ballcount < 1) {
+                    float initTime3 = System.currentTimeMillis() / 1000f;
+                    while (System.currentTimeMillis() / 1000f < initTime3 + 0.2f) {//Wait 0.2 Seconds for front wheels to get up to speed
+                        //Set Storage Motor to 0.2(20%)(Releases first ball into shooter)
+                        storageMotor.set(0.2);
+                    }
+                    new WaitCommand(0.1);//Wait 0.1 Seconds for ball to exit shooter
+                }
+                float initTime4 = System.currentTimeMillis() / 1000f;
+                while (System.currentTimeMillis() / 1000f < initTime4 + 0.1f) {//Wait 0.1 Seconds for ball to leave shooter
+                    //Stop All Motors
+                    storageMotor.stopMotor();
+                    topShooterMotor.stopMotor();
+                    bottomShooterMotor.stopMotor();
+                    return true;
+                }
+            }
         }
-        //Stop All Motors
-        storageMotor.stopMotor();
-        topShooterMotor.stopMotor();
-        bottomShooterMotor.stopMotor();
-        return true;
+        
+        
     }
     public Boolean shootingProcess2(Boolean highLow) {
         //Aim Assist (No Shoot)
