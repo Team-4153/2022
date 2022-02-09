@@ -1,5 +1,6 @@
 package frc.swerverobot;
 
+import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.swerverobot.commands.*;
@@ -45,7 +46,7 @@ public class RobotContainer {
                 () -> controller.getRightXAxis().get(true)
         ));
 
-
+                
         updateManager.startLoop(5.0e-3);
         initRobot();
         configureButtonBindings();
