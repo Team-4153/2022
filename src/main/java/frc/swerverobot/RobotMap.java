@@ -53,4 +53,5 @@ public class RobotMap {
     public static final int CLIMBER_MOTOR = 9;
     public static final int CLIMBER_PISTON = 1;
     public static final int CLIMBER_SWITCH = 0;
+    public static final int WINCH_PISTON = 2;
 }
