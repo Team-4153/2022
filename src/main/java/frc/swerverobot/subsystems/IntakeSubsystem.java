@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 //Robot Map
 import static frc.swerverobot.RobotMap.*;
 
+import frc.swerverobot.XboxTrigger;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
@@ -77,6 +78,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
 public void Button_Binding (){
     Intake_Extension.whenPressed(
+    //XboxTrigger.whenPressed(  
         () -> this.Sol_toggle()
 );
     Intake_Roller.whileHeld(
@@ -88,6 +90,8 @@ public void Button_Binding (){
         () ->  this.Motor_Stop()
 );
 }
+
+
 
 public void init(){
     this.Sol_init();
