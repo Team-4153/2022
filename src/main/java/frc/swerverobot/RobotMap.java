@@ -24,7 +24,7 @@ public class RobotMap {
     public static final int CLIMBER_MOTOR = 9; //[Climber Subsystem] The Number is the RIO PWM port
 //Controls
     public static final Controller Driver_controller = new XboxController(0);//[Controller]
-    public static final Button Intake_Extension = Driver_controller.getLeftBumperButton();//[Intake Subsystem]
+    public static final Axis Intake_Extension = Driver_controller.getLeftTriggerAxis();//[Intake Subsystem]
     public static final Button Intake_Roller = Driver_controller.getRightBumperButton();//[Intake Subsystem]
 //Pneumatics
     public static final int INTAKE_SOLa = 1;//[Intake Subsystem]

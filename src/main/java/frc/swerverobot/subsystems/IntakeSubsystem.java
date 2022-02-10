@@ -18,6 +18,10 @@ import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 //Robot Map
 import static frc.swerverobot.RobotMap.*;
 
+import org.frcteam2910.common.robot.input.Axis;
+import org.frcteam2910.common.robot.input.Controller;
+import org.frcteam2910.common.robot.input.XboxController;
+
 import frc.swerverobot.XboxTrigger;
 
 public class IntakeSubsystem extends SubsystemBase {
@@ -74,22 +78,26 @@ public class IntakeSubsystem extends SubsystemBase {
     public void Sol_init () {
     // This method sets the solonoid to a position on bootup
     exampleSolenoidPH.set(DoubleSolenoid.Value.kReverse);
+
+    public void Button_Binding (){
+        // Intake_Extension.whenPressed(
+        // //XboxTrigger.whenPressed(  
+            if(Intake_Extension.getScale() > .5);
+            {
+            () -> this.Sol_toggle();
+            }
+        Intake_Roller.whileHeld(
+            //[Intake Subystem] Start Motor
+            () ->  this.Motor_Start()
+    );
+        Intake_Roller.whenReleased(
+            //[Intake Subystem] Stop Motor
+            () ->  this.Motor_Stop()
+    );
+    }
     }
 
-public void Button_Binding (){
-    Intake_Extension.whenPressed(
-    //XboxTrigger.whenPressed(  
-        () -> this.Sol_toggle()
-);
-    Intake_Roller.whileHeld(
-        //[Intake Subystem] Start Motor
-        () ->  this.Motor_Start()
-);
-    Intake_Roller.whenReleased(
-        //[Intake Subystem] Stop Motor
-        () ->  this.Motor_Stop()
-);
-}
+
 
 
 
