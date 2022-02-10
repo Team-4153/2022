@@ -21,7 +21,6 @@ import static frc.swerverobot.RobotMap.*;
 import org.frcteam2910.common.robot.input.Axis;
 import org.frcteam2910.common.robot.input.Controller;
 import org.frcteam2910.common.robot.input.XboxController;
-
 import frc.swerverobot.XboxTrigger;
 
 public class IntakeSubsystem extends SubsystemBase {
@@ -48,14 +47,14 @@ public class IntakeSubsystem extends SubsystemBase {
   }
   public void Motor_Start ()
   {
-    if (exampleSolenoidPH.get() == DoubleSolenoid.Value.kForward)
-    {
+    // if (exampleSolenoidPH.get() == DoubleSolenoid.Value.kForward)
+    // {
     victor.set(.2);
-    }
-    else
-    {
-    victor.set(0);
-    }
+    // }
+    // else
+    // {
+    // victor.set(0);
+    // }
 
   }
   public void Motor_Stop ()
@@ -78,32 +77,35 @@ public class IntakeSubsystem extends SubsystemBase {
     public void Sol_init () {
     // This method sets the solonoid to a position on bootup
     exampleSolenoidPH.set(DoubleSolenoid.Value.kReverse);
+    }
 
     public void Button_Binding (){
-        // Intake_Extension.whenPressed(
-        // //XboxTrigger.whenPressed(  
-            if(Intake_Extension.getScale() > .5);
-            {
-            () -> this.Sol_toggle();
-            }
-        Intake_Roller.whileHeld(
-            //[Intake Subystem] Start Motor
-            () ->  this.Motor_Start()
-    );
-        Intake_Roller.whenReleased(
-            //[Intake Subystem] Stop Motor
-            () ->  this.Motor_Stop()
-    );
+        // XboxTrigger.whenPressed(  
+            // if (Intake_Extension.get() > 0.5);
+            // {
+            //     this.Sol_toggle();
+            // }
+            // Intake_Extension.whileHeld (
+            //     () -> this.Sol_toggle()
+            // );
+            Intake_Roller.whileHeld
+            (
+                //[Intake Subystem] Start Motor
+                () ->  this.Motor_Start()
+            );
+            Intake_Roller.whenReleased
+            (
+                //[Intake Subystem] Stop Motor
+                () ->  this.Motor_Stop()
+            );
+        }
+    
+    
+        
+    public void init()
+    {
+        this.Sol_init();
+        this.Motor_init();
+        this.Button_Binding();
     }
-    }
-
-
-
-
-
-public void init(){
-    this.Sol_init();
-    this.Motor_init();
-    this.Button_Binding();
-}
 }
