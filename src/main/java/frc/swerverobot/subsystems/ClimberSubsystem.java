@@ -7,13 +7,14 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.swerverobot.RobotMap;
 
 public class ClimberSubsystem extends SubsystemBase{
-    public ClimberSubsystem(int motor, int solenoid, int solenoid2, int aSwitch) {
+    public ClimberSubsystem(int motor, int solenoid_hook1, int solenoid_hook2, int solenoid_winch1, int solenoid_winch2, int aSwitch) {
         super();
         this.motor = new PWMSparkMax(motor);
-        this.solenoid = new DoubleSolenoid(solenoid, PneumaticsModuleType.CTREPCM, 0, 1);
-        this.solenoid2 = new DoubleSolenoid(solenoid2, PneumaticsModuleType.CTREPCM, 2,3);
+        this.solenoid = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, solenoid_hook1, solenoid_hook1);
+        this.solenoid2 = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, solenoid_winch1, solenoid_winch2);
         this.Switch = new DigitalInput(aSwitch);
     }
 
