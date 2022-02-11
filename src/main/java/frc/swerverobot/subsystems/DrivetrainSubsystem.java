@@ -40,10 +40,11 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
 
 
     // define the pid constants for each rotation motor
-    private static final PidConstants rotation1 = new PidConstants(0, 0.0, 0.0001);
-    private static final PidConstants rotation2 = new PidConstants(0.8, 0.0001, 0.1);
-    private static final PidConstants rotation3 = new PidConstants(0.8, 0.0001, 0.1);
-    private static final PidConstants rotation4 = new PidConstants(0.8, 0.0001, 0.1);
+    private static final PidConstants rotation2 = new PidConstants(1.0, 0.0, 0.001);
+    private static final PidConstants rotation4 = new PidConstants(1.0, 0.0, 0.001);
+    private static final PidConstants rotation6 = new PidConstants(1.0, 0.0, 0.5);
+    private static final PidConstants rotation8 = new PidConstants(1.0, 0.0, 0.5);
+
 
     //
     // initialize each module using Mk2SwerveModuleBuilder
@@ -51,10 +52,10 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
             // check org/frcteam2910/common/robot/drivers/Mk2SwerveModuleBuilder
             // to see the initialization arguments
     private final SwerveModule frontLeftModule =
-            new Mk2SwerveModuleBuilder(new Vector2(TRACKWIDTH / 2.0, -WHEELBASE / 2.0))
+            new Mk2SwerveModuleBuilder(new Vector2(TRACKWIDTH / 2.0, WHEELBASE / 2.0))
                     .angleMotor(
                             new CANSparkMax(DRIVETRAIN_FRONT_LEFT_MODULE_ANGLE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                            rotation1, 18.0 / 1.0, DRIVETRAIN_FRONT_LEFT_MODULE_ANGLE_OFFSET) 
+                            rotation6, 18.0 / 1.0, DRIVETRAIN_FRONT_LEFT_MODULE_ANGLE_OFFSET, DRIVETRAIN_FRONT_LEFT_MODULE_ENCODER_VOLTAGE_MAX) 
                 //     .angleEncoder(
                 //            .angleMotor.getAnalog(),
                 //               DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_OFFSET)
@@ -66,7 +67,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
             new Mk2SwerveModuleBuilder(new Vector2(TRACKWIDTH / 2.0, -WHEELBASE / 2.0))
                     .angleMotor(
                             new CANSparkMax(DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                            rotation2, 18.0/1.0, DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_OFFSET)    
+                            rotation2, 18.0/1.0, DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_OFFSET, DRIVETRAIN_FRONT_RIGHT_MODULE_ENCODER_VOLTAGE_MAX)    
 //                    .angleEncoder(
  //                           NULL, /*new AnalogInput(DRIVETRAIN_FRONT_LEFT_MODULE_ANGLE_ENCODER),*/
   //                          DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_OFFSET)
@@ -75,25 +76,25 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
                             Mk2SwerveModuleBuilder.MotorType.NEO)
                     .build();
     private final SwerveModule backLeftModule =
-            new Mk2SwerveModuleBuilder(new Vector2(-TRACKWIDTH / 2.0, -WHEELBASE / 2.0))
+            new Mk2SwerveModuleBuilder(new Vector2(-TRACKWIDTH / 2.0, WHEELBASE / 2.0))
 //                    .angleEncoder(
  //                           new AnalogInput(DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_ENCODER),
   //                          DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_OFFSET)
                     .angleMotor(
                             new CANSparkMax(DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                            rotation3, 18.0/1.0, DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_OFFSET)
+                            rotation8, 18.0/1.0, DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_OFFSET, DRIVETRAIN_BACK_LEFT_MODULE_ENCODER_VOLTAGE_MAX)
                     .driveMotor(
                             new CANSparkMax(DRIVETRAIN_BACK_LEFT_MODULE_DRIVE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
                             Mk2SwerveModuleBuilder.MotorType.NEO)
                     .build();
     private final SwerveModule backRightModule =
-            new Mk2SwerveModuleBuilder(new Vector2(-TRACKWIDTH / 2.0, WHEELBASE / 2.0))
+            new Mk2SwerveModuleBuilder(new Vector2(-TRACKWIDTH / 2.0, -WHEELBASE / 2.0))
 //                    .angleEncoder(
  //                           new AnalogInput(DRIVETRAIN_BACK_RIGHT_MODULE_ANGLE_ENCODER),
   //                          DRIVETRAIN_BACK_RIGHT_MODULE_ANGLE_OFFSET)
                     .angleMotor(
                             new CANSparkMax(DRIVETRAIN_BACK_RIGHT_MODULE_ANGLE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                            rotation4, 18.0/1.0, DRIVETRAIN_BACK_RIGHT_MODULE_ANGLE_OFFSET)
+                            rotation4, 18.0/1.0, DRIVETRAIN_BACK_RIGHT_MODULE_ANGLE_OFFSET, DRIVETRAIN_BACK_RIGHT_MODULE_ENCODER_VOLTAGE_MAX)
                     .driveMotor(
                             new CANSparkMax(DRIVETRAIN_BACK_RIGHT_MODULE_DRIVE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
                             Mk2SwerveModuleBuilder.MotorType.NEO)
