@@ -26,7 +26,7 @@ public class RobotContainer {
     private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
     private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem shooter = new ShooterSubsystem();
-    private final ClimberSubsystem climber = new ClimberSubsystem(CLIMBER_MOTOR, HOOKa, HOOKb, CLIMBER_ARMa, CLIMBER_ARMb, CLIMBER_SWITCH);
+    private final ClimberSubsystem climber = new ClimberSubsystem(CLIMBER_MOTOR, HOOKa, HOOKb, WINCH_SOLa, WINCH_SOLb, CLIMBER_SWITCH);
 
 
     private final Vector2 vector0 = new Vector2(1, 0);

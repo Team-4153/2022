@@ -1,7 +1,6 @@
 package frc.swerverobot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.swerverobot.RobotMap;
 // Pneumatics
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
