@@ -85,16 +85,17 @@ public class RobotContainer {
           //manualShooterDistanceIncrease(D-Pad Up) - Increases the power to both shooter motors by 5%, doesent shoot balls
           //manualShooterDistanceDecrease(D-Pad Down) - Decrease the power to both shooter motors by 5%, doesent shoot balls
         if (controller.getRightTriggerAxis().getScale() > 0.1) {
+                //TODO: Figure out how to do triggers on controller the above code doesent work
                 //[Shooter Subsystem] Shoot Balls
-                shooter.shootingProcess1();
+                // new Shoot1(shooter);
         }
         controller.getAButton().whenPressed(
                 //[Shooter Subsystem] Low Goal Auto Aim
-                () ->  shooter.shootingProcess2(false)
+                new Shoot2(shooter, false)
         );
         controller.getXButton().whenPressed(
                 //[Shooter Subsystem] High Goal Auto Aim 
-                () ->  shooter.shootingProcess2(true)
+                new Shoot2(shooter, true)
         );
         controller.getDPadButton(Direction.UP).whenPressed(
                 //[Shooter Subsystem] Manually Increase Shooter Distance by 5%
