@@ -9,6 +9,8 @@ import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import frc.swerverobot.subsystems.IntakeSubsystem;
 import frc.swerverobot.subsystems.ShooterSubsystem;
 
+//Robot Map
+import static frc.swerverobot.RobotMap.*;
 
 import java.util.function.DoubleSupplier;
 
@@ -20,11 +22,11 @@ import org.frcteam2910.common.robot.input.XboxController;
 import org.frcteam2910.common.robot.input.DPadButton.Direction;
 
 public class RobotContainer {
-    private final Controller controller = RobotMap.Driver_controller;
+    private final Controller controller = Driver_controller;
     private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
     private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem shooter = new ShooterSubsystem();
-    private final ClimberSubsystem climber = new ClimberSubsystem(RobotMap.CLIMBER_MOTOR, RobotMap.CLIMBER_PISTON, RobotMap.WINCH_PISTON, RobotMap.CLIMBER_SWITCH);
+    private final ClimberSubsystem climber = new ClimberSubsystem(CLIMBER_MOTOR, HOOKa, HOOKb, CLIMBER_ARMa, CLIMBER_ARMb, CLIMBER_SWITCH);
 
 
     private final Vector2 vector0 = new Vector2(1, 0);

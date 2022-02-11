@@ -16,21 +16,29 @@ public class RobotMap {
 //Sensors
     public static final ADIS16470_IMU imu = new ADIS16470_IMU(); //Gyro and acceleration sensor
     public static final I2C.Port i2cPort = I2C.Port.kOnboard; //[Shooter Subsystem] Color Sensor (Only one I2C port on the robot)
-//Motors
+
+//PWM Motors
     public static final int TopMotorPort = 0; //[Shooter Subsystem] The Number is the RIO PWM port 
     public static final int BottomMotorPort = 1; //[Shooter Subsystem] The Number is the RIO PWM port
     public static final int StorageMotorPort = 2; //[Shooter Subsystem] The Number is the RIO PWM port
     public static final int Intake_Motor_PWM = 3; //[Intake Subsystem] PWM for intake motor
     public static final int CLIMBER_MOTOR = 9; //[Climber Subsystem] The Number is the RIO PWM port
-//Controls
+
+    //Controls
     public static final Controller Driver_controller = new XboxController(0);//[Controller]
     public static final Axis Intake_Extension = Driver_controller.getLeftTriggerAxis();//[Intake Subsystem]
     public static final Button Intake_Roller = Driver_controller.getRightBumperButton();//[Intake Subsystem]
-//Pneumatics
+
+    //Pneumatics
+    public static final int PH_CAN_ID = 1;//[Pneumatic hub CAN address]    
     public static final int INTAKE_SOLa = 1;//[Intake Subsystem]
     public static final int INTAKE_SOLb = 2;//[Intake Subsystem]
+    public static final int CLIMBER_ARMa = 3;//[Climber Subsystem]
+    public static final int CLIMBER_ARMb = 4;//[Climber Subsystem]
+    public static final int HOOKa = 5;//[Climber Subsystem]
+    public static final int HOOKb = 6;//[Climber Subsystem]
 
-//Drive Train
+//Drive Train -- uses spark max CAN ID 1-8 
 // EVEN numbers are angle motors, ODD numbers are drive motors
     public static final int DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_ENCODER = -1;
     public static final int DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_MOTOR = 2;
@@ -53,7 +61,5 @@ public class RobotMap {
     public static final int DRIVETRAIN_BACK_LEFT_MODULE_DRIVE_MOTOR = 7;
 
 //Climber Stuff TODO: fix
-    public static final int CLIMBER_PISTON = 1;
-    public static final int CLIMBER_SWITCH = 0;
-    public static final int WINCH_PISTON = 2;
+    public static final int CLIMBER_SWITCH = 2;
 }

@@ -23,7 +23,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public IntakeSubsystem() {}
 
   //public final Compressor phCompressor = new Compressor(1, PneumaticsModuleType.REVPH);
-  private DoubleSolenoid exampleSolenoidPH = new DoubleSolenoid(1, PneumaticsModuleType.REVPH, RobotMap.INTAKE_SOLa, RobotMap.INTAKE_SOLb);
+  private DoubleSolenoid exampleSolenoidPH = new DoubleSolenoid(PH_CAN_ID, PneumaticsModuleType.REVPH, INTAKE_SOLa, INTAKE_SOLb);
   private PWMVictorSPX victor = new PWMVictorSPX(Intake_Motor_PWM);
 
   private boolean triggerDone = false;
