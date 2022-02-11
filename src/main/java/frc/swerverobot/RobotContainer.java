@@ -98,11 +98,11 @@ public class RobotContainer {
         );
         controller.getDPadButton(Direction.UP).whenPressed(
                 //[Shooter Subsystem] Manually Increase Shooter Distance by 5%
-                () ->  shooter.manualShooterDistanceIncrease()
+                new IncreaseShootDistance(shooter)
         );
         controller.getDPadButton(Direction.DOWN).whenPressed(
                 //[Shooter Subsystem] Manually Decrease Shooter Distance by 5%
-                () ->  shooter.manualShooterDistanceDecrease()
+                new DecreaseShootDistance(shooter)
         );
     }
 }
