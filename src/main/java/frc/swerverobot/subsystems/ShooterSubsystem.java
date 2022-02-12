@@ -302,21 +302,23 @@ public class ShooterSubsystem extends SubsystemBase{
         return ballCount;
     }
     public String ball1color() {
-        String ballColor1 = "none";//Starts the first ball color at none
-        
-        //Detected Color from Color Sensor 1
-        Color detectedColor = colorSensor.getColor();//Detected Color from first color sensor
+        //Detected Color & Proximity from Color Sensor 1
+        Color detectedColor = colorSensor.getColor();
+        int proximity = colorSensor.getProximity();
 
         //Check ball color
-        if (detectedColor.red > detectedColor.blue && detectedColor.red > detectedColor.green) {
-            //Red Ball Found
-            ballColor1 = "Red";
+        if (proximity > 125) {//125 is 1 inch and half a ball away from the color sensor
+            if (detectedColor.red > detectedColor.blue) {
+                //Return Red
+                return"Red";
+            }
+            else {
+                //Return Blue
+                return"Blue";
+            }
         }
-        else if (detectedColor.blue > detectedColor.red && detectedColor.blue > detectedColor.green) {
-            //Red Ball Found
-            ballColor1 = "Blue";
+        else {
+            return"none";
         }
-        
-        return ballColor1;
     }
 }
