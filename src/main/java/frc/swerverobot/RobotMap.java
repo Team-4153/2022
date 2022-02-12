@@ -25,9 +25,36 @@ public class RobotMap {
     public static final int CLIMBER_MOTOR = 9; //[Climber Subsystem] The Number is the RIO PWM port
 
     //Controls
-    public static final Controller Driver_controller = new XboxController(0);//[Controller]
-    public static final Axis Intake_Extension = Driver_controller.getLeftTriggerAxis();//[Intake Subsystem]
-    public static final Button Intake_Roller = Driver_controller.getRightBumperButton();//[Intake Subsystem]
+    /* Example Analog Trigger Code NOTE: put inside susytem periodic
+    public void periodic() {
+        // This method will be called once per scheduler run
+        if (Intake_Extension.get() > 0.5)
+        {
+            if (!triggerDone)
+            {
+            this.Sol_toggle();
+            triggerDone = true;
+            }
+        }
+        else
+        {
+            triggerDone = false;
+        }
+    }
+    */
+    //DriveTrain Controller (Kendal)
+    public static final Controller Driver_controller = new XboxController(0);//[Driver's Controller]
+    public static final Axis Speed_Increase = Driver_controller.getLeftTriggerAxis();//[DriveTrain Subsystem](L-Trigger)
+    public static final Axis Speed_Decrease = Driver_controller.getRightTriggerAxis();//[DriveTrain Subsystem](R-Trigger)
+    public static final Button Intake_Extension = Driver_controller.getLeftBumperButton();//[Intake Subsystem](L-Bumper)
+    public static final Button Intake_Retract = Driver_controller.getRightBumperButton();//[Intake Subsystem](R-Bumper)
+    //Shooter/Climber Controller (Noah)
+    public static final Controller Shooter_controller = new XboxController(1);//[Shooter's Controller]
+    public static final Button Shoot = Driver_controller.getAButton();//[Shooter Subsystem](A)
+    public static final Axis AimShootHigh = Driver_controller.getRightTriggerAxis();//[Shooter Subsystem](R-Trigger)
+    public static final Button AimShootLow = Driver_controller.getBButton();//[Shooter Subsystem](B)
+    public static final Button ManualShootIncrease = Driver_controller.getYButton();//[Shooter Subsystem](Y)
+    public static final Button ManualShootDecrease = Driver_controller.getAButton();//[Shooter Subsystem](A)
 
     //Pneumatics
     public static final int PH_CAN_ID = 1;//[Pneumatic hub CAN address]    
