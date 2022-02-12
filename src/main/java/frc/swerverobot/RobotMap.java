@@ -50,11 +50,11 @@ public class RobotMap {
     public static final Button Intake_Retract = Driver_controller.getRightBumperButton();//[Intake Subsystem](R-Bumper)
     //Shooter/Climber Controller (Noah)
     public static final Controller Shooter_controller = new XboxController(1);//[Shooter's Controller]
-    public static final Button Shoot = Driver_controller.getAButton();//[Shooter Subsystem](A)
-    public static final Axis AimShootHigh = Driver_controller.getRightTriggerAxis();//[Shooter Subsystem](R-Trigger)
-    public static final Button AimShootLow = Driver_controller.getBButton();//[Shooter Subsystem](B)
-    public static final Button ManualShootIncrease = Driver_controller.getYButton();//[Shooter Subsystem](Y)
-    public static final Button ManualShootDecrease = Driver_controller.getAButton();//[Shooter Subsystem](A)
+    public static final Button Shoot = Shooter_controller.getAButton();//[Shooter Subsystem](A)
+    public static final Axis AimShootHigh = Shooter_controller.getRightTriggerAxis();//[Shooter Subsystem](R-Trigger)
+    public static final Button AimShootLow = Shooter_controller.getBButton();//[Shooter Subsystem](B)
+    public static final Button ManualShootIncrease = Shooter_controller.getYButton();//[Shooter Subsystem](Y)
+    public static final Button ManualShootDecrease = Shooter_controller.getAButton();//[Shooter Subsystem](A)
 
     //Pneumatics
     public static final int PH_CAN_ID = 1;//[Pneumatic hub CAN address]    
