@@ -73,36 +73,35 @@ public class RobotContainer {
         );
 
         //[Climber Subsystem]
-      /*  controller.getYButton().whenPressed(
+        /*  
+        controller.getYButton().whenPressed(
                 //[Climber Subsystem] Climb
                 (Command) new Climb1Command(climber)
-        );*/
+        );
+        */
 
         //[Shooter Subystem]
-          //shootingProcess1(Right Trigger) - Shoots balls this will use values from auto aim to shoot, The driver can also manually change these values with D-Pad Up || D-Pad Down
-          //shootingProcess2(X for High Goal | A for Low Goal) - Auto aims the robot but doesent shoot, the boolean is for aiming for the high or low goal (true = High || false = Low)
-          //shootingProcess3(Not A Button Yet) - Auto aims the robot and shoots, the boolean is for aiming for the high or low goal (true = High || false = Low)
-          //manualShooterDistanceIncrease(D-Pad Up) - Increases the power to both shooter motors by 5%, doesent shoot balls
-          //manualShooterDistanceDecrease(D-Pad Down) - Decrease the power to both shooter motors by 5%, doesent shoot balls
-        if (controller.getRightTriggerAxis().getScale() > 0.1) {
-                //[Shooter Subsystem] Shoot Balls
-                shooter.shootingProcess1();
-        }
-        controller.getAButton().whenPressed(
-                //[Shooter Subsystem] Low Goal Auto Aim
-                () ->  shooter.shootingProcess2(false)
+          //All controls should be on Noahs controller
+          //shootingProcess1(X) - Shoots balls this will use values from auto aim to shoot, The driver can also manually change these values with D-Pad Up || D-Pad Down
+          //shootingProcess2(Not A Button) - Auto aims the robot but doesent shoot, the boolean is for aiming for the high or low goal (true = High || false = Low)
+          //shootingProcess3(Right Trigger for High Goal | A for Low Goal) - Auto aims the robot and shoots, the boolean is for aiming for the high or low goal (true = High || false = Low)
+          //manualShooterDistanceIncrease(Y) - Increases the power to both shooter motors by 5%, doesent shoot balls
+          //manualShooterDistanceDecrease(A) - Decrease the power to both shooter motors by 5%, doesent shoot balls
+        Shoot.whenPressed(
+                //[Shooter Subsystem] High Goal Auto Aim & Shoot
+                new Shoot1(shooter)
         );
-        controller.getXButton().whenPressed(
-                //[Shooter Subsystem] High Goal Auto Aim 
-                () ->  shooter.shootingProcess2(true)
+        AimShootLow.whenPressed(
+                //[Shooter Subsystem] Low Goal Auto Aim & Shoot
+                new Shoot3(shooter, false)
         );
-        controller.getDPadButton(Direction.UP).whenPressed(
+        ManualShootIncrease.whenPressed(
                 //[Shooter Subsystem] Manually Increase Shooter Distance by 5%
-                () ->  shooter.manualShooterDistanceIncrease()
+                new IncreaseShootDistance(shooter)
         );
-        controller.getDPadButton(Direction.DOWN).whenPressed(
+        ManualShootDecrease.whenPressed(
                 //[Shooter Subsystem] Manually Decrease Shooter Distance by 5%
-                () ->  shooter.manualShooterDistanceDecrease()
+                new DecreaseShootDistance(shooter)
         );
     }
 }

@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.swerverobot.RobotMap;
+
 import org.frcteam2910.common.drivers.SwerveModule;
 import org.frcteam2910.common.kinematics.ChassisVelocity;
 import org.frcteam2910.common.kinematics.SwerveKinematics;
@@ -40,10 +42,11 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
 
 
     // define the pid constants for each rotation motor
-    private static final PidConstants rotation1 = new PidConstants(0, 0.0, 0.0001);
-    private static final PidConstants rotation2 = new PidConstants(0.8, 0.0001, 0.1);
-    private static final PidConstants rotation3 = new PidConstants(0.8, 0.0001, 0.1);
-    private static final PidConstants rotation4 = new PidConstants(0.8, 0.0001, 0.1);
+    private static final PidConstants rotation2 = new PidConstants(1.0, 0.0, 0.001);
+    private static final PidConstants rotation4 = new PidConstants(1.0, 0.0, 0.001);
+    private static final PidConstants rotation6 = new PidConstants(1.0, 0.0, 0.5);
+    private static final PidConstants rotation8 = new PidConstants(1.0, 0.0, 0.5);
+
 
     //
     // initialize each module using Mk2SwerveModuleBuilder
@@ -51,13 +54,10 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
             // check org/frcteam2910/common/robot/drivers/Mk2SwerveModuleBuilder
             // to see the initialization arguments
     private final SwerveModule frontLeftModule =
-            new Mk2SwerveModuleBuilder(new Vector2(TRACKWIDTH / 2.0, -WHEELBASE / 2.0))
+            new Mk2SwerveModuleBuilder(new Vector2(TRACKWIDTH / 2.0, WHEELBASE / 2.0))
                     .angleMotor(
                             new CANSparkMax(DRIVETRAIN_FRONT_LEFT_MODULE_ANGLE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                            rotation1, 18.0 / 1.0, DRIVETRAIN_FRONT_LEFT_MODULE_ANGLE_OFFSET) 
-                //     .angleEncoder(
-                //            .angleMotor.getAnalog(),
-                //               DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_OFFSET)
+                            rotation6, 18.0 / 1.0, DRIVETRAIN_FRONT_LEFT_MODULE_ANGLE_OFFSET, DRIVETRAIN_FRONT_LEFT_MODULE_ENCODER_VOLTAGE_MAX)
                     .driveMotor(
                             new CANSparkMax(DRIVETRAIN_FRONT_LEFT_MODULE_DRIVE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
                             Mk2SwerveModuleBuilder.MotorType.NEO)
@@ -66,34 +66,25 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
             new Mk2SwerveModuleBuilder(new Vector2(TRACKWIDTH / 2.0, -WHEELBASE / 2.0))
                     .angleMotor(
                             new CANSparkMax(DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                            rotation2, 18.0/1.0, DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_OFFSET)    
-//                    .angleEncoder(
- //                           NULL, /*new AnalogInput(DRIVETRAIN_FRONT_LEFT_MODULE_ANGLE_ENCODER),*/
-  //                          DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_OFFSET)
+                            rotation2, 18.0/1.0, DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_OFFSET, DRIVETRAIN_FRONT_RIGHT_MODULE_ENCODER_VOLTAGE_MAX)    
                     .driveMotor(
                             new CANSparkMax(DRIVETRAIN_FRONT_RIGHT_MODULE_DRIVE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
                             Mk2SwerveModuleBuilder.MotorType.NEO)
                     .build();
     private final SwerveModule backLeftModule =
-            new Mk2SwerveModuleBuilder(new Vector2(-TRACKWIDTH / 2.0, -WHEELBASE / 2.0))
-//                    .angleEncoder(
- //                           new AnalogInput(DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_ENCODER),
-  //                          DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_OFFSET)
+            new Mk2SwerveModuleBuilder(new Vector2(-TRACKWIDTH / 2.0, WHEELBASE / 2.0))
                     .angleMotor(
                             new CANSparkMax(DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                            rotation3, 18.0/1.0, DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_OFFSET)
+                            rotation8, 18.0/1.0, DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_OFFSET, DRIVETRAIN_BACK_LEFT_MODULE_ENCODER_VOLTAGE_MAX)
                     .driveMotor(
                             new CANSparkMax(DRIVETRAIN_BACK_LEFT_MODULE_DRIVE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
                             Mk2SwerveModuleBuilder.MotorType.NEO)
                     .build();
     private final SwerveModule backRightModule =
-            new Mk2SwerveModuleBuilder(new Vector2(-TRACKWIDTH / 2.0, WHEELBASE / 2.0))
-//                    .angleEncoder(
- //                           new AnalogInput(DRIVETRAIN_BACK_RIGHT_MODULE_ANGLE_ENCODER),
-  //                          DRIVETRAIN_BACK_RIGHT_MODULE_ANGLE_OFFSET)
+            new Mk2SwerveModuleBuilder(new Vector2(-TRACKWIDTH / 2.0, -WHEELBASE / 2.0))
                     .angleMotor(
                             new CANSparkMax(DRIVETRAIN_BACK_RIGHT_MODULE_ANGLE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
-                            rotation4, 18.0/1.0, DRIVETRAIN_BACK_RIGHT_MODULE_ANGLE_OFFSET)
+                            rotation4, 18.0/1.0, DRIVETRAIN_BACK_RIGHT_MODULE_ANGLE_OFFSET, DRIVETRAIN_BACK_RIGHT_MODULE_ENCODER_VOLTAGE_MAX)
                     .driveMotor(
                             new CANSparkMax(DRIVETRAIN_BACK_RIGHT_MODULE_DRIVE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless),
                             Mk2SwerveModuleBuilder.MotorType.NEO)
@@ -112,14 +103,10 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
 
     private final Object sensorLock = new Object();
     @GuardedBy("sensorLock")
-    //public final ADIS16448_IMU lil_navX = new ADIS16448_IMU();
+    public final ADIS16470_IMU adisGyro = RobotMap.imu;
 
-//    public final ADIS16470_IMU adisGyro = new ADIS16470_IMU();
-
-    //private final NavX navX = new NavX(SPI.Port.kMXP);
-//    private NetworkTableEntry t265Pitch;
-        private double pitchZero;
-        private NetworkTableEntry t265Pitch;
+    private double pitchZero;
+    private NetworkTableEntry t265Pitch;
 
     private final Object kinematicsLock = new Object();
     @GuardedBy("kinematicsLock")
@@ -136,8 +123,8 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
 
     private NetworkTableEntry[] moduleAngleEntries = new NetworkTableEntry[modules.length];
 
+    private boolean angleReset = true;
 
-// 
     public DrivetrainSubsystem() {
         synchronized (sensorLock) { 
 //            navX.setInverted(true);
@@ -196,9 +183,9 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
 
     public void resetGyroAngle(Rotation2 angle) {
         synchronized (sensorLock) {
-                pitchZero = t265Pitch.getDouble(1.0); // SmartDashboard.getNumber("T265/Pitch", 1.0);
-
-//                adisGyro.calibrate();
+//                pitchZero = t265Pitch.getDouble(1.0); // SmartDashboard.getNumber("T265/Pitch", 1.0);
+                adisGyro.reset();
+                angleReset = true;
         }
     }
 
@@ -228,17 +215,17 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
         // updates robot angle based on gyro at intervals of length dt
         Rotation2 angle;
         synchronized (sensorLock) {
-                double rangle = t265Pitch.getDouble(Double.NaN); // /*SmartDashboard.getNumber("Pitch", 1.0)
+//                double rangle = t265Pitch.getDouble(Double.NaN); // /*SmartDashboard.getNumber("Pitch", 1.0)
+                double rangle = adisGyro.getAngle(); // /*SmartDashboard.getNumber("Pitch", 1.0)
+
                 if (Double.isNaN(rangle)) { 
                         rangle = pitchZero;
                 }
 
-                angle = Rotation2.fromRadians(-(rangle - pitchZero)); // subtract from the robot's zero angle
+//                angle = Rotation2.fromRadians(-(rangle - pitchZero)); // subtract from the robot's zero angle
 
-//              angle = Rotation2.fromDegrees(-adisGyro.getAngle());
+              angle = Rotation2.fromDegrees(rangle-pitchZero);
 
-            //angle = Rotation2.fromDegrees(-lil_navX.getAngle());
-            //angle = navX.getAngle();
         }
 
         RigidTransform2 pose = odometry.update(angle, dt, moduleVelocities); // set the "pose" to the robot's actual pose
@@ -290,4 +277,17 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
             moduleAngleEntries[i].setDouble(Math.toDegrees(module.getCurrentAngle()));
         }
     }
+
+    public boolean isAngleReset() {
+        synchronized (sensorLock) {
+               return angleReset;
+        }
+    }
+
+    public void unsetAngleReset() {
+        synchronized (sensorLock) {
+                angleReset = false;
+        }
+    }
+
 }

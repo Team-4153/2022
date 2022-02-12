@@ -53,13 +53,12 @@ import com.revrobotics.ColorSensorV3;
 
 
 /*      ----Driver Interaction----
-- shootingProcess1(Right Trigger) - Shoots balls this will use values from auto aim to shoot, The driver can also manually change these values with 
-- shootingProcess2(X for High Goal | A for Low Goal) - Auto aims the robot but doesent shoot, the boolean is for aiming for the high or low goal (true = High || false = Low)
-- shootingProcess3(Not A Button Yet) - Auto aims the robot and shoots, the boolean is for aiming for the high or low goal (true = High || false = Low)
-- manualShooterDistanceIncrease(D-Pad Up) - Increases the power to both shooter motors by 5%, doesent shoot balls
-- manualShooterDistanceDecrease(D-Pad Down) - Decrease the power to both shooter motors by 5%, doesent shoot balls
-
-- TODO:Add Shooting Process 3 to Keybindings
+All controls should be on Noahs controller
+- shootingProcess1(X) - Shoots balls this will use values from auto aim to shoot, The driver can also manually change these values with 
+- shootingProcess2(Not Needed) - Auto aims the robot but doesent shoot, the boolean is for aiming for the high or low goal (true = High || false = Low)
+- shootingProcess3(Right Trigger for High Goal | B for Low Goal) - Auto aims the robot and shoots, the boolean is for aiming for the high or low goal (true = High || false = Low)
+- manualShooterDistanceIncrease(Y) - Increases the power to both shooter motors by 5%, doesent shoot balls
+- manualShooterDistanceDecrease(A) - Decrease the power to both shooter motors by 5%, doesent shoot balls
 */
 
 
@@ -269,11 +268,10 @@ public class ShooterSubsystem extends SubsystemBase{
         }
     }
 
-
     //      ----Distance Sensor Functions----
     public int distanceFront() {
         //Get distance infront of robot
-        int distance = 5;//Placeholder Value TODO: Replace with working distance sensor
+        int distance = 5;//Placeholder Value TODO: Figure out how to get value from rasberrypie(Something about a network cable)
         return distance;
     }
 
@@ -283,12 +281,12 @@ public class ShooterSubsystem extends SubsystemBase{
         Color detectedColor = colorSensor.getColor();//Detected Color from first color sensor
 
         //Detected true/false from photoeye
-        Boolean photoeye = true; //Placeholder Value TODO:Figure out how photo eyes work
+        Boolean photoeye = false; //Placeholder Value TODO:Attach Voltage Regulator For Photo Eye
 
         int ballCount = 0;//Starts the count of balls at 0
 
-        //Look for first ball with color sensor TODO: Test Color Sensor Logic
-        if (detectedColor.red > detectedColor.blue && detectedColor.red > detectedColor.green || detectedColor.blue > detectedColor.red && detectedColor.blue > detectedColor.green) {
+        //Look for first ball with color
+        if (ball1color() != "none") {
             //1 Ball Found
             ballCount = 1;
 
@@ -302,21 +300,31 @@ public class ShooterSubsystem extends SubsystemBase{
         return ballCount;
     }
     public String ball1color() {
-        String ballColor1 = "none";//Starts the first ball color at none
-        
-        //Detected Color from Color Sensor 1
-        Color detectedColor = colorSensor.getColor();//Detected Color from first color sensor
+        //Detected Color & Proximity from Color Sensor 1
+        Color detectedColor = colorSensor.getColor();
+        int proximity = colorSensor.getProximity();
 
         //Check ball color
-        if (detectedColor.red > detectedColor.blue && detectedColor.red > detectedColor.green) {
-            //Red Ball Found
-            ballColor1 = "Red";
+        if (proximity > 125) {//125 is 1 inch and half a ball away from the color sensor
+            if (detectedColor.red > detectedColor.blue) {
+                //Return Red
+                return"Red";
+            }
+            else {
+                //Return Blue
+                return"Blue";
+            }
         }
-        else if (detectedColor.blue > detectedColor.red && detectedColor.blue > detectedColor.green) {
-            //Red Ball Found
-            ballColor1 = "Blue";
+        else {
+            return"none";
         }
-        
-        return ballColor1;
+    }
+
+    //      ----Controlls [Right Trigger|Auto Aim & Shoot High]----
+    @Override
+    public void periodic() {
+        if (AimShootHigh.get() > 0.5) {
+            shootingProcess3(true);
+        }
     }
 }

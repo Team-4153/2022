@@ -30,18 +30,18 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if (Intake_Extension.get() > 0.5)
-      {
-        if (!triggerDone)
-        {
-          this.Sol_toggle();
-          triggerDone = true;
-        }
-      }
-      else
-      {
-        triggerDone = false;
-      }
+    // if (Intake_Extension.get() > 0.5)
+    //   {
+    //     if (!triggerDone)
+    //     {
+    //       this.Sol_toggle();
+    //       triggerDone = true;
+    //     }
+    //   }
+    //   else
+    //   {
+    //     triggerDone = false;
+    //   }
   }
 
   @Override
@@ -54,32 +54,36 @@ public class IntakeSubsystem extends SubsystemBase {
   }
   public void Motor_Start ()
   {
-    // if (exampleSolenoidPH.get() == DoubleSolenoid.Value.kForward)
-    // {
     victor.set(.2);
-    // }
-    // else
-    // {
-    // victor.set(0);
-    // }
-
   }
   public void Motor_Stop ()
   {
     victor.set(0);
   }
 
-    public void Sol_toggle () {
+    public void Extension () {
     // This method turns the whenPressed into a toggle command
     if (exampleSolenoidPH.get() == DoubleSolenoid.Value.kReverse)
     {
       exampleSolenoidPH.set(DoubleSolenoid.Value.kForward);
-    } else {
+    } 
+    else 
+    {
       exampleSolenoidPH.set(DoubleSolenoid.Value.kReverse);
     }
-      
-      
   }
+
+    public void Retract () {
+      // This method turns the whenPressed into a toggle command
+      if (exampleSolenoidPH.get() == DoubleSolenoid.Value.kReverse)
+      {
+        exampleSolenoidPH.set(DoubleSolenoid.Value.kForward);
+      } 
+      else 
+      {
+        exampleSolenoidPH.set(DoubleSolenoid.Value.kReverse);
+      }  
+      }
 
     public void Sol_init () {
     // This method sets the solonoid to a position on bootup
@@ -87,24 +91,15 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void Button_Binding (){
-        // XboxTrigger.whenPressed(  
-          // if (Intake_Extension.get() > 0.5);
-          // {
-          //   this.Sol_toggle();
-          // }
-          // Intake_Extension.whileHeld 
-          // (
-          //   () -> this.Sol_toggle()
-          // );
-          Intake_Roller.whileHeld
+          Intake_Extension.whenPressed
           (
           //[Intake Subystem] Start Motor
-            () ->  this.Motor_Start()
+            () ->  this.Extension()
           );
-          Intake_Roller.whenReleased
+          Intake_Retract.whenPressed
           (
             //[Intake Subystem] Stop Motor
-            () ->  this.Motor_Stop()
+            () ->  this.Retract()
           );
         }
     
