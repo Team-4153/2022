@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Shoot1 extends CommandBase {
 
-  public Shoot1(ShooterSubsystem subsystem, Boolean highLow) {
+  public Shoot1(ShooterSubsystem subsystem) {
     final ShooterSubsystem m_subsystem = subsystem;
     subsystem.shootingProcess1();
     addRequirements(m_subsystem);

@@ -283,12 +283,12 @@ public class ShooterSubsystem extends SubsystemBase{
         Color detectedColor = colorSensor.getColor();//Detected Color from first color sensor
 
         //Detected true/false from photoeye
-        Boolean photoeye = true; //Placeholder Value TODO:Figure out how photo eyes work
+        Boolean photoeye = false; //Placeholder Value TODO:Figure out how photo eyes work
 
         int ballCount = 0;//Starts the count of balls at 0
 
-        //Look for first ball with color sensor TODO: Test Color Sensor Logic
-        if (detectedColor.red > detectedColor.blue && detectedColor.red > detectedColor.green || detectedColor.blue > detectedColor.red && detectedColor.blue > detectedColor.green) {
+        //Look for first ball with color
+        if (ball1color() != "none") {
             //1 Ball Found
             ballCount = 1;
 
@@ -302,21 +302,23 @@ public class ShooterSubsystem extends SubsystemBase{
         return ballCount;
     }
     public String ball1color() {
-        String ballColor1 = "none";//Starts the first ball color at none
-        
-        //Detected Color from Color Sensor 1
-        Color detectedColor = colorSensor.getColor();//Detected Color from first color sensor
+        //Detected Color & Proximity from Color Sensor 1
+        Color detectedColor = colorSensor.getColor();
+        int proximity = colorSensor.getProximity();
 
         //Check ball color
-        if (detectedColor.red > detectedColor.blue && detectedColor.red > detectedColor.green) {
-            //Red Ball Found
-            ballColor1 = "Red";
+        if (proximity > 125) {//125 is 1 inch and half a ball away from the color sensor
+            if (detectedColor.red > detectedColor.blue) {
+                //Return Red
+                return"Red";
+            }
+            else {
+                //Return Blue
+                return"Blue";
+            }
         }
-        else if (detectedColor.blue > detectedColor.red && detectedColor.blue > detectedColor.green) {
-            //Red Ball Found
-            ballColor1 = "Blue";
+        else {
+            return"none";
         }
-        
-        return ballColor1;
     }
 }

@@ -42,11 +42,19 @@ public class RobotMap {
         }
     }
     */
-    public static final Controller Driver_controller = new XboxController(0);//[Controller]
+    //DriveTrain Controller
+    public static final Controller Driver_controller = new XboxController(0);//[Driver's Controller]
     public static final Axis Speed_Increase = Driver_controller.getLeftTriggerAxis();//[DriveTrain Subsystem]
     public static final Axis Speed_Decrease = Driver_controller.getRightTriggerAxis();//[DriveTrain Subsystem]
     public static final Button Intake_Extension = Driver_controller.getLeftBumperButton();//[Intake Subsystem]
     public static final Button Intake_Retract = Driver_controller.getRightBumperButton();//[Intake Subsystem]
+    //Shooter/Climber Controller
+    public static final Controller Shooter_controller = new XboxController(1);//[Shooter's Controller]
+    public static final Axis Shoot = Driver_controller.getRightTriggerAxis();//[Shooter Subsystem](R-Trigger)
+    public static final Button AimShootHigh = Driver_controller.getAButton();//[Shooter Subsystem](A)
+    public static final Button AimShootLow = Driver_controller.getBButton();//[Shooter Subsystem](B)
+    public static final Button ManualShootIncrease = Driver_controller.getYButton();//[Shooter Subsystem](Y)
+    public static final Button ManualShootDecrease = Driver_controller.getAButton();//[Shooter Subsystem](A)
 
     //Pneumatics
     public static final int PH_CAN_ID = 1;//[Pneumatic hub CAN address]    
