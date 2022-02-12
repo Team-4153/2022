@@ -25,9 +25,28 @@ public class RobotMap {
     public static final int CLIMBER_MOTOR = 9; //[Climber Subsystem] The Number is the RIO PWM port
 
     //Controls
+    /* Example Analog Trigger Code NOTE: put inside susytem periodic
+    public void periodic() {
+        // This method will be called once per scheduler run
+        if (Intake_Extension.get() > 0.5)
+        {
+            if (!triggerDone)
+            {
+            this.Sol_toggle();
+            triggerDone = true;
+            }
+        }
+        else
+        {
+            triggerDone = false;
+        }
+    }
+    */
     public static final Controller Driver_controller = new XboxController(0);//[Controller]
-    public static final Axis Intake_Extension = Driver_controller.getLeftTriggerAxis();//[Intake Subsystem]
-    public static final Button Intake_Roller = Driver_controller.getRightBumperButton();//[Intake Subsystem]
+    public static final Axis Speed_Increase = Driver_controller.getLeftTriggerAxis();//[DriveTrain Subsystem]
+    public static final Axis Speed_Decrease = Driver_controller.getRightTriggerAxis();//[DriveTrain Subsystem]
+    public static final Button Intake_Extension = Driver_controller.getLeftBumperButton();//[Intake Subsystem]
+    public static final Button Intake_Retract = Driver_controller.getRightBumperButton();//[Intake Subsystem]
 
     //Pneumatics
     public static final int PH_CAN_ID = 1;//[Pneumatic hub CAN address]    
