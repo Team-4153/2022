@@ -283,12 +283,12 @@ public class ShooterSubsystem extends SubsystemBase{
         Color detectedColor = colorSensor.getColor();//Detected Color from first color sensor
 
         //Detected true/false from photoeye
-        Boolean photoeye = true; //Placeholder Value TODO:Figure out how photo eyes work
+        Boolean photoeye = false; //Placeholder Value TODO:Figure out how photo eyes work
 
         int ballCount = 0;//Starts the count of balls at 0
 
-        //Look for first ball with color sensor TODO: Test Color Sensor Logic
-        if (detectedColor.red > detectedColor.blue && detectedColor.red > detectedColor.green || detectedColor.blue > detectedColor.red && detectedColor.blue > detectedColor.green) {
+        //Look for first ball with color
+        if (ball1color() != "none") {
             //1 Ball Found
             ballCount = 1;
 
