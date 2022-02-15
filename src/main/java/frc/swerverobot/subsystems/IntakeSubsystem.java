@@ -14,8 +14,6 @@ import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 
 //Sensors
 import edu.wpi.first.wpilibj.util.Color;
-import com.revrobotics.ColorSensorV3;
-import edu.wpi.first.wpilibj.DigitalInput;
 
 
 
@@ -27,14 +25,6 @@ public class IntakeSubsystem extends SubsystemBase {
   private PWMVictorSPX Intake_Motor = new PWMVictorSPX(Intake_Motor_PWM);
 
   boolean ballStuck = false; //Is true if there is a ball in the second position(Photoeye) but not the first(Color Sensor)
-
-  //Color Sensor
-  public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort); //The Number is the I2C port from the RobotMap.java
-    
-  //Photo Eye (Digital Input|Boolean)
-  DigitalInput photoEye = new DigitalInput(PhotoEyePort);
-
-  // private boolean triggerDone = false;
 
   //      ----Ball Count & Color Functions----
   public int ballCount() {
