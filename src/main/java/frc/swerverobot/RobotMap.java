@@ -16,7 +16,7 @@ public class RobotMap {
 //Sensors
     public static final ADIS16470_IMU imu = new ADIS16470_IMU(); //Gyro and acceleration sensor
     public static final I2C.Port i2cPort = I2C.Port.kOnboard; //[Shooter Subsystem] Color Sensor (Only one I2C port on the robot)
-    public static final int PhotoEye = 4; //[Shooter Subsystem] The Number is the RIO DIO port 
+    public static final int PhotoEyePort = 4; //[Shooter Subsystem] The Number is the RIO DIO port (Outputs a Digital Input|Like a Limit Switch)
 
 //PWM Motors
     public static final int TopMotorPort = 0; //[Shooter Subsystem] The Number is the RIO DIO port 

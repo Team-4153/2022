@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.util.Color;
 import com.revrobotics.ColorSensorV3;
 
+//Photo Eye
+import edu.wpi.first.wpilibj.DigitalInput;
+
 /*      ----Notes----
 - Motors
     - Prototype used 2 on the front and one in the back to hold the ball
@@ -281,7 +284,7 @@ public class ShooterSubsystem extends SubsystemBase{
         Color detectedColor = colorSensor.getColor();//Detected Color from first color sensor
 
         //Detected true/false from photoeye
-        Boolean photoeye = false; //Placeholder Value TODO:Attach Voltage Regulator For Photo Eye
+        DigitalInput photoEye = new DigitalInput(PhotoEyePort); //TODO: Test Photo Eye
 
         int ballCount = 0;//Starts the count of balls at 0
 
@@ -291,7 +294,7 @@ public class ShooterSubsystem extends SubsystemBase{
             ballCount = 1;
 
             //Look for second ball with photo eye
-            if (photoeye) {
+            if (photoEye.get()) {
                 //2 Balls found
                 ballCount = 2;
             } 
