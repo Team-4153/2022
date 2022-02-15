@@ -8,7 +8,6 @@ import static frc.swerverobot.RobotMap.*;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 //Color Sensor
-import edu.wpi.first.wpilibj.util.Color;
 import com.revrobotics.ColorSensorV3;
 
 //Photo Eye
@@ -119,9 +118,6 @@ public class ShooterSubsystem extends SubsystemBase{
     Spark topShooterMotor = new Spark(TopMotorPort); //The Number is the RIO PWM port from the RobotMap.java
     Spark bottomShooterMotor = new Spark(BottomMotorPort); //The Number is the RIO PWM port from the RobotMap.java
     Spark feedMotor = new Spark(FeedMotorPort); //The Number is the RIO PWM port from the RobotMap.java
-
-    //Color Sensor
-    public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort); //The Number is the I2C port from the RobotMap.java
 
     //      ----Wait Function----
     public void Wait(float Seconds) {
