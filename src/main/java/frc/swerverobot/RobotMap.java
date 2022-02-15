@@ -4,6 +4,7 @@ package frc.swerverobot;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.DigitalInput; //Photo Eye
+import com.revrobotics.ColorSensorV3;//Color Sensor
 
 //Controller Libraries
 import org.frcteam2910.common.robot.input.Axis;
@@ -18,6 +19,7 @@ public class RobotMap {
 //Sensors
     public static final ADIS16470_IMU imu = new ADIS16470_IMU(); //Gyro and acceleration sensor
     public static final I2C.Port i2cPort = I2C.Port.kOnboard; //[Shooter Subsystem] Color Sensor (Only one I2C port on the robot)
+    public static final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort); //[Shooter/Intake Subsystem] The Number is the I2C port from the RobotMap.java
     public static final int PhotoEyePort = 4; //[Shooter Subsystem] The Number is the RIO DIO port (Outputs a Digital Input|Like a Limit Switch)
     public static final DigitalInput photoEye = new DigitalInput(PhotoEyePort); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
 
