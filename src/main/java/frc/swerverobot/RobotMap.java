@@ -16,6 +16,7 @@ public class RobotMap {
 //Sensors
     public static final ADIS16470_IMU imu = new ADIS16470_IMU(); //Gyro and acceleration sensor
     public static final I2C.Port i2cPort = I2C.Port.kOnboard; //[Shooter Subsystem] Color Sensor (Only one I2C port on the robot)
+    public static final int PhotoEye = 4; //[Shooter Subsystem] The Number is the RIO DIO port 
 
 //PWM Motors
     public static final int TopMotorPort = 0; //[Shooter Subsystem] The Number is the RIO PWM port 
@@ -24,7 +25,7 @@ public class RobotMap {
     public static final int Intake_Motor_PWM = 3; //[Intake Subsystem] PWM for intake motor
     public static final int CLIMBER_MOTOR = 9; //[Climber Subsystem] The Number is the RIO PWM port
 
-    //Controls
+//Controls
     /* Example Analog Trigger Code NOTE: put inside susytem periodic
     public void periodic() {
         // This method will be called once per scheduler run
@@ -56,7 +57,7 @@ public class RobotMap {
     public static final Button ManualShootIncrease = Shooter_controller.getYButton();//[Shooter Subsystem](Y)
     public static final Button ManualShootDecrease = Shooter_controller.getAButton();//[Shooter Subsystem](A)
 
-    //Pneumatics
+//Pneumatics
     public static final int PH_CAN_ID = 1;//[Pneumatic hub CAN address]    
     public static final int INTAKE_SOLa = 1;//[Intake Subsystem]
     public static final int INTAKE_SOLb = 2;//[Intake Subsystem]
