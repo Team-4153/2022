@@ -312,6 +312,7 @@ public class ShooterSubsystem extends SubsystemBase{
     public int distanceFront() {
         //Get distance infront of robot
         int distance = 5;//Placeholder Value TODO: Figure out how to get value from rasberrypie(Something about a network cable)
+        SmartDashboard.putNumber("Distance to Hub", distance);
         return distance;
     }
 
@@ -376,6 +377,15 @@ public class ShooterSubsystem extends SubsystemBase{
         return ball1Color;
     }
 
+    //      ----Variable Update Function----
+    public void updateHudVariablesShooter() {    
+        //Updates all the Variables that are sent to the drivers station for the shooter subsystem
+        ball1color();
+        distanceFront();
+        SmartDashboard.putNumber("Bottom Motor Saved Power", bottomMotorPower);
+        SmartDashboard.putNumber("Top Motor Saved Power", topMotorPower);
+    }
+
     //      ----Controlls [Right Trigger Auto Aim & Shoot High | Left Trigger|Auto Aim & Shoot Low]----
     @Override
     public void periodic() {
@@ -387,6 +397,6 @@ public class ShooterSubsystem extends SubsystemBase{
             //Auto Aim & Shoot into the Low Goal
             shootingProcess3(false);
         }
-        ballCount();
+        updateHudVariablesShooter();//Updates the variables being sent to the drivers station
     }
 }
