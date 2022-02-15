@@ -1,6 +1,5 @@
 package frc.swerverobot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 //Robot Map
 import static frc.swerverobot.RobotMap.*;
