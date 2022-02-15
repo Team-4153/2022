@@ -49,14 +49,14 @@ public class IntakeSubsystem extends SubsystemBase {
         ballCount = 1;
 
         //Look for second ball with photo eye
-        if (photoEye.get()) {
+        if (photoEye.get() == true) {
             //2 Balls found
             ballCount = 2;
         }
     }
     else {
         //Check if there is a ball in second position but not first
-        if (photoEye.get()) {
+        if (photoEye.get() == true) {
             //A ball is in the second position but not the first
             ballCount = 1;
             ballStuck = true;
