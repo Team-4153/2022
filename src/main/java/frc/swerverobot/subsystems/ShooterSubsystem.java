@@ -116,12 +116,15 @@ public class ShooterSubsystem extends SubsystemBase{
     boolean ballStuck = false; //Is true if there is a ball in the second position(Photoeye) but not the first(Color Sensor)
 
     //Shooter Motors
-    Spark topShooterMotor = new Spark(TopMotorPort);// The Number is the RIO PWM port from the RobotMap.java
-    Spark bottomShooterMotor = new Spark(BottomMotorPort);// The Number is the RIO PWM port from the RobotMap.java
-    Spark feedMotor = new Spark(FeedMotorPort);// The Number is the RIO PWM port from the RobotMap.java
+    Spark topShooterMotor = new Spark(TopMotorPort); //The Number is the RIO PWM port from the RobotMap.java
+    Spark bottomShooterMotor = new Spark(BottomMotorPort); //The Number is the RIO PWM port from the RobotMap.java
+    Spark feedMotor = new Spark(FeedMotorPort); //The Number is the RIO PWM port from the RobotMap.java
 
     //Color Sensor
-    public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);// The Number is the I2C port from the RobotMap.java
+    public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort); //The Number is the I2C port from the RobotMap.java
+    
+    //Photo Eye (Digital Input|Boolean)
+    DigitalInput photoEye = new DigitalInput(PhotoEyePort);
 
     //      ----Wait Function----
     public void Wait(float Seconds) {
@@ -318,9 +321,6 @@ public class ShooterSubsystem extends SubsystemBase{
 
     //      ----Ball Count & Color Functions----
     public int ballCount() {
-        //Photo Eye is a digital Input which returns a bool value
-        DigitalInput photoEye = new DigitalInput(PhotoEyePort);
-
         //Starts the count of balls at 0
         int ballCount = 0;
 
