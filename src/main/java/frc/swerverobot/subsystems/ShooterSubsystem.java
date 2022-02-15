@@ -123,6 +123,14 @@ public class ShooterSubsystem extends SubsystemBase{
     //Color Sensor
     public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);// The Number is the I2C port from the RobotMap.java
 
+    //      ----Wait Function----
+    public void Wait(float Seconds) {
+        float initTime = System.currentTimeMillis() / 1000f;
+        while (System.currentTimeMillis() / 1000f < initTime + Seconds) {
+            return;
+        }
+    }
+
     //      ----Shooting Functions----
     public Boolean shootingProcess1() {
         //Get Number of balls at the start of shooting and saves it to a variable for use later
