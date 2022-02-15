@@ -15,6 +15,9 @@ import com.revrobotics.ColorSensorV3;
 //Photo Eye
 import edu.wpi.first.wpilibj.DigitalInput;
 
+//Smart Dashboard
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /*      ----Notes----
 - Motors
     - Prototype used 2 on the front and one in the back to hold the ball
@@ -110,6 +113,7 @@ All controls should be on Noahs controller
 public class ShooterSubsystem extends SubsystemBase{
     float bottomMotorPower = 0.3f; //Start the Bottom motor at low power
     float topMotorPower = 0.3f; //Start the Top motor at low power
+    boolean ballStuck = false; //Is true if there is a ball in the second position(Photoeye) but not the first(Color Sensor)
 
     //Shooter Motors
     Spark topShooterMotor = new Spark(TopMotorPort);// The Number is the RIO PWM port from the RobotMap.java
@@ -280,13 +284,11 @@ public class ShooterSubsystem extends SubsystemBase{
 
     //      ----Ball Count & Color Functions----
     public int ballCount() {
-        //Detected Color from Color Sensor 1
-        Color detectedColor = colorSensor.getColor();//Detected Color from first color sensor
-
-        //Detected true/false from photoeye
+        //Photo Eye is a digital Input which returns a bool value
         DigitalInput photoEye = new DigitalInput(PhotoEyePort); //TODO: Test Photo Eye
 
-        int ballCount = 0;//Starts the count of balls at 0
+        //Starts the count of balls at 0
+        int ballCount = 0;
 
         //Look for first ball with color
         if (ball1color() != "none") {
@@ -297,9 +299,20 @@ public class ShooterSubsystem extends SubsystemBase{
             if (photoEye.get()) {
                 //2 Balls found
                 ballCount = 2;
-            } 
+            }
         }
+        else {
+            //Check if there is a ball in second position but not first
+            if (photoEye.get()) {
+                //A ball is in the second position but not the first
+                ballCount = 1;
+                ballStuck = true;
+            }
+        }
+
         //No else statment because value is initalized at 0
+        SmartDashboard.putNumber("Ball Count", ballCount);
+        SmartDashboard.putBoolean("Ball Stuck", ballStuck);
         return ballCount;
     }
     public String ball1color() {
@@ -307,20 +320,25 @@ public class ShooterSubsystem extends SubsystemBase{
         Color detectedColor = colorSensor.getColor();
         int proximity = colorSensor.getProximity();
 
+        String ball1Color = "none";
+
         //Check ball color
         if (proximity > 125) {//125 is 1 inch and half a ball away from the color sensor
             if (detectedColor.red > detectedColor.blue) {
-                //Return Red
-                return"Red";
+                //The 1st ball is Red
+                //set variable to be returned to Red
+                ball1Color = "Red";
             }
             else {
-                //Return Blue
-                return"Blue";
+                //The 1st ball is Blue
+                //set variable to be returned to Blue
+                ball1Color = "Blue";
             }
         }
-        else {
-            return"none";
-        }
+        
+        //No else statment because value is initalized at "none"
+        SmartDashboard.putString("Ball1 Color", ball1Color);
+        return ball1Color;
     }
 
     //      ----Controlls [Right Trigger|Auto Aim & Shoot High]----
