@@ -19,11 +19,11 @@ public class RobotMap {
     public static final int PhotoEye = 4; //[Shooter Subsystem] The Number is the RIO DIO port 
 
 //PWM Motors
-    public static final int TopMotorPort = 0; //[Shooter Subsystem] The Number is the RIO PWM port 
-    public static final int BottomMotorPort = 1; //[Shooter Subsystem] The Number is the RIO PWM port
-    public static final int FeedMotorPort = 2; //[Shooter Subsystem] The Number is the RIO PWM port
+    public static final int TopMotorPort = 0; //[Shooter Subsystem] The Number is the RIO DIO port 
+    public static final int BottomMotorPort = 1; //[Shooter Subsystem] The Number is the RIO DIO port
+    public static final int FeedMotorPort = 2; //[Shooter Subsystem] The Number is the RIO DIO port
     public static final int Intake_Motor_PWM = 3; //[Intake Subsystem] PWM for intake motor
-    public static final int CLIMBER_MOTOR = 9; //[Climber Subsystem] The Number is the RIO PWM port
+    public static final int CLIMBER_MOTOR = 9; //[Climber Subsystem] The Number is the RIO DIO port
 
 //Controls
     /* Example Analog Trigger Code NOTE: put inside susytem periodic
