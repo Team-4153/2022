@@ -311,7 +311,7 @@ public class ShooterSubsystem extends SubsystemBase{
     //      ----Distance Sensor Functions----
     public int distanceFront() {
         //Get distance infront of robot
-        int distance = 5;//Placeholder Value TODO: Figure out how to get value from rasberrypie(Something about a network cable)
+        int distance = 5;//Placeholder Value TODO: Figure out how to get distance value from rasberrypie(Something about a network cable)
         SmartDashboard.putNumber("Distance to Hub", distance);
         return distance;
     }
@@ -373,17 +373,17 @@ public class ShooterSubsystem extends SubsystemBase{
         }
         
         //No else statment because value is initalized at "none"
-        SmartDashboard.putString("Ball1 Color", ball1Color);
+        SmartDashboard.putString("Ball 1 Color", ball1Color);
         return ball1Color;
     }
 
     //      ----Variable Update Function----
     public void updateHudVariablesShooter() {    
         //Updates all the Variables that are sent to the drivers station for the shooter subsystem
-        ball1color();
-        distanceFront();
-        SmartDashboard.putNumber("Bottom Motor Saved Power", bottomMotorPower);
-        SmartDashboard.putNumber("Top Motor Saved Power", topMotorPower);
+        ballCount(); //Updates "Ball Count"(int), "Ball Stuck"(bool), "Ball 1 Color"(string)
+        distanceFront(); //Updates "Distance to Hub"(int)
+        SmartDashboard.putNumber("Bottom Motor Saved Power", bottomMotorPower); //Updates "Bottom Motor Saved Power"(int)
+        SmartDashboard.putNumber("Top Motor Saved Power", topMotorPower); //Updates "Bottom Motor Saved Power"(int)
     }
 
     //      ----Controlls [Right Trigger Auto Aim & Shoot High | Left Trigger|Auto Aim & Shoot Low]----
