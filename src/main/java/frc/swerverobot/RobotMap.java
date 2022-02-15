@@ -53,7 +53,7 @@ public class RobotMap {
     public static final Controller Shooter_controller = new XboxController(1);//[Shooter's Controller]
     public static final Button Shoot = Shooter_controller.getAButton();//[Shooter Subsystem](A)
     public static final Axis AimShootHigh = Shooter_controller.getRightTriggerAxis();//[Shooter Subsystem](R-Trigger)
-    public static final Axis AimShootLow = Shooter_controller.getLeftTriggerAxis();//[Shooter Subsystem](R-Left)
+    public static final Axis AimShootLow = Shooter_controller.getLeftTriggerAxis();//[Shooter Subsystem](L-Trigger)
     public static final Button EjectBall = Shooter_controller.getBButton();//[Shooter Subsystem](B)
     public static final Button ManualShootIncrease = Shooter_controller.getYButton();//[Shooter Subsystem](Y)
     public static final Button ManualShootDecrease = Shooter_controller.getAButton();//[Shooter Subsystem](A)
