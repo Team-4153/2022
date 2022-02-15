@@ -122,9 +122,6 @@ public class ShooterSubsystem extends SubsystemBase{
 
     //Color Sensor
     public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort); //The Number is the I2C port from the RobotMap.java
-    
-    //Photo Eye (Digital Input|Boolean)
-    DigitalInput photoEye = new DigitalInput(PhotoEyePort);
 
     //      ----Wait Function----
     public void Wait(float Seconds) {
