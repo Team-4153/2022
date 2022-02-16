@@ -65,7 +65,6 @@ public class RobotContainer {
 
     private void initRobot() {
        intake.init();
-       shooter.ControllerButtonInit();//Initalizes all the controller buttons for the Shooter Subsystem
     }
 
     private void configureButtonBindings() {
@@ -132,5 +131,7 @@ public class RobotContainer {
                 (Command) new Climb1Command(climber)
         );
         */
+
+        shooter.ControllerButtonInit();//Initalizes all the controller buttons for the Shooter Subsystem
     }
 }
