@@ -120,7 +120,7 @@ public class ShooterSubsystem extends SubsystemBase{
     public void Wait(float Seconds) {
         float initTime = System.currentTimeMillis() / 1000f;
         while (System.currentTimeMillis() / 1000f < initTime + Seconds) {
-            return;
+            // return.wait(Seconds);
         }
     }
 
@@ -268,37 +268,25 @@ public class ShooterSubsystem extends SubsystemBase{
     }
 
     //      ----Manual Adjustments Functions----
-    public void manualShooterDistanceIncrease() {
+    public void changeShooterDistance(float changeTop,float changeBottom) {
         //Top Motor
-        if (topMotorPower < 1) {
+        topMotorPower = topMotorPower + changeTop;
+        if (topMotorPower > 1) {
             topMotorPower = 1f;
         }
-        else {
-            topMotorPower = 0.05f + topMotorPower;
-        }
-        //Bottom Motor
-        if (bottomMotorPower < 1) {
-            bottomMotorPower = 1f;
-        }
-        else {
-            bottomMotorPower = 0.05f + bottomMotorPower;
-        }
-    }
-    public void manualShooterDistanceDecrease() {
-        //Top Motor
-        if (topMotorPower > 0) {
+        else if (topMotorPower < 0) {
             topMotorPower = 0f;
         }
-        else {
-            topMotorPower = -0.1f + topMotorPower;
-        }
         //Bottom Motor
-        if (bottomMotorPower > 0) {
+        bottomMotorPower = bottomMotorPower + changeBottom;
+        if (bottomMotorPower > 1) {
+            bottomMotorPower = 1f;
+        }
+        else if (bottomMotorPower < 0) {
             bottomMotorPower = 0f;
         }
-        else {
-            bottomMotorPower = -0.1f + bottomMotorPower;
-        }
+        SmartDashboard.putNumber("Bottom Motor Saved Power", bottomMotorPower); //Updates "Bottom Motor Saved Power"(int)
+        SmartDashboard.putNumber("Top Motor Saved Power", topMotorPower); //Updates "Bottom Motor Saved Power"(int)
     }
 
     //      ----Distance Sensor Functions----
