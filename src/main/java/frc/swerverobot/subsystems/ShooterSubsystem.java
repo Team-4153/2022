@@ -426,11 +426,11 @@ public class ShooterSubsystem extends SubsystemBase{
         //When Buttons are Held
         ManualShootIncrease.whileActiveContinuous(
             //Manually Increase Shooter Distance by 1% while held
-            () -> this.changeShooterDistance(0.02f,0.02f)
+            () -> this.changeShooterDistance(0.01f,0.01f)
         );
         ManualShootDecrease.whileActiveContinuous(
             //Manually Decrease Shooter Distance by 1% while held
-            () -> this.changeShooterDistance(-0.02f,-0.02f)
+            () -> this.changeShooterDistance(-0.01f,-0.01f)
         );
     }
 }
