@@ -378,21 +378,31 @@ public class ShooterSubsystem extends SubsystemBase{
         updateHudVariablesShooter();//Updates the variables being sent to the drivers station
     }
     public void ControllerButtonInit (){
+        //When Buttons are Pressed
         Shoot.whenPressed(
             //[Shooter Subsystem] High Goal Auto Aim & Shoot
             () -> this.shootingProcess1()
         );
         ManualShootIncrease.whenPressed(
             //[Shooter Subsystem] Manually Increase Shooter Distance by 5%
-            () -> this.changeShooterDistance(0.05f,0.05f)
+            () -> this.changeShooterDistance(0.025f,0.025f)
         );
         ManualShootDecrease.whenPressed(
             //[Shooter Subsystem] Manually Decrease Shooter Distance by 5%
-            () -> this.changeShooterDistance(-0.05f,-0.05f)
+            () -> this.changeShooterDistance(-0.025f,-0.025f)
         );
         EjectBall.whenPressed(
             //[Shooter Subsystem] Drops the first ball in storage
             () -> this.dropBall()
+        );
+        //When Buttons are Held
+        ManualShootIncrease.whileActiveContinuous(
+            //[Shooter Subsystem] Manually Increase Shooter Distance by 1% when held
+            () -> this.changeShooterDistance(0.02f,0.02f)
+        );
+        ManualShootDecrease.whileActiveContinuous(
+            //[Shooter Subsystem] Manually Decrease Shooter Distance by 5%
+            () -> this.changeShooterDistance(-0.02f,-0.02f)
         );
     }
 }
