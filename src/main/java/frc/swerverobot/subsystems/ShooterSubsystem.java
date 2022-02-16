@@ -8,7 +8,7 @@ import static frc.swerverobot.RobotMap.*;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 //Color Sensor
-import com.revrobotics.ColorSensorV3;
+import edu.wpi.first.wpilibj.util.Color;
 
 //Photo Eye
 import edu.wpi.first.wpilibj.DigitalInput;
