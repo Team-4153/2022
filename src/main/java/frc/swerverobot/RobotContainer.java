@@ -39,15 +39,16 @@ public class RobotContainer {
     public RobotContainer() {
 
         // set the drivetrain's default command to the driver's controller values
-        // CommandScheduler.getInstance().setDefaultCommand(drivetrain, new DriveCommand(
-        //         drivetrain,
-        //         () -> controller.getLeftXAxis().get(true),
-        //         () -> -controller.getLeftYAxis().get(true),
-        //         () -> controller.getRightXAxis().get(true),
-        //         () -> controller.getLeftTriggerAxis().get(true),
-        //         () -> controller.getRightTriggerAxis().get(true)
-        // ));
+        CommandScheduler.getInstance().setDefaultCommand(drivetrain, new DriveCommand(
+                drivetrain,
+                () -> controller.getLeftXAxis().get(true),
+                () -> -controller.getLeftYAxis().get(true),
+                () -> controller.getRightXAxis().get(true),
+                () -> controller.getLeftTriggerAxis().get(true),
+                () -> controller.getRightTriggerAxis().get(true)
+        ));
 
+/**     Point rotation control method
         CommandScheduler.getInstance().setDefaultCommand(drivetrain, new GoToAngleCommand(
                 drivetrain,
                 () -> controller.getLeftXAxis().get(true),
@@ -55,7 +56,7 @@ public class RobotContainer {
                 () -> -controller.getRightXAxis().get(true),
                 () -> controller.getRightYAxis().get(true)
         ));
-
+*/
                 
         updateManager.startLoop(5.0e-3);
         initRobot();
@@ -76,22 +77,45 @@ public class RobotContainer {
 //                //[Drive Subsystem]  Drives in Square (Update if this is wrong I dont know)
 //                new SquareCommand(drivetrain, 0.4, 1)
 //        );
-/*        controller.getYButton().whenPressed(
-                new GoToAngleCommand(drivetrain, 0.0)
+        controller.getYButton().whenPressed(
+                new GoToAngleCommand(
+                        drivetrain,
+                        () -> 0.0,
+                        () -> 0.0,
+                        () -> 0.0,
+                        () -> 1.0
+                        )
         );
 
         controller.getBButton().whenPressed(
-                new GoToAngleCommand(drivetrain, 3*Math.PI/2)
+                new GoToAngleCommand(
+                        drivetrain,
+                        () -> 0.0,
+                        () -> 0.0,
+                        () -> -1.0,
+                        () -> 0.0
+                        )
         );
 
         controller.getXButton().whenPressed(
-                new GoToAngleCommand(drivetrain, Math.PI/2)
+                new GoToAngleCommand(
+                        drivetrain,
+                        () -> 0.0,
+                        () -> 0.0,
+                        () -> 1.0,
+                        () -> 0.0
+                        )
         );
 
         controller.getAButton().whenPressed(
-                new GoToAngleCommand(drivetrain, Math.PI)
+                new GoToAngleCommand(
+                        drivetrain,
+                        () -> 0.0, 
+                        () -> 0.0,
+                        () -> 0.0,
+                        () -> -1.0)
         );
-*/
+
 
         controller.getStartButton().whenPressed(
                 //[Drive Subsystem]  Drives in Square (Update if this is wrong I dont know)
