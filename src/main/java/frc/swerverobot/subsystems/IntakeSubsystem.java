@@ -88,7 +88,7 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() 
   {
-  int ballcount = ballCount();
+    int ballcount = ballCount();
     if (ballcount == 2)
     {
     Intake_Motor.set(0.0);
@@ -114,7 +114,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public void Extend() 
   {
     int ballcount = ballCount();
-    if (ballcount == 0) 
+    if (ballcount < 2) 
     {
       Intake_Sol.set(DoubleSolenoid.Value.kForward);
       Intake_Motor.set(0.5);
