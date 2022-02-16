@@ -94,11 +94,11 @@ public class RobotContainer {
         );
         ManualShootIncrease.whenPressed(
                 //[Shooter Subsystem] Manually Increase Shooter Distance by 5%
-                new IncreaseShootDistance(shooter)
+                new ChangeShootDistance(shooter,0.05f,0.05f)
         );
         ManualShootDecrease.whenPressed(
                 //[Shooter Subsystem] Manually Decrease Shooter Distance by 5%
-                new DecreaseShootDistance(shooter)
+                new ChangeShootDistance(shooter,0.05f,0.05f)
         );
         EjectBall.whenPressed(
                 //[Shooter Subsystem] Drops the first ball in storage
