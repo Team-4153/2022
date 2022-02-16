@@ -1,6 +1,6 @@
 package frc.swerverobot.subsystems;
 
-//
+//Setup
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.swerverobot.RobotMap.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,15 +18,17 @@ import edu.wpi.first.wpilibj.util.Color;
 
 
 public class IntakeSubsystem extends SubsystemBase {
-  /** Creates a new IntakeSubsystem. */
+  //Creates a new IntakeSubsystem
   public IntakeSubsystem() {}
 
+  //Solenoid for intake extension and Compression
   private DoubleSolenoid Intake_Sol = new DoubleSolenoid(PH_CAN_ID, PneumaticsModuleType.REVPH, INTAKE_SOLa, INTAKE_SOLb);
+  //Motor for spinning wheels
   private PWMVictorSPX Intake_Motor = new PWMVictorSPX(Intake_Motor_PWM);
+  //Needed for Ball functions, turns to true when the photoeye detects a ball, but colorsensor doesn't
+  boolean ballStuck = false;
 
-  boolean ballStuck = false; //Is true if there is a ball in the second position(Photoeye) but not the first(Color Sensor)
-
-  //      ----Ball Count & Color Functions----
+  //Ball functions needed for knowing whether or not shooting is allowed
   public int ballCount() {
     //Starts the count of balls at 0
     int ballCount = 0;
@@ -84,7 +86,6 @@ public class IntakeSubsystem extends SubsystemBase {
     return ball1Color;
 }
 
-
   @Override
   public void periodic() 
   {
@@ -97,18 +98,17 @@ public class IntakeSubsystem extends SubsystemBase {
 
   }
 
-  public void Motor_init ()
+  public void Motor_init()
   {
     Intake_Motor.setSafetyEnabled(false);
   }
 
-
-  public void Sol_init () 
+  public void Sol_init() 
   {
     Intake_Sol.set(DoubleSolenoid.Value.kReverse);
   }
 
-  public void Extend () 
+  public void Extend() 
   {
     int ballcount = ballCount();
     if (ballcount == 0) {
@@ -117,33 +117,30 @@ public class IntakeSubsystem extends SubsystemBase {
     }
   }
 
-  public void Retract () 
+  public void Compress() 
   {
     Intake_Sol.set(DoubleSolenoid.Value.kReverse);
     Intake_Motor.set(0.0);  
   }
 
-    
-
-    public void Button_Binding (){
-          Intake_Extension.whenPressed
-          (
-          //[Intake Subystem] Start Motor
-            () ->  this.Extend()
-          );
-          Intake_Retract.whenPressed
-          (
-            //[Intake Subystem] Stop Motor
-            () ->  this.Retract()
-          );
-        }
-    
-    
-        
-    public void init()
-    {
-        this.Sol_init();
-        this.Motor_init();
-        this.Button_Binding();
-    }
+  public void Button_Binding()
+  {
+    Intake_Extension.whenPressed
+    (
+    //[Intake Subystem] Start Motor
+      () ->  this.Extend()
+    );
+    Intake_Retract.whenPressed
+    (
+      //[Intake Subystem] Stop Motor
+      () ->  this.Compress()
+    );
+  }
+            
+  public void init()
+  {
+    this.Sol_init();
+    this.Motor_init();
+    this.Button_Binding();
+  }
 }
