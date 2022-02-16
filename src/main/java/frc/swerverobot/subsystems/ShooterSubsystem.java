@@ -10,9 +10,6 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 //Color Sensor
 import edu.wpi.first.wpilibj.util.Color;
 
-//Photo Eye
-import edu.wpi.first.wpilibj.DigitalInput;
-
 //Smart Dashboard
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
