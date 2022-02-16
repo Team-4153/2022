@@ -175,6 +175,14 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
         }
     }
 
+    public void resetPose() {
+            synchronized (kinematicsLock) {
+                    pose = RigidTransform2.ZERO;
+            }
+
+            resetGyroAngle(Rotation2.ZERO);
+    }
+
     public void drive(Vector2 translationalVelocity, double rotationalVelocity, boolean fieldOriented) {
         synchronized (stateLock) {
             driveSignal = new HolonomicDriveSignal(translationalVelocity, rotationalVelocity, fieldOriented);
@@ -290,4 +298,13 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
         }
     }
 
+/*    public void setDefenseOn() {
+            synchronized (sensorLock) {
+                for (int i = 0; i < modules.length; i++) {
+                        var module = modules[i];
+                        moduleAngleEntries[i].setDouble(45);
+                    }
+            }
+    }
+*/
 }

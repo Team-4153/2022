@@ -20,6 +20,7 @@ import org.frcteam2910.common.robot.UpdateManager;
 import org.frcteam2910.common.robot.input.Controller;
 import org.frcteam2910.common.robot.input.XboxController;
 import org.frcteam2910.common.robot.input.DPadButton.Direction;
+import org.opencv.core.Mat;
 
 public class RobotContainer {
     private final Controller controller = Driver_controller;
@@ -28,9 +29,7 @@ public class RobotContainer {
     private final ShooterSubsystem shooter = new ShooterSubsystem();
     private final ClimberSubsystem climber = new ClimberSubsystem(CLIMBER_MOTOR, HOOKa, HOOKb, WINCH_SOLa, WINCH_SOLb, CLIMBER_SWITCH);
 
-
-    private final Vector2 vector0 = new Vector2(1, 0);
-    private final Vector2 vector1 = new Vector2(0, 1);
+    private boolean pointRotation = false;
 
     private final UpdateManager updateManager = new UpdateManager(
         drivetrain
@@ -44,9 +43,20 @@ public class RobotContainer {
                 drivetrain,
                 () -> controller.getLeftXAxis().get(true),
                 () -> -controller.getLeftYAxis().get(true),
-                () -> controller.getRightXAxis().get(true)
+                () -> controller.getRightXAxis().get(true),
+                () -> controller.getLeftTriggerAxis().get(true),
+                () -> controller.getRightTriggerAxis().get(true)
         ));
 
+/**     Point rotation control method
+        CommandScheduler.getInstance().setDefaultCommand(drivetrain, new GoToAngleCommand(
+                drivetrain,
+                () -> controller.getLeftXAxis().get(true),
+                () -> -controller.getLeftYAxis().get(true),
+                () -> -controller.getRightXAxis().get(true),
+                () -> controller.getRightYAxis().get(true)
+        ));
+*/
                 
         updateManager.startLoop(5.0e-3);
         initRobot();
@@ -64,15 +74,57 @@ public class RobotContainer {
                 //[Drive Subsystem]  Reset Gyro (Update if this is wrong I dont know)
                 () -> drivetrain.resetGyroAngle(Rotation2.ZERO)
         );
-        controller.getAButton().whenPressed(
-                //[Drive Subsystem]  Drive (Update if this is wrong I dont know)
-                () -> drivetrain.drive(vector0, 0, false)
-        );
-        controller.getBButton().whenPressed(
-                //[Drive Subsystem]  Drives in Square (Update if this is wrong I dont know)
-                new SquareCommand(drivetrain, 0.4, 1)
+//        controller.getBButton().whenPressed(
+//                //[Drive Subsystem]  Drives in Square (Update if this is wrong I dont know)
+//                new SquareCommand(drivetrain, 0.4, 1)
+//        );
+        controller.getYButton().whenPressed(
+                new GoToAngleCommand(
+                        drivetrain,
+                        () -> 0.0,
+                        () -> 0.0,
+                        () -> 0.0,
+                        () -> 1.0
+                        )
         );
 
+        controller.getBButton().whenPressed(
+                new GoToAngleCommand(
+                        drivetrain,
+                        () -> 0.0,
+                        () -> 0.0,
+                        () -> -1.0,
+                        () -> 0.0
+                        )
+        );
+
+        controller.getXButton().whenPressed(
+                new GoToAngleCommand(
+                        drivetrain,
+                        () -> 0.0,
+                        () -> 0.0,
+                        () -> 1.0,
+                        () -> 0.0
+                        )
+        );
+
+        controller.getAButton().whenPressed(
+                new GoToAngleCommand(
+                        drivetrain,
+                        () -> 0.0, 
+                        () -> 0.0,
+                        () -> 0.0,
+                        () -> -1.0)
+        );
+
+
+        controller.getStartButton().whenPressed(
+                //[Drive Subsystem]  Drives in Square (Update if this is wrong I dont know)
+                () -> drivetrain.resetPose()
+        );
+
+
+ 
         //[Climber Subsystem]
         /*  
         controller.getYButton().whenPressed(
