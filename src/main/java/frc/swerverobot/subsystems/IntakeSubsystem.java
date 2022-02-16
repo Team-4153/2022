@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj.util.Color;
 
 
-
 public class IntakeSubsystem extends SubsystemBase {
   //Creates a new IntakeSubsystem
   public IntakeSubsystem() {}
@@ -89,7 +88,11 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() 
   {
-
+  int ballcount = ballCount();
+    if (ballcount == 2)
+    {
+    Intake_Motor.set(0.0);
+    }
   }
 
   @Override
@@ -111,7 +114,8 @@ public class IntakeSubsystem extends SubsystemBase {
   public void Extend() 
   {
     int ballcount = ballCount();
-    if (ballcount == 0) {
+    if (ballcount == 0) 
+    {
       Intake_Sol.set(DoubleSolenoid.Value.kForward);
       Intake_Motor.set(0.5);
     }
