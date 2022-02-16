@@ -15,6 +15,8 @@ public class DriveCommand extends CommandBase {
     private final DoubleSupplier forward;
     private final DoubleSupplier strafe;
     private final DoubleSupplier rotation;
+    private final DoubleSupplier leftTrigger;
+    private final DoubleSupplier rightTrigger;
     private boolean rotating;
 
     // create a pid controller for robot rotation
@@ -23,11 +25,15 @@ public class DriveCommand extends CommandBase {
     public DriveCommand(DrivetrainSubsystem drivetrain,
                         DoubleSupplier forward,
                         DoubleSupplier strafe,
-                        DoubleSupplier rotation) {
+                        DoubleSupplier rotation,
+                        DoubleSupplier leftTrigger,
+                        DoubleSupplier rightTrigger) {
         this.drivetrain = drivetrain;
         this.forward = forward;
         this.strafe = strafe;
         this.rotation = rotation;
+        this.leftTrigger = leftTrigger;
+        this.rightTrigger = rightTrigger;
 
         rotationController.setInputRange(0.0, 2*Math.PI);
         rotationController.setContinuous(true);
@@ -51,6 +57,18 @@ public class DriveCommand extends CommandBase {
         double fw = forward.getAsDouble();
         double stf = strafe.getAsDouble();
         double rot = rotation.getAsDouble();
+
+        double speed;
+
+        if (leftTrigger.getAsDouble() > 0.05) {
+            speed = 0.5;
+        }
+        else if (rightTrigger.getAsDouble() > 0.05) {
+            speed = 1.5;
+        }
+        else {
+            speed = 1;
+        }
 
         if (Math.abs(fw) < minVal) {
             fw = 0.0;
@@ -89,8 +107,8 @@ public class DriveCommand extends CommandBase {
         // drive command, change values here to change robot speed or field oriented
             drivetrain.drive(
                     new Vector2(
-                            fw,
-                            stf
+                            fw * speed,
+                            stf * speed
                     ),
                     -rotationOutput,
                     true
@@ -101,7 +119,7 @@ public class DriveCommand extends CommandBase {
         else{
             rotating = true;
             drivetrain.drive(
-                    new Vector2(fw, stf),
+                    new Vector2(fw * speed, stf * speed),
                     rot,
                     true
             );
@@ -113,4 +131,5 @@ public class DriveCommand extends CommandBase {
     public void end(boolean interrupted) {
         drivetrain.drive(Vector2.ZERO, 0.0, false);
     }
+
 }
