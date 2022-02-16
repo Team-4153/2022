@@ -1,6 +1,5 @@
 package frc.swerverobot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 //Robot Map
 import static frc.swerverobot.RobotMap.*;
@@ -10,7 +9,12 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 //Color Sensor
 import edu.wpi.first.wpilibj.util.Color;
-import com.revrobotics.ColorSensorV3;
+
+//Photo Eye
+import edu.wpi.first.wpilibj.DigitalInput;
+
+//Smart Dashboard
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /*      ----Notes----
 - Motors
@@ -56,9 +60,10 @@ import com.revrobotics.ColorSensorV3;
 All controls should be on Noahs controller
 - shootingProcess1(X) - Shoots balls this will use values from auto aim to shoot, The driver can also manually change these values with 
 - shootingProcess2(Not Needed) - Auto aims the robot but doesent shoot, the boolean is for aiming for the high or low goal (true = High || false = Low)
-- shootingProcess3(Right Trigger for High Goal | B for Low Goal) - Auto aims the robot and shoots, the boolean is for aiming for the high or low goal (true = High || false = Low)
+- shootingProcess3(Right Trigger for High Goal | Left Trigger for Low Goal) - Auto aims the robot and shoots, the boolean is for aiming for the high or low goal (true = High || false = Low)
 - manualShooterDistanceIncrease(Y) - Increases the power to both shooter motors by 5%, doesent shoot balls
 - manualShooterDistanceDecrease(A) - Decrease the power to both shooter motors by 5%, doesent shoot balls
+- dropBall(B) - Drops the first ball in the system
 */
 
 
@@ -107,51 +112,65 @@ All controls should be on Noahs controller
 public class ShooterSubsystem extends SubsystemBase{
     float bottomMotorPower = 0.3f; //Start the Bottom motor at low power
     float topMotorPower = 0.3f; //Start the Top motor at low power
+    boolean ballStuck = false; //Is true if there is a ball in the second position(Photoeye) but not the first(Color Sensor)
 
     //Shooter Motors
-    Spark topShooterMotor = new Spark(TopMotorPort);// The Number is the RIO PWM port from the RobotMap.java
-    Spark bottomShooterMotor = new Spark(BottomMotorPort);// The Number is the RIO PWM port from the RobotMap.java
-    Spark feedMotor = new Spark(FeedMotorPort);// The Number is the RIO PWM port from the RobotMap.java
+    Spark topShooterMotor = new Spark(TopMotorPort); //The Number is the RIO PWM port from the RobotMap.java
+    Spark bottomShooterMotor = new Spark(BottomMotorPort); //The Number is the RIO PWM port from the RobotMap.java
+    Spark feedMotor = new Spark(FeedMotorPort); //The Number is the RIO PWM port from the RobotMap.java
 
-    //Color Sensor
-    public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);// The Number is the I2C port from the RobotMap.java
+    //      ----Wait Function----
+    public void Wait(float Seconds) {
+        float initTime = System.currentTimeMillis() / 1000f;
+        while (System.currentTimeMillis() / 1000f < initTime + Seconds) {
+            return;
+        }
+    }
 
     //      ----Shooting Functions----
     public Boolean shootingProcess1() {
-        //Get Number of balls at the start of shooting and saves it to a variable
+        //Get Number of balls at the start of shooting and saves it to a variable for use later
         int ballcount = ballCount();
 
         if (ballcount == 0) {
-            //If there are not balls in the shooter stop the program.
+            //If the number of balls is 0 stop the function
             return false;
         }
 
-        //Set Top Motor to topMotorPower (This is from manual adjustment or the autoaim program)
+        //Set Top Motor to topMotorPower (This is from autoaim or the manual adjustment functions)
         topShooterMotor.set(topMotorPower);
-        //Set Bottom Motor to bottomMotorPower (This is from manual adjustment or the autoaim program)
+        //Set Bottom Motor to bottomMotorPower (This is from autoaim or the manual adjustment functions)
         bottomShooterMotor.set(bottomMotorPower);
 
+        
+        //Wait 0.2 Seconds for front wheels to get up to speed
         float initTime = System.currentTimeMillis() / 1000f;
-        while (System.currentTimeMillis() / 1000f < initTime + 0.2f) {//Wait 0.2 Seconds for front wheels to get up to speed
-            //Set Feed Motor to 0.2(20%)(Releases first ball into shooter)
+        while (System.currentTimeMillis() / 1000f < initTime + 0.2f) {
+
+            //Set Feed Motor to 0.2 (Releases first ball into shooter)
             feedMotor.set(0.2);
 
+            //Wait 0.1 Seconds for ball to leave shooter
             float initTime2 = System.currentTimeMillis() / 1000f;
-            while (System.currentTimeMillis() / 1000f < initTime2 + 0.1f) {//Wait 0.1 Seconds for ball to leave shooter
+            while (System.currentTimeMillis() / 1000f < initTime2 + 0.1f) {
+
                 //Set Feed Motor to 0 (Stops any more balls from entering the shooter until front wheels are at speed)
                 feedMotor.stopMotor();
 
                 //If there were 2 balls at the start
                 if (ballcount < 1) {
+
+                    //Wait 0.2 Seconds for front wheels to get up to speed
                     float initTime3 = System.currentTimeMillis() / 1000f;
-                    while (System.currentTimeMillis() / 1000f < initTime3 + 0.2f) {//Wait 0.2 Seconds for front wheels to get up to speed
-                        //Set Feed Motor to 0.2(20%)(Releases first ball into shooter)
-                        feedMotor.set(0.2);
+                    while (System.currentTimeMillis() / 1000f < initTime3 + 0.2f) {
+                        //Set Feed Motor to 0.25 (Releases second ball into shooter)
+                        feedMotor.set(0.25);
                     }
-                    new WaitCommand(0.1);//Wait 0.1 Seconds for ball to exit shooter
                 }
+
+                //Wait 0.1 Seconds for ball to leave shooter
                 float initTime4 = System.currentTimeMillis() / 1000f;
-                while (System.currentTimeMillis() / 1000f < initTime4 + 0.1f) {//Wait 0.1 Seconds for ball to leave shooter
+                while (System.currentTimeMillis() / 1000f < initTime4 + 0.1f) {
                     //Stop All Motors
                     feedMotor.stopMotor();
                     topShooterMotor.stopMotor();
@@ -160,7 +179,7 @@ public class ShooterSubsystem extends SubsystemBase{
                 }
             }
         }
-        return true;
+        return false;
     }
     public Boolean shootingProcess2(Boolean highLow) {
         //Aim Assist (No Shoot)
@@ -233,6 +252,23 @@ public class ShooterSubsystem extends SubsystemBase{
             return false;
         }
     }
+    public void dropBall() {
+        //Drops the first ball in the system
+        //Set Top Motor to 0.175 (Barely enough to move it)
+        topShooterMotor.set(0.175);
+        //Set Bottom Motor to 0.175 (Barely enough to move it)
+        bottomShooterMotor.set(0.175);
+        //Set Bottom Motor to 0.2
+        feedMotor.set(0.2);
+
+        float initTime = System.currentTimeMillis() / 1000f;
+        while (System.currentTimeMillis() / 1000f < initTime + 0.2f) {//Wait 0.1 Seconds for ball to leave shooter
+            //Stop all the motors
+            feedMotor.stopMotor();
+            topShooterMotor.stopMotor();
+            bottomShooterMotor.stopMotor();
+        }
+    }
 
     //      ----Manual Adjustments Functions----
     public void manualShooterDistanceIncrease() {
@@ -271,32 +307,41 @@ public class ShooterSubsystem extends SubsystemBase{
     //      ----Distance Sensor Functions----
     public int distanceFront() {
         //Get distance infront of robot
-        int distance = 5;//Placeholder Value TODO: Figure out how to get value from rasberrypie(Something about a network cable)
+        int distance = 5;//Placeholder Value TODO: Figure out how to get distance value from rasberrypie(Something about a network cable)
+        SmartDashboard.putNumber("Distance to Hub", distance);
         return distance;
     }
 
     //      ----Ball Count & Color Functions----
     public int ballCount() {
-        //Detected Color from Color Sensor 1
-        Color detectedColor = colorSensor.getColor();//Detected Color from first color sensor
-
-        //Detected true/false from photoeye
-        Boolean photoeye = false; //Placeholder Value TODO:Attach Voltage Regulator For Photo Eye
-
-        int ballCount = 0;//Starts the count of balls at 0
+        //Starts the count of balls at 0
+        int ballCount = 0;
 
         //Look for first ball with color
         if (ball1color() != "none") {
+            ballStuck = false;
+            
             //1 Ball Found
             ballCount = 1;
 
             //Look for second ball with photo eye
-            if (photoeye) {
+            if (photoEye.get()) {
                 //2 Balls found
                 ballCount = 2;
-            } 
+            }
         }
+        else {
+            //Check if there is a ball in second position but not first
+            if (photoEye.get()) {
+                //A ball is in the second position but not the first
+                ballCount = 1;
+                ballStuck = true;
+            }
+        }
+
         //No else statment because value is initalized at 0
+        SmartDashboard.putNumber("Ball Count", ballCount);
+        SmartDashboard.putBoolean("Ball Stuck", ballStuck);
         return ballCount;
     }
     public String ball1color() {
@@ -304,27 +349,47 @@ public class ShooterSubsystem extends SubsystemBase{
         Color detectedColor = colorSensor.getColor();
         int proximity = colorSensor.getProximity();
 
+        String ball1Color = "none";
+
         //Check ball color
         if (proximity > 125) {//125 is 1 inch and half a ball away from the color sensor
             if (detectedColor.red > detectedColor.blue) {
-                //Return Red
-                return"Red";
+                //The 1st ball is Red
+                //set variable to be returned to Red
+                ball1Color = "Red";
             }
             else {
-                //Return Blue
-                return"Blue";
+                //The 1st ball is Blue
+                //set variable to be returned to Blue
+                ball1Color = "Blue";
             }
         }
-        else {
-            return"none";
-        }
+        
+        //No else statment because value is initalized at "none"
+        SmartDashboard.putString("Ball 1 Color", ball1Color);
+        return ball1Color;
     }
 
-    //      ----Controlls [Right Trigger|Auto Aim & Shoot High]----
+    //      ----Variable Update Function----
+    public void updateHudVariablesShooter() {    
+        //Updates all the Variables that are sent to the drivers station for the shooter subsystem
+        ballCount(); //Updates "Ball Count"(int), "Ball Stuck"(bool), "Ball 1 Color"(string)
+        distanceFront(); //Updates "Distance to Hub"(int)
+        SmartDashboard.putNumber("Bottom Motor Saved Power", bottomMotorPower); //Updates "Bottom Motor Saved Power"(int)
+        SmartDashboard.putNumber("Top Motor Saved Power", topMotorPower); //Updates "Bottom Motor Saved Power"(int)
+    }
+
+    //      ----Controlls [Right Trigger Auto Aim & Shoot High | Left Trigger|Auto Aim & Shoot Low]----
     @Override
     public void periodic() {
         if (AimShootHigh.get() > 0.5) {
+            //Auto Aim & Shoot into the High Goal
             shootingProcess3(true);
         }
+        if (AimShootLow.get() > 0.5) {
+            //Auto Aim & Shoot into the Low Goal
+            shootingProcess3(false);
+        }
+        updateHudVariablesShooter();//Updates the variables being sent to the drivers station
     }
 }

@@ -1,114 +1,146 @@
 package frc.swerverobot.subsystems;
 
+//Setup
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-// Pneumatics
+import static frc.swerverobot.RobotMap.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+//Pneumatics
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 //Motors
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 
-//Robot Map
-import static frc.swerverobot.RobotMap.*;
+//Sensors
+import edu.wpi.first.wpilibj.util.Color;
 
-//Controller
-import org.frcteam2910.common.robot.input.Axis;
-import org.frcteam2910.common.robot.input.Controller;
-import org.frcteam2910.common.robot.input.XboxController;
-import frc.swerverobot.XboxTrigger;
+
 
 public class IntakeSubsystem extends SubsystemBase {
-  /** Creates a new IntakeSubsystem. */
+  //Creates a new IntakeSubsystem
   public IntakeSubsystem() {}
 
-  //public final Compressor phCompressor = new Compressor(1, PneumaticsModuleType.REVPH);
-  private DoubleSolenoid exampleSolenoidPH = new DoubleSolenoid(PH_CAN_ID, PneumaticsModuleType.REVPH, INTAKE_SOLa, INTAKE_SOLb);
-  private PWMVictorSPX victor = new PWMVictorSPX(Intake_Motor_PWM);
+  //Solenoid for intake extension and Compression
+  private DoubleSolenoid Intake_Sol = new DoubleSolenoid(PH_CAN_ID, PneumaticsModuleType.REVPH, INTAKE_SOLa, INTAKE_SOLb);
+  //Motor for spinning wheels
+  private PWMVictorSPX Intake_Motor = new PWMVictorSPX(Intake_Motor_PWM);
+  //Needed for Ball functions, turns to true when the photoeye detects a ball, but colorsensor doesn't
+  boolean ballStuck = false;
 
-  private boolean triggerDone = false;
+  //Ball functions needed for knowing whether or not shooting is allowed
+  public int ballCount() {
+    //Starts the count of balls at 0
+    int ballCount = 0;
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    // if (Intake_Extension.get() > 0.5)
-    //   {
-    //     if (!triggerDone)
-    //     {
-    //       this.Sol_toggle();
-    //       triggerDone = true;
-    //     }
-    //   }
-    //   else
-    //   {
-    //     triggerDone = false;
-    //   }
-  }
-
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
-  }
-  public void Motor_init ()
-  {
-    victor.setSafetyEnabled(false);
-  }
-  public void Motor_Start ()
-  {
-    victor.set(.2);
-  }
-  public void Motor_Stop ()
-  {
-    victor.set(0);
-  }
-
-    public void Extension () {
-    // This method turns the whenPressed into a toggle command
-    if (exampleSolenoidPH.get() == DoubleSolenoid.Value.kReverse)
-    {
-      exampleSolenoidPH.set(DoubleSolenoid.Value.kForward);
-    } 
-    else 
-    {
-      exampleSolenoidPH.set(DoubleSolenoid.Value.kReverse);
-    }
-  }
-
-    public void Retract () {
-      // This method turns the whenPressed into a toggle command
-      if (exampleSolenoidPH.get() == DoubleSolenoid.Value.kReverse)
-      {
-        exampleSolenoidPH.set(DoubleSolenoid.Value.kForward);
-      } 
-      else 
-      {
-        exampleSolenoidPH.set(DoubleSolenoid.Value.kReverse);
-      }  
-      }
-
-    public void Sol_init () {
-    // This method sets the solonoid to a position on bootup
-    exampleSolenoidPH.set(DoubleSolenoid.Value.kReverse);
-    }
-
-    public void Button_Binding (){
-          Intake_Extension.whenPressed
-          (
-          //[Intake Subystem] Start Motor
-            () ->  this.Extension()
-          );
-          Intake_Retract.whenPressed
-          (
-            //[Intake Subystem] Stop Motor
-            () ->  this.Retract()
-          );
-        }
-    
-    
+    //Look for first ball with color
+    if (ball1color() != "none") {
+        ballStuck = false;
         
-    public void init()
-    {
-        this.Sol_init();
-        this.Motor_init();
-        this.Button_Binding();
+        //1 Ball Found
+        ballCount = 1;
+
+        //Look for second ball with photo eye
+        if (photoEye.get() == true) {
+            //2 Balls found
+            ballCount = 2;
+        }
     }
+    else {
+        //Check if there is a ball in second position but not first
+        if (photoEye.get() == true) {
+            //A ball is in the second position but not the first
+            ballCount = 1;
+            ballStuck = true;
+        }
+    }
+
+    //No else statment because value is initalized at 0
+    SmartDashboard.putNumber("Ball Count", ballCount);
+    SmartDashboard.putBoolean("Ball Stuck", ballStuck);
+    return ballCount;
+}
+  public String ball1color() {
+    //Detected Color & Proximity from Color Sensor 1
+    Color detectedColor = colorSensor.getColor();
+    int proximity = colorSensor.getProximity();
+
+    String ball1Color = "none";
+
+    //Check ball color
+    if (proximity > 125) {//125 is 1 inch and half a ball away from the color sensor
+        if (detectedColor.red > detectedColor.blue) {
+            //The 1st ball is Red
+            //set variable to be returned to Red
+            ball1Color = "Red";
+        }
+        else {
+            //The 1st ball is Blue
+            //set variable to be returned to Blue
+            ball1Color = "Blue";
+        }
+    }
+    
+    //No else statment because value is initalized at "none"
+    SmartDashboard.putString("Ball 1 Color", ball1Color);
+    return ball1Color;
+}
+
+  @Override
+  public void periodic() 
+  {
+
+  }
+
+  @Override
+  public void simulationPeriodic() 
+  {
+
+  }
+
+  public void Motor_init()
+  {
+    Intake_Motor.setSafetyEnabled(false);
+  }
+
+  public void Sol_init() 
+  {
+    Intake_Sol.set(DoubleSolenoid.Value.kReverse);
+  }
+
+  public void Extend() 
+  {
+    int ballcount = ballCount();
+    if (ballcount == 0) {
+      Intake_Sol.set(DoubleSolenoid.Value.kForward);
+      Intake_Motor.set(0.5);
+    }
+  }
+
+  public void Compress() 
+  {
+    Intake_Sol.set(DoubleSolenoid.Value.kReverse);
+    Intake_Motor.set(0.0);  
+  }
+
+  public void Button_Binding()
+  {
+    Intake_Extension.whenPressed
+    (
+    //[Intake Subystem] Start Motor
+      () ->  this.Extend()
+    );
+    Intake_Retract.whenPressed
+    (
+      //[Intake Subystem] Stop Motor
+      () ->  this.Compress()
+    );
+  }
+            
+  public void init()
+  {
+    this.Sol_init();
+    this.Motor_init();
+    this.Button_Binding();
+  }
 }

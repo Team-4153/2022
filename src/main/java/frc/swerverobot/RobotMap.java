@@ -3,6 +3,8 @@ package frc.swerverobot;
 //Sensor Library
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
+import edu.wpi.first.wpilibj.DigitalInput; //Photo Eye
+import com.revrobotics.ColorSensorV3;//Color Sensor
 
 //Controller Libraries
 import org.frcteam2910.common.robot.input.Axis;
@@ -10,21 +12,25 @@ import org.frcteam2910.common.robot.input.Controller;
 import org.frcteam2910.common.robot.input.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Button;
 
+
 public class RobotMap {
 //Define all ports and constants of a component, put in correct catagory, label subsystem(s) used
 
 //Sensors
     public static final ADIS16470_IMU imu = new ADIS16470_IMU(); //Gyro and acceleration sensor
     public static final I2C.Port i2cPort = I2C.Port.kOnboard; //[Shooter Subsystem] Color Sensor (Only one I2C port on the robot)
+    public static final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort); //[Shooter/Intake Subsystem] The Number is the I2C port from the RobotMap.java
+    public static final int PhotoEyePort = 4; //[Shooter Subsystem] The Number is the RIO DIO port (Outputs a Digital Input|Like a Limit Switch)
+    public static final DigitalInput photoEye = new DigitalInput(PhotoEyePort); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
 
 //PWM Motors
-    public static final int TopMotorPort = 0; //[Shooter Subsystem] The Number is the RIO PWM port 
-    public static final int BottomMotorPort = 1; //[Shooter Subsystem] The Number is the RIO PWM port
-    public static final int FeedMotorPort = 2; //[Shooter Subsystem] The Number is the RIO PWM port
+    public static final int TopMotorPort = 0; //[Shooter Subsystem] The Number is the RIO DIO port 
+    public static final int BottomMotorPort = 1; //[Shooter Subsystem] The Number is the RIO DIO port
+    public static final int FeedMotorPort = 2; //[Shooter Subsystem] The Number is the RIO DIO port
     public static final int Intake_Motor_PWM = 3; //[Intake Subsystem] PWM for intake motor
-    public static final int CLIMBER_MOTOR = 9; //[Climber Subsystem] The Number is the RIO PWM port
+    public static final int CLIMBER_MOTOR = 9; //[Climber Subsystem] The Number is the RIO DIO port
 
-    //Controls
+//Controls
     /* Example Analog Trigger Code NOTE: put inside susytem periodic
     public void periodic() {
         // This method will be called once per scheduler run
@@ -50,13 +56,14 @@ public class RobotMap {
     public static final Button Intake_Retract = Driver_controller.getRightBumperButton();//[Intake Subsystem](R-Bumper)
     //Shooter/Climber Controller (Noah)
     public static final Controller Shooter_controller = new XboxController(1);//[Shooter's Controller]
-    public static final Button Shoot = Driver_controller.getAButton();//[Shooter Subsystem](A)
-    public static final Axis AimShootHigh = Driver_controller.getRightTriggerAxis();//[Shooter Subsystem](R-Trigger)
-    public static final Button AimShootLow = Driver_controller.getBButton();//[Shooter Subsystem](B)
-    public static final Button ManualShootIncrease = Driver_controller.getYButton();//[Shooter Subsystem](Y)
-    public static final Button ManualShootDecrease = Driver_controller.getAButton();//[Shooter Subsystem](A)
+    public static final Button Shoot = Shooter_controller.getAButton();//[Shooter Subsystem](A)
+    public static final Axis AimShootHigh = Shooter_controller.getRightTriggerAxis();//[Shooter Subsystem](R-Trigger)
+    public static final Axis AimShootLow = Shooter_controller.getLeftTriggerAxis();//[Shooter Subsystem](L-Trigger)
+    public static final Button EjectBall = Shooter_controller.getBButton();//[Shooter Subsystem](B)
+    public static final Button ManualShootIncrease = Shooter_controller.getYButton();//[Shooter Subsystem](Y)
+    public static final Button ManualShootDecrease = Shooter_controller.getAButton();//[Shooter Subsystem](A)
 
-    //Pneumatics
+//Pneumatics
     public static final int PH_CAN_ID = 1;//[Pneumatic hub CAN address]    
     public static final int INTAKE_SOLa = 1;//[Intake Subsystem]
     public static final int INTAKE_SOLb = 2;//[Intake Subsystem]
