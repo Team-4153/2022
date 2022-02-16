@@ -65,7 +65,7 @@ public class RobotContainer {
 
     private void initRobot() {
        intake.init();
-       shooter.ControllerButtonInit();
+       shooter.ControllerButtonInit();//Initalizes all the controller buttons for the Shooter Subsystem
     }
 
     private void configureButtonBindings() {

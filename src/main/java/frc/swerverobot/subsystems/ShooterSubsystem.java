@@ -111,6 +111,12 @@ public class ShooterSubsystem extends SubsystemBase{
     float topMotorPower = 0.3f; //Start the Top motor at low power
     boolean ballStuck = false; //Is true if there is a ball in the second position(Photoeye) but not the first(Color Sensor)
 
+    //Boolean Values for if a function is in progress
+    public Boolean s1 = false;//Shooting Process 1
+    public Boolean s2 = false;//Shooting Process 2
+    public Boolean s3 = false;//Shooting Process 3
+    public Boolean db = false;//Drop Ball Function
+
     //Shooter Motors
     Spark topShooterMotor = new Spark(TopMotorPort); //The Number is the RIO PWM port from the RobotMap.java
     Spark bottomShooterMotor = new Spark(BottomMotorPort); //The Number is the RIO PWM port from the RobotMap.java
@@ -126,144 +132,165 @@ public class ShooterSubsystem extends SubsystemBase{
 
     //      ----Shooting Functions----
     public Boolean shootingProcess1() {
-        //Get Number of balls at the start of shooting and saves it to a variable for use later
-        int ballcount = ballCount();
+        if (!s2) {//If the function isnt already running
+            s1 = true;//Mark the function as already running to prevent multiple instances of a function running at once
+            //Get Number of balls at the start of shooting and saves it to a variable for use later
+            int ballcount = ballCount();
 
-        if (ballcount == 0) {
-            //If the number of balls is 0 stop the function
-            return false;
-        }
+            if (ballcount == 0) {
+                //If the number of balls is 0 stop the function
+                return false;
+            }
 
-        //Set Top Motor to topMotorPower (This is from autoaim or the manual adjustment functions)
-        topShooterMotor.set(topMotorPower);
-        //Set Bottom Motor to bottomMotorPower (This is from autoaim or the manual adjustment functions)
-        bottomShooterMotor.set(bottomMotorPower);
+            //Set Top Motor to topMotorPower (This is from autoaim or the manual adjustment functions)
+            topShooterMotor.set(topMotorPower);
+            //Set Bottom Motor to bottomMotorPower (This is from autoaim or the manual adjustment functions)
+            bottomShooterMotor.set(bottomMotorPower);
 
-        
-        //Wait 0.2 Seconds for front wheels to get up to speed
-        float initTime = System.currentTimeMillis() / 1000f;
-        while (System.currentTimeMillis() / 1000f < initTime + 0.2f) {
+            
+            //Wait 0.2 Seconds for front wheels to get up to speed
+            float initTime = System.currentTimeMillis() / 1000f;
+            while (System.currentTimeMillis() / 1000f < initTime + 0.2f) {
 
-            //Set Feed Motor to 0.2 (Releases first ball into shooter)
-            feedMotor.set(0.2);
-
-            //Wait 0.1 Seconds for ball to leave shooter
-            float initTime2 = System.currentTimeMillis() / 1000f;
-            while (System.currentTimeMillis() / 1000f < initTime2 + 0.1f) {
-
-                //Set Feed Motor to 0 (Stops any more balls from entering the shooter until front wheels are at speed)
-                feedMotor.stopMotor();
-
-                //If there were 2 balls at the start
-                if (ballcount < 1) {
-
-                    //Wait 0.2 Seconds for front wheels to get up to speed
-                    float initTime3 = System.currentTimeMillis() / 1000f;
-                    while (System.currentTimeMillis() / 1000f < initTime3 + 0.2f) {
-                        //Set Feed Motor to 0.25 (Releases second ball into shooter)
-                        feedMotor.set(0.25);
-                    }
-                }
+                //Set Feed Motor to 0.2 (Releases first ball into shooter)
+                feedMotor.set(0.2);
 
                 //Wait 0.1 Seconds for ball to leave shooter
-                float initTime4 = System.currentTimeMillis() / 1000f;
-                while (System.currentTimeMillis() / 1000f < initTime4 + 0.1f) {
-                    //Stop All Motors
+                float initTime2 = System.currentTimeMillis() / 1000f;
+                while (System.currentTimeMillis() / 1000f < initTime2 + 0.1f) {
+
+                    //Set Feed Motor to 0 (Stops any more balls from entering the shooter until front wheels are at speed)
                     feedMotor.stopMotor();
-                    topShooterMotor.stopMotor();
-                    bottomShooterMotor.stopMotor();
-                    return true;
+
+                    //If there were 2 balls at the start
+                    if (ballcount < 1) {
+
+                        //Wait 0.2 Seconds for front wheels to get up to speed
+                        float initTime3 = System.currentTimeMillis() / 1000f;
+                        while (System.currentTimeMillis() / 1000f < initTime3 + 0.2f) {
+                            //Set Feed Motor to 0.25 (Releases second ball into shooter)
+                            feedMotor.set(0.25);
+                        }
+                    }
+
+                    //Wait 0.1 Seconds for ball to leave shooter
+                    float initTime4 = System.currentTimeMillis() / 1000f;
+                    while (System.currentTimeMillis() / 1000f < initTime4 + 0.1f) {
+                        //Stop All Motors
+                        feedMotor.stopMotor();
+                        topShooterMotor.stopMotor();
+                        bottomShooterMotor.stopMotor();
+                        s1 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                        return true;
+                    }
                 }
             }
+            s1 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+            return false;
         }
-        return false;
+        else {
+            return false;
+        }
     }
     public Boolean shootingProcess2(Boolean highLow) {
         //Aim Assist (No Shoot)
-        
-        //TODO: When Shooter is Built calibrate if statments for distances
-        
-        //Machine vision to find reflective tape on high goal
-        //Rotate Robot to face hub
-        //Wait Until Facing Hub
-        if (highLow) {
-            //true = High Goal
+        if (!s2) {//If the function isnt already running
+            s2 = true;//Mark the function as already running to prevent multiple instances of a function running at once
+            
+            //TODO: When Shooter is Built calibrate if statments for distances
+            
+            //Machine vision to find reflective tape on high goal
+            //Rotate Robot to face hub
+            //Wait Until Facing Hub
+            if (highLow) {
+                //true = High Goal
 
-            //Set bottomMotorPower & topMotorPower variables to needed to get into high goal
-            if (distanceFront() > 3) {
-                bottomMotorPower = 0.3f;
-                topMotorPower = 0.3f;
-                //Return true to signal program completion
-                return true;
+                //Set bottomMotorPower & topMotorPower variables to needed to get into high goal
+                if (distanceFront() > 3) {
+                    bottomMotorPower = 0.3f;
+                    topMotorPower = 0.3f;
+                    s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                    return true;//Return true to signal program completion
+                }
+                else if (distanceFront() > 5) {
+                    bottomMotorPower = 0.5f;
+                    topMotorPower = 0.5f;
+                    s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                    return true;//Return true to signal program completion
+                }
+                else if (distanceFront() > 10) {
+                    //Out of Bounds
+                    //Set Motors to max just incase driver needs to shoot
+                    bottomMotorPower = 1f;
+                    topMotorPower = 1f;
+                    s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                    return false;//Return true to signal program completion
+                } 
             }
-            else if (distanceFront() > 5) {
-                bottomMotorPower = 0.5f;
-                topMotorPower = 0.5f;
-                //Return true to signal program completion
-                return true;
-            }
-            else if (distanceFront() > 10) {
-                //Out of Bounds
-                //Set Motors to max just incase driver needs to shoot
-                bottomMotorPower = 1f;
-                topMotorPower = 1f;
-                //Return false to notify driver of error
-                return false;
-            } 
-        }
-        else {
-            //false = Low Goal
+            else {
+                //false = Low Goal
 
-            //Set bottomMotorPower & topMotorPower variables to needed to get into low goal
-            if (distanceFront() > 3) {
-                bottomMotorPower = 0.2f;
-                topMotorPower = 0.2f;
-                //Return true to signal program completion
-                return true;
+                //Set bottomMotorPower & topMotorPower variables to needed to get into low goal
+                if (distanceFront() > 3) {
+                    bottomMotorPower = 0.2f;
+                    topMotorPower = 0.2f;
+                    s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                    return true;//Return true to signal program completion
+                }
+                else if (distanceFront() > 5) {
+                    bottomMotorPower = 0.3f;
+                    topMotorPower = 0.3f;
+                    s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                    return true;//Return true to signal program completion
+                }
+                else if (distanceFront() > 10) {
+                    //Out of Bounds
+                    //Set Motors to max just incase driver needs to shoot
+                    bottomMotorPower = 1f;
+                    topMotorPower = 1f;
+                    s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                    return false;//Return false to notify driver of error
+                } 
             }
-            else if (distanceFront() > 5) {
-                bottomMotorPower = 0.3f;
-                topMotorPower = 0.3f;
-                //Return true to signal program completion
-                return true;
-            }
-            else if (distanceFront() > 10) {
-                //Out of Bounds
-                //Set Motors to max just incase driver needs to shoot
-                bottomMotorPower = 1f;
-                topMotorPower = 1f;
-                //Return false to notify driver of error
-                return false;
-            } 
         }
         return false;
     }
     public Boolean shootingProcess3(Boolean highLow) {
-        //Run ShootingProcess2 with highlow boolean to aim the robot
-        if (shootingProcess2(highLow) != false) {
-            //Run ShootingProcess1 to shoot all the balls in the robot after done aiming
-            shootingProcess1();
-            return true;
-        }
-        else {
+        if (!s3) {//If the function isnt already running
+            s3 = true;//Mark the function as already running to prevent multiple instances of a function running at once
+            //Run ShootingProcess2 with highlow boolean to aim the robot
+            if (shootingProcess2(highLow) != false) {
+                s2 = true;//Mark shooting process 2 as in pogress untill shooting process 3 is done
+                //Run ShootingProcess1 to shoot all the balls in the robot after done aiming
+                shootingProcess1();
+                s2 = false;//Mark shooting process 2 as in pogress untill shooting process 3 is done
+                s3 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                return true;
+            }
+            s3 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
             return false;
         }
+        return false;
     }
     public void dropBall() {
-        //Drops the first ball in the system
-        //Set Top Motor to 0.175 (Barely enough to move it)
-        topShooterMotor.set(0.175);
-        //Set Bottom Motor to 0.175 (Barely enough to move it)
-        bottomShooterMotor.set(0.175);
-        //Set Bottom Motor to 0.2
-        feedMotor.set(0.2);
+        if (!db) {//If the function isnt already running
+            db = true;//Mark the function as already running to prevent multiple instances of a function running at once
+            //Drops the first ball in the system
+            //Set Top Motor to 0.175 (Barely enough to move it)
+            topShooterMotor.set(0.175);
+            //Set Bottom Motor to 0.175 (Barely enough to move it)
+            bottomShooterMotor.set(0.175);
+            //Set Bottom Motor to 0.2
+            feedMotor.set(0.2);
 
-        float initTime = System.currentTimeMillis() / 1000f;
-        while (System.currentTimeMillis() / 1000f < initTime + 0.2f) {//Wait 0.1 Seconds for ball to leave shooter
-            //Stop all the motors
-            feedMotor.stopMotor();
-            topShooterMotor.stopMotor();
-            bottomShooterMotor.stopMotor();
+            float initTime = System.currentTimeMillis() / 1000f;
+            while (System.currentTimeMillis() / 1000f < initTime + 0.2f) {//Wait 0.1 Seconds for ball to leave shooter
+                //Stop all the motors
+                feedMotor.stopMotor();
+                topShooterMotor.stopMotor();
+                bottomShooterMotor.stopMotor();
+                db = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+            }
         }
     }
 
@@ -367,6 +394,7 @@ public class ShooterSubsystem extends SubsystemBase{
     //      ----Controlls [Right Trigger Auto Aim & Shoot High | Left Trigger|Auto Aim & Shoot Low]----
     @Override
     public void periodic() {
+        //When Triggers are Pressed
         if (AimShootHigh.get() > 0.5) {
             //Auto Aim & Shoot into the High Goal
             shootingProcess3(true);
@@ -380,28 +408,28 @@ public class ShooterSubsystem extends SubsystemBase{
     public void ControllerButtonInit (){
         //When Buttons are Pressed
         Shoot.whenPressed(
-            //[Shooter Subsystem] High Goal Auto Aim & Shoot
+            //High Goal Auto Aim & Shoot
             () -> this.shootingProcess1()
         );
         ManualShootIncrease.whenPressed(
-            //[Shooter Subsystem] Manually Increase Shooter Distance by 5%
+            //Manually Increase Shooter Distance by 5%
             () -> this.changeShooterDistance(0.025f,0.025f)
         );
         ManualShootDecrease.whenPressed(
-            //[Shooter Subsystem] Manually Decrease Shooter Distance by 5%
+            //Manually Decrease Shooter Distance by 5%
             () -> this.changeShooterDistance(-0.025f,-0.025f)
         );
         EjectBall.whenPressed(
-            //[Shooter Subsystem] Drops the first ball in storage
+            //Drops the first ball in storage
             () -> this.dropBall()
         );
         //When Buttons are Held
         ManualShootIncrease.whileActiveContinuous(
-            //[Shooter Subsystem] Manually Increase Shooter Distance by 1% when held
+            //Manually Increase Shooter Distance by 1% while held
             () -> this.changeShooterDistance(0.02f,0.02f)
         );
         ManualShootDecrease.whileActiveContinuous(
-            //[Shooter Subsystem] Manually Decrease Shooter Distance by 5%
+            //Manually Decrease Shooter Distance by 1% while held
             () -> this.changeShooterDistance(-0.02f,-0.02f)
         );
     }
