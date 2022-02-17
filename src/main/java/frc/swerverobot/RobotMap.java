@@ -30,7 +30,6 @@ public class RobotMap {
     public static final int Intake_Motor_PWM = 3; //[Intake Subsystem] PWM for intake motor
     public static final int CLIMBER_MOTOR = 9; //[Climber Subsystem] The Number is the RIO DIO port
 
-//Controls
     /* Example Analog Trigger Code NOTE: put inside susytem periodic
     public void periodic() {
         // This method will be called once per scheduler run
@@ -48,6 +47,7 @@ public class RobotMap {
         }
     }
     */
+//Controls
     //DriveTrain Controller (Kendal)
     public static final Controller Driver_controller = new XboxController(0);//[Driver's Controller]
     public static final Axis Speed_Increase = Driver_controller.getLeftTriggerAxis();//[DriveTrain Subsystem](L-Trigger)
