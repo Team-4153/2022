@@ -1,8 +1,8 @@
 package frc.swerverobot.subsystems;
 
 //Setup
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.swerverobot.RobotMap.*;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //Pneumatics
@@ -20,7 +20,7 @@ public class IntakeSubsystem extends SubsystemBase {
   //Creates a new IntakeSubsystem
   public IntakeSubsystem() {}
 
-  //Solenoid for intake extension and Compression
+  //Solenoid for intake extension and compression
   private DoubleSolenoid Intake_Sol = new DoubleSolenoid(PH_CAN_ID, PneumaticsModuleType.REVPH, INTAKE_SOLa, INTAKE_SOLb);
 
   //Motor for spinning wheels
