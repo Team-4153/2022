@@ -17,10 +17,10 @@ public class RobotMap {
 //Define all ports and constants of a component, put in correct catagory, label subsystem(s) used
 
 //Sensors
-    public static final ADIS16470_IMU imu = new ADIS16470_IMU(); //Gyro and acceleration sensor
+    public static final ADIS16470_IMU imu = new ADIS16470_IMU(); //[DriveTrain Subsystem]Gyro and acceleration sensor
+    public static final int PhotoEyePort = 4; //[Shooter Subsystem] The Number is the RIO DIO port (Outputs a Digital Input|Like a Limit Switch)
     public static final I2C.Port i2cPort = I2C.Port.kOnboard; //[Shooter Subsystem] Color Sensor (Only one I2C port on the robot)
     public static final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort); //[Shooter/Intake Subsystem] The Number is the I2C port from the RobotMap.java
-    public static final int PhotoEyePort = 4; //[Shooter Subsystem] The Number is the RIO DIO port (Outputs a Digital Input|Like a Limit Switch)
     public static final DigitalInput photoEye = new DigitalInput(PhotoEyePort); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
 
 //PWM Motors
@@ -37,14 +37,15 @@ public class RobotMap {
     public static final Axis Speed_Decrease = Driver_controller.getRightTriggerAxis();//[DriveTrain Subsystem](R-Trigger)
     public static final Button Intake_Extension = Driver_controller.getLeftBumperButton();//[Intake Subsystem](L-Bumper)
     public static final Button Intake_Retract = Driver_controller.getRightBumperButton();//[Intake Subsystem](R-Bumper)
+    
     //Shooter/Climber Controller (Noah)
     public static final Controller Shooter_controller = new XboxController(1);//[Shooter's Controller]
     public static final Button Shoot = Shooter_controller.getAButton();//[Shooter Subsystem](A)
-    public static final Axis AimShootHigh = Shooter_controller.getRightTriggerAxis();//[Shooter Subsystem](R-Trigger)
-    public static final Axis AimShootLow = Shooter_controller.getLeftTriggerAxis();//[Shooter Subsystem](L-Trigger)
     public static final Button EjectBall = Shooter_controller.getBButton();//[Shooter Subsystem](B)
     public static final Button ManualShootIncrease = Shooter_controller.getYButton();//[Shooter Subsystem](Y)
     public static final Button ManualShootDecrease = Shooter_controller.getAButton();//[Shooter Subsystem](A)
+    public static final Axis AimShootLow = Shooter_controller.getLeftTriggerAxis();//[Shooter Subsystem](L-Trigger)
+    public static final Axis AimShootHigh = Shooter_controller.getRightTriggerAxis();//[Shooter Subsystem](R-Trigger)
 
     
     /* Example Analog Trigger Code NOTE: put this inside your subsystem
