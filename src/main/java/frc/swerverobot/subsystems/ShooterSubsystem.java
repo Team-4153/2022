@@ -115,9 +115,9 @@ All controls should be on Noahs controller
 */
 
 public class ShooterSubsystem extends SubsystemBase{
-    float bottomMotorPower = 0.3f; //Start the Bottom motor at low power
-    float topMotorPower = 0.3f; //Start the Top motor at low power
-    boolean ballStuck = false; //Is true if there is a ball in the second position(Photoeye) but not the first(Color Sensor)
+    float bottomMotorPower = 0.3f;  //Start the Bottom motor at low power
+    float topMotorPower = 0.3f;     //Start the Top motor at low power
+    boolean ballStuck = false;      //Is true if there is a ball in the second position(Photoeye) but not the first(Color Sensor)
 
     //Boolean Values for if a function is in progress
     public Boolean s1 = false; //Shooting Process 1
@@ -126,11 +126,11 @@ public class ShooterSubsystem extends SubsystemBase{
     public Boolean db = false; //Drop Ball Function
 
     //Shooter Motors
-    Spark topShooterMotor = new Spark(TopMotorPort); //The Number is the RIO PWM port from the RobotMap.java
-    Spark bottomShooterMotor = new Spark(BottomMotorPort); //The Number is the RIO PWM port from the RobotMap.java
-    Spark feedMotor = new Spark(FeedMotorPort); //The Number is the RIO PWM port from the RobotMap.java
+    Spark topShooterMotor = new Spark(TopMotorPort);        //The Number is the RIO PWM port from the RobotMap.java
+    Spark bottomShooterMotor = new Spark(BottomMotorPort);  //The Number is the RIO PWM port from the RobotMap.java
+    Spark feedMotor = new Spark(FeedMotorPort);             //The Number is the RIO PWM port from the RobotMap.java
 
-    //      ----Independent Wait Function [Broken]----
+    //      ----Independent Wait Function----               [Broken]
     public void Wait(float Seconds) {
         //Currently Broken
         float initTime = System.currentTimeMillis() / 1000f;
@@ -139,7 +139,7 @@ public class ShooterSubsystem extends SubsystemBase{
         }
     }
 
-    //      ----Shooting Functions [SP1:Needs Testing, SP2:Placeholder, SP3:Needs Testing, DB: Needs Testing]----
+    //      ----Shooting Functions----                      [SP1:Needs Testing, SP2:Placeholder, SP3:Needs Testing, DB: Needs Testing]
     public Boolean shootingProcess1() {
         //TODO: Test if wait timers are actually working or not
         if (!s2) {//If the function isnt already running
@@ -317,7 +317,7 @@ public class ShooterSubsystem extends SubsystemBase{
         }
     }
 
-    //      ----Manual Change Shoot Distance Function [Fully Functional]----
+    //      ----Manual Change Shoot Distance Function----   [Fully Functional]
     public void changeShooterDistance(float changeTop,float changeBottom) {
         //Top Motor
         topMotorPower = topMotorPower + changeTop;
@@ -339,7 +339,7 @@ public class ShooterSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("Top Motor Saved Power", topMotorPower); //Updates "Bottom Motor Saved Power"(int)
     }
 
-    //      ----Machine Vision Functions[DF:Placeholder,RH:Placeholder]----
+    //      ----Machine Vision Functions----                [DF:Placeholder,RH:Placeholder]
     public int distanceFront() {
         //TODO: Figure out how to get distance value from rasberrypie (Uses Network Tables)
         //Get distance infront of robot
@@ -354,7 +354,7 @@ public class ShooterSubsystem extends SubsystemBase{
         return rotationToHub;
     }
 
-    //      ----Ball Count & Color Functions [BC:Fully Working, B1C: Fully Functional]----
+    //      ----Ball Count & Color Functions----            [BC:Fully Functional, B1C: Fully Functional]
     public int ballCount() {
         //Starts the count of balls at 0
         int ballCount = 0;
@@ -412,7 +412,7 @@ public class ShooterSubsystem extends SubsystemBase{
         return ball1Color;
     }
 
-    //      ----Variable Update Function [Fully Functional]----
+    //      ----Variable Update Function----                [Fully Functional]
     public void updateHudVariablesShooter() {    
         //Updates all the Variables that are sent to the drivers station for the shooter subsystem
         ballCount(); //Updates "Ball Count"(int), "Ball Stuck"(bool), "Ball 1 Color"(string)
@@ -421,7 +421,7 @@ public class ShooterSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("Top Motor Saved Power", topMotorPower); //Updates "Bottom Motor Saved Power"(int)
     }
 
-    //      ----Controls [Right Trigger Auto Aim & Shoot High | Left Trigger|Auto Aim & Shoot Low] [Fully Functional]----
+    //      ----Controls [Right Trigger Auto Aim & Shoot High | Left Trigger|Auto Aim & Shoot Low]----  [Fully Functional]
     @Override
     public void periodic() {
         //When Triggers are Pressed
