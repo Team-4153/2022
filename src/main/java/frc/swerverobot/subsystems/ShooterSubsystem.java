@@ -209,9 +209,19 @@ public class ShooterSubsystem extends SubsystemBase{
             s2 = true;//Mark the function as already running to prevent multiple instances of a function running at once
             
             //TODO: When Shooter is Built calibrate if statments for distances
-            
             //Machine vision to find reflective tape on high goal
+
             //Rotate Robot to face hub
+            int rotationToHub = rotHub();
+            if (rotationToHub > 0) {
+                //Turn Left
+                //TODO: Figure out how to turn robot a certan number of degrees or radians to the right or left
+            }
+            else if (rotationToHub < 0) {
+                //Turn Right
+                //TODO: Figure out how to turn robot a certan number of degrees or radians to the right or left
+            }
+            
             //Wait Until Facing Hub
             if (highLow) {
                 //true = High Goal
@@ -236,7 +246,7 @@ public class ShooterSubsystem extends SubsystemBase{
                     topMotorPower = 1f;
                     s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
                     return false;//Return true to signal program completion
-                } 
+                }
             }
             else {
                 //false = Low Goal
@@ -329,13 +339,19 @@ public class ShooterSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("Top Motor Saved Power", topMotorPower); //Updates "Bottom Motor Saved Power"(int)
     }
 
-    //      ----Machine Vision Functions[Placeholder]----
+    //      ----Machine Vision Functions[DF:Placeholder,RH:Placeholder]----
     public int distanceFront() {
         //TODO: Figure out how to get distance value from rasberrypie (Uses Network Tables)
         //Get distance infront of robot
         int distance = 5;//Placeholder Value 
         SmartDashboard.putNumber("Distance to Hub", distance);
         return distance;
+    }
+    public int rotHub() {
+        //https://docs.wpilib.org/en/stable/docs/software/networktables/reading-array-values-published-by-networktables.html
+        //Above for when rasberry pi is publishing data to network table and is connected
+        int rotationToHub = 20; //TODO: Figure out how the Rasbery Pi mesures rotation to hub and adjust code accordingly (Value Currently Placeholder)
+        return rotationToHub;
     }
 
     //      ----Ball Count & Color Functions [BC:Fully Working, B1C: Fully Functional]----
