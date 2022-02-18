@@ -12,23 +12,36 @@ import org.frcteam2910.common.robot.input.Controller;
 import org.frcteam2910.common.robot.input.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Button;
 
+/*Needed Electronics
+Solenoids(4)
+Motor Controllers (13)
+Rasberry Pi (1)
+Cameras (2)
+Photo Eye(1)
+Color Sensor(1)
+Blinky Light(1)
+Voltage Regulator(1)
+Pnumatic Hub(1)
+Compressor(1)
+*/
 
 public class RobotMap {
 //Define all ports and constants of a component, put in correct catagory, label subsystem(s) used
 
 //Sensors
     public static final ADIS16470_IMU imu = new ADIS16470_IMU(); //[DriveTrain Subsystem]Gyro and acceleration sensor
-    public static final int PhotoEyePort = 4; //[Shooter Subsystem] The Number is the RIO DIO port (Outputs a Digital Input|Like a Limit Switch)
+    public static final int PhotoEyePort = 0; //[Shooter Subsystem] The Number is the RIO DIO port (Outputs a Digital Input|Like a Limit Switch)
     public static final I2C.Port i2cPort = I2C.Port.kOnboard; //[Shooter Subsystem] Color Sensor (Only one I2C port on the robot)
     public static final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort); //[Shooter/Intake Subsystem] The Number is the I2C port from the RobotMap.java
     public static final DigitalInput photoEye = new DigitalInput(PhotoEyePort); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
+    public static final int CLIMBER_SWITCH = 2;//Clark moved this   
 
 //PWM Motors
-    public static final int TopMotorPort = 0; //[Shooter Subsystem] The Number is the RIO DIO port 
-    public static final int BottomMotorPort = 1; //[Shooter Subsystem] The Number is the RIO DIO port
-    public static final int FeedMotorPort = 2; //[Shooter Subsystem] The Number is the RIO DIO port
-    public static final int Intake_Motor_PWM = 3; //[Intake Subsystem] PWM for intake motor
-    public static final int CLIMBER_MOTOR = 9; //[Climber Subsystem] The Number is the RIO DIO port
+    public static final int TopMotorPort = 1;       //[Shooter Subsystem] The Number is the RIO DIO port 
+    public static final int BottomMotorPort = 2;    //[Shooter Subsystem] The Number is the RIO DIO port
+    public static final int FeedMotorPort = 0;      //[Shooter Subsystem] The Number is the RIO DIO port
+    public static final int Intake_Motor_PWM = 3;   //[Intake Subsystem] PWM for intake motor
+    public static final int CLIMBER_MOTOR = 4;      //[Climber Subsystem] The Number is the RIO DIO port
 
 //Controls
     //DriveTrain Controller (Kendal)
@@ -67,15 +80,18 @@ public class RobotMap {
     */
 
 //Pneumatics
-    public static final int PH_CAN_ID = 1;//[Pneumatic hub CAN address]    
-    public static final int INTAKE_SOLa = 1;//[Intake Subsystem]
-    public static final int INTAKE_SOLb = 2;//[Intake Subsystem]
-    public static final int CLIMBER_ARMa = 3;//[Climber Subsystem]
-    public static final int CLIMBER_ARMb = 4;//[Climber Subsystem]
-    public static final int HOOKa = 5;//[Climber Subsystem]
-    public static final int HOOKb = 6;//[Climber Subsystem]
-    public static final int WINCH_SOLa = 7;//[Climber Subsystem]
-    public static final int WINCH_SOLb = 8;//[Climber Subsystem]
+    public static final int PH_CAN_ID = 9;//[Pneumatic hub CAN address]    
+    public static final int INTAKE_SOLa = 0;//[Intake Subsystem]
+    public static final int INTAKE_SOLb = 1;//[Intake Subsystem]
+
+    public static final int CLIMBER_ARMa = 4;//[Climber Subsystem]
+    public static final int CLIMBER_ARMb = 5;//[Climber Subsystem]
+
+    public static final int HOOKa = 2;//[Climber Subsystem]
+    public static final int HOOKb = 3;//[Climber Subsystem]
+
+    public static final int WINCH_SOLa = 6;//[Climber Subsystem]
+    public static final int WINCH_SOLb = 7;//[Climber Subsystem]
 
 //Drive Train -- uses spark max CAN ID 1-8 
 // EVEN numbers are angle motors, ODD numbers are drive motors
@@ -102,7 +118,4 @@ public class RobotMap {
     public static final double DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_OFFSET = -Math.toRadians(20.1);
     public static final int DRIVETRAIN_BACK_LEFT_MODULE_DRIVE_MOTOR = 7;
     public static final double DRIVETRAIN_BACK_LEFT_MODULE_ENCODER_VOLTAGE_MAX = 3.256;
-
-//Climber Stuff TODO: fix
-    public static final int CLIMBER_SWITCH = 2;
 }
