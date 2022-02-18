@@ -30,7 +30,24 @@ public class RobotMap {
     public static final int Intake_Motor_PWM = 3; //[Intake Subsystem] PWM for intake motor
     public static final int CLIMBER_MOTOR = 9; //[Climber Subsystem] The Number is the RIO DIO port
 
-    /* Example Analog Trigger Code NOTE: put inside susytem periodic
+//Controls
+    //DriveTrain Controller (Kendal)
+    public static final Controller Driver_controller = new XboxController(0);//[Driver's Controller]
+    public static final Axis Speed_Increase = Driver_controller.getLeftTriggerAxis();//[DriveTrain Subsystem](L-Trigger)
+    public static final Axis Speed_Decrease = Driver_controller.getRightTriggerAxis();//[DriveTrain Subsystem](R-Trigger)
+    public static final Button Intake_Extension = Driver_controller.getLeftBumperButton();//[Intake Subsystem](L-Bumper)
+    public static final Button Intake_Retract = Driver_controller.getRightBumperButton();//[Intake Subsystem](R-Bumper)
+    //Shooter/Climber Controller (Noah)
+    public static final Controller Shooter_controller = new XboxController(1);//[Shooter's Controller]
+    public static final Button Shoot = Shooter_controller.getAButton();//[Shooter Subsystem](A)
+    public static final Axis AimShootHigh = Shooter_controller.getRightTriggerAxis();//[Shooter Subsystem](R-Trigger)
+    public static final Axis AimShootLow = Shooter_controller.getLeftTriggerAxis();//[Shooter Subsystem](L-Trigger)
+    public static final Button EjectBall = Shooter_controller.getBButton();//[Shooter Subsystem](B)
+    public static final Button ManualShootIncrease = Shooter_controller.getYButton();//[Shooter Subsystem](Y)
+    public static final Button ManualShootDecrease = Shooter_controller.getAButton();//[Shooter Subsystem](A)
+
+    
+    /* Example Analog Trigger Code NOTE: put this inside your subsystem
     public void periodic() {
         // This method will be called once per scheduler run
         if (Intake_Extension.get() > 0.5)
@@ -47,21 +64,6 @@ public class RobotMap {
         }
     }
     */
-//Controls
-    //DriveTrain Controller (Kendal)
-    public static final Controller Driver_controller = new XboxController(0);//[Driver's Controller]
-    public static final Axis Speed_Increase = Driver_controller.getLeftTriggerAxis();//[DriveTrain Subsystem](L-Trigger)
-    public static final Axis Speed_Decrease = Driver_controller.getRightTriggerAxis();//[DriveTrain Subsystem](R-Trigger)
-    public static final Button Intake_Extension = Driver_controller.getLeftBumperButton();//[Intake Subsystem](L-Bumper)
-    public static final Button Intake_Retract = Driver_controller.getRightBumperButton();//[Intake Subsystem](R-Bumper)
-    //Shooter/Climber Controller (Noah)
-    public static final Controller Shooter_controller = new XboxController(1);//[Shooter's Controller]
-    public static final Button Shoot = Shooter_controller.getAButton();//[Shooter Subsystem](A)
-    public static final Axis AimShootHigh = Shooter_controller.getRightTriggerAxis();//[Shooter Subsystem](R-Trigger)
-    public static final Axis AimShootLow = Shooter_controller.getLeftTriggerAxis();//[Shooter Subsystem](L-Trigger)
-    public static final Button EjectBall = Shooter_controller.getBButton();//[Shooter Subsystem](B)
-    public static final Button ManualShootIncrease = Shooter_controller.getYButton();//[Shooter Subsystem](Y)
-    public static final Button ManualShootDecrease = Shooter_controller.getAButton();//[Shooter Subsystem](A)
 
 //Pneumatics
     public static final int PH_CAN_ID = 1;//[Pneumatic hub CAN address]    
