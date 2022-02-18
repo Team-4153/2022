@@ -15,57 +15,55 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /*      ----Notes----
 - Motors
-    - Prototype used 2 on the front and one in the back to hold the ball
-- How are balls stored?
-    - Held away from shooter by a motor behind shooter
-- Distance to target/machine vision?
-- Autoaim?
+    - Prototype used 2 launch motors and 1 feed motor
+    - Balls are Stored with feed Motor
+- Distance to target with machine vision (Rasberry pie with network cable?|TODO:Figure out network tables/Rasberry pie)
+- TODO: When Shooter is built calibrate the power needed for different distances & the time it takes for it to get the Launch Motors up to speed
 
 - Notes from Prototype Testing
-- With Current Motors and angle of ~30 degrees power of 0.6T0.6B works well to get it into the goal from distance
-- From Close up adding backspin helps
-- Assuming no added force from storage system (The 3rd motor at the end adds speed) 0.5 second wait time before wheels back up to speed
+    - With Current Motors and angle of ~30 degrees power of 0.6T 0.6B works well to get it into the goal from distance
+    - From Close up adding backspin helps
+    - Assuming no added force from storage system (The 3rd motor at the end adds speed) 0.1 second wait time before wheels back up to speed 
 */
 
-
 /*      ----Electronics Needed----
-- Motors (3)
+- Motors (3|Needs Testing)
     - 2 for shooter
     - 1 for feed
-- Motor Controllers (3)
+- Motor Controllers (3|Needs Testing)
     - 1 for each motor in the shooter
+    - Probably Spark or Spark Max motor controllers
 - Machine Vision
     - Camera (1?)
     - Rasberry Pie (1)
-    - Used to detect high goal and rotate robot towrds hub 
-    - Distance?
-        - If we can get reliable distance from Machine Vision relace distance sensor with Machine Vision.
-- Distnace Sensor (Shooting Process #2,3) (Ultrasonic maybe?) (Might be replaced with Machine Vision)
-    - Detect distance to hub for shooting processs #2 and #3
-    - Might need to be aimed upwards because the bottom section is not uniform maybe aim for middle of the lower hoop from edge of the field?
-- Color Sensor (1)
-    - Detect ball color and count
-- Photo Eye (1)
+        - Figure out network tables
+    - Needs to be able to Detect high goal & Distance to hub
+        - Detect distance to hub for shooting processs #2 and #3
+        - If distance to hub is not viable we need to find some way of reliably detecting distance to hub
+            - Things other than machine vision might need to be aimed upwards because the bottom section is not uniform maybe aim for middle of the lower hoop from edge of the field?
+- Color Sensor (1|Functional)
+    - Detect first ball color and count
+- Photo Eye (1|Functional)
     - Detect if there is a second ball
-- PID Controller (Maybe)
+    - Detect if there is only a second ball and not a first one
+- PID Controller (Not-Needed)
     - Keep flywheels at constant speed
     - Might not be needed
 */
 
-
 /*      ----Driver Interaction----
 All controls should be on Noahs controller
-- shootingProcess1(X) - Shoots balls this will use values from auto aim to shoot, The driver can also manually change these values with 
+- shootingProcess1(X:Needs Testing) - Shoots balls this will use values from auto aim to shoot, The driver can also manually change these values with 
 - shootingProcess2(Not Needed) - Auto aims the robot but doesent shoot, the boolean is for aiming for the high or low goal (true = High || false = Low)
-- shootingProcess3(Right Trigger for High Goal | Left Trigger for Low Goal) - Auto aims the robot and shoots, the boolean is for aiming for the high or low goal (true = High || false = Low)
-- manualShooterDistanceIncrease(Y) - Increases the power to both shooter motors by 5%, doesent shoot balls
-- manualShooterDistanceDecrease(A) - Decrease the power to both shooter motors by 5%, doesent shoot balls
-- dropBall(B) - Drops the first ball in the system
+- shootingProcess3(Right Trigger for High Goa0l:Needs Testing | Left Trigger for Low Goal:Needs Testing) - Auto aims the robot and shoots, the boolean is for aiming for the high or low goal (true = High || false = Low)
+- manualShooterDistanceIncrease(Y:Functional) - Increases the power to both shooter motors by 5%, doesent shoot balls
+- manualShooterDistanceDecrease(A:Functional) - Decrease the power to both shooter motors by 5%, doesent shoot balls
+- dropBall(B:Needs Testing) - Drops the first ball in the system
 */
 
-
 /*      ----Processes----
-- Shooting Process #1 (No Aim Assist & 2 Balls)
+- Shooting Process #1 (No Aim Assist & 2 Balls | Needs Testing)
+    - If Process isnt already running
     - Driver Preses Shoot Button or Activated by code (Start Function)
     - Spin bottom & top Motors to variables (This value can be changed by the driver manually or buy the aim program)
     - Wait ~0.5 Seconds
@@ -80,7 +78,8 @@ All controls should be on Noahs controller
     - Stop both intake motors
     - End
     
-- Shooting Process #2 (Aim Assist & 2 Balls)
+- Shooting Process #2 (Aim Assist & 2 Balls | Needs Testing)
+    - If Process isnt already running
     - Driver should position robot roughly aming at the hub before running program
     - Driver Preses Aim Button or Activated by code high or low (Maybe a button combination for the low goal) (Start Function)
     - Machiene vision to find the reflective tape on high goal
@@ -97,12 +96,21 @@ All controls should be on Noahs controller
             - Notify Driver (Maybe a beep or just something on the HUD)
     - End
     
-- Shooting Process #3 (Auto Aim/Auto Shoot)
+- Shooting Process #3 (Auto Aim/Auto Shoot | Needs Testing)
+    - If Process isnt already running
     - Driver should position robot roughly aming at the hub before running program
     - Driver Preses Auto Shoot Button for either high or low (Maybe a button combination for the low goal)
     - Run Shooting Process #2 (Input High Low Goal)
     - Wait until #2 finished
     - Run Shooting Process #1 
+    - End
+- Drop Balls
+    - If Process isnt already running
+    - Driver presses button
+    - Gently spin shoot motors
+    - Push forward first ball
+    - Wait 0.2 Seconds
+    - Stop All Motors
     - End
 */
 
@@ -112,26 +120,28 @@ public class ShooterSubsystem extends SubsystemBase{
     boolean ballStuck = false; //Is true if there is a ball in the second position(Photoeye) but not the first(Color Sensor)
 
     //Boolean Values for if a function is in progress
-    public Boolean s1 = false;//Shooting Process 1
-    public Boolean s2 = false;//Shooting Process 2
-    public Boolean s3 = false;//Shooting Process 3
-    public Boolean db = false;//Drop Ball Function
+    public Boolean s1 = false; //Shooting Process 1
+    public Boolean s2 = false; //Shooting Process 2
+    public Boolean s3 = false; //Shooting Process 3
+    public Boolean db = false; //Drop Ball Function
 
     //Shooter Motors
     Spark topShooterMotor = new Spark(TopMotorPort); //The Number is the RIO PWM port from the RobotMap.java
     Spark bottomShooterMotor = new Spark(BottomMotorPort); //The Number is the RIO PWM port from the RobotMap.java
     Spark feedMotor = new Spark(FeedMotorPort); //The Number is the RIO PWM port from the RobotMap.java
 
-    //      ----Wait Function----
+    //      ----Independent Wait Function [Broken]----
     public void Wait(float Seconds) {
+        //Currently Broken
         float initTime = System.currentTimeMillis() / 1000f;
         while (System.currentTimeMillis() / 1000f < initTime + Seconds) {
             // return.wait(Seconds);
         }
     }
 
-    //      ----Shooting Functions----
+    //      ----Shooting Functions [SP1:Needs Testing, SP2:Placeholder, SP3:Needs Testing, DB: Needs Testing]----
     public Boolean shootingProcess1() {
+        //TODO: Test if wait timers are actually working or not
         if (!s2) {//If the function isnt already running
             s1 = true;//Mark the function as already running to prevent multiple instances of a function running at once
             //Get Number of balls at the start of shooting and saves it to a variable for use later
@@ -193,6 +203,7 @@ public class ShooterSubsystem extends SubsystemBase{
         }
     }
     public Boolean shootingProcess2(Boolean highLow) {
+        //TODO: Find hub relative to robot and rotate robot accordingly
         //Aim Assist (No Shoot)
         if (!s2) {//If the function isnt already running
             s2 = true;//Mark the function as already running to prevent multiple instances of a function running at once
@@ -256,6 +267,7 @@ public class ShooterSubsystem extends SubsystemBase{
         return false;
     }
     public Boolean shootingProcess3(Boolean highLow) {
+        //TODO: Test if function is running shooting process 1 and then shooting process 2 in sequence or parallel
         if (!s3) {//If the function isnt already running
             s3 = true;//Mark the function as already running to prevent multiple instances of a function running at once
             //Run ShootingProcess2 with highlow boolean to aim the robot
@@ -273,6 +285,7 @@ public class ShooterSubsystem extends SubsystemBase{
         return false;
     }
     public void dropBall() {
+        //TODO: Test timing
         if (!db) {//If the function isnt already running
             db = true;//Mark the function as already running to prevent multiple instances of a function running at once
             //Drops the first ball in the system
@@ -284,7 +297,7 @@ public class ShooterSubsystem extends SubsystemBase{
             feedMotor.set(0.2);
 
             float initTime = System.currentTimeMillis() / 1000f;
-            while (System.currentTimeMillis() / 1000f < initTime + 0.2f) {//Wait 0.1 Seconds for ball to leave shooter
+            while (System.currentTimeMillis() / 1000f < initTime + 0.2f) {//Wait 0.2 Seconds for ball to leave shooter
                 //Stop all the motors
                 feedMotor.stopMotor();
                 topShooterMotor.stopMotor();
@@ -294,7 +307,7 @@ public class ShooterSubsystem extends SubsystemBase{
         }
     }
 
-    //      ----Manual Adjustments Functions----
+    //      ----Manual Change Shoot Distance Function [Fully Functional]----
     public void changeShooterDistance(float changeTop,float changeBottom) {
         //Top Motor
         topMotorPower = topMotorPower + changeTop;
@@ -316,15 +329,16 @@ public class ShooterSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("Top Motor Saved Power", topMotorPower); //Updates "Bottom Motor Saved Power"(int)
     }
 
-    //      ----Distance Sensor Functions----
+    //      ----Machine Vision Functions[Placeholder]----
     public int distanceFront() {
+        //TODO: Figure out how to get distance value from rasberrypie (Uses Network Tables)
         //Get distance infront of robot
-        int distance = 5;//Placeholder Value TODO: Figure out how to get distance value from rasberrypie(Something about a network cable)
+        int distance = 5;//Placeholder Value 
         SmartDashboard.putNumber("Distance to Hub", distance);
         return distance;
     }
 
-    //      ----Ball Count & Color Functions----
+    //      ----Ball Count & Color Functions [BC:Fully Working, B1C: Fully Functional]----
     public int ballCount() {
         //Starts the count of balls at 0
         int ballCount = 0;
@@ -382,7 +396,7 @@ public class ShooterSubsystem extends SubsystemBase{
         return ball1Color;
     }
 
-    //      ----Variable Update Function----
+    //      ----Variable Update Function [Fully Functional]----
     public void updateHudVariablesShooter() {    
         //Updates all the Variables that are sent to the drivers station for the shooter subsystem
         ballCount(); //Updates "Ball Count"(int), "Ball Stuck"(bool), "Ball 1 Color"(string)
@@ -391,7 +405,7 @@ public class ShooterSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("Top Motor Saved Power", topMotorPower); //Updates "Bottom Motor Saved Power"(int)
     }
 
-    //      ----Controlls [Right Trigger Auto Aim & Shoot High | Left Trigger|Auto Aim & Shoot Low]----
+    //      ----Controls [Right Trigger Auto Aim & Shoot High | Left Trigger|Auto Aim & Shoot Low] [Fully Functional]----
     @Override
     public void periodic() {
         //When Triggers are Pressed
