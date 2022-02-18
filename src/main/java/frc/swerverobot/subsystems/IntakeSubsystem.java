@@ -26,9 +26,6 @@ public class IntakeSubsystem extends SubsystemBase {
   //Motor for spinning wheels
   private PWMVictorSPX Intake_Motor = new PWMVictorSPX(Intake_Motor_PWM);
 
-  //Needed for Ball functions, turns to true when the photoeye detects a ball, but colorsensor doesn't
-  boolean ballStuck = false;
-
   //Ball functions needed for knowing whether or not shooting is allowed
   public int ballCount() {
     //Starts the count of balls at 0
@@ -37,7 +34,6 @@ public class IntakeSubsystem extends SubsystemBase {
     //Look for first ball with color
     if (ball1color() != "none") 
     {
-      ballStuck = false;
       
       //1 Ball Found
       ballCount = 1;
@@ -55,13 +51,10 @@ public class IntakeSubsystem extends SubsystemBase {
       if (photoEye.get() == true) {
           //A ball is in the second position but not the first
         ballCount = 1;
-        ballStuck = true;
       }
     }
 
     //No else statment because value is initalized at 0
-    SmartDashboard.putNumber("Ball Count", ballCount);
-    SmartDashboard.putBoolean("Ball Stuck", ballStuck);
     return ballCount;
 }
   
