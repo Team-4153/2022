@@ -41,7 +41,7 @@ public class RobotMap {
     public static final int BottomMotorPort = 2;    //[Shooter Subsystem] The Number is the RIO DIO port
     public static final int FeedMotorPort = 0;      //[Shooter Subsystem] The Number is the RIO DIO port
     public static final int Intake_Motor_PWM = 3;   //[Intake Subsystem] PWM for intake motor
-    public static final int CLIMBER_MOTOR = 4;      //[Climber Subsystem] The Number is the RIO DIO port
+    public static final int CLIMBER_MOTOR = 4;      //[Climber Subsystem] The Number is the RIO DIO port (Winch)
 
 //Controls
     //DriveTrain Controller (Kendal)
@@ -80,7 +80,7 @@ public class RobotMap {
     */
 
 //Pneumatics
-    public static final int PH_CAN_ID = 9;//[Pneumatic hub CAN address]    
+    public static final int PH_CAN_ID = 1;//[Pneumatic hub CAN address]    
     public static final int INTAKE_SOLa = 0;//[Intake Subsystem]
     public static final int INTAKE_SOLb = 1;//[Intake Subsystem]
 
