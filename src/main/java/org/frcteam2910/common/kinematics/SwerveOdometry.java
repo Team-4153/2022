@@ -93,4 +93,16 @@ public class SwerveOdometry {
 
         return pose;
     }
+
+    public RigidTransform2 update(Rotation2 gyroAngle, double poseX, double poseY) {
+        double x = pose.translation.x;
+        double y = pose.translation.y;
+
+        Vector2 newPosition = pose.translation
+                .add(new Vector2(poseX - x, poseY - y));
+        
+        pose = new RigidTransform2(newPosition, gyroAngle);
+
+        return pose;
+    }
 }

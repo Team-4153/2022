@@ -12,7 +12,9 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.RobotController;
 import frc.swerverobot.RobotMap;
+import frc.swerverobot.drivers.T265;
 
 import org.frcteam2910.common.drivers.SwerveModule;
 import org.frcteam2910.common.kinematics.ChassisVelocity;
@@ -27,19 +29,40 @@ import org.frcteam2910.common.robot.drivers.Mk2SwerveModuleBuilder;
 import org.frcteam2910.common.util.HolonomicDriveSignal;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.frcteam2910.common.control.*;
+import org.frcteam2910.common.util.*;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
+import java.util.Optional;
+
 import static frc.swerverobot.RobotMap.*;
 
 public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.Updatable {
     // define the trackwidth (short side in our case) and wheelbase (long side in our case) ratio of the robot
-    private static final double TRACKWIDTH = 1.0;
-    private static final double WHEELBASE = 1.0;
+    public static final double TRACKWIDTH = 1.0; //  22.5; // 1.0;
+    public static final double WHEELBASE = 1.0; // 22.5; // 1.0;
 
+    public static final DrivetrainFeedforwardConstants FEEDFORWARD_CONSTANTS = new DrivetrainFeedforwardConstants(
+            0.042746,
+            0.0032181,
+            0.30764
+    );
 
+    public static final TrajectoryConstraint[] TRAJECTORY_CONSTRAINTS = {
+        new FeedforwardConstraint(11.0, FEEDFORWARD_CONSTANTS.getVelocityConstant(), FEEDFORWARD_CONSTANTS.getAccelerationConstant(), false),
+        new MaxAccelerationConstraint(12.5 * 12.0),
+        new CentripetalAccelerationConstraint(15 * 12.0)
+    };
+
+    private static final int MAX_LATENCY_COMPENSATION_MAP_ENTRIES = 25;
+
+    private final HolonomicMotionProfiledTrajectoryFollower follower = new HolonomicMotionProfiledTrajectoryFollower(
+        new PidConstants(1.0, 0.0, 0.01),
+        new PidConstants(1.0, 0.0, 0.01),
+        new HolonomicFeedforward(FEEDFORWARD_CONSTANTS)
+    );
 
     // define the pid constants for each rotation motor
     private static final PidConstants rotation2 = new PidConstants(1.0, 0.0, 0.001);
@@ -101,12 +124,19 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
     );
     private final SwerveOdometry odometry = new SwerveOdometry(kinematics, RigidTransform2.ZERO);
 
+    @GuardedBy("kinematicsLock")
+    private Vector2 velocity = Vector2.ZERO;
+    @GuardedBy("kinematicsLock")
+    private double angularVelocity = 0.0;
+    @GuardedBy("kinematicsLock")
+    private final InterpolatingTreeMap<InterpolatingDouble, RigidTransform2> latencyCompensationMap = new InterpolatingTreeMap<>();
+
     private final Object sensorLock = new Object();
     @GuardedBy("sensorLock")
     public final ADIS16470_IMU adisGyro = RobotMap.imu;
 
-    private double pitchZero;
-    private NetworkTableEntry t265Pitch;
+    public final T265 t265 = new T265();
+    private final boolean useT265 = false;
 
     private final Object kinematicsLock = new Object();
     @GuardedBy("kinematicsLock")
@@ -122,8 +152,6 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
     private NetworkTableEntry poseAngleEntry;
 
     private NetworkTableEntry[] moduleAngleEntries = new NetworkTableEntry[modules.length];
-
-    private boolean angleReset = true;
 
     public DrivetrainSubsystem() {
         synchronized (sensorLock) { 
@@ -143,6 +171,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
                 .withPosition(0, 2)
                 .withSize(1, 1)
                 .getEntry();
+                
 
         // this section adds each swerve module to the driver station's shuffleboard
         ShuffleboardLayout frontLeftModuleContainer = tab.getLayout("Front Left Module", BuiltInLayouts.kList)
@@ -164,10 +193,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
                 .withPosition(7, 0)
                 .withSize(2, 3);
         moduleAngleEntries[3] = backRightModuleContainer.add("Angle", 0.0).getEntry();
-
-        ShuffleboardTab t265Tab = Shuffleboard.getTab("T265");
-        t265Pitch = t265Tab.add("Yaw", 0.0).getEntry();
-}
+    }
 
     public RigidTransform2 getPose() {
         synchronized (kinematicsLock) {
@@ -180,7 +206,30 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
                     pose = RigidTransform2.ZERO;
             }
 
-            resetGyroAngle(Rotation2.ZERO);
+            odometry.resetPose(RigidTransform2.ZERO);
+            t265.reset();
+            resetGyroAngle();
+    }
+
+/*
+    public void resetPose(RigidTransform2 pose) {
+        synchronized (kinematicsLock) {
+            this.pose = pose;
+            odometry.resetPose(pose);
+        }
+    }
+*/
+
+    public Vector2 getVelocity() {
+        synchronized (kinematicsLock) {
+            return velocity;
+        }
+    }
+
+    public double getAngularVelocity() {
+        synchronized (kinematicsLock) {
+            return angularVelocity;
+        }
     }
 
     public void drive(Vector2 translationalVelocity, double rotationalVelocity, boolean fieldOriented) {
@@ -189,28 +238,47 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
         }
     }
 
-    public void resetGyroAngle(Rotation2 angle) {
+    public void resetGyroAngle() {
         synchronized (sensorLock) {
-//                pitchZero = t265Pitch.getDouble(1.0); // SmartDashboard.getNumber("T265/Pitch", 1.0);
                 adisGyro.reset();
-                angleReset = true;
         }
     }
 
     @Override
     public void update(double timestamp, double dt) {
         // updates the odometry and drive signal for the robot at time intervals of length dt
-        updateOdometry(dt);
+        updateOdometry(timestamp, dt);
 
         HolonomicDriveSignal driveSignal;
-        synchronized (stateLock) {
-            driveSignal = this.driveSignal;
+        Optional<HolonomicDriveSignal> trajectorySignal = follower.update(
+                getPose(),
+                getVelocity(),
+                getAngularVelocity(),
+                timestamp,
+                dt
+        );
+        if (trajectorySignal.isPresent()) {
+            driveSignal = trajectorySignal.get();
+            driveSignal = new HolonomicDriveSignal(
+                     driveSignal.getTranslation().scale(1.0 / RobotController.getBatteryVoltage()),
+                     driveSignal.getRotation() / RobotController.getBatteryVoltage(),
+                     driveSignal.isFieldOriented()
+             );
+             SmartDashboard.putNumber("drive signal x", driveSignal.getTranslation().x);
+             SmartDashboard.putNumber("drive signal y", driveSignal.getTranslation().y);
+             SmartDashboard.putNumber("drive signal rot", driveSignal.getRotation());
+
+        } else {
+            synchronized (stateLock) {
+                driveSignal = this.driveSignal;
+            }
         }
+
 
         updateModules(driveSignal, dt);
     }
 
-    private void updateOdometry(double dt) {
+    private void updateOdometry(double timestamp, double dt) {
         // updates the module velocities at time intervals of length dt
         Vector2[] moduleVelocities = new Vector2[modules.length];
         for (int i = 0; i < modules.length; i++) {
@@ -222,26 +290,29 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
 
         // updates robot angle based on gyro at intervals of length dt
         Rotation2 angle;
+        double angularVelocity;
         synchronized (sensorLock) {
-//                double rangle = t265Pitch.getDouble(Double.NaN); // /*SmartDashboard.getNumber("Pitch", 1.0)
-                double rangle = adisGyro.getAngle(); // /*SmartDashboard.getNumber("Pitch", 1.0)
-
-                if (Double.isNaN(rangle)) { 
-                        rangle = pitchZero;
-                }
-
-//                angle = Rotation2.fromRadians(-(rangle - pitchZero)); // subtract from the robot's zero angle
-
-              angle = Rotation2.fromDegrees(rangle-pitchZero);
-
+            if (useT265) {
+                angle = Rotation2.fromRadians(t265.getRotation());
+                angularVelocity = t265.getAngularVelocity();
+            } else {
+                angle = Rotation2.fromDegrees(adisGyro.getAngle());
+                angularVelocity = adisGyro.getRate();
+            }
         }
 
-        RigidTransform2 pose = odometry.update(angle, dt, moduleVelocities); // set the "pose" to the robot's actual pose
         SmartDashboard.putNumber(String.format("gyro reading"), angle.toDegrees());     // put the gyro reading into the smartdashboard
-
-
         synchronized (kinematicsLock) {
-            this.pose = pose;
+            if (useT265) {
+                this.pose = t265.getPose();
+                this.velocity = t265.getVelocity(); //velocity.getTranslationalVelocity();
+                this.angularVelocity = angularVelocity; // t265.getAngularVelocity(); // angularVelocity;
+            } else {
+                ChassisVelocity velocity = kinematics.toChassisVelocity(moduleVelocities);
+                this.pose = odometry.update(angle, dt, moduleVelocities);
+                this.velocity = velocity.getTranslationalVelocity();
+                this.angularVelocity = angularVelocity;
+            }
         }
     }
 
@@ -251,7 +322,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
             velocity = new ChassisVelocity(Vector2.ZERO, 0.0);
         } else if (signal.isFieldOriented()) {
         // if the robot is field oriented, shift translation to account for the rotation
-                double rot = signal.getRotation() - getPose().rotation.toRadians();
+ //               double rot = signal.getRotation() - getPose().rotation.toRadians();
                 
             velocity = new ChassisVelocity(
                     signal.getTranslation().rotateBy(getPose().rotation.inverse()),
@@ -286,16 +357,8 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
         }
     }
 
-    public boolean isAngleReset() {
-        synchronized (sensorLock) {
-               return angleReset;
-        }
-    }
-
-    public void unsetAngleReset() {
-        synchronized (sensorLock) {
-                angleReset = false;
-        }
+    public HolonomicMotionProfiledTrajectoryFollower getFollower() {
+        return follower;
     }
 
 /*    public void setDefenseOn() {
