@@ -40,7 +40,7 @@ public class Mk2SwerveModuleBuilder {
     /**
      * The diameter of the standard wheel in inches.
      */
-    private static final double DEFAULT_WHEEL_DIAMETER = 4.0;
+    private static final double DEFAULT_WHEEL_DIAMETER = 3.8; // 4.0;
 
     /**
      * Default constants for angle pid running on-board with NEOs.
@@ -89,7 +89,7 @@ public class Mk2SwerveModuleBuilder {
      *                the true module angle.
      * @return The builder.
      */
-    public Mk2SwerveModuleBuilder angleEncoder(CANSparkMax motor, double offset) {
+/*    public Mk2SwerveModuleBuilder angleEncoder(CANSparkMax motor, double offset) {
 
         CANAnalog enc = motor.getAnalog(AnalogMode.kAbsolute);
         if (Double.isNaN(offset))
@@ -109,7 +109,7 @@ public class Mk2SwerveModuleBuilder {
 
         return this;
     }
-
+*/
     /**
      * Configures the swerve module to use a CAN Spark MAX driving a NEO as it's angle motor.
      * <p>
@@ -187,9 +187,6 @@ public class Mk2SwerveModuleBuilder {
             controller.setReference(newTarget, ControlType.kPosition);
         };
         initializeAngleCallback = encoder::setPosition;
-
-        if (Double.isNaN(offset))
-            offset = -(1.0 - enc.getPosition() / voltageMax) * 2.0 * Math.PI;
 
         final double off = offset;
         angleSupplier = () -> {

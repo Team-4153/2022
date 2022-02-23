@@ -21,7 +21,7 @@ public class GoToAngleCommand extends CommandBase {
     private double rotationOutput;
 
     // create a pid controller for robot rotation
-    private PidController rotationController = new PidController(new PidConstants(0.8, 0.0, 0.01)); //0.5 0.0 0.008
+    private PidController rotationController = new PidController(new PidConstants(0.8/DrivetrainSubsystem.WHEELBASE, 0.0, 0.01/DrivetrainSubsystem.WHEELBASE)); //0.5 0.0 0.008
 
     public GoToAngleCommand(DrivetrainSubsystem drivetrain,
                         DoubleSupplier forward,
@@ -88,8 +88,8 @@ public class GoToAngleCommand extends CommandBase {
         drivetrain.drive(Vector2.ZERO, 0.0, false);
     }
 
-/*    public boolean isFinished() {
+    public boolean isFinished() {
         return Math.abs(rotationOutput) < 0.05;
     }
-*/
+
 }

@@ -4,7 +4,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import org.frcteam2910.common.math.Vector2;
-
+import org.frcteam2910.common.robot.subsystems.Drivetrain;
+import org.frcteam2910.common.math.Rotation2;
 import org.frcteam2910.common.control.PidConstants;
 import org.frcteam2910.common.control.PidController;
 
@@ -20,7 +21,7 @@ public class DriveCommand extends CommandBase {
     private boolean rotating;
 
     // create a pid controller for robot rotation
-    private PidController rotationController = new PidController(new PidConstants(0.8, 0.0, 0.01)); //0.5 0.0 0.008
+    private PidController rotationController = new PidController(new PidConstants(0.8/DrivetrainSubsystem.WHEELBASE, 0.0, 0.01/DrivetrainSubsystem.WHEELBASE)); //0.8 0.0 0.01
 
     public DriveCommand(DrivetrainSubsystem drivetrain,
                         DoubleSupplier forward,
@@ -50,7 +51,7 @@ public class DriveCommand extends CommandBase {
     }
 
     @Override
-    public void execute() {
+    public synchronized void execute() {
         boolean keepAngle = true;
         double minVal = 0.07;
 
@@ -79,7 +80,7 @@ public class DriveCommand extends CommandBase {
         }
 
         if (Math.abs(rot) < minVal) {
-            rot = 0.0001;
+            rot = 0; // 0.0001;
         }
 
 //        if (Math.abs(fw) < minVal && Math.abs(stf) < minVal && Math.abs(rot) < minVal) {
@@ -93,16 +94,15 @@ public class DriveCommand extends CommandBase {
 
 
         // if the driver isn't rotating the robot, use pid to keep robot orientation constant (rotation = 0)
+        double rotationOutput = 0.0;
         if (keepAngle && Math.abs(rot) < minVal) {
-            if (rotating || drivetrain.isAngleReset()) {
+            if (rotating) {
 //                rotationController.setSetpoint(drivetrain.getPose().rotation.toRadians());
                 rotationController.setSetpoint(drivetrain.getPose().rotation.toRadians());
                 rotating = false;
-                drivetrain.unsetAngleReset();
+            } else {
+                rotationOutput = rotationController.calculate(drivetrain.getPose().rotation.toRadians(), 0.01);
             }
-
-            double rotationOutput = rotationController.calculate(drivetrain.getPose().rotation.toRadians(), 0.01);
-
 
         // drive command, change values here to change robot speed or field oriented
             drivetrain.drive(
@@ -120,7 +120,7 @@ public class DriveCommand extends CommandBase {
             rotating = true;
             drivetrain.drive(
                     new Vector2(fw * speed, stf * speed),
-                    rot,
+                    rot/(2*DrivetrainSubsystem.WHEELBASE),
                     true
             );
         }
@@ -132,4 +132,8 @@ public class DriveCommand extends CommandBase {
         drivetrain.drive(Vector2.ZERO, 0.0, false);
     }
 
+    public synchronized void resetPose() {
+        drivetrain.resetPose();
+        rotationController.setSetpoint(0); //drivetrain.getPose().rotation.toRadians());
+    }
 }

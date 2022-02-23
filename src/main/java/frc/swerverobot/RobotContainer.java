@@ -14,6 +14,7 @@ import static frc.swerverobot.RobotMap.*;
 
 import java.util.function.DoubleSupplier;
 
+import org.frcteam2910.common.math.RigidTransform2;
 import org.frcteam2910.common.math.Rotation2;
 import org.frcteam2910.common.math.Vector2;
 import org.frcteam2910.common.robot.UpdateManager;
@@ -24,12 +25,13 @@ import org.opencv.core.Mat;
 
 public class RobotContainer {
     private final Controller controller = Driver_controller;
-    private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
     private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem shooter = new ShooterSubsystem();
     private final ClimberSubsystem climber = new ClimberSubsystem(CLIMBER_MOTOR, HOOKa, HOOKb, WINCH_SOLa, WINCH_SOLb, CLIMBER_SWITCH);
 
+    private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
     private boolean pointRotation = false;
+    private DriveCommand drivecommand;
 
     private final UpdateManager updateManager = new UpdateManager(
         drivetrain
@@ -37,16 +39,17 @@ public class RobotContainer {
 
     
     public RobotContainer() {
-
-        // set the drivetrain's default command to the driver's controller values
-        CommandScheduler.getInstance().setDefaultCommand(drivetrain, new DriveCommand(
+        this.drivecommand = new DriveCommand(
                 drivetrain,
                 () -> controller.getLeftXAxis().get(true),
                 () -> -controller.getLeftYAxis().get(true),
                 () -> controller.getRightXAxis().get(true),
                 () -> controller.getLeftTriggerAxis().get(true),
                 () -> controller.getRightTriggerAxis().get(true)
-        ));
+        );
+
+        // set the drivetrain's default command to the driver's controller values
+        CommandScheduler.getInstance().setDefaultCommand(drivetrain, drivecommand);
 
 /**     Point rotation control method
         CommandScheduler.getInstance().setDefaultCommand(drivetrain, new GoToAngleCommand(
@@ -71,7 +74,8 @@ public class RobotContainer {
         //[Drive Subsystem]
         controller.getBackButton().whenPressed(
                 //[Drive Subsystem]  Reset Gyro (Update if this is wrong I dont know)
-                () -> drivetrain.resetGyroAngle(Rotation2.ZERO)
+ //               () -> drivetrain.resetGyroAngle(Rotation2.ZERO)
+                () -> drivecommand.resetPose()
         );
 //        controller.getBButton().whenPressed(
 //                //[Drive Subsystem]  Drives in Square (Update if this is wrong I dont know)
@@ -113,15 +117,34 @@ public class RobotContainer {
                         () -> 0.0, 
                         () -> 0.0,
                         () -> 0.0,
-                        () -> -1.0)
+                        () -> -1.0
+                        )
         );
 
+        controller.getRightBumperButton().whenPressed(
+                new FollowBallCommand(drivetrain,
+                        () -> controller.getRightTriggerAxis().get(true),
+                        () -> controller.getRightBumperButton().get()
+                )
+        );
 
-        controller.getStartButton().whenPressed(
+//        controller.getRightTriggerAxis().getButton(0.1).whenPressed(
+//                new FollowBallCommand(drivetrain,
+//                () -> controller.getRightTriggerAxis().get(true)
+//                )
+//        );
+
+
+/*        controller.getStartButton().whenPressed(
+                new PathCommand(drivetrain, 1.0, 0.0, 0.0)
+        );
+*/
+
+/*        controller.getStartButton().whenPressed(
                 //[Drive Subsystem]  Drives in Square (Update if this is wrong I dont know)
-                () -> drivetrain.resetPose()
+                () -> drivetrain.resetPose(new RigidTransform2(new Vector2(0, 0), new Rotation2(0, 0, false)))
         );
-
+*/
 
  
         //[Climber Subsystem]
