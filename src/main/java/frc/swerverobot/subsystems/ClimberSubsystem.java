@@ -1,3 +1,27 @@
+
+/* 
+
+-Mechanics-
+    - Pistons (5 TOTAL)
+        - Elevator/arm pistons (2, left and right)
+            - Allign arm straight
+        - Stationary hook pistons (2, left and right)
+            - Hook onto rung once elevated
+        - Winch piston
+            - Disengages and enganges winch so motors can start spooling/unspooling
+    - Motors
+        - Spooling motors
+            - Spool thread
+
+-Process-
+
+1. Arm piston is activated - this should make the elevator straight to climb
+2. Winch piston disengages
+
+
+
+*/
+
 package frc.swerverobot.subsystems;
 
 import com.revrobotics.CANSparkMax;
@@ -10,36 +34,38 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.swerverobot.RobotMap;
 
 public class ClimberSubsystem extends SubsystemBase{
-    public ClimberSubsystem(int motor, int solenoid_hook1, int solenoid_hook2, int solenoid_winch1, int solenoid_winch2, int aSwitch) {
+    //Initiator
+    public ClimberSubsystem(int spoolMotor, int solenoid_hook1, int solenoid_hook2, int solenoid_winch1, int solenoid_winch2, int aSwitch) {
         super();
-        this.motor = new PWMSparkMax(motor);
-        this.solenoid = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, solenoid_hook1, solenoid_hook1);
-        this.solenoid2 = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, solenoid_winch1, solenoid_winch2);
+        this.spoolMotor = new PWMSparkMax(spoolMotor);
+        this.armPiston = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, solenoid_hook1, solenoid_hook1);
+        this.stathookPiston = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, solenoid_winch1, solenoid_winch2);
         this.Switch = new DigitalInput(aSwitch);
     }
 
-    private final PWMSparkMax motor;
-    private final DoubleSolenoid solenoid;
-    private final DoubleSolenoid solenoid2;
+    private final PWMSparkMax spoolMotor;
+    private final DoubleSolenoid armPiston;
+    private final DoubleSolenoid stathookPiston;
     private final DigitalInput Switch;
     private static boolean Step2;
+
     public void RunMotor(){
-        motor.set(1);
+        spoolMotor.set(1);
     }
     public void StopMotor(){
-        motor.set(0);
+        spoolMotor.set(0);
     }
     public void Lock(){
-        solenoid.set(DoubleSolenoid.Value.kForward);
+        armPiston.set(DoubleSolenoid.Value.kForward);
     }
     public void Unlock(){
-        solenoid.set(DoubleSolenoid.Value.kReverse);
+        armPiston.set(DoubleSolenoid.Value.kReverse);
     }
     public void Lock2(){
-        solenoid2.set(DoubleSolenoid.Value.kForward);
+        stathookPiston.set(DoubleSolenoid.Value.kForward);
     }
     public void Unlock2() {
-        solenoid2.set(DoubleSolenoid.Value.kReverse);
+        stathookPiston.set(DoubleSolenoid.Value.kReverse);
         }
     public boolean GetSwitch(){
         return Switch.get();
@@ -50,4 +76,7 @@ public class ClimberSubsystem extends SubsystemBase{
     public static void setStep2(){
         Step2 = !Step2;
     }
+
+
+
 }
