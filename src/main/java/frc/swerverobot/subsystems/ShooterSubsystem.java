@@ -10,65 +10,60 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 //Color Sensor
 import edu.wpi.first.wpilibj.util.Color;
 
-//Photo Eye
-import edu.wpi.first.wpilibj.DigitalInput;
-
 //Smart Dashboard
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /*      ----Notes----
 - Motors
-    - Prototype used 2 on the front and one in the back to hold the ball
-- How are balls stored?
-    - Held away from shooter by a motor behind shooter
-- Distance to target/machine vision?
-- Autoaim?
+    - Prototype used 2 launch motors and 1 feed motor
+    - Balls are Stored with feed Motor
+- Distance to target with machine vision (Rasberry pie with network cable?|TODO:Figure out network tables/Rasberry pie)
+- TODO: When Shooter is built calibrate the power needed for different distances & the time it takes for it to get the Launch Motors up to speed
 
 - Notes from Prototype Testing
-- With Current Motors and angle of ~30 degrees power of 0.6T0.6B works well to get it into the goal from distance
-- From Close up adding backspin helps
-- Assuming no added force from storage system (The 3rd motor at the end adds speed) 0.5 second wait time before wheels back up to speed
+    - With Current Motors and angle of ~30 degrees power of 0.6T 0.6B works well to get it into the goal from distance
+    - From Close up adding backspin helps
+    - Assuming no added force from storage system (The 3rd motor at the end adds speed) 0.1 second wait time before wheels back up to speed 
 */
 
-
 /*      ----Electronics Needed----
-- Motors (3)
+- Motors (3|Needs Testing)
     - 2 for shooter
     - 1 for feed
-- Motor Controllers (3)
+- Motor Controllers (3|Needs Testing)
     - 1 for each motor in the shooter
+    - Probably Spark or Spark Max motor controllers
 - Machine Vision
     - Camera (1?)
     - Rasberry Pie (1)
-    - Used to detect high goal and rotate robot towrds hub 
-    - Distance?
-        - If we can get reliable distance from Machine Vision relace distance sensor with Machine Vision.
-- Distnace Sensor (Shooting Process #2,3) (Ultrasonic maybe?) (Might be replaced with Machine Vision)
-    - Detect distance to hub for shooting processs #2 and #3
-    - Might need to be aimed upwards because the bottom section is not uniform maybe aim for middle of the lower hoop from edge of the field?
-- Color Sensor (1)
-    - Detect ball color and count
-- Photo Eye (1)
+        - Figure out network tables
+    - Needs to be able to Detect high goal & Distance to hub
+        - Detect distance to hub for shooting processs #2 and #3
+        - If distance to hub is not viable we need to find some way of reliably detecting distance to hub
+            - Things other than machine vision might need to be aimed upwards because the bottom section is not uniform maybe aim for middle of the lower hoop from edge of the field?
+- Color Sensor (1|Functional)
+    - Detect first ball color and count
+- Photo Eye (1|Functional)
     - Detect if there is a second ball
-- PID Controller (Maybe)
+    - Detect if there is only a second ball and not a first one
+- PID Controller (Not-Needed)
     - Keep flywheels at constant speed
     - Might not be needed
 */
 
-
 /*      ----Driver Interaction----
 All controls should be on Noahs controller
-- shootingProcess1(X) - Shoots balls this will use values from auto aim to shoot, The driver can also manually change these values with 
+- shootingProcess1(X:Needs Testing) - Shoots balls this will use values from auto aim to shoot, The driver can also manually change these values with 
 - shootingProcess2(Not Needed) - Auto aims the robot but doesent shoot, the boolean is for aiming for the high or low goal (true = High || false = Low)
-- shootingProcess3(Right Trigger for High Goal | Left Trigger for Low Goal) - Auto aims the robot and shoots, the boolean is for aiming for the high or low goal (true = High || false = Low)
-- manualShooterDistanceIncrease(Y) - Increases the power to both shooter motors by 5%, doesent shoot balls
-- manualShooterDistanceDecrease(A) - Decrease the power to both shooter motors by 5%, doesent shoot balls
-- dropBall(B) - Drops the first ball in the system
+- shootingProcess3(Right Trigger for High Goa0l:Needs Testing | Left Trigger for Low Goal:Needs Testing) - Auto aims the robot and shoots, the boolean is for aiming for the high or low goal (true = High || false = Low)
+- manualShooterDistanceIncrease(Y:Functional) - Increases the power to both shooter motors by 5%, doesent shoot balls
+- manualShooterDistanceDecrease(A:Functional) - Decrease the power to both shooter motors by 5%, doesent shoot balls
+- dropBall(B:Needs Testing) - Drops the first ball in the system
 */
 
-
 /*      ----Processes----
-- Shooting Process #1 (No Aim Assist & 2 Balls)
+- Shooting Process #1 (No Aim Assist & 2 Balls | Needs Testing)
+    - If Process isnt already running
     - Driver Preses Shoot Button or Activated by code (Start Function)
     - Spin bottom & top Motors to variables (This value can be changed by the driver manually or buy the aim program)
     - Wait ~0.5 Seconds
@@ -83,7 +78,8 @@ All controls should be on Noahs controller
     - Stop both intake motors
     - End
     
-- Shooting Process #2 (Aim Assist & 2 Balls)
+- Shooting Process #2 (Aim Assist & 2 Balls | Needs Testing)
+    - If Process isnt already running
     - Driver should position robot roughly aming at the hub before running program
     - Driver Preses Aim Button or Activated by code high or low (Maybe a button combination for the low goal) (Start Function)
     - Machiene vision to find the reflective tape on high goal
@@ -100,219 +96,265 @@ All controls should be on Noahs controller
             - Notify Driver (Maybe a beep or just something on the HUD)
     - End
     
-- Shooting Process #3 (Auto Aim/Auto Shoot)
+- Shooting Process #3 (Auto Aim/Auto Shoot | Needs Testing)
+    - If Process isnt already running
     - Driver should position robot roughly aming at the hub before running program
     - Driver Preses Auto Shoot Button for either high or low (Maybe a button combination for the low goal)
     - Run Shooting Process #2 (Input High Low Goal)
     - Wait until #2 finished
     - Run Shooting Process #1 
     - End
+- Drop Balls
+    - If Process isnt already running
+    - Driver presses button
+    - Gently spin shoot motors
+    - Push forward first ball
+    - Wait 0.2 Seconds
+    - Stop All Motors
+    - End
 */
 
 public class ShooterSubsystem extends SubsystemBase{
-    float bottomMotorPower = 0.3f; //Start the Bottom motor at low power
-    float topMotorPower = 0.3f; //Start the Top motor at low power
-    boolean ballStuck = false; //Is true if there is a ball in the second position(Photoeye) but not the first(Color Sensor)
+    float bottomMotorPower = 0.3f;  //Start the Bottom motor at low power
+    float topMotorPower = 0.3f;     //Start the Top motor at low power
+    boolean ballStuck = false;      //Is true if there is a ball in the second position(Photoeye) but not the first(Color Sensor)
+
+    //Boolean Values for if a function is in progress
+    public Boolean s1 = false; //Shooting Process 1
+    public Boolean s2 = false; //Shooting Process 2
+    public Boolean s3 = false; //Shooting Process 3
+    public Boolean db = false; //Drop Ball Function
 
     //Shooter Motors
-    Spark topShooterMotor = new Spark(TopMotorPort); //The Number is the RIO PWM port from the RobotMap.java
-    Spark bottomShooterMotor = new Spark(BottomMotorPort); //The Number is the RIO PWM port from the RobotMap.java
-    Spark feedMotor = new Spark(FeedMotorPort); //The Number is the RIO PWM port from the RobotMap.java
+    Spark topShooterMotor = new Spark(TopMotorPort);        //The Number is the RIO PWM port from the RobotMap.java
+    Spark bottomShooterMotor = new Spark(BottomMotorPort);  //The Number is the RIO PWM port from the RobotMap.java
+    Spark feedMotor = new Spark(FeedMotorPort);             //The Number is the RIO PWM port from the RobotMap.java
 
-    //      ----Wait Function----
+    //      ----Independent Wait Function----               [Broken]
     public void Wait(float Seconds) {
+        //Currently Broken
         float initTime = System.currentTimeMillis() / 1000f;
         while (System.currentTimeMillis() / 1000f < initTime + Seconds) {
-            return;
+            // return.wait(Seconds);
         }
     }
 
-    //      ----Shooting Functions----
+    //      ----Shooting Functions----                      [SP1:Needs Testing, SP2:Placeholder, SP3:Needs Testing, DB: Needs Testing]
     public Boolean shootingProcess1() {
-        //Get Number of balls at the start of shooting and saves it to a variable for use later
-        int ballcount = ballCount();
+        //TODO: Test if wait timers are actually working or not
+        if (!s2) {//If the function isnt already running
+            s1 = true;//Mark the function as already running to prevent multiple instances of a function running at once
+            //Get Number of balls at the start of shooting and saves it to a variable for use later
+            int ballcount = ballCount();
 
-        if (ballcount == 0) {
-            //If the number of balls is 0 stop the function
-            return false;
-        }
+            if (ballcount == 0) {
+                //If the number of balls is 0 stop the function
+                return false;
+            }
 
-        //Set Top Motor to topMotorPower (This is from autoaim or the manual adjustment functions)
-        topShooterMotor.set(topMotorPower);
-        //Set Bottom Motor to bottomMotorPower (This is from autoaim or the manual adjustment functions)
-        bottomShooterMotor.set(bottomMotorPower);
+            //Set Top Motor to topMotorPower (This is from autoaim or the manual adjustment functions)
+            topShooterMotor.set(topMotorPower);
+            //Set Bottom Motor to bottomMotorPower (This is from autoaim or the manual adjustment functions)
+            bottomShooterMotor.set(bottomMotorPower);
 
-        
-        //Wait 0.2 Seconds for front wheels to get up to speed
-        float initTime = System.currentTimeMillis() / 1000f;
-        while (System.currentTimeMillis() / 1000f < initTime + 0.2f) {
+            
+            //Wait 0.2 Seconds for front wheels to get up to speed
+            float initTime = System.currentTimeMillis() / 1000f;
+            while (System.currentTimeMillis() / 1000f < initTime + 0.2f) {
 
-            //Set Feed Motor to 0.2 (Releases first ball into shooter)
-            feedMotor.set(0.2);
-
-            //Wait 0.1 Seconds for ball to leave shooter
-            float initTime2 = System.currentTimeMillis() / 1000f;
-            while (System.currentTimeMillis() / 1000f < initTime2 + 0.1f) {
-
-                //Set Feed Motor to 0 (Stops any more balls from entering the shooter until front wheels are at speed)
-                feedMotor.stopMotor();
-
-                //If there were 2 balls at the start
-                if (ballcount < 1) {
-
-                    //Wait 0.2 Seconds for front wheels to get up to speed
-                    float initTime3 = System.currentTimeMillis() / 1000f;
-                    while (System.currentTimeMillis() / 1000f < initTime3 + 0.2f) {
-                        //Set Feed Motor to 0.25 (Releases second ball into shooter)
-                        feedMotor.set(0.25);
-                    }
-                }
+                //Set Feed Motor to 0.2 (Releases first ball into shooter)
+                feedMotor.set(0.2);
 
                 //Wait 0.1 Seconds for ball to leave shooter
-                float initTime4 = System.currentTimeMillis() / 1000f;
-                while (System.currentTimeMillis() / 1000f < initTime4 + 0.1f) {
-                    //Stop All Motors
+                float initTime2 = System.currentTimeMillis() / 1000f;
+                while (System.currentTimeMillis() / 1000f < initTime2 + 0.1f) {
+
+                    //Set Feed Motor to 0 (Stops any more balls from entering the shooter until front wheels are at speed)
                     feedMotor.stopMotor();
-                    topShooterMotor.stopMotor();
-                    bottomShooterMotor.stopMotor();
-                    return true;
+
+                    //If there were 2 balls at the start
+                    if (ballcount < 1) {
+
+                        //Wait 0.2 Seconds for front wheels to get up to speed
+                        float initTime3 = System.currentTimeMillis() / 1000f;
+                        while (System.currentTimeMillis() / 1000f < initTime3 + 0.2f) {
+                            //Set Feed Motor to 0.25 (Releases second ball into shooter)
+                            feedMotor.set(0.25);
+                        }
+                    }
+
+                    //Wait 0.1 Seconds for ball to leave shooter
+                    float initTime4 = System.currentTimeMillis() / 1000f;
+                    while (System.currentTimeMillis() / 1000f < initTime4 + 0.1f) {
+                        //Stop All Motors
+                        feedMotor.stopMotor();
+                        topShooterMotor.stopMotor();
+                        bottomShooterMotor.stopMotor();
+                        s1 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                        return true;
+                    }
                 }
             }
-        }
-        return false;
-    }
-    public Boolean shootingProcess2(Boolean highLow) {
-        //Aim Assist (No Shoot)
-        
-        //TODO: When Shooter is Built calibrate if statments for distances
-        
-        //Machine vision to find reflective tape on high goal
-        //Rotate Robot to face hub
-        //Wait Until Facing Hub
-        if (highLow) {
-            //true = High Goal
-
-            //Set bottomMotorPower & topMotorPower variables to needed to get into high goal
-            if (distanceFront() > 3) {
-                bottomMotorPower = 0.3f;
-                topMotorPower = 0.3f;
-                //Return true to signal program completion
-                return true;
-            }
-            else if (distanceFront() > 5) {
-                bottomMotorPower = 0.5f;
-                topMotorPower = 0.5f;
-                //Return true to signal program completion
-                return true;
-            }
-            else if (distanceFront() > 10) {
-                //Out of Bounds
-                //Set Motors to max just incase driver needs to shoot
-                bottomMotorPower = 1f;
-                topMotorPower = 1f;
-                //Return false to notify driver of error
-                return false;
-            } 
+            s1 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+            return false;
         }
         else {
-            //false = Low Goal
+            return false;
+        }
+    }
+    public Boolean shootingProcess2(Boolean highLow) {
+        //TODO: Find hub relative to robot and rotate robot accordingly
+        //Aim Assist (No Shoot)
+        if (!s2) {//If the function isnt already running
+            s2 = true;//Mark the function as already running to prevent multiple instances of a function running at once
+            
+            //TODO: When Shooter is Built calibrate if statments for distances
+            //Machine vision to find reflective tape on high goal
 
-            //Set bottomMotorPower & topMotorPower variables to needed to get into low goal
-            if (distanceFront() > 3) {
-                bottomMotorPower = 0.2f;
-                topMotorPower = 0.2f;
-                //Return true to signal program completion
-                return true;
+            //Rotate Robot to face hub
+            int rotationToHub = rotHub();
+            if (rotationToHub > 0) {
+                //Turn Left
+                //TODO: Figure out how to turn robot a certan number of degrees or radians to the right or left
             }
-            else if (distanceFront() > 5) {
-                bottomMotorPower = 0.3f;
-                topMotorPower = 0.3f;
-                //Return true to signal program completion
-                return true;
+            else if (rotationToHub < 0) {
+                //Turn Right
+                //TODO: Figure out how to turn robot a certan number of degrees or radians to the right or left
             }
-            else if (distanceFront() > 10) {
-                //Out of Bounds
-                //Set Motors to max just incase driver needs to shoot
-                bottomMotorPower = 1f;
-                topMotorPower = 1f;
-                //Return false to notify driver of error
-                return false;
-            } 
+            
+            //Wait Until Facing Hub
+            if (highLow) {
+                //true = High Goal
+
+                //Set bottomMotorPower & topMotorPower variables to needed to get into high goal
+                if (distanceFront() > 3) {
+                    bottomMotorPower = 0.3f;
+                    topMotorPower = 0.3f;
+                    s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                    return true;//Return true to signal program completion
+                }
+                else if (distanceFront() > 5) {
+                    bottomMotorPower = 0.5f;
+                    topMotorPower = 0.5f;
+                    s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                    return true;//Return true to signal program completion
+                }
+                else if (distanceFront() > 10) {
+                    //Out of Bounds
+                    //Set Motors to max just incase driver needs to shoot
+                    bottomMotorPower = 1f;
+                    topMotorPower = 1f;
+                    s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                    return false;//Return true to signal program completion
+                }
+            }
+            else {
+                //false = Low Goal
+
+                //Set bottomMotorPower & topMotorPower variables to needed to get into low goal
+                if (distanceFront() > 3) {
+                    bottomMotorPower = 0.2f;
+                    topMotorPower = 0.2f;
+                    s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                    return true;//Return true to signal program completion
+                }
+                else if (distanceFront() > 5) {
+                    bottomMotorPower = 0.3f;
+                    topMotorPower = 0.3f;
+                    s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                    return true;//Return true to signal program completion
+                }
+                else if (distanceFront() > 10) {
+                    //Out of Bounds
+                    //Set Motors to max just incase driver needs to shoot
+                    bottomMotorPower = 1f;
+                    topMotorPower = 1f;
+                    s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                    return false;//Return false to notify driver of error
+                } 
+            }
         }
         return false;
     }
     public Boolean shootingProcess3(Boolean highLow) {
-        //Run ShootingProcess2 with highlow boolean to aim the robot
-        if (shootingProcess2(highLow) != false) {
-            //Run ShootingProcess1 to shoot all the balls in the robot after done aiming
-            shootingProcess1();
-            return true;
-        }
-        else {
+        //TODO: Test if function is running shooting process 1 and then shooting process 2 in sequence or parallel
+        if (!s3) {//If the function isnt already running
+            s3 = true;//Mark the function as already running to prevent multiple instances of a function running at once
+            //Run ShootingProcess2 with highlow boolean to aim the robot
+            if (shootingProcess2(highLow) != false) {
+                s2 = true;//Mark shooting process 2 as in pogress untill shooting process 3 is done
+                //Run ShootingProcess1 to shoot all the balls in the robot after done aiming
+                shootingProcess1();
+                s2 = false;//Mark shooting process 2 as in pogress untill shooting process 3 is done
+                s3 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                return true;
+            }
+            s3 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
             return false;
         }
+        return false;
     }
     public void dropBall() {
-        //Drops the first ball in the system
-        //Set Top Motor to 0.175 (Barely enough to move it)
-        topShooterMotor.set(0.175);
-        //Set Bottom Motor to 0.175 (Barely enough to move it)
-        bottomShooterMotor.set(0.175);
-        //Set Bottom Motor to 0.2
-        feedMotor.set(0.2);
+        //TODO: Test timing
+        if (!db) {//If the function isnt already running
+            db = true;//Mark the function as already running to prevent multiple instances of a function running at once
+            //Drops the first ball in the system
+            //Set Top Motor to 0.175 (Barely enough to move it)
+            topShooterMotor.set(0.175);
+            //Set Bottom Motor to 0.175 (Barely enough to move it)
+            bottomShooterMotor.set(0.175);
+            //Set Bottom Motor to 0.2
+            feedMotor.set(0.2);
 
-        float initTime = System.currentTimeMillis() / 1000f;
-        while (System.currentTimeMillis() / 1000f < initTime + 0.2f) {//Wait 0.1 Seconds for ball to leave shooter
-            //Stop all the motors
-            feedMotor.stopMotor();
-            topShooterMotor.stopMotor();
-            bottomShooterMotor.stopMotor();
+            float initTime = System.currentTimeMillis() / 1000f;
+            while (System.currentTimeMillis() / 1000f < initTime + 0.2f) {//Wait 0.2 Seconds for ball to leave shooter
+                //Stop all the motors
+                feedMotor.stopMotor();
+                topShooterMotor.stopMotor();
+                bottomShooterMotor.stopMotor();
+                db = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+            }
         }
     }
 
-    //      ----Manual Adjustments Functions----
-    public void manualShooterDistanceIncrease() {
+    //      ----Manual Change Shoot Distance Function----   [Fully Functional]
+    public void changeShooterDistance(float changeTop,float changeBottom) {
         //Top Motor
-        if (topMotorPower < 1) {
+        topMotorPower = topMotorPower + changeTop;
+        if (topMotorPower > 1) {
             topMotorPower = 1f;
         }
-        else {
-            topMotorPower = 0.05f + topMotorPower;
-        }
-        //Bottom Motor
-        if (bottomMotorPower < 1) {
-            bottomMotorPower = 1f;
-        }
-        else {
-            bottomMotorPower = 0.05f + bottomMotorPower;
-        }
-    }
-    public void manualShooterDistanceDecrease() {
-        //Top Motor
-        if (topMotorPower > 0) {
+        else if (topMotorPower < 0) {
             topMotorPower = 0f;
         }
-        else {
-            topMotorPower = -0.1f + topMotorPower;
-        }
         //Bottom Motor
-        if (bottomMotorPower > 0) {
+        bottomMotorPower = bottomMotorPower + changeBottom;
+        if (bottomMotorPower > 1) {
+            bottomMotorPower = 1f;
+        }
+        else if (bottomMotorPower < 0) {
             bottomMotorPower = 0f;
         }
-        else {
-            bottomMotorPower = -0.1f + bottomMotorPower;
-        }
+        SmartDashboard.putNumber("Bottom Motor Saved Power", bottomMotorPower); //Updates "Bottom Motor Saved Power"(int)
+        SmartDashboard.putNumber("Top Motor Saved Power", topMotorPower); //Updates "Bottom Motor Saved Power"(int)
     }
 
-    //      ----Distance Sensor Functions----
+    //      ----Machine Vision Functions----                [DF:Placeholder,RH:Placeholder]
     public int distanceFront() {
+        //TODO: Figure out how to get distance value from rasberrypie (Uses Network Tables)
         //Get distance infront of robot
-        int distance = 5;//Placeholder Value TODO: Figure out how to get distance value from rasberrypie(Something about a network cable)
+        int distance = 5;//Placeholder Value 
         SmartDashboard.putNumber("Distance to Hub", distance);
         return distance;
     }
+    public int rotHub() {
+        //https://docs.wpilib.org/en/stable/docs/software/networktables/reading-array-values-published-by-networktables.html
+        //Above for when rasberry pi is publishing data to network table and is connected
+        int rotationToHub = 20; //TODO: Figure out how the Rasbery Pi mesures rotation to hub and adjust code accordingly (Value Currently Placeholder)
+        return rotationToHub;
+    }
 
-    //      ----Ball Count & Color Functions----
+    //      ----Ball Count & Color Functions----            [BC:Fully Functional, B1C: Fully Functional]
     public int ballCount() {
         //Starts the count of balls at 0
         int ballCount = 0;
@@ -370,7 +412,7 @@ public class ShooterSubsystem extends SubsystemBase{
         return ball1Color;
     }
 
-    //      ----Variable Update Function----
+    //      ----Variable Update Function----                [Fully Functional]
     public void updateHudVariablesShooter() {    
         //Updates all the Variables that are sent to the drivers station for the shooter subsystem
         ballCount(); //Updates "Ball Count"(int), "Ball Stuck"(bool), "Ball 1 Color"(string)
@@ -379,9 +421,10 @@ public class ShooterSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("Top Motor Saved Power", topMotorPower); //Updates "Bottom Motor Saved Power"(int)
     }
 
-    //      ----Controlls [Right Trigger Auto Aim & Shoot High | Left Trigger|Auto Aim & Shoot Low]----
+    //      ----Controls [Right Trigger Auto Aim & Shoot High | Left Trigger|Auto Aim & Shoot Low]----  [Fully Functional]
     @Override
     public void periodic() {
+        //When Triggers are Pressed
         if (AimShootHigh.get() > 0.5) {
             //Auto Aim & Shoot into the High Goal
             shootingProcess3(true);
@@ -391,5 +434,33 @@ public class ShooterSubsystem extends SubsystemBase{
             shootingProcess3(false);
         }
         updateHudVariablesShooter();//Updates the variables being sent to the drivers station
+    }
+    public void ControllerButtonInit (){
+        //When Buttons are Pressed
+        Shoot.whenPressed(
+            //High Goal Auto Aim & Shoot
+            () -> this.shootingProcess1()
+        );
+        ManualShootIncrease.whenPressed(
+            //Manually Increase Shooter Distance by 5%
+            () -> this.changeShooterDistance(0.025f,0.025f)
+        );
+        ManualShootDecrease.whenPressed(
+            //Manually Decrease Shooter Distance by 5%
+            () -> this.changeShooterDistance(-0.025f,-0.025f)
+        );
+        EjectBall.whenPressed(
+            //Drops the first ball in storage
+            () -> this.dropBall()
+        );
+        //When Buttons are Held
+        ManualShootIncrease.whileActiveContinuous(
+            //Manually Increase Shooter Distance by 1% while held
+            () -> this.changeShooterDistance(0.01f,0.01f)
+        );
+        ManualShootDecrease.whileActiveContinuous(
+            //Manually Decrease Shooter Distance by 1% while held
+            () -> this.changeShooterDistance(-0.01f,-0.01f)
+        );
     }
 }

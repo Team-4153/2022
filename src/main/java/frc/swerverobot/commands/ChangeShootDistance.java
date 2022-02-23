@@ -3,11 +3,11 @@ package frc.swerverobot.commands;
 import frc.swerverobot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class DecreaseShootDistance extends CommandBase {
+public class ChangeShootDistance extends CommandBase {
 
-  public DecreaseShootDistance(ShooterSubsystem subsystem) {
+  public ChangeShootDistance(ShooterSubsystem subsystem, Float TopChange, Float BottomChange) {
     final ShooterSubsystem m_subsystem = subsystem;
-    subsystem.manualShooterDistanceDecrease();
+    subsystem.changeShooterDistance(TopChange,BottomChange);
     addRequirements(m_subsystem);
   }
 

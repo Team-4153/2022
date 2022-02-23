@@ -13,7 +13,7 @@ public class ClimberSubsystem extends SubsystemBase{
     public ClimberSubsystem(int motor, int solenoid_hook1, int solenoid_hook2, int solenoid_winch1, int solenoid_winch2, int aSwitch) {
         super();
         this.motor = new PWMSparkMax(motor);
-        this.solenoid = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, solenoid_hook1, solenoid_hook1);
+        this.solenoid = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, solenoid_hook1, solenoid_hook2);
         this.solenoid2 = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, solenoid_winch1, solenoid_winch2);
         this.Switch = new DigitalInput(aSwitch);
     }

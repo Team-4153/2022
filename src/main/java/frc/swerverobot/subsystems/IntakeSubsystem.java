@@ -1,8 +1,8 @@
 package frc.swerverobot.subsystems;
 
 //Setup
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.swerverobot.RobotMap.*;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //Pneumatics
@@ -16,17 +16,15 @@ import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj.util.Color;
 
 
-
 public class IntakeSubsystem extends SubsystemBase {
   //Creates a new IntakeSubsystem
   public IntakeSubsystem() {}
 
-  //Solenoid for intake extension and Compression
+  //Solenoid for intake extension and compression
   private DoubleSolenoid Intake_Sol = new DoubleSolenoid(PH_CAN_ID, PneumaticsModuleType.REVPH, INTAKE_SOLa, INTAKE_SOLb);
+
   //Motor for spinning wheels
   private PWMVictorSPX Intake_Motor = new PWMVictorSPX(Intake_Motor_PWM);
-  //Needed for Ball functions, turns to true when the photoeye detects a ball, but colorsensor doesn't
-  boolean ballStuck = false;
 
   //Ball functions needed for knowing whether or not shooting is allowed
   public int ballCount() {
@@ -34,32 +32,32 @@ public class IntakeSubsystem extends SubsystemBase {
     int ballCount = 0;
 
     //Look for first ball with color
-    if (ball1color() != "none") {
-        ballStuck = false;
-        
-        //1 Ball Found
-        ballCount = 1;
+    if (ball1color() != "none") 
+    {
+      
+      //1 Ball Found
+      ballCount = 1;
 
-        //Look for second ball with photo eye
-        if (photoEye.get() == true) {
-            //2 Balls found
-            ballCount = 2;
-        }
+      //Look for second ball with photo eye
+      if (photoEye.get() == true) 
+      {
+        //2 Balls found
+        ballCount = 2;
+      }
     }
-    else {
+    else 
+    {
         //Check if there is a ball in second position but not first
-        if (photoEye.get() == true) {
-            //A ball is in the second position but not the first
-            ballCount = 1;
-            ballStuck = true;
-        }
+      if (photoEye.get() == true) {
+          //A ball is in the second position but not the first
+        ballCount = 1;
+      }
     }
 
     //No else statment because value is initalized at 0
-    SmartDashboard.putNumber("Ball Count", ballCount);
-    SmartDashboard.putBoolean("Ball Stuck", ballStuck);
     return ballCount;
 }
+  
   public String ball1color() {
     //Detected Color & Proximity from Color Sensor 1
     Color detectedColor = colorSensor.getColor();
@@ -68,17 +66,18 @@ public class IntakeSubsystem extends SubsystemBase {
     String ball1Color = "none";
 
     //Check ball color
-    if (proximity > 125) {//125 is 1 inch and half a ball away from the color sensor
-        if (detectedColor.red > detectedColor.blue) {
-            //The 1st ball is Red
-            //set variable to be returned to Red
-            ball1Color = "Red";
-        }
-        else {
-            //The 1st ball is Blue
-            //set variable to be returned to Blue
-            ball1Color = "Blue";
-        }
+    if (proximity > 125) //125 is 1 inch and half a ball away from the color sensor
+    {
+      if (detectedColor.red > detectedColor.blue)//The 1st ball is Red
+      {
+          //set variable to be returned to Red
+          ball1Color = "Red";
+      }
+      else //The 1st ball is Blue
+      {
+          //set variable to be returned to Blue
+          ball1Color = "Blue";
+      }
     }
     
     //No else statment because value is initalized at "none"
@@ -89,7 +88,11 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() 
   {
-
+    int ballcount = ballCount();
+    if (ballcount == 2)
+    {
+    Intake_Motor.set(0.0);
+    }
   }
 
   @Override
@@ -111,7 +114,8 @@ public class IntakeSubsystem extends SubsystemBase {
   public void Extend() 
   {
     int ballcount = ballCount();
-    if (ballcount == 0) {
+    if (ballcount < 2) 
+    {
       Intake_Sol.set(DoubleSolenoid.Value.kForward);
       Intake_Motor.set(0.5);
     }

@@ -25,11 +25,11 @@ import org.opencv.core.Mat;
 
 public class RobotContainer {
     private final Controller controller = Driver_controller;
-    private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
     private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem shooter = new ShooterSubsystem();
     private final ClimberSubsystem climber = new ClimberSubsystem(CLIMBER_MOTOR, HOOKa, HOOKb, WINCH_SOLa, WINCH_SOLb, CLIMBER_SWITCH);
 
+    private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
     private boolean pointRotation = false;
     private DriveCommand drivecommand;
 
@@ -155,29 +155,6 @@ public class RobotContainer {
         );
         */
 
-        //[Shooter Subystem]
-          //All controls should be on Noahs controller
-          //shootingProcess1(X) - Shoots balls this will use values from auto aim to shoot, The driver can also manually change these values with D-Pad Up || D-Pad Down
-          //shootingProcess2(Not A Button) - Auto aims the robot but doesent shoot, the boolean is for aiming for the high or low goal (true = High || false = Low)
-          //shootingProcess3(Right Trigger for High Goal | Left Trigger for Low Goal) - Auto aims the robot and shoots, the boolean is for aiming for the high or low goal (true = High || false = Low)
-          //manualShooterDistanceIncrease(Y) - Increases the power to both shooter motors by 5%, doesent shoot balls
-          //manualShooterDistanceDecrease(A) - Decrease the power to both shooter motors by 5%, doesent shoot balls
-          //dropBall(B) - Drops the first ball in the system
-        Shoot.whenPressed(
-                //[Shooter Subsystem] High Goal Auto Aim & Shoot
-                new Shoot1(shooter)
-        );
-        ManualShootIncrease.whenPressed(
-                //[Shooter Subsystem] Manually Increase Shooter Distance by 5%
-                new IncreaseShootDistance(shooter)
-        );
-        ManualShootDecrease.whenPressed(
-                //[Shooter Subsystem] Manually Decrease Shooter Distance by 5%
-                new DecreaseShootDistance(shooter)
-        );
-        EjectBall.whenPressed(
-                //[Shooter Subsystem] Drops the first ball in storage
-                new EjectBall(shooter)
-        );
+        shooter.ControllerButtonInit();//Initalizes all the controller buttons for the Shooter Subsystem
     }
 }
