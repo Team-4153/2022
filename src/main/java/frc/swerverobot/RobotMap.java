@@ -84,14 +84,14 @@ public class RobotMap {
     public static final int INTAKE_SOLa = 0;//[Intake Subsystem]
     public static final int INTAKE_SOLb = 1;//[Intake Subsystem]
 
-    public static final int CLIMBER_ARMa = 4;//[Climber Subsystem]
-    public static final int CLIMBER_ARMb = 5;//[Climber Subsystem]
+    public static final int ARM_FORWARD = 4;//[Climber Subsystem]
+    public static final int ARM_BACK = 5;//[Climber Subsystem]
 
-    public static final int HOOKa = 2;//[Climber Subsystem]
-    public static final int HOOKb = 3;//[Climber Subsystem]
+    public static final int HOOK_CLOSE = 2;//[Climber Subsystem]
+    public static final int HOOK_OPEN = 3;//[Climber Subsystem]
 
-    public static final int WINCH_SOLa = 6;//[Climber Subsystem]
-    public static final int WINCH_SOLb = 7;//[Climber Subsystem]
+    public static final int WINCH_LOCK = 6;//[Climber Subsystem]
+    public static final int WINCH_UNLOCK = 7;//[Climber Subsystem]
 
 //Drive Train -- uses spark max CAN ID 1-8 
 // EVEN numbers are angle motors, ODD numbers are drive motors

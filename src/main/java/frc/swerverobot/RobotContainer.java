@@ -3,7 +3,11 @@ package frc.swerverobot;
 import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.swerverobot.commands.*;
+import frc.swerverobot.commands.drive.*;
+import frc.swerverobot.commands.climb.*;
+import frc.swerverobot.commands.intake.*;
+import frc.swerverobot.commands.shooter.*;
+import frc.swerverobot.commands.auto.*;
 import frc.swerverobot.subsystems.ClimberSubsystem;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import frc.swerverobot.subsystems.IntakeSubsystem;
@@ -27,7 +31,7 @@ public class RobotContainer {
     private final Controller controller = Driver_controller;
     private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem shooter = new ShooterSubsystem();
-    private final ClimberSubsystem climber = new ClimberSubsystem(CLIMBER_MOTOR, HOOKa, HOOKb, WINCH_SOLa, WINCH_SOLb, CLIMBER_SWITCH);
+    private final ClimberSubsystem climber = new ClimberSubsystem();
 
     private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
     private boolean pointRotation = false;

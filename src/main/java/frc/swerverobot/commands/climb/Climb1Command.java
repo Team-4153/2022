@@ -1,4 +1,4 @@
-package frc.swerverobot.commands;
+package frc.swerverobot.commands.climb;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.swerverobot.subsystems.ClimberSubsystem;
@@ -25,15 +25,15 @@ public class Climb1Command extends Command {
      */
     @Override
     protected void execute() {
-        if(!ClimberSubsystem.isStep2()){
-            subsystem.Unlock();
-            subsystem.Unlock2();
+/*        if(!ClimberSubsystem.isStep2()){
+            subsystem.winchUnlock();
+            subsystem.unspool();
             subsystem.RunMotor();
             ClimberSubsystem.setStep2();
         }
         else{
             subsystem.Lock2();
-        }
+        }*/
     }
 
     /**

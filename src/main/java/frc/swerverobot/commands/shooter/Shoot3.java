@@ -1,13 +1,13 @@
-package frc.swerverobot.commands;
+package frc.swerverobot.commands.shooter;
 
 import frc.swerverobot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class EjectBall extends CommandBase {
+public class Shoot3 extends CommandBase {
 
-  public EjectBall(ShooterSubsystem subsystem) {
+  public Shoot3(ShooterSubsystem subsystem, Boolean highLow) {
     final ShooterSubsystem m_subsystem = subsystem;
-    subsystem.dropBall();
+    subsystem.shootingProcess3(highLow);
     addRequirements(m_subsystem);
   }
 

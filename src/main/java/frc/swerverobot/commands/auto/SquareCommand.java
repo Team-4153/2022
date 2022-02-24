@@ -1,8 +1,9 @@
-package frc.swerverobot.commands;
+package frc.swerverobot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import org.frcteam2910.common.math.Vector2;
+import frc.swerverobot.commands.drive.*;
 
 public class SquareCommand extends SequentialCommandGroup {
     public SquareCommand(DrivetrainSubsystem drivetrain, double speed, double dt) {

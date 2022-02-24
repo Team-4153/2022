@@ -1,4 +1,4 @@
-package frc.swerverobot.commands;
+package frc.swerverobot.commands.intake;
 
 import frc.swerverobot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
