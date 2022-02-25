@@ -7,11 +7,9 @@ import frc.swerverobot.subsystems.ClimberSubsystem;
 
 public class SpoolCommand extends CommandBase{
     private final ClimberSubsystem climb;
-    private boolean buttonPressed;
     
-    public SpoolCommand(ClimberSubsystem climb, BooleanSupplier buttonPressed) {
+    public SpoolCommand(ClimberSubsystem climb) {
         this.climb = climb;
-        this.buttonPressed = buttonPressed.getAsBoolean();
     }
 
     @Override
@@ -20,15 +18,13 @@ public class SpoolCommand extends CommandBase{
 
     @Override
     public void execute() {
+
         if(!climb.isLocked()) {
             climb.setLocked(true);
         }
 
+        climb.spool();
 
-        while(buttonPressed) {
-            climb.spool();
-        }
-        climb.StopMotor();
     }
 
 

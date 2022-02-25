@@ -28,10 +28,11 @@ import org.frcteam2910.common.robot.input.DPadButton.Direction;
 import org.opencv.core.Mat;
 
 public class RobotContainer {
-    private final Controller controller = Driver_controller;
+    private final Controller driveController = RobotMap.Driver_controller;
+    private final Controller manipulatorController = RobotMap.Shooter_controller;
     private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem shooter = new ShooterSubsystem();
-    private final ClimberSubsystem climber = new ClimberSubsystem();
+    private final ClimberSubsystem climb = new ClimberSubsystem();
 
     private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
     private boolean pointRotation = false;
@@ -45,11 +46,11 @@ public class RobotContainer {
     public RobotContainer() {
         this.drivecommand = new DriveCommand(
                 drivetrain,
-                () -> controller.getLeftXAxis().get(true),
-                () -> -controller.getLeftYAxis().get(true),
-                () -> controller.getRightXAxis().get(true),
-                () -> controller.getLeftTriggerAxis().get(true),
-                () -> controller.getRightTriggerAxis().get(true)
+                () -> driveController.getLeftXAxis().get(true),
+                () -> -driveController.getLeftYAxis().get(true),
+                () -> driveController.getRightXAxis().get(true),
+                () -> driveController.getLeftTriggerAxis().get(true),
+                () -> driveController.getRightTriggerAxis().get(true)
         );
 
         // set the drivetrain's default command to the driver's controller values
@@ -76,7 +77,7 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         //[Drive Subsystem]
-        controller.getBackButton().whenPressed(
+        driveController.getBackButton().whenPressed(
                 //[Drive Subsystem]  Reset Gyro (Update if this is wrong I dont know)
  //               () -> drivetrain.resetGyroAngle(Rotation2.ZERO)
                 () -> drivecommand.resetPose()
@@ -85,7 +86,7 @@ public class RobotContainer {
 //                //[Drive Subsystem]  Drives in Square (Update if this is wrong I dont know)
 //                new SquareCommand(drivetrain, 0.4, 1)
 //        );
-        controller.getYButton().whenPressed(
+        driveController.getYButton().whenPressed(
                 new GoToAngleCommand(
                         drivetrain,
                         () -> 0.0,
@@ -95,7 +96,7 @@ public class RobotContainer {
                         )
         );
 
-        controller.getBButton().whenPressed(
+        driveController.getBButton().whenPressed(
                 new GoToAngleCommand(
                         drivetrain,
                         () -> 0.0,
@@ -105,7 +106,7 @@ public class RobotContainer {
                         )
         );
 
-        controller.getXButton().whenPressed(
+        driveController.getXButton().whenPressed(
                 new GoToAngleCommand(
                         drivetrain,
                         () -> 0.0,
@@ -115,7 +116,7 @@ public class RobotContainer {
                         )
         );
 
-        controller.getAButton().whenPressed(
+        driveController.getAButton().whenPressed(
                 new GoToAngleCommand(
                         drivetrain,
                         () -> 0.0, 
@@ -125,10 +126,10 @@ public class RobotContainer {
                         )
         );
 
-        controller.getRightBumperButton().whenPressed(
+        driveController.getRightBumperButton().whenPressed(
                 new FollowBallCommand(drivetrain,
-                        () -> controller.getRightTriggerAxis().get(true),
-                        () -> controller.getRightBumperButton().get()
+                        () -> driveController.getRightTriggerAxis().get(true),
+                        () -> driveController.getRightBumperButton().get()
                 )
         );
 
@@ -152,12 +153,28 @@ public class RobotContainer {
 
  
         //[Climber Subsystem]
-        /*  
-        controller.getYButton().whenPressed(
+ 
+        manipulatorController.getYButton().whenPressed(
                 //[Climber Subsystem] Climb
-                (Command) new Climb1Command(climber)
+                new WinchLockCommand(climb)
         );
-        */
+
+        manipulatorController.getBButton().whenPressed(
+                new PullandGrabCommand(climb)
+        );
+
+        manipulatorController.getAButton().whenPressed(
+                new GetToNextRungCommand(climb)
+        );
+
+        manipulatorController.getXButton().whenHeld(
+                new SpoolCommand(climb)
+        );
+
+        manipulatorController.getLeftBumperButton().whenPressed(
+                new StaticHookCommand(climb)
+        );
+        
 
         shooter.ControllerButtonInit();//Initalizes all the controller buttons for the Shooter Subsystem
     }

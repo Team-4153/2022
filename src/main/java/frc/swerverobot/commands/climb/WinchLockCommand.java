@@ -7,11 +7,9 @@ import frc.swerverobot.subsystems.ClimberSubsystem;
 
 public class WinchLockCommand extends CommandBase{
     private ClimberSubsystem climb;
-    private boolean buttonPressed;
 
-    public WinchLockCommand(ClimberSubsystem climb, BooleanSupplier buttonPressed) {
+    public WinchLockCommand(ClimberSubsystem climb) {
         this.climb = climb;
-        this.buttonPressed = buttonPressed.getAsBoolean();
 
         addRequirements(climb);
     }
@@ -23,10 +21,10 @@ public class WinchLockCommand extends CommandBase{
 
     @Override
     public void execute() {
-        if(climb.isLocked() && buttonPressed) {
+        if(climb.isLocked()) {
             climb.winchUnlock();
         }
-        else if(!climb.isLocked() && buttonPressed) {
+        else if(!climb.isLocked()) {
             climb.winchLock();
         }
     }
@@ -36,7 +34,7 @@ public class WinchLockCommand extends CommandBase{
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
 }

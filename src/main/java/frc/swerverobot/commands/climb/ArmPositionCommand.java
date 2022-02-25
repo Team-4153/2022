@@ -1,18 +1,13 @@
 package frc.swerverobot.commands.climb;
 
-import java.util.function.BooleanSupplier;
-
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.swerverobot.subsystems.ClimberSubsystem;
 
 public class ArmPositionCommand extends CommandBase{
     private final ClimberSubsystem climb;
-    private boolean buttonPressed;
     
-    public ArmPositionCommand(ClimberSubsystem climb, BooleanSupplier buttonPressed) {
+    public ArmPositionCommand(ClimberSubsystem climb) {
         this.climb = climb;
-        this.buttonPressed = buttonPressed.getAsBoolean();
 
         addRequirements(climb);
     }
@@ -23,10 +18,10 @@ public class ArmPositionCommand extends CommandBase{
 
     @Override
     public void execute() {
-        if(buttonPressed && climb.isArmUp()) {
+        if(climb.isArmUp()) {
             climb.armDown();
         }
-        else if(buttonPressed && !climb.isArmUp()) {
+        else if(!climb.isArmUp()) {
             climb.armUp();
         }
     }

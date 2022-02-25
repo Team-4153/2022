@@ -9,13 +9,13 @@ public class GetToNextRungCommand extends SequentialCommandGroup{
 
     public GetToNextRungCommand(ClimberSubsystem climb) {
         addCommands(
-            new WinchLockCommand(climb, () -> true),
+            new WinchLockCommand(climb),
             new WaitCommand(time),
-            new WinchLockCommand(climb, () -> true),
+            new WinchLockCommand(climb),
 
-            new ArmPositionCommand(climb, () -> true),
-            new WinchLockCommand(climb, () -> true),
-            new ArmPositionCommand(climb, () -> true)
+            new ArmPositionCommand(climb),
+            new WinchLockCommand(climb),
+            new ArmPositionCommand(climb)
         );
     }
 
