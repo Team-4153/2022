@@ -87,6 +87,22 @@ public class ClimberSubsystem extends SubsystemBase{
     private boolean armUp;
     private boolean hookOpen;
 
+
+    public void motorInit() {
+	spoolMotor.setSafetyEnabled(false);
+    }
+
+    public void solenoidInit() {
+	armPiston.set(DoubleSolenoid.Value.kReverse);
+	stathookPiston.set(DoubleSolenoid.Value.kReverse);
+	winchSolenoid.set(DoubleSolenoid.Value.kReverse);
+    }
+
+    public void init() {
+	this.motorInit();
+	this.solenoidInit();
+    }
+
     public void spool(){
         spoolMotor.set(1);
     }

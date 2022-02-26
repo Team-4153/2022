@@ -72,7 +72,8 @@ public class RobotContainer {
     }
 
     private void initRobot() {
-       intake.init();
+	intake.init();
+	climb.init();
     }
 
     private void configureButtonBindings() {
