@@ -154,26 +154,26 @@ public class RobotContainer {
  
         //[Climber Subsystem]
  
-        manipulatorController.getYButton().whenPressed(
-                //[Climber Subsystem] Climb
-                new WinchLockCommand(climb)
-        );
+        // manipulatorController.getYButton().whenPressed(
+        //         //[Climber Subsystem] Climb
+        //         new WinchLockCommand(climb)
+        // );
 
-        manipulatorController.getBButton().whenPressed(
-                new PullandGrabCommand(climb)
-        );
+        // manipulatorController.getBButton().whenPressed(
+        //         new PullandGrabCommand(climb)
+        // );
 
-        manipulatorController.getAButton().whenPressed(
-                new GetToNextRungCommand(climb)
-        );
+        // manipulatorController.getAButton().whenPressed(
+        //         new GetToNextRungCommand(climb)
+        // );
 
-        manipulatorController.getXButton().whenHeld(
-                new SpoolCommand(climb)
-        );
+        // manipulatorController.getXButton().whenHeld(
+        //         new SpoolCommand(climb)
+        // );
 
-        manipulatorController.getLeftBumperButton().whenPressed(
-                new StaticHookCommand(climb)
-        );
+        // manipulatorController.getLeftBumperButton().whenPressed(
+        //         new StaticHookCommand(climb)
+        // );
         
 
         shooter.ControllerButtonInit();//Initalizes all the controller buttons for the Shooter Subsystem

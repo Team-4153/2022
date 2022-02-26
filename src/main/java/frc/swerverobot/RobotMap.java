@@ -82,7 +82,7 @@ public class RobotMap {
 //Pneumatics
     public static final int PH_CAN_ID = 1;//[Pneumatic hub CAN address]    
     public static final int INTAKE_SOLa = 0;//[Intake Subsystem]
-    public static final int INTAKE_SOLb = 1;//[Intake Subsystem]
+    public static final int INTAKE_SOLb = 8;//[Intake Subsystem]
 
     public static final int ARM_FORWARD = 4;//[Climber Subsystem]
     public static final int ARM_BACK = 5;//[Climber Subsystem]

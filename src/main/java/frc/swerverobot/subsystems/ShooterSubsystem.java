@@ -141,7 +141,7 @@ public class ShooterSubsystem extends SubsystemBase{
 
     //      ----Shooting Functions----                      [SP1:Needs Testing, SP2:Placeholder, SP3:Needs Testing, DB: Needs Testing]
     public Boolean shootingProcess1() {
-        //TODO: Test if wait timers are actually working or not
+        //TODO: Wait functions do not work fix them & fix shooter Motors not fiering
         if (!s2) {//If the function isnt already running
             s1 = true;//Mark the function as already running to prevent multiple instances of a function running at once
             //Get Number of balls at the start of shooting and saves it to a variable for use later
@@ -163,7 +163,7 @@ public class ShooterSubsystem extends SubsystemBase{
             while (System.currentTimeMillis() / 1000f < initTime + 0.2f) {
 
                 //Set Feed Motor to 0.2 (Releases first ball into shooter)
-                feedMotor.set(0.2);
+                feedMotor.set(-0.2);
 
                 //Wait 0.1 Seconds for ball to leave shooter
                 float initTime2 = System.currentTimeMillis() / 1000f;
@@ -179,7 +179,7 @@ public class ShooterSubsystem extends SubsystemBase{
                         float initTime3 = System.currentTimeMillis() / 1000f;
                         while (System.currentTimeMillis() / 1000f < initTime3 + 0.2f) {
                             //Set Feed Motor to 0.25 (Releases second ball into shooter)
-                            feedMotor.set(0.25);
+                            feedMotor.set(-0.25);
                         }
                     }
 
@@ -304,7 +304,7 @@ public class ShooterSubsystem extends SubsystemBase{
             //Set Bottom Motor to 0.175 (Barely enough to move it)
             bottomShooterMotor.set(0.175);
             //Set Bottom Motor to 0.2
-            feedMotor.set(0.2);
+            feedMotor.set(-0.2);
 
             float initTime = System.currentTimeMillis() / 1000f;
             while (System.currentTimeMillis() / 1000f < initTime + 0.2f) {//Wait 0.2 Seconds for ball to leave shooter

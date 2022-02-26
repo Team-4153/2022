@@ -116,14 +116,14 @@ public class IntakeSubsystem extends SubsystemBase {
     int ballcount = ballCount();
     if (ballcount < 2) 
     {
-      Intake_Sol.set(DoubleSolenoid.Value.kForward);
-      Intake_Motor.set(0.5);
+      Intake_Sol.set(DoubleSolenoid.Value.kReverse);
+      Intake_Motor.set(-0.5);
     }
   }
 
   public void Compress() 
   {
-    Intake_Sol.set(DoubleSolenoid.Value.kReverse);
+    Intake_Sol.set(DoubleSolenoid.Value.kForward);
     Intake_Motor.set(0.0);  
   }
 
