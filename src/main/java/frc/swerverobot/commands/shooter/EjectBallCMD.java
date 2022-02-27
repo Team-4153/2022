@@ -1,22 +1,15 @@
 package frc.swerverobot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.swerverobot.subsystems.ShooterSubsystem;
 
-public class Shoot1 extends SequentialCommandGroup{
-    public Shoot1(ShooterSubsystem shooter) {
+public class EjectBallCMD extends SequentialCommandGroup{
+    public EjectBallCMD(ShooterSubsystem shooter) {
         addCommands(
-            new Shoot1A(shooter),
+            new EjectBall(),
             new WaitCommand(0.2),
-            new Shoot1B(shooter),
-            new WaitCommand(0.1),
-            new Shoot1C(shooter),
-            new WaitCommand(0.1),
-            new Shoot1B(shooter),
-            new WaitCommand(0.1),
-            new Shoot1E(shooter)
+            new EjectBalla()
         );
     }
 

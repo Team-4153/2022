@@ -11,12 +11,15 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 //Motors
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 //Sensors
 import edu.wpi.first.wpilibj.util.Color;
 
 
 public class IntakeSubsystem extends SubsystemBase {
+  public  boolean feedStatus = false;                              // 
+
   //Creates a new IntakeSubsystem
   public IntakeSubsystem() {}
 
@@ -66,7 +69,7 @@ public class IntakeSubsystem extends SubsystemBase {
     String ball1Color = "none";
 
     //Check ball color
-    if (proximity > 125) //125 is 1 inch and half a ball away from the color sensor
+    if (proximity > 100) //125 is 1 inch and half a ball away from the color sensor
     {
       if (detectedColor.red > detectedColor.blue)//The 1st ball is Red
       {
@@ -91,7 +94,17 @@ public class IntakeSubsystem extends SubsystemBase {
     int ballcount = ballCount();
     if (ballcount == 2)
     {
-    Intake_Motor.set(0.0);
+      Intake_Motor.stopMotor();
+    }
+    if (ball1color() == "none" && Intake_Sol.get() == DoubleSolenoid.Value.kReverse)
+    {
+      feedMotor.set(-0.2);
+      feedStatus = true;
+    }
+    else if (feedStatus == true && Intake_Sol.get() == DoubleSolenoid.Value.kReverse)
+    {
+      feedMotor.stopMotor();
+      feedStatus = false;
     }
   }
 
@@ -104,11 +117,12 @@ public class IntakeSubsystem extends SubsystemBase {
   public void Motor_init()
   {
     Intake_Motor.setSafetyEnabled(false);
+    feedMotor.setSafetyEnabled(false);
   }
 
   public void Sol_init() 
   {
-    Intake_Sol.set(DoubleSolenoid.Value.kReverse);
+    Intake_Sol.set(DoubleSolenoid.Value.kForward);
   }
 
   public void Extend() 

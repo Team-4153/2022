@@ -12,6 +12,9 @@ import org.frcteam2910.common.robot.input.Controller;
 import org.frcteam2910.common.robot.input.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Button;
 
+//Motor Controller Libraries
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+
 /*Needed Electronics
 Solenoids(4)
 Motor Controllers (13)
@@ -37,11 +40,14 @@ public class RobotMap {
     public static final int CLIMBER_SWITCH = 2;//Clark moved this   
 
 //PWM Motors
-    public static final int TopMotorPort = 1;       //[Shooter Subsystem] The Number is the RIO DIO port 
-    public static final int BottomMotorPort = 2;    //[Shooter Subsystem] The Number is the RIO DIO port
-    public static final int FeedMotorPort = 0;      //[Shooter Subsystem] The Number is the RIO DIO port
-    public static final int Intake_Motor_PWM = 3;   //[Intake Subsystem] PWM for intake motor
-    public static final int CLIMBER_MOTOR = 4;      //[Climber Subsystem] The Number is the RIO DIO port (Winch)
+    public static final int TopMotorPort = 1;                       //[Shooter Subsystem] The Number is the RIO DIO port 
+    public static final Spark topShooterMotor = new Spark(TopMotorPort);        //The Number is the RIO PWM port from the RobotMap.java
+    public static final int BottomMotorPort = 2;                    //[Shooter Subsystem] The Number is the RIO DIO port
+    public static final Spark bottomShooterMotor = new Spark(BottomMotorPort);  //The Number is the RIO PWM port from the RobotMap.java
+    public static final int FeedMotorPort = 0;                      //[Shooter Subsystem] The Number is the RIO DIO port
+    public static final Spark feedMotor = new Spark(FeedMotorPort); //[Shooter / Intake Subsystems]
+    public static final int Intake_Motor_PWM = 3;                   //[Intake Subsystem] PWM for intake motor
+    public static final int CLIMBER_MOTOR = 4;                      //[Climber Subsystem] The Number is the RIO DIO port (Winch)
 
 //Controls
     //DriveTrain Controller (Kendal)
@@ -53,8 +59,8 @@ public class RobotMap {
     
     //Shooter/Climber Controller (Noah)
     public static final Controller Shooter_controller = new XboxController(1);//[Shooter's Controller]
-    public static final Button Shoot = Shooter_controller.getAButton();//[Shooter Subsystem](A)
-    public static final Button EjectBall = Shooter_controller.getBButton();//[Shooter Subsystem](B)
+    public static final Button Shoot = Shooter_controller.getXButton();//[Shooter Subsystem](X)
+    public static final Button Ejectball = Shooter_controller.getBButton();//[Shooter Subsystem](B)
     public static final Button ManualShootIncrease = Shooter_controller.getYButton();//[Shooter Subsystem](Y)
     public static final Button ManualShootDecrease = Shooter_controller.getAButton();//[Shooter Subsystem](A)
     public static final Axis AimShootLow = Shooter_controller.getLeftTriggerAxis();//[Shooter Subsystem](L-Trigger)

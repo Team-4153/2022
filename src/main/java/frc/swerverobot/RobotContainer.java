@@ -74,6 +74,7 @@ public class RobotContainer {
     private void initRobot() {
 	intake.init();
 	climb.init();
+        shooter.init();
     }
 
     private void configureButtonBindings() {
@@ -178,5 +179,14 @@ public class RobotContainer {
         
 
         shooter.ControllerButtonInit();//Initalizes all the controller buttons for the Shooter Subsystem
+        
+        Shoot.whenPressed(
+            //High Goal Auto Aim & Shoot
+            new Shoot1(shooter)
+        );
+        Ejectball.whenPressed(
+            //Drops the first ball in storage
+            new EjectBall()
+        );
     }
 }
