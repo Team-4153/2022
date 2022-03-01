@@ -134,7 +134,7 @@ public class ShooterSubsystem extends SubsystemBase{
     //      ----Shooting Functions----                      [SP1:Needs Testing, SP2:Placeholder, SP3:Needs Testing, DB: Needs Testing]
     public void shootingProcess1a() {
         // if (!s2) {//If the function isnt already running or If the number of balls is 0 stop the function
-            s1 = true;//Mark the function as already running to prevent multiple instances of a function running at once
+            // s1 = true;//Mark the function as already running to prevent multiple instances of a function running at once
             //Set Top Motor to topMotorPower (This is from autoaim or the manual adjustment functions)
             topShooterMotor.set(topMotorPower);
             //Set Bottom Motor to bottomMotorPower (This is from autoaim or the manual adjustment functions)
@@ -160,14 +160,14 @@ public class ShooterSubsystem extends SubsystemBase{
         feedMotor.stopMotor();
         topShooterMotor.stopMotor();
         bottomShooterMotor.stopMotor();
-        s1 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+        // s1 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
     }
     
     public Boolean shootingProcess2(Boolean highLow) {
         //TODO: Find hub relative to robot and rotate robot accordingly
         //Aim Assist (No Shoot)
-        if (!s2) {//If the function isnt already running
-            s2 = true;//Mark the function as already running to prevent multiple instances of a function running at once
+        // if (!s2) {//If the function isnt already running
+            // s2 = true;//Mark the function as already running to prevent multiple instances of a function running at once
             
             //TODO: When Shooter is Built calibrate if statments for distances
             //Machine vision to find reflective tape on high goal
@@ -191,13 +191,13 @@ public class ShooterSubsystem extends SubsystemBase{
                 if (distanceFront() > 3) {
                     bottomMotorPower = 0.3f;
                     topMotorPower = 0.3f;
-                    s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                    // s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
                     return true;//Return true to signal program completion
                 }
                 else if (distanceFront() > 5) {
                     bottomMotorPower = 0.5f;
                     topMotorPower = 0.5f;
-                    s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                    // s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
                     return true;//Return true to signal program completion
                 }
                 else if (distanceFront() > 10) {
@@ -205,7 +205,7 @@ public class ShooterSubsystem extends SubsystemBase{
                     //Set Motors to max just incase driver needs to shoot
                     bottomMotorPower = 1f;
                     topMotorPower = 1f;
-                    s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                    // s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
                     return false;//Return true to signal program completion
                 }
             }
@@ -216,13 +216,13 @@ public class ShooterSubsystem extends SubsystemBase{
                 if (distanceFront() > 3) {
                     bottomMotorPower = 0.2f;
                     topMotorPower = 0.2f;
-                    s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                    // s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
                     return true;//Return true to signal program completion
                 }
                 else if (distanceFront() > 5) {
                     bottomMotorPower = 0.3f;
                     topMotorPower = 0.3f;
-                    s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                    // s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
                     return true;//Return true to signal program completion
                 }
                 else if (distanceFront() > 10) {
@@ -230,35 +230,34 @@ public class ShooterSubsystem extends SubsystemBase{
                     //Set Motors to max just incase driver needs to shoot
                     bottomMotorPower = 1f;
                     topMotorPower = 1f;
-                    s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                    // s2 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
                     return false;//Return false to notify driver of error
                 } 
             }
-        }
+        // }
         return false;
     }
     public Boolean shootingProcess3(Boolean highLow) {
-        //TODO: Test if function is running shooting process 1 and then shooting process 2 in sequence or parallel
-        if (!s3) {//If the function isnt already running
-            s3 = true;//Mark the function as already running to prevent multiple instances of a function running at once
+        // if (!s3) {//If the function isnt already running
+            // s3 = true;//Mark the function as already running to prevent multiple instances of a function running at once
             //Run ShootingProcess2 with highlow boolean to aim the robot
             if (shootingProcess2(highLow) != false) {
-                s2 = true;//Mark shooting process 2 as in pogress untill shooting process 3 is done
+                // s2 = true;//Mark shooting process 2 as in pogress untill shooting process 3 is done
                 //Run ShootingProcess1 to shoot all the balls in the robot after done aiming
-                // new 
-                s2 = false;//Mark shooting process 2 as in pogress untill shooting process 3 is done
-                s3 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+                //TODO: Figure out how to run a command from a subsystem
+                // s2 = false;//Mark shooting process 2 as in pogress untill shooting process 3 is done
+                // s3 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
                 return true;
             }
-            s3 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+            // s3 = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
             return false;
-        }
-        return false;
+        // }
+        // return false;
     }
     public void dropBall() {
         //TODO: Test timing
-        if (!db) {//If the function isnt already running
-            db = true;//Mark the function as already running to prevent multiple instances of a function running at once
+        // if (!db) {//If the function isnt already running
+            // db = true;//Mark the function as already running to prevent multiple instances of a function running at once
             //Drops the first ball in the system
             //Set Top Motor to 0.175 (Barely enough to move it)
             topShooterMotor.set(0.175);
@@ -266,14 +265,14 @@ public class ShooterSubsystem extends SubsystemBase{
             bottomShooterMotor.set(0.175);
             //Set Bottom Motor to 0.2
             feedMotor.set(-0.2);
-        }
+        // }
     }
     public void dropBalla() {
         //Stop all the motors
         feedMotor.stopMotor();
         topShooterMotor.stopMotor();
         bottomShooterMotor.stopMotor();
-        db = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
+        // db = false;//Mark the function as finished this is to prevent multiple instances of a function running at once
     }
 
     //      ----Manual Change Shoot Distance Function----   [Fully Functional]
@@ -374,10 +373,13 @@ public class ShooterSubsystem extends SubsystemBase{
     //      ----Variable Update Function----                [Fully Functional]
     public void updateHudVariablesShooter() {    
         //Updates all the Variables that are sent to the drivers station for the shooter subsystem
+        
         ballCount(); //Updates "Ball Count"(int), "Ball Stuck"(bool), "Ball 1 Color"(string)
         distanceFront(); //Updates "Distance to Hub"(int)
         SmartDashboard.putNumber("Bottom Motor Saved Power", bottomMotorPower); //Updates "Bottom Motor Saved Power"(int)
         SmartDashboard.putNumber("Top Motor Saved Power", topMotorPower); //Updates "Bottom Motor Saved Power"(int)
+
+        //Debug Values Start (Theses can be removed after fixing the shooter if they aren't needed)
 
         SmartDashboard.putNumber("Top Motor Set Power", topShooterMotor.get()); //Updates "Bottom Motor Saved Power"(int)
         SmartDashboard.putNumber("Bottom Motor Set Power", bottomShooterMotor.get()); //Updates "Bottom Motor Saved Power"(int)
@@ -386,20 +388,22 @@ public class ShooterSubsystem extends SubsystemBase{
         SmartDashboard.putBoolean("Top Motor Saftey", topShooterMotor.isSafetyEnabled()); //Pushes Top Motor Saftey to the Smart Dashboard
         SmartDashboard.putBoolean("Bottom Motor Saftey", bottomShooterMotor.isSafetyEnabled()); //Pushes Bottom Motor Saftey to the Smart Dashboard
         SmartDashboard.putBoolean("Feed Motor Saftey", feedMotor.isSafetyEnabled()); //Pushes Feed Motor Saftey to the Smart Dashboard
+
+        //Debug Values End
     }
 
     //      ----Controls [Right Trigger Auto Aim & Shoot High | Left Trigger|Auto Aim & Shoot Low]----  [Fully Functional]
     @Override
     public void periodic() {
         //When Triggers are Pressed
-        if (AimShootHigh.get() > 0.5) {
-            //Auto Aim & Shoot into the High Goal
-            shootingProcess3(true);
-        }
-        if (AimShootLow.get() > 0.5) {
-            //Auto Aim & Shoot into the Low Goal
-            shootingProcess3(false);
-        }
+        // if (AimShootHigh.get() > 0.5) {
+        //     //Auto Aim & Shoot into the High Goal
+        //     shootingProcess3(true);
+        // }
+        // if (AimShootLow.get() > 0.5) {
+        //     //Auto Aim & Shoot into the Low Goal
+        //     shootingProcess3(false);
+        // }
         updateHudVariablesShooter();//Updates the variables being sent to the drivers station
     }
     public void ControllerButtonInit() {
@@ -424,7 +428,10 @@ public class ShooterSubsystem extends SubsystemBase{
     }
     public void init() {
         feedMotor.setSafetyEnabled(false);
+        feedMotor.stopMotor();
         topShooterMotor.setSafetyEnabled(false);
+        topShooterMotor.stopMotor();
         bottomShooterMotor.setSafetyEnabled(false);
+        bottomShooterMotor.stopMotor();
     }
 }

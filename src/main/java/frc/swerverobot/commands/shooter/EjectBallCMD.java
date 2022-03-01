@@ -5,10 +5,11 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.swerverobot.subsystems.ShooterSubsystem;
 
 public class EjectBallCMD extends SequentialCommandGroup{
-    public EjectBallCMD() {
+    public EjectBallCMD(ShooterSubsystem shooter) {
         addCommands(
-            new EjectBall().withTimeout(0.2),
-            new EjectBalla()
+            new EjectBall(shooter),
+            new WaitCommand(0.2),
+            new EjectBalla(shooter)
         );
     }
 }
