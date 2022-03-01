@@ -10,45 +10,45 @@ import edu.wpi.first.wpilibj.util.Color;
 
 public class ShooterSubsystem2 extends SubsystemBase {
 
-    private final topMotor;
-    private final botMotor;
-    private final feedMotor;
-    private int ballCount;
+    private final Spark topMotor;
+    private final Spark botMotor;
+    private final Spark feedMotor;
+    private int ballCount = 0;
 
     public ShooterSubsystem2() {
-	this.topMotor = new Spark(RobotMap.TopMotorPort);
-	this.bottomMotor = new Spark(RobotMap.BottomMotorPart);
-	this.feedMotor = new Spark(RobotMap.FeedMotorPort);
+	this.topMotor = new Spark(TopMotorPort);
+	this.botMotor = new Spark(BottomMotorPort);
+	this.feedMotor = new Spark(FeedMotorPort);
     }
 
     public void init() {
         feedMotor.setSafetyEnabled(false);
         topMotor.setSafetyEnabled(false);
-        bottomMotor.setSafetyEnabled(false);
-	ballCount = 0;
+        botMotor.setSafetyEnabled(false);
+    	ballCount = 0;
     }
 
     @Override
     public void periodic() {
-	checkBalls();
+	    checkBalls();
+        pushDashboardVars();
     }
 
     public void checkBalls() {
-	if (ball1Color() != "none" || photoEye.get()) {
-	    ballCount = 1;
+        if (ball1Color() != "none" || photoEye.get()) {
+            ballCount = 1;
 
-	    if (ball1Color() != "none" && photoEye.get()) {
-		ballCount = 2;
-	    }
+            if (ball1Color() != "none" && photoEye.get()) {
+            ballCount = 2;
+            }
 
-	}
-	else {
-	    ballCount = 0;
-	}
-
+        }
+        else {
+            ballCount = 0;
+        }
     }
 
-    public String ball1color() {
+    public String ball1Color() {
         //Detected Color & Proximity from Color Sensor 1
         Color detectedColor = colorSensor.getColor();
         int proximity = colorSensor.getProximity();
@@ -74,17 +74,21 @@ public class ShooterSubsystem2 extends SubsystemBase {
         return ball1Color;
     }
 
+    public void pushDashboardVars() {
+        SmartDashboard.putNumber("Ball Cound", getBallCount());
+    }
+
     public int getBallCount() {
-	return ballCount;
+	    return ballCount;
     }
 
     public void setShootMotorSpeeds(double topSpeed, double botSpeed) {
-	topMotor.set(topSpeed);
-	botMotor.set(botSpeed);
+	    topMotor.set(topSpeed);
+	    botMotor.set(botSpeed);
     }
 
     public void setFeedMotorSpeeds(double feedSpeed) {
-	feedMotor.set(feedSpeed);
+    	feedMotor.set(feedSpeed);
     }
 
 }

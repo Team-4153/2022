@@ -5,13 +5,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.swerverobot.commands.drive.*;
 import frc.swerverobot.commands.climb.*;
-import frc.swerverobot.commands.intake.*;
+//import frc.swerverobot.commands.intake.*;
 import frc.swerverobot.commands.shooter.*;
 import frc.swerverobot.commands.auto.*;
 import frc.swerverobot.subsystems.ClimberSubsystem;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
-import frc.swerverobot.subsystems.IntakeSubsystem;
-import frc.swerverobot.subsystems.ShooterSubsystem;
+//import frc.swerverobot.subsystems.IntakeSubsystem;
+import frc.swerverobot.subsystems.ShooterSubsystem2;
 
 //Robot Map
 import static frc.swerverobot.RobotMap.*;
@@ -30,8 +30,8 @@ import org.opencv.core.Mat;
 public class RobotContainer {
     private final Controller driveController = RobotMap.Driver_controller;
     private final Controller manipulatorController = RobotMap.Shooter_controller;
-    private final IntakeSubsystem intake = new IntakeSubsystem();
-    private final ShooterSubsystem shooter = new ShooterSubsystem();
+//    private final IntakeSubsystem intake = new IntakeSubsystem();
+    private final ShooterSubsystem2 shooter = new ShooterSubsystem2();
     private final ClimberSubsystem climb = new ClimberSubsystem();
 
     private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
@@ -72,7 +72,7 @@ public class RobotContainer {
     }
 
     private void initRobot() {
-	intake.init();
+//	intake.init();
 	climb.init();
         shooter.init();
     }
@@ -156,37 +156,47 @@ public class RobotContainer {
  
         //[Climber Subsystem]
  
-        // manipulatorController.getYButton().whenPressed(
-        //         //[Climber Subsystem] Climb
-        //         new WinchLockCommand(climb)
-        // );
+        manipulatorController.getYButton().whenPressed(
+                //[Climber Subsystem] Climb
+                new WinchLockCommand(climb)
+        );
 
-        // manipulatorController.getBButton().whenPressed(
-        //         new PullandGrabCommand(climb)
-        // );
+        manipulatorController.getBButton().whenPressed(
+                new PullandGrabCommand(climb)
+        );
 
-        // manipulatorController.getAButton().whenPressed(
-        //         new GetToNextRungCommand(climb)
-        // );
+        manipulatorController.getAButton().whenPressed(
+                new GetToNextRungCommand(climb)
+        );
 
-        // manipulatorController.getXButton().whenHeld(
-        //         new SpoolCommand(climb)
-        // );
+        manipulatorController.getXButton().whenHeld(
+                new SpoolCommand(climb)
+        );
 
-        // manipulatorController.getLeftBumperButton().whenPressed(
-        //         new StaticHookCommand(climb)
-        // );
+        manipulatorController.getLeftBumperButton().whenPressed(
+                new StaticHookCommand(climb)
+        );
         
 
-        shooter.ControllerButtonInit();//Initalizes all the controller buttons for the Shooter Subsystem
+//        shooter.ControllerButtonInit();//Initalizes all the controller buttons for the Shooter Subsystem
         
+//
+// THIS SHOOTER          vvvvvvvv
+// THIS WORKS!!!!!!!!
+// THIS WORKS!!!!!!!!
+//
+
+
         // Shoot.whenPressed(
         //     //High Goal Auto Aim & Shoot
         //     new Shoot1(shooter)
         // );
-        Ejectball.whenPressed(
+/*        Ejectball.whenPressed(
             //Drops the first ball in storage
-            new EjectBallCMD(shooter)
+            new RunShootMotors(shooter, 0.3, 0.3)
         );
+        Shoot.whenPressed(
+            new ShootCommand(shooter, -0.5, 0.5)
+        );*/
     }
 }

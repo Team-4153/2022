@@ -41,11 +41,11 @@ public class RobotMap {
 
 //PWM Motors
     public static final int TopMotorPort = 1;                                   //[Shooter Subsystem] The Number is the RIO DIO port 
-    public static final Spark topShooterMotor = new Spark(TopMotorPort);        //The Number is the RIO PWM port from the RobotMap.java
+    // public static final Spark topShooterMotor = new Spark(TopMotorPort);        //The Number is the RIO PWM port from the RobotMap.java
     public static final int BottomMotorPort = 2;                                //[Shooter Subsystem] The Number is the RIO DIO port
-    public static final Spark bottomShooterMotor = new Spark(BottomMotorPort);  //The Number is the RIO PWM port from the RobotMap.java
+    // public static final Spark bottomShooterMotor = new Spark(BottomMotorPort);  //The Number is the RIO PWM port from the RobotMap.java
     public static final int FeedMotorPort = 0;                                  //[Shooter Subsystem] The Number is the RIO DIO port
-    public static final Spark feedMotor = new Spark(FeedMotorPort);             //[Shooter / Intake Subsystems]
+    // public static final Spark feedMotor = new Spark(FeedMotorPort);             //[Shooter / Intake Subsystems]
     public static final int Intake_Motor_PWM = 3;                               //[Intake Subsystem] PWM for intake motor
     public static final int CLIMBER_MOTOR = 4;                                  //[Climber Subsystem] The Number is the RIO DIO port (Winch)
 
