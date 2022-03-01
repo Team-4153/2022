@@ -17,7 +17,6 @@ public class ShooterSubsystem2 extends SubsystemBase {
     //     ----Variable Initialization----
     private final Spark topMotor;
     private final Spark botMotor;
-    private final Spark feedMotor;
     private int ballCount = 0;
     private boolean ballStuck = false;
 
@@ -25,7 +24,6 @@ public class ShooterSubsystem2 extends SubsystemBase {
     public ShooterSubsystem2() {
         this.topMotor = new Spark(TopMotorPort); //Defines the top motor with the port from the RobotMap
         this.botMotor = new Spark(BottomMotorPort); //Defines the bottom motor with the port from the RobotMap
-        this.feedMotor = new Spark(FeedMotorPort); //Defines the feed motor with the port from the RobotMap
     }
 
     //      ----Shooter Motor Functions----             [SMS:Fully Functional, FMS: Fully Functional, PL: Fully Functional]
@@ -91,7 +89,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
         String ball1Color = "none";
 
         //Check ball color
-        if (proximity > 100) {//Smaller values are closer and bigger is farther away
+        if (proximity > colorSensorDistance) {//Smaller values are closer and bigger is farther away
             if (detectedColor.red > detectedColor.blue) {
                 //The 1st ball is Red
                 //set variable to be returned to Red

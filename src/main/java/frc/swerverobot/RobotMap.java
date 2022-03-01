@@ -36,16 +36,15 @@ public class RobotMap {
     public static final int PhotoEyePort = 0;                                   //[Shooter Subsystem] The Number is the RIO DIO port (Outputs a Digital Input|Like a Limit Switch)
     public static final I2C.Port i2cPort = I2C.Port.kOnboard;                   //[Shooter Subsystem] Color Sensor (Only one I2C port on the robot)
     public static final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort); //[Shooter/Intake Subsystem] The Number is the I2C port from the RobotMap.java
+    public static final int colorSensorDistance = 100;                          //[Shooter/Intake Subsystem] The Number is the distance from the sensor to the target (Small=Close, Big=Far)
     public static final DigitalInput photoEye = new DigitalInput(PhotoEyePort); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
     public static final int CLIMBER_SWITCH = 2;                                 //Clark moved this   
 
 //PWM Motors
     public static final int TopMotorPort = 1;                                   //[Shooter Subsystem] The Number is the RIO DIO port 
-    // public static final Spark topShooterMotor = new Spark(TopMotorPort);        //The Number is the RIO PWM port from the RobotMap.java
     public static final int BottomMotorPort = 2;                                //[Shooter Subsystem] The Number is the RIO DIO port
-    // public static final Spark bottomShooterMotor = new Spark(BottomMotorPort);  //The Number is the RIO PWM port from the RobotMap.java
     public static final int FeedMotorPort = 0;                                  //[Shooter Subsystem] The Number is the RIO DIO port
-    // public static final Spark feedMotor = new Spark(FeedMotorPort);             //[Shooter / Intake Subsystems]
+    public static final Spark feedMotor = new Spark(FeedMotorPort);             //[Shooter / Intake Subsystems]
     public static final int Intake_Motor_PWM = 3;                               //[Intake Subsystem] PWM for intake motor
     public static final int CLIMBER_MOTOR = 4;                                  //[Climber Subsystem] The Number is the RIO DIO port (Winch)
 
