@@ -180,13 +180,13 @@ public class RobotContainer {
 
         shooter.ControllerButtonInit();//Initalizes all the controller buttons for the Shooter Subsystem
         
-        Shoot.whenPressed(
-            //High Goal Auto Aim & Shoot
-            new Shoot1(shooter)
-        );
+        // Shoot.whenPressed(
+        //     //High Goal Auto Aim & Shoot
+        //     new Shoot1(shooter)
+        // );
         Ejectball.whenPressed(
             //Drops the first ball in storage
-            new EjectBall()
+            new EjectBallCMD(shooter)
         );
     }
 }
