@@ -40,7 +40,7 @@ public class Mk2SwerveModuleBuilder {
     /**
      * The diameter of the standard wheel in inches.
      */
-    private static final double DEFAULT_WHEEL_DIAMETER = 4.0;
+    private static final double DEFAULT_WHEEL_DIAMETER = 3.8; // 4.0;
 
     /**
      * Default constants for angle pid running on-board with NEOs.
@@ -89,7 +89,7 @@ public class Mk2SwerveModuleBuilder {
      *                the true module angle.
      * @return The builder.
      */
-    public Mk2SwerveModuleBuilder angleEncoder(CANSparkMax motor, double offset) {
+/*    public Mk2SwerveModuleBuilder angleEncoder(CANSparkMax motor, double offset) {
 
         CANAnalog enc = motor.getAnalog(AnalogMode.kAbsolute);
         if (Double.isNaN(offset))
@@ -109,7 +109,7 @@ public class Mk2SwerveModuleBuilder {
 
         return this;
     }
-
+*/
     /**
      * Configures the swerve module to use a CAN Spark MAX driving a NEO as it's angle motor.
      * <p>
@@ -122,13 +122,13 @@ public class Mk2SwerveModuleBuilder {
      *              in radians.
      * @return The builder.
      */
-    public Mk2SwerveModuleBuilder angleMotor(CANSparkMax motor, double offset) {
-        return angleMotor(motor, DEFAULT_CAN_SPARK_MAX_ANGLE_CONSTANTS, DEFAULT_ANGLE_REDUCTION, offset);
+    public Mk2SwerveModuleBuilder angleMotor(CANSparkMax motor, double offset, double voltageMax) {
+        return angleMotor(motor, DEFAULT_CAN_SPARK_MAX_ANGLE_CONSTANTS, DEFAULT_ANGLE_REDUCTION, offset, voltageMax);
     }
 
-    public Mk2SwerveModuleBuilder angleMotor(CANSparkMax motor, MotorType motorType, double offset) {
+    public Mk2SwerveModuleBuilder angleMotor(CANSparkMax motor, MotorType motorType, double offset, double voltageMax) {
         if (motorType == MotorType.NEO) {
-            return angleMotor(motor, DEFAULT_CAN_SPARK_MAX_ANGLE_CONSTANTS, DEFAULT_ANGLE_REDUCTION, offset);
+            return angleMotor(motor, DEFAULT_CAN_SPARK_MAX_ANGLE_CONSTANTS, DEFAULT_ANGLE_REDUCTION, offset, voltageMax);
         }
 
         return angleMotor((SpeedController) motor, motorType);
@@ -147,7 +147,7 @@ public class Mk2SwerveModuleBuilder {
      *                  For example, an 18:1 ratio should be specified by {@code 18.0 / 1.0}.
      * @return The builder.
      */
-    public Mk2SwerveModuleBuilder angleMotor(CANSparkMax motor, PidConstants constants, double reduction, double offset) {
+    public Mk2SwerveModuleBuilder angleMotor(CANSparkMax motor, PidConstants constants, double reduction, double offset, double voltageMax) {
         CANEncoder encoder = motor.getEncoder();
         encoder.setPositionConversionFactor(2.0 * Math.PI / reduction);
 
@@ -158,6 +158,8 @@ public class Mk2SwerveModuleBuilder {
         controller.setP(constants.p);
         controller.setI(constants.i);
         controller.setD(constants.d);
+
+//        motor.setSmartCurrentLimit(40);
 
 
         targetAngleConsumer = targetAngle -> {
@@ -186,13 +188,11 @@ public class Mk2SwerveModuleBuilder {
         };
         initializeAngleCallback = encoder::setPosition;
 
-        if (Double.isNaN(offset))
-            offset = -(1.0 - enc.getPosition() / 3.3) * 2.0 * Math.PI;
-
         final double off = offset;
         angleSupplier = () -> {
-            double angle = (1.0 - enc.getPosition() / 3.3) * 2.0 * Math.PI;
+            double angle = (1.0 - enc.getPosition() / voltageMax) * 2.0 * Math.PI;
             SmartDashboard.putNumber(String.format("%d: encoder raw", motor.getDeviceId()), angle*180/Math.PI);
+            SmartDashboard.putNumber(String.format("%d: encoder voltage", motor.getDeviceId()), enc.getPosition());
             angle += off;
             angle %= 2.0 * Math.PI;
             if (angle < 0.0) {
@@ -341,6 +341,8 @@ public class Mk2SwerveModuleBuilder {
         CANEncoder encoder = motor.getEncoder();
         encoder.setPositionConversionFactor(wheelDiameter * Math.PI / reduction);
         encoder.setVelocityConversionFactor(wheelDiameter * Math.PI / reduction * (1.0 / 60.0)); // RPM to units per second
+
+        motor.setSmartCurrentLimit(30);
 
         currentDrawSupplier = motor::getOutputCurrent;
         distanceSupplier = encoder::getPosition;
