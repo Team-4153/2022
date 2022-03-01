@@ -378,9 +378,14 @@ public class ShooterSubsystem extends SubsystemBase{
         distanceFront(); //Updates "Distance to Hub"(int)
         SmartDashboard.putNumber("Bottom Motor Saved Power", bottomMotorPower); //Updates "Bottom Motor Saved Power"(int)
         SmartDashboard.putNumber("Top Motor Saved Power", topMotorPower); //Updates "Bottom Motor Saved Power"(int)
-        feedMotor.setSafetyEnabled(false);
-        topShooterMotor.setSafetyEnabled(false);
-        bottomShooterMotor.setSafetyEnabled(false);
+
+        SmartDashboard.putNumber("Top Motor Set Power", topShooterMotor.get()); //Updates "Bottom Motor Saved Power"(int)
+        SmartDashboard.putNumber("Bottom Motor Set Power", bottomShooterMotor.get()); //Updates "Bottom Motor Saved Power"(int)
+        SmartDashboard.putNumber("Feed Motor Set Power", feedMotor.get()); //Updates "Bottom Motor Saved Power"(int)
+
+        SmartDashboard.putBoolean("Top Motor Saftey", topShooterMotor.isSafetyEnabled()); //Pushes Top Motor Saftey to the Smart Dashboard
+        SmartDashboard.putBoolean("Bottom Motor Saftey", bottomShooterMotor.isSafetyEnabled()); //Pushes Bottom Motor Saftey to the Smart Dashboard
+        SmartDashboard.putBoolean("Feed Motor Saftey", feedMotor.isSafetyEnabled()); //Pushes Feed Motor Saftey to the Smart Dashboard
     }
 
     //      ----Controls [Right Trigger Auto Aim & Shoot High | Left Trigger|Auto Aim & Shoot Low]----  [Fully Functional]
