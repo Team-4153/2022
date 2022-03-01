@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import static frc.swerverobot.RobotMap.*;
 
 public class EjectBalla extends CommandBase {
-
   public EjectBalla() {
       //Set Top Motor to 0.175 (Barely enough to move it)
       topShooterMotor.stopMotor();
@@ -14,15 +13,5 @@ public class EjectBalla extends CommandBase {
       //Set Bottom Motor to 0.2
       feedMotor.stopMotor();
       System.out.println("Stop SHooter Motors");
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
   }
 }
