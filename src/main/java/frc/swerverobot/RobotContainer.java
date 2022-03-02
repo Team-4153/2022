@@ -183,7 +183,7 @@ public class RobotContainer {
             new ShootCommand(shooter, -0.1, 0.1)
         );
         Shoot.whenPressed(
-            new ShootCommand(shooter, -0.5, 0.5)
+            new ShootCommand(shooter, -0.7, 0.7)
         );
 
 

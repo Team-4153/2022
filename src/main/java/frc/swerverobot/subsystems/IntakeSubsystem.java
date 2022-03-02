@@ -91,22 +91,12 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() 
   {
+    //Stops when 2 balls in robot
     int ballcount = ballCount();
     if (ballcount == 2)
     {
       Intake_Motor.stopMotor();
     }
-/*    if (ball1color() == "none" && Intake_Sol.get() == DoubleSolenoid.Value.kReverse)
-    {
-      feedMotor.set(-0.2);
-      feedStatus = true;
-    }*/
-/*    else if (feedStatus == true && Intake_Sol.get() == DoubleSolenoid.Value.kReverse)
-    {
-      feedMotor.stopMotor();
-      feedStatus = false;
-    }
-  }*/
 }
 
   @Override
