@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.util.Color;
 
 
 public class IntakeSubsystem extends SubsystemBase {
-  public  boolean feedStatus = false;                              // 
+  public  boolean feedStatus = false;
 
   //Creates a new IntakeSubsystem
   public IntakeSubsystem() {}
@@ -69,7 +69,7 @@ public class IntakeSubsystem extends SubsystemBase {
     String ball1Color = "none";
 
     //Check ball color
-    if (proximity > 100) //125 is 1 inch and half a ball away from the color sensor
+    if (proximity > colorSensorDistance)//Smaller values are closer and bigger is farther away
     {
       if (detectedColor.red > detectedColor.blue)//The 1st ball is Red
       {
