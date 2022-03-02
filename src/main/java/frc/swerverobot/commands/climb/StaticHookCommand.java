@@ -5,9 +5,10 @@ import frc.swerverobot.subsystems.ClimberSubsystem;
 
 public class StaticHookCommand extends CommandBase{
     private final ClimberSubsystem climb;
-
-    public StaticHookCommand(ClimberSubsystem climb){
+    private final States state;
+    public StaticHookCommand(ClimberSubsystem climb, States state){
         this.climb = climb;
+        this.state = state;
     }
 
     @Override
@@ -16,11 +17,18 @@ public class StaticHookCommand extends CommandBase{
 
     @Override
     public void execute() {
-        if(climb.isHookOpen()) {
-            climb.hookClose();
-        }
-        else if(!climb.isHookOpen()) {
-            climb.hookOpen();
+        switch (state){
+            case LOCKED:
+                climb.hookOpen();
+                break;
+            case UNLOCKED:
+                climb.hookClose();
+                break;
+            case TOGGLE:
+                climb.setHookOpen(!climb.isHookOpen());
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + state);
         }
     }
 

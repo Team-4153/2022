@@ -5,10 +5,11 @@ import frc.swerverobot.subsystems.ClimberSubsystem;
 
 public class ArmPositionCommand extends CommandBase{
     private final ClimberSubsystem climb;
+    private final States state;
     
-    public ArmPositionCommand(ClimberSubsystem climb) {
+    public ArmPositionCommand(ClimberSubsystem climb, States state) {
         this.climb = climb;
-
+        this.state = state;
         addRequirements(climb);
     }
 
@@ -18,11 +19,18 @@ public class ArmPositionCommand extends CommandBase{
 
     @Override
     public void execute() {
-        if(climb.isArmUp()) {
-            climb.armDown();
-        }
-        else if(!climb.isArmUp()) {
-            climb.armUp();
+        switch (state){
+            case LOCKED:
+                climb.armUp();
+                break;
+            case UNLOCKED:
+                climb.armDown();
+                break;
+            case TOGGLE:
+                climb.setArmUp(!climb.isArmUp());
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + state);
         }
     }
 

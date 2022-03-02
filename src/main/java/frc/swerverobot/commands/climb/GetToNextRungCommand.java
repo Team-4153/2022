@@ -7,15 +7,15 @@ import frc.swerverobot.subsystems.ClimberSubsystem;
 public class GetToNextRungCommand extends SequentialCommandGroup{
     private double time = 0.01; // subject to change
 
-    public GetToNextRungCommand(ClimberSubsystem climb) {
+    public GetToNextRungCommand(ClimberSubsystem climb, States winch, States winch2, States winch3, States arm1, States arm2) {
         addCommands(
-            new WinchLockCommand(climb),
+            new WinchLockCommand(climb, winch),
             new WaitCommand(time),
-            new WinchLockCommand(climb),
+            new WinchLockCommand(climb, winch2),
 
-            new ArmPositionCommand(climb),
-            new WinchLockCommand(climb),
-            new ArmPositionCommand(climb)
+            new ArmPositionCommand(climb,arm1),
+            new WinchLockCommand(climb,winch3),
+            new ArmPositionCommand(climb, arm2)
         );
     }
 

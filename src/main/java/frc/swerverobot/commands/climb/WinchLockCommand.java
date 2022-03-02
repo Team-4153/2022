@@ -7,10 +7,11 @@ import frc.swerverobot.subsystems.ClimberSubsystem;
 
 public class WinchLockCommand extends CommandBase{
     private ClimberSubsystem climb;
+    private final States state;
 
-    public WinchLockCommand(ClimberSubsystem climb) {
+    public WinchLockCommand(ClimberSubsystem climb, States state) {
         this.climb = climb;
-
+        this.state = state;
         addRequirements(climb);
     }
 
@@ -21,12 +22,20 @@ public class WinchLockCommand extends CommandBase{
 
     @Override
     public void execute() {
-        if(climb.isLocked()) {
-            climb.winchUnlock();
+        switch (state){
+            case UNLOCKED:
+                climb.winchLock();
+                break;
+            case LOCKED:
+                climb.winchUnlock();
+                break;
+            case TOGGLE:
+                climb.setLocked(!climb.isLocked());
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + state);
         }
-        else if(!climb.isLocked()) {
-            climb.winchLock();
-        }
+
     }
 
     @Override

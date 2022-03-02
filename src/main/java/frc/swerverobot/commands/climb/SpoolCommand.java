@@ -5,11 +5,15 @@ import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.swerverobot.subsystems.ClimberSubsystem;
 
+import static frc.swerverobot.commands.climb.States.LOCKED;
+
 public class SpoolCommand extends CommandBase{
     private final ClimberSubsystem climb;
+    private final States state;
     
-    public SpoolCommand(ClimberSubsystem climb) {
+    public SpoolCommand(ClimberSubsystem climb, States state) {
         this.climb = climb;
+        this.state = state;
     }
 
     @Override
@@ -18,13 +22,10 @@ public class SpoolCommand extends CommandBase{
 
     @Override
     public void execute() {
-
-        if(!climb.isLocked()) {
-            climb.setLocked(true);
+        if(state == LOCKED){
+            climb.setLocked(false);
         }
-
         climb.spool();
-
     }
 
 
