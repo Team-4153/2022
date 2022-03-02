@@ -5,12 +5,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.swerverobot.commands.drive.*;
 import frc.swerverobot.commands.climb.*;
-//import frc.swerverobot.commands.intake.*;
+import frc.swerverobot.commands.intake.*;
 import frc.swerverobot.commands.shooter.*;
 import frc.swerverobot.commands.auto.*;
 import frc.swerverobot.subsystems.ClimberSubsystem;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
-//import frc.swerverobot.subsystems.IntakeSubsystem;
+import frc.swerverobot.subsystems.IntakeSubsystem;
 import frc.swerverobot.subsystems.ShooterSubsystem2;
 
 //Robot Map
@@ -30,7 +30,7 @@ import org.opencv.core.Mat;
 public class RobotContainer {
     private final Controller driveController = RobotMap.Driver_controller;
     private final Controller manipulatorController = RobotMap.Shooter_controller;
-//    private final IntakeSubsystem intake = new IntakeSubsystem();
+    private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem2 shooter = new ShooterSubsystem2();
     private final ClimberSubsystem climb = new ClimberSubsystem();
 
@@ -180,10 +180,19 @@ public class RobotContainer {
         //[Shooter Subsystem]
         Ejectball.whenPressed(
             //Drops the first ball in storage
-            new RunShootMotors(shooter, 0.3, 0.3)
+            new ShootCommand(shooter, -0.1, 0.1)
         );
         Shoot.whenPressed(
             new ShootCommand(shooter, -0.5, 0.5)
+        );
+
+
+        //[Intake]
+        Intake_Extension.whenPressed(
+                new IntakeSequence(intake, shooter)
+        );
+        Intake_Retract.whenPressed(
+                new IntakeCommand(intake, true)
         );
     }
 }

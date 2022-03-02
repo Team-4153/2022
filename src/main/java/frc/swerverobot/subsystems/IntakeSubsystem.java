@@ -96,17 +96,18 @@ public class IntakeSubsystem extends SubsystemBase {
     {
       Intake_Motor.stopMotor();
     }
-    if (ball1color() == "none" && Intake_Sol.get() == DoubleSolenoid.Value.kReverse)
+/*    if (ball1color() == "none" && Intake_Sol.get() == DoubleSolenoid.Value.kReverse)
     {
       feedMotor.set(-0.2);
       feedStatus = true;
-    }
-    else if (feedStatus == true && Intake_Sol.get() == DoubleSolenoid.Value.kReverse)
+    }*/
+/*    else if (feedStatus == true && Intake_Sol.get() == DoubleSolenoid.Value.kReverse)
     {
       feedMotor.stopMotor();
       feedStatus = false;
     }
-  }
+  }*/
+}
 
   @Override
   public void simulationPeriodic() 
@@ -135,30 +136,28 @@ public class IntakeSubsystem extends SubsystemBase {
     }
   }
 
+  public void setIntakeSol(boolean compress) {
+    if(compress) {
+      Intake_Sol.set(DoubleSolenoid.Value.kForward);
+    }
+    else {
+      Intake_Sol.set(DoubleSolenoid.Value.kReverse);
+    }
+  }
+
+  public void setIntakeMotor(double speed) {
+    Intake_Motor.set(speed);
+  }
+
   public void Compress() 
   {
     Intake_Sol.set(DoubleSolenoid.Value.kForward);
     Intake_Motor.set(0.0);  
-  }
-
-  public void Button_Binding()
-  {
-    Intake_Extension.whenPressed
-    (
-    //[Intake Subystem] Start Motor
-      () ->  this.Extend()
-    );
-    Intake_Retract.whenPressed
-    (
-      //[Intake Subystem] Stop Motor
-      () ->  this.Compress()
-    );
   }
             
   public void init()
   {
     this.Sol_init();
     this.Motor_init();
-    this.Button_Binding();
   }
 }
