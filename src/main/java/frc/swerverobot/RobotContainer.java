@@ -156,47 +156,34 @@ public class RobotContainer {
  
         //[Climber Subsystem]
  
-        manipulatorController.getYButton().whenPressed(
-                //[Climber Subsystem] Climb
-                new WinchLockCommand(climb)
-        );
-
-        manipulatorController.getBButton().whenPressed(
-                new PullandGrabCommand(climb)
-        );
-
-        manipulatorController.getAButton().whenPressed(
-                new GetToNextRungCommand(climb)
-        );
-
-        manipulatorController.getXButton().whenHeld(
-                new SpoolCommand(climb)
-        );
-
-        manipulatorController.getLeftBumperButton().whenPressed(
-                new StaticHookCommand(climb)
-        );
-        
-
-//        shooter.ControllerButtonInit();//Initalizes all the controller buttons for the Shooter Subsystem
-        
-//
-// THIS SHOOTER          vvvvvvvv
-// THIS WORKS!!!!!!!!
-// THIS WORKS!!!!!!!!
-//
-
-
-        // Shoot.whenPressed(
-        //     //High Goal Auto Aim & Shoot
-        //     new Shoot1(shooter)
+        // manipulatorController.getYButton().whenPressed(
+        //         //[Climber Subsystem] Climb
+        //         new WinchLockCommand(climb)
         // );
-/*        Ejectball.whenPressed(
+
+        // manipulatorController.getBButton().whenPressed(
+        //         new PullandGrabCommand(climb)
+        // );
+
+        // manipulatorController.getAButton().whenPressed(
+        //         new GetToNextRungCommand(climb)
+        // );
+
+        // manipulatorController.getXButton().whenHeld(
+        //         new SpoolCommand(climb)
+        // );
+
+        // manipulatorController.getLeftBumperButton().whenPressed(
+        //         new StaticHookCommand(climb)
+        // );
+        
+        //[Shooter Subsystem]
+        Ejectball.whenPressed(
             //Drops the first ball in storage
             new RunShootMotors(shooter, 0.3, 0.3)
         );
         Shoot.whenPressed(
             new ShootCommand(shooter, -0.5, 0.5)
-        );*/
+        );
     }
 }
