@@ -9,11 +9,9 @@ import static frc.swerverobot.commands.climb.States.LOCKED;
 
 public class SpoolCommand extends CommandBase{
     private final ClimberSubsystem climb;
-    private final States state;
     
-    public SpoolCommand(ClimberSubsystem climb, States state) {
+    public SpoolCommand(ClimberSubsystem climb) {
         this.climb = climb;
-        this.state = state;
     }
 
     @Override
@@ -22,19 +20,19 @@ public class SpoolCommand extends CommandBase{
 
     @Override
     public void execute() {
-        if(state == LOCKED){
-            climb.setLocked(false);
-        }
         climb.spool();
     }
 
 
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        climb.StopMotor();
+    }
 
     @Override
     public boolean isFinished() {
-        return climb.GetSwitch();
+        return false;
+//        return climb.GetSwitch();
     }
     
 }

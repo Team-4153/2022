@@ -156,43 +156,46 @@ public class RobotContainer {
  
         //[Climber Subsystem]
  
-        // manipulatorController.getYButton().whenPressed(
-        //         //[Climber Subsystem] Climb
-        //         new WinchLockCommand(climb)
-        // );
+        manipulatorController.getYButton().whenPressed(
+                //[Climber Subsystem] Climb
+                new WinchLockCommand(climb, States.TOGGLE)
+        );
 
-        // manipulatorController.getBButton().whenPressed(
-        //         new PullandGrabCommand(climb)
-        // );
+/*        manipulatorController.getBButton().whenPressed(
+                new PullandGrabCommand(climb, 1)
+        );
 
-        // manipulatorController.getAButton().whenPressed(
-        //         new GetToNextRungCommand(climb)
-        // );
+        manipulatorController.getAButton().whenPressed(
+                new GetToNextRungCommand(climb)
+        );*/
 
-        // manipulatorController.getXButton().whenHeld(
-        //         new SpoolCommand(climb)
-        // );
+        manipulatorController.getXButton().whenHeld(
+                new SpoolCommand(climb)
+        );
 
-        // manipulatorController.getLeftBumperButton().whenPressed(
-        //         new StaticHookCommand(climb)
-        // );
+        manipulatorController.getLeftBumperButton().whenPressed(
+                new StaticHookCommand(climb, States.UNLOCKED)
+        );
+        manipulatorController.getRightBumperButton().whenPressed(
+                new StaticHookCommand(climb, States.LOCKED)
+        );
         
         //[Shooter Subsystem]
-        Ejectball.whenPressed(
-            //Drops the first ball in storage
-            new ShootCommand(shooter, -0.1, 0.1)
-        );
-        Shoot.whenPressed(
-            new ShootCommand(shooter, -0.7, 0.7)
-        );
+        // Ejectball.whenPressed(
+        //     //Drops the first ball in storage
+        //     new ShootCommand(shooter, -0.1, 0.1)
+        // );
+        // Shoot.whenPressed(
+        //     new ShootCommand(shooter, -0.7, 0.7)
+        // );
 
 
-        //[Intake]
-        Intake_Extension.whenPressed(
-                new IntakeSequence(intake, shooter)
-        );
-        Intake_Retract.whenPressed(
-                new IntakeCommand(intake, true)
-        );
+        // //[Intake]
+        // Intake_Extension.whenPressed(
+        //         new IntakeSequence(intake, shooter)
+        // );
+        // Intake_Retract.whenPressed(
+        //         new IntakeCommand(intake, true)
+        // );
     }
 }

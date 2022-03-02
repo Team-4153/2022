@@ -30,7 +30,12 @@ public class WinchLockCommand extends CommandBase{
                 climb.winchUnlock();
                 break;
             case TOGGLE:
-                climb.setLocked(!climb.isLocked());
+                if(climb.isLocked()) {
+                    climb.winchUnlock();
+                }
+                else {
+                    climb.winchLock();
+                }
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + state);
