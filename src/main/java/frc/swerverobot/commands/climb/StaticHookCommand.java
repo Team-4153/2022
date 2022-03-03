@@ -25,7 +25,12 @@ public class StaticHookCommand extends CommandBase{
                 climb.hookClose();
                 break;
             case TOGGLE:
-                climb.setHookOpen(!climb.isHookOpen());
+                if(climb.isHookOpen()) {
+                    climb.hookClose();
+                }
+                else {
+                    climb.hookOpen();
+                }
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + state);

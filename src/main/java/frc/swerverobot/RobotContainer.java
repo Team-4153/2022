@@ -168,18 +168,22 @@ public class RobotContainer {
         manipulatorController.getAButton().whenPressed(
                 new GetToNextRungCommand(climb)
         );*/
+        manipulatorController.getAButton().whenPressed(
+                new ArmPositionCommand(climb, States.TOGGLE)
+        );
 
         manipulatorController.getXButton().whenHeld(
                 new SpoolCommand(climb)
+
         );
 
         manipulatorController.getLeftBumperButton().whenPressed(
-                new StaticHookCommand(climb, States.UNLOCKED)
+                new StaticHookCommand(climb, States.TOGGLE)
         );
-        manipulatorController.getRightBumperButton().whenPressed(
+/*        manipulatorController.getRightBumperButton().whenPressed(
                 new StaticHookCommand(climb, States.LOCKED)
         );
-        
+*/        
         //[Shooter Subsystem]
         // Ejectball.whenPressed(
         //     //Drops the first ball in storage

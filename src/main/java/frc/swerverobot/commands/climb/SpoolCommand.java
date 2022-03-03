@@ -32,7 +32,6 @@ public class SpoolCommand extends CommandBase{
     @Override
     public boolean isFinished() {
         return false;
-//        return climb.GetSwitch();
     }
     
 }
