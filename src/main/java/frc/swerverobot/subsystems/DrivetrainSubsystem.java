@@ -41,8 +41,8 @@ import static frc.swerverobot.RobotMap.*;
 
 public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.Updatable {
     // define the trackwidth (short side in our case) and wheelbase (long side in our case) ratio of the robot
-    public static final double TRACKWIDTH = 1.0; //  22.5; // 1.0;
-    public static final double WHEELBASE = 1.0; // 22.5; // 1.0;
+    public static final double TRACKWIDTH = 19.685; //  22.5; // 1.0;
+    public static final double WHEELBASE = 27.159; // 22.5; // 1.0;
 
     public static final DrivetrainFeedforwardConstants FEEDFORWARD_CONSTANTS = new DrivetrainFeedforwardConstants(
             0.042746,
