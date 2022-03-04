@@ -1,0 +1,77 @@
+{
+    "cameras": [
+        {
+            "fps": 30,
+            "height": 448,
+            "name": "Intake",
+            "path": "/dev/v4l/by-path/platform-fd500000.pcie-pci-0000:01:00.0-usb-0:1.2:1.0-video-index0",
+            "pixel format": "mjpeg",
+            "properties": [
+                {
+                    "name": "track_ball",
+                    "value": true
+                }
+            ],
+            "stream": {
+                "properties": []
+            },
+            "width": 800
+        },
+        {
+            "fps": 30,
+            "height": 480,
+            "name": "Shooter",
+            "path": "/dev/v4l/by-path/platform-fd500000.pcie-pci-0000:01:00.0-usb-0:1.3:1.0-video-index0",
+            "pixel format": "mjpeg",
+            "properties": [
+                {
+                    "name": "exposure_auto",
+                    "value": 1
+                },
+                {
+                    "name": "raw_exposure_absolute",
+                    "value": 1
+                },
+                {
+                    "name": "exposure_absolute",
+                    "value": 1
+                },
+                {
+                    "name": "track_target",
+                    "value": true
+                },
+                {
+                    "name": "target_h_low",
+                    "value": 60
+                },
+                {
+                    "name": "target_s_low",
+                    "value": 91
+                },
+                {
+                    "name": "target_v_low",
+                    "value": 136
+                },
+                {
+                    "name": "target_h_high",
+                    "value": 95
+                },
+                {
+                    "name": "target_s_high",
+                    "value": 255
+                },
+                {
+                    "name": "target_v_high",
+                    "value": 255
+                }
+            ],
+            "stream": {
+                "properties": []
+            },
+            "width": 640
+        }
+    ],
+    "ntmode": "client",
+    "switched cameras": [],
+    "team": 4153
+}
