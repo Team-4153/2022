@@ -19,7 +19,15 @@ int main(int argc, char* argv[]) {
 	if (csrvInit(NULL, NULL) != 0)
 		return -1;
 
-//	ntbl = ntinst.GetTable("SmartDashboard/T265");
+	char fname[128];
+	FILE *trajf = NULL;
+	for(int i = 0; i < 1000; i++) {
+		snprintf(fname, sizeof(fname), "/mnt/rw/trajectories/t%06d.txt", i);
+		trajf = fopen(fname, "wx");
+		if (trajf != NULL)
+			break;
+	}
+
 	frc::ShuffleboardTab& tab = frc::Shuffleboard::GetTab("T265");
 	nt::NetworkTableEntry xent = tab.Add("X", 0.0).GetEntry();
 //	nt::NetworkTableEntry yent = tab.Add("Y", 0.0).GetEntry();
@@ -56,8 +64,9 @@ int main(int argc, char* argv[]) {
 		auto sensor = dev.first<rs2::pose_sensor>();
 
 		double tstart = 0.0;
-//	double lastprint;
-//	std::shared_ptr<nt::NetworkTable> ntbl;
+		double lastprint;
+		if (trajf != NULL)
+			fprintf(trajf, "--------\n");
 
 		while (1) {
 			rs2::frameset frames = pipe.wait_for_frames(1000);
@@ -116,13 +125,17 @@ int main(int argc, char* argv[]) {
 //			razent.SetDouble(pd.angular_acceleration.z);
 #endif
 
-#if 0
-			// print once per second
-			if (lastprint + 1000 > tstamp)
+			// print once every hundred of a second
+			if (lastprint + 100 > tstamp)
 				continue;
 
-//			printf("%6.3f: (%6.3f, %6.3f, %6.3f) %6.3f %6.3f %6.3f\n", tstamp - tstart, pd.translation.x, pd.translation.y, pd.translation.z, roll, pitch, yaw);
+			if (trajf != NULL) {
+				fprintf(trajf, "%6.3f %5.3f %5.3f %4.1f\n", (tstamp - tstart) / 1000, x, z, yaw);
+			}
+				
 			lastprint = tstamp;
+
+#if 0
 			if (mapsave) {
 				std::unique_lock<std::mutex> lck (mapmtx);
 				pipe.stop();
@@ -147,10 +160,10 @@ int main(int argc, char* argv[]) {
 		std::cerr << "RealSense error calling " << e.get_failed_function() << "(" << e.get_failed_args() << "):\n    " << e.what() << std::endl;
 
 		// sleep for a second, and retry
-		sleep(1);
+		usleep(100);
 	} catch (const std::exception& e) {
 		// not sure if that can even happen, but anyway...
 		// sleep for a second, and retry
-		sleep(1);
+		usleep(100);
 	}
 }

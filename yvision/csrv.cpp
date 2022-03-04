@@ -78,11 +78,9 @@
 
 using namespace cv;
 using namespace std;
-//using namespace cv::xfeatures2d;
 
 struct CameraImpl : Camera {
 	wpi::json	config;
-//	CS_Source	outHandle;	// output stream
 	CS_Source	targetHandle;	// target output stream
 	CS_Source	ballHandle;	// ball output stream
 
@@ -109,35 +107,6 @@ nt::NetworkTableInstance ntinst;
 bool saveImages;		// true if any of the cameras is going to save images
 char imagePath[256];
 
-// Target static members and methods
-// Model of the target. All numbers are in meters.
-// The center of the coordinate system is the floor level of the 
-// center of the target.
-//
-// Target dimensions (in m) (-0.0635, 0), (0.0635, -0.0508)
-// Height: 2.64 m
-// 
-vector<Point3f> Target::model = {
-	Point3f(-0.0635, 2.64 - 0, 0),		// top left corner
-	Point3f(-0.0635, 2.64 - 0.0508, 0),	// bottom left corner
-	Point3f(0.0635, 2.64 - 0.0508, 0),	// bottom right corner
-	Point3f(0.0635, 2.64 - 0, 0),		// top right corner
-};
-
-// Raspberry Pi Camera (640x480)
-// old Mat Target::cameraMatrix = (Mat_<double>(3,3) <<  4.6676194913596777e+02, 0., 3.1086529034645207e+02, 0., 4.6676194913596777e+02, 2.3946292934201807e+02, 0., 0., 1.);
-// Mat Target::cameraMatrix = (Mat_<double>(3,3) << 4.9889252599572541e+02, 0., 3.1157422532497679e+02, 0., 4.9889252599572541e+02, 2.3724852037903509e+02, 0., 0., 1.);
-
-// Microsoft HD Camera (640x480)
-// old Mat Target::cameraMatrix = (Mat_<double>(3,3) <<  6.7939614509180524e+02, 0., 3.0627626279973128e+02, 0., 6.7939614509180524e+02, 2.2394196729643429e+02, 0., 0., 1.);
- Mat Target::cameraMatrix = (Mat_<double>(3,3) <<  6.7076054565726974e+02, 0., 3.3601187921143253e+02, 0., 6.7076054565726974e+02, 2.3234578140238639e+02, 0., 0., 1.);
-
-// Intel RealSense (640x480)
-//Mat Target::cameraMatrix = (Mat_<double>(3,3) <<  5.9499960389797957e+02, 0., 3.2018801228431829e+02, 0., 5.9499960389797957e+02, 2.4618253134582881e+02, 0., 0., 1.);
-
-// Intel RealSense (960x540)
-//Mat Target::cameraMatrix = (Mat_<double>(3,3) << 6.9584472882317743e+02, 0., 4.8789603110723795e+02, 0., 6.9584472882317743e+02, 2.6041500439328513e+02, 0., 0., 1.);
-
 Target::Target(cv::Rect &r) {
 	rect = r;
 }
@@ -163,15 +132,6 @@ double Target::height() {
 
 void Target::draw(Mat &dst, int idx, int w) {
 	rectangle(dst, rect, Scalar(0, 0, 255), w);
-//	line(dst, Point2f(rect.x, rect,y), Point2color[idx], w);
-//	line(dst, rect.xpoly[1], poly[2], color[idx], w);
-//	line(dst, poly[2], poly[3], color[idx], w);
-//	line(dst, poly[3], poly[0], color[idx], w);
-
-//	circle(dst, poly[0], 5, Scalar(255, 0, 0));
-//	circle(dst, poly[1], 5, Scalar(0, 0, 255));
-//	circle(dst, poly[2], 5, Scalar(255, 0, 0), 3);
-//	circle(dst, poly[3], 5, Scalar(0, 0, 255), 3);
 }
 
 double distance(Point2f& p1, Point2f& p2) {
@@ -236,20 +196,13 @@ void processTargets(Mat &src, Mat &dst, Mat &mask, const CameraImpl& c, uint64_t
 	double imgwidth = src.size().width;
 
 	// Convert to HSV
-	cvtColor(src /*gauss*/, hsv, CV_BGR2HSV);
+	cvtColor(src, hsv, CV_BGR2HSV);
 
 	// Get only pixels that have the colors we expect the stripes to be
 	inRange(hsv, Scalar(c.targetHLow, c.targetSLow, c.targetVLow), Scalar(c.targetHHigh, c.targetSHigh, c.targetVHigh), mask);
 
-//	cv::GaussianBlur(hsv, hsv, cv::Size(11, 11), 2, 2);
-
 	// Find contours
 	cv::findContours(mask, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
-
-//	findContours(mask, contours, hierarchy, RETR_TREE, CHAIN_APPROX_TC89_KCOS/*CHAIN_APPROX_SIMPLE*/);
-#if 0
-	printf("contours: %d\n", contours.size());
-#endif
 
 	// Identify targets
 	tgt = NULL;
@@ -274,6 +227,13 @@ void processTargets(Mat &src, Mat &dst, Mat &mask, const CameraImpl& c, uint64_t
 	if (tgtnum > 0) {
 		y /= tgtnum;
 		x /= tgtnum;
+
+		// Calculation of the distance:
+		// The target is at height of 104 inches
+		// The camera is at 35 degrees and (according to ChiefDelphi) has 34.3 degrees vertical angle
+		// y is a value between 0 and 1 and defines if the target is at the top of the image (0)
+		//    or the bottom (1).
+		// The math is probably incorrect, but is a good first try.
 		dist = (104-0) * tan((35 + y*34.3) * M_PI / 180); // (192.0/0.9) * d + 80;
 	}
 
@@ -308,57 +268,27 @@ vector<Ball *> processMask(cv::Mat& src, cv::Mat& dst, cv::Mat& mask, int label)
 		if (area/maskarea > MAXAREA)
 			continue;
 
-//		if (area < 2000)
-//			continue;
-
 		Point2f center;
 		float rad;
 
 		cv::minEnclosingCircle(contours[i], center, rad);
-//		cv::circle(dst, center, rad, Scalar(0, 255, 0), 1);
 
 		float aratio = area / (M_PI * rad * rad);
-//		char rbuf[80];
-//		snprintf(rbuf, sizeof(rbuf), "%f", aratio);
-//		cv::putText(dst, rbuf, center, cv::FONT_HERSHEY_SIMPLEX, 0.7, CV_RGB(255, 255, 255), 1, 0);
 		if (aratio < 0.67)
 			continue;
 
 		if (rad/width < MINRAD || rad/width > MAXRAD)
 			continue;
 
-//		cv::Mat cmask = cv::Mat::zeros(src.size(), CV_8U);
-//		cv::circle(cmask, center, rad/2, Scalar(255, 255, 255), -1);
-		
-
-//		cv::Rect rct = boundingRect(contours[i]);
-//		if (rct.y == 0)
-//			continue;
-//
-//		float ratio = rct.x/rct.y;
-//
-//		if (ratio < 0.6 || ratio > 1/0.6)
-//			continue;
-
-
 		// Approximate contour with accuracy proportional
 		// to the contour perimeter
 		cv::approxPolyDP(cv::Mat(contours[i]), approx, cv::arcLength(cv::Mat(contours[i]), true)*/*0.02*/0.025, true);
-
-//		cv::polylines(dst, approx, true, Scalar(255, 255, 255), 8);
-		// Skip small or non-convex objects 
-//		if (!cv::isContourConvex(approx))
-//			continue;
 
 		if (approx.size() < 7)
 			continue;
 
 		cv::rectangle(dst, Point(brect.x, brect.y), Point(brect.x + brect.width, brect.y + brect.height), CV_RGB(0,255,0), 1);
 		
-//		int radius = r.width / 2;
-//		if (std::abs(1 - ((double)r.width / r.height)) <= 0.2 &&
-//		    std::abs(1 - (area / (CV_PI * std::pow(radius, 2)))) <= 0.2)
-//		setLabel(dst, label, brect);
 		Ball *b = new Ball(center, rad, label);
 		ret.push_back(b);		
 	}
@@ -372,7 +302,7 @@ void processBalls(Mat &src, Mat &dst, Mat &mask, const CameraImpl& c, uint64_t t
 	Ball *cb = NULL;
 
 	// Convert to HSV
-	cvtColor(src /*gauss*/, hsv, CV_BGR2HSV);
+	cvtColor(src, hsv, CV_BGR2HSV);
 
 	int clr = c.ntbl->GetNumber("BallColor", 0);
 	if (clr != BallRed) {
@@ -560,7 +490,6 @@ bool readConfig() {
 	if (j.count("ntmode") != 0) {
 		try {
 			auto str = j.at("ntmode").get<string>();
-//			wpi::StringRef s(str);
 			if (wpi::equals_lower(str, "client")) {
 				server = false;
 			} else if (wpi::equals_lower(str, "server")) {
@@ -710,7 +639,6 @@ void cameraThread(CameraImpl *c) {
 			Mat mask;
 
 			processBalls(frame, frame, mask, *c, tstamp);
-//			ballStream.PutFrame(mask);
 			ballStream.PutFrame(frame);
 		}
 
