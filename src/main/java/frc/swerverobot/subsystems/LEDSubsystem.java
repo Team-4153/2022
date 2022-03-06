@@ -122,6 +122,7 @@ public class LEDSubsystem extends SubsystemBase {
         else {
           m_ledBuffer.setRGB(running_LED, 10, 10, 10);
         }
+      }
     }
 
 
