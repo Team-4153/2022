@@ -5,12 +5,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.swerverobot.commands.drive.*;
 import frc.swerverobot.commands.climb.*;
-//import frc.swerverobot.commands.intake.*;
+import frc.swerverobot.commands.intake.*;
+import frc.swerverobot.commands.LED.*;
 import frc.swerverobot.commands.shooter.*;
 import frc.swerverobot.commands.auto.*;
 import frc.swerverobot.subsystems.ClimberSubsystem;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
-//import frc.swerverobot.subsystems.IntakeSubsystem;
+import frc.swerverobot.subsystems.IntakeSubsystem;
+import frc.swerverobot.subsystems.LEDSubsystem;
 import frc.swerverobot.subsystems.ShooterSubsystem2;
 
 //Robot Map
@@ -31,10 +33,11 @@ import frc.swerverobot.commands.climb.States;
 public class RobotContainer {
     private final Controller driveController = RobotMap.Driver_controller;
     private final Controller manipulatorController = RobotMap.Shooter_controller;
-//    private final IntakeSubsystem intake = new IntakeSubsystem();
+    private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem2 shooter = new ShooterSubsystem2();
     private final ClimberSubsystem climb = new ClimberSubsystem();
-
+    private final LEDSubsystem LED = new LEDSubsystem();
+    private final LEDSubsystemCommand m_autoCommand = new LEDSubsystemCommand(LED);
     private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
     private boolean pointRotation = false;
     private DriveCommand drivecommand;
@@ -76,6 +79,7 @@ public class RobotContainer {
 //	intake.init();
 	climb.init();
         shooter.init();
+        LED.init();
     }
 
     private void configureButtonBindings() {
@@ -158,34 +162,50 @@ public class RobotContainer {
  
         //[Climber Subsystem]
  
-        // manipulatorController.getYButton().whenPressed(
-        //         //[Climber Subsystem] Climb
-        //         new WinchLockCommand(climb)
-        // );
+        manipulatorController.getYButton().whenPressed(
+                //[Climber Subsystem] Climb
+                new WinchLockCommand(climb, States.TOGGLE)
+        );
 
-        // manipulatorController.getBButton().whenPressed(
-        //         new PullandGrabCommand(climb)
-        // );
+/*        manipulatorController.getBButton().whenPressed(
+                new PullandGrabCommand(climb, 1)
+        );
 
-        // manipulatorController.getAButton().whenPressed(
-        //         new GetToNextRungCommand(climb)
-        // );
+        manipulatorController.getAButton().whenPressed(
+                new GetToNextRungCommand(climb)
+        );*/
+        manipulatorController.getAButton().whenPressed(
+                new ArmPositionCommand(climb, States.TOGGLE)
+        );
 
-        // manipulatorController.getXButton().whenHeld(
-        //         new SpoolCommand(climb)
-        // );
+        manipulatorController.getXButton().whenHeld(
+                new SpoolCommand(climb)
 
-        // manipulatorController.getLeftBumperButton().whenPressed(
-        //         new StaticHookCommand(climb)
-        // );
-        
+        );
+
+        manipulatorController.getLeftBumperButton().whenPressed(
+                new StaticHookCommand(climb, States.TOGGLE)
+        );
+/*        manipulatorController.getRightBumperButton().whenPressed(
+                new StaticHookCommand(climb, States.LOCKED)
+        );
+*/        
         //[Shooter Subsystem]
-        Ejectball.whenPressed(
-            //Drops the first ball in storage
-            new RunShootMotors(shooter, 0.3, 0.3)
-        );
-        Shoot.whenPressed(
-            new ShootCommand(shooter, -0.5, 0.5)
-        );
+        // Ejectball.whenPressed(
+        //     //Drops the first ball in storage
+        //     new ShootCommand(shooter, -0.1, 0.1)
+        // );
+        // Shoot.whenPressed(
+        //     new ShootCommand(shooter, -0.7, 0.7)
+        // );
+
+
+        // //[Intake]
+        // Intake_Extension.whenPressed(
+        //         new IntakeSequence(intake, shooter)
+        // );
+        // Intake_Retract.whenPressed(
+        //         new IntakeCommand(intake, true)
+        // );
     }
 }

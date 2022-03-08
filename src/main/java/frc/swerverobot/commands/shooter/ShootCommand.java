@@ -18,9 +18,9 @@ public class ShootCommand extends SequentialCommandGroup{
 
     private double feedSpeed = -0.5;
 
-    private double waitforSpool = 1.5;
-    private double waitforShoot1ball = 1.5;
-    private double waitforShoot2balls = 0.75;
+    private double waitforSpool = 0.5;
+    private double waitforShoot1ball = 0.5;
+    private double waitforShoot2balls = 1.;
 
     double waitForShoot = waitforShoot2balls; //This variable is changed for the number of balls in the shooter
 
@@ -30,7 +30,7 @@ public class ShootCommand extends SequentialCommandGroup{
         this.botSpeed = botSpeed;
 
         //Changes the wait time for the number of balls in the shooter
-        if (waitForShoot < 1) {
+        if (shooter.ballCount() < 1) {
             //if there are 2 balls use the 2 ball wait time
             waitForShoot = waitforShoot2balls;
         }

@@ -27,7 +27,12 @@ public class ArmPositionCommand extends CommandBase{
                 climb.armDown();
                 break;
             case TOGGLE:
-                climb.setArmUp(!climb.isArmUp());
+                if(climb.isArmUp()) {
+                    climb.armDown();
+                }
+                else {
+                    climb.armUp();
+                }
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + state);
@@ -39,6 +44,6 @@ public class ArmPositionCommand extends CommandBase{
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 }

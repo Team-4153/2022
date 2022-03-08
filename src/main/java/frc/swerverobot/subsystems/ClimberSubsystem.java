@@ -62,7 +62,7 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.swerverobot.RobotMap;
 
@@ -70,14 +70,14 @@ public class ClimberSubsystem extends SubsystemBase{
     //Initiator
     public ClimberSubsystem() {
         super();
-        this.spoolMotor = new PWMSparkMax(RobotMap.CLIMBER_MOTOR);
+        this.spoolMotor = new Spark(RobotMap.CLIMBER_MOTOR);
         this.armPiston = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, RobotMap.ARM_FORWARD, RobotMap.ARM_BACK);
         this.stathookPiston = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, RobotMap.HOOK_CLOSE, RobotMap.HOOK_OPEN);
         this.winchSolenoid = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, RobotMap.WINCH_LOCK, RobotMap.WINCH_UNLOCK);
         this.Switch = new DigitalInput(RobotMap.CLIMBER_SWITCH);
     }
 
-    private final PWMSparkMax spoolMotor;
+    private final Spark spoolMotor;
     private final DoubleSolenoid armPiston;
     private final DoubleSolenoid stathookPiston;
     private final DoubleSolenoid winchSolenoid;
@@ -99,12 +99,13 @@ public class ClimberSubsystem extends SubsystemBase{
     }
 
     public void init() {
-	this.motorInit();
-	this.solenoidInit();
+        spoolMotor.setSafetyEnabled(false);
+	    this.motorInit();
+	    this.solenoidInit();
     }
 
     public void spool(){
-        spoolMotor.set(1);
+        spoolMotor.set(-0.5);
     }
 
     public void StopMotor(){
