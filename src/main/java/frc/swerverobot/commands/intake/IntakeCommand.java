@@ -41,7 +41,7 @@ public class IntakeCommand extends CommandBase {
             done = true;
         }
         else {
-            intake.setIntakeMotor(-1);
+            intake.setIntakeMotor(-0.7);
         }
     }
 

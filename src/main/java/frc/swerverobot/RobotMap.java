@@ -49,7 +49,7 @@ public class RobotMap {
     public static final int CLIMBER_MOTOR = 4;                                  //[Climber Subsystem] The Number is the RIO DIO port (Winch)
 
 //Controls
-    //DriveTrain Controller (Kendal)
+    //DriveTrain Controller (Kendall)
     public static final Controller Driver_controller = new XboxController(0);//[Driver's Controller]
     public static final Axis Speed_Increase = Driver_controller.getLeftTriggerAxis();//[DriveTrain Subsystem](L-Trigger)
     public static final Axis Speed_Decrease = Driver_controller.getRightTriggerAxis();//[DriveTrain Subsystem](R-Trigger)
@@ -102,7 +102,7 @@ public class RobotMap {
 // EVEN numbers are angle motors, ODD numbers are drive motors
     public static final int DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_ENCODER = -1;
     public static final int DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_MOTOR = 2;
-    public static final double DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_OFFSET = -Math.toRadians(232.7);
+    public static final double DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_OFFSET = -Math.toRadians(356.08);
     public static final int DRIVETRAIN_FRONT_RIGHT_MODULE_DRIVE_MOTOR = 1;
     public static final double DRIVETRAIN_FRONT_RIGHT_MODULE_ENCODER_VOLTAGE_MAX = 3.300;
 

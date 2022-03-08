@@ -1,6 +1,7 @@
 package frc.swerverobot;
 
 import edu.wpi.first.wpilibj.buttons.Trigger;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.swerverobot.commands.drive.*;
@@ -8,10 +9,11 @@ import frc.swerverobot.commands.climb.*;
 import frc.swerverobot.commands.intake.*;
 import frc.swerverobot.commands.shooter.*;
 import frc.swerverobot.commands.auto.*;
-import frc.swerverobot.subsystems.ClimberSubsystem;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
+import frc.swerverobot.subsystems.ClimberSubsystem;
 import frc.swerverobot.subsystems.IntakeSubsystem;
 import frc.swerverobot.subsystems.ShooterSubsystem2;
+
 
 //Robot Map
 import static frc.swerverobot.RobotMap.*;
@@ -34,13 +36,15 @@ public class RobotContainer {
     private final ShooterSubsystem2 shooter = new ShooterSubsystem2();
     private final ClimberSubsystem climb = new ClimberSubsystem();
 
-    private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
-    private boolean pointRotation = false;
+     private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
+//     private boolean pointRotation = false;
     private DriveCommand drivecommand;
 
     private final UpdateManager updateManager = new UpdateManager(
         drivetrain
     );
+
+    SendableChooser<PossibleAutos> autoChoice = new SendableChooser<PossibleAutos>();
 
     
     public RobotContainer() {
@@ -65,16 +69,21 @@ public class RobotContainer {
                 () -> controller.getRightYAxis().get(true)
         ));
 */
-                
-        updateManager.startLoop(5.0e-3);
+
+//        updateManager.startLoop(5.0e-3);
         initRobot();
         configureButtonBindings();
     }
 
     private void initRobot() {
-//	intake.init();
+	intake.init();
 	climb.init();
         shooter.init();
+    }
+
+    public Command getAutonomousCommand() {
+        PossibleAutos choice = autoChoice.getSelected();
+        return new AutonomousCommand(drivetrain, shooter, intake, choice);
     }
 
     private void configureButtonBindings() {
@@ -154,52 +163,46 @@ public class RobotContainer {
 */
 
  
-        //[Climber Subsystem]
+//        [Climber Subsystem]
  
-        manipulatorController.getYButton().whenPressed(
-                //[Climber Subsystem] Climb
-                new WinchLockCommand(climb, States.TOGGLE)
+        manipulatorController.getDPadButton(Direction.UP).whenPressed(
+                new WinchLockCommand(climb, States.UNLOCKED)
         );
-
-/*        manipulatorController.getBButton().whenPressed(
-                new PullandGrabCommand(climb, 1)
+        manipulatorController.getDPadButton(Direction.DOWN).whenPressed(
+                new WinchLockCommand(climb, States.LOCKED)
         );
-
-        manipulatorController.getAButton().whenPressed(
+        manipulatorController.getDPadButton(Direction.LEFT).whenPressed(
+                new PullandGrabCommand(climb)
+        );
+        manipulatorController.getDPadButton(Direction.RIGHT).whenPressed(
                 new GetToNextRungCommand(climb)
-        );*/
-        manipulatorController.getAButton().whenPressed(
-                new ArmPositionCommand(climb, States.TOGGLE)
         );
-
-        manipulatorController.getXButton().whenHeld(
-                new SpoolCommand(climb)
-
-        );
-
         manipulatorController.getLeftBumperButton().whenPressed(
                 new StaticHookCommand(climb, States.TOGGLE)
         );
-/*        manipulatorController.getRightBumperButton().whenPressed(
-                new StaticHookCommand(climb, States.LOCKED)
+        manipulatorController.getRightBumperButton().whenPressed(
+                new SpoolCommand(climb)
         );
-*/        
-        //[Shooter Subsystem]
-        // Ejectball.whenPressed(
-        //     //Drops the first ball in storage
-        //     new ShootCommand(shooter, -0.1, 0.1)
-        // );
-        // Shoot.whenPressed(
-        //     new ShootCommand(shooter, -0.7, 0.7)
-        // );
 
 
-        // //[Intake]
-        // Intake_Extension.whenPressed(
-        //         new IntakeSequence(intake, shooter)
-        // );
-        // Intake_Retract.whenPressed(
-        //         new IntakeCommand(intake, true)
-        // );
+//        [Shooter Subsystem]
+        Ejectball.whenPressed(
+            //Drops the first ball in storage
+            new ShootCommand(shooter, -0.2, 0.2)
+        );
+        Shoot.whenPressed(
+            new ShootCommand(shooter, -0.3, 1.0)
+        );
+
+
+//        [Intake]
+        Intake_Extension.whenPressed(
+                new IntakeSequence(intake, shooter)
+        );
+        Intake_Retract.whenPressed(
+                new IntakeCommand(intake, true)
+        );
+
+
     }
 }
