@@ -7,11 +7,13 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.swerverobot.commands.drive.*;
 import frc.swerverobot.commands.climb.*;
 import frc.swerverobot.commands.intake.*;
+import frc.swerverobot.commands.LED.*;
 import frc.swerverobot.commands.shooter.*;
 import frc.swerverobot.commands.auto.*;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import frc.swerverobot.subsystems.ClimberSubsystem;
 import frc.swerverobot.subsystems.IntakeSubsystem;
+import frc.swerverobot.subsystems.LEDSubsystem;
 import frc.swerverobot.subsystems.ShooterSubsystem2;
 
 
@@ -35,9 +37,10 @@ public class RobotContainer {
     private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem2 shooter = new ShooterSubsystem2();
     private final ClimberSubsystem climb = new ClimberSubsystem();
-
-     private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
-//     private boolean pointRotation = false;
+    private final LEDSubsystem LED = new LEDSubsystem();
+    private final LEDSubsystemCommand m_autoCommand = new LEDSubsystemCommand(LED);
+    private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
+    private boolean pointRotation = false;
     private DriveCommand drivecommand;
 
     private final UpdateManager updateManager = new UpdateManager(
@@ -79,6 +82,7 @@ public class RobotContainer {
 	intake.init();
 	climb.init();
         shooter.init();
+        LED.init();
     }
 
     public Command getAutonomousCommand() {

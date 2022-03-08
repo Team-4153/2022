@@ -31,6 +31,9 @@ Compressor(1)
 public class RobotMap {
 //Define all ports and constants of a component, put in correct catagory, label subsystem(s) used
 
+//LEDS 
+    public static final int LEDPWMPort = 9;                                     //[LED Subsystem] Port for the LED's
+
 //Sensors
     public static final ADIS16470_IMU imu = new ADIS16470_IMU();                //[DriveTrain Subsystem]Gyro and acceleration sensor
     public static final int PhotoEyePort = 0;                                   //[Shooter Subsystem] The Number is the RIO DIO port (Outputs a Digital Input|Like a Limit Switch)
