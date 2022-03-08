@@ -34,13 +34,14 @@ import org.opencv.core.Mat;
 public class RobotContainer {
     private final Controller driveController = RobotMap.Driver_controller;
     private final Controller manipulatorController = RobotMap.Shooter_controller;
+
     private final IntakeSubsystem intake = new IntakeSubsystem();
     private final ShooterSubsystem2 shooter = new ShooterSubsystem2();
     private final ClimberSubsystem climb = new ClimberSubsystem();
     private final LEDSubsystem LED = new LEDSubsystem();
-    private final LEDSubsystemCommand m_autoCommand = new LEDSubsystemCommand(LED);
+    private final LEDSubsystemCommand m_LEDCommand = new LEDSubsystemCommand(LED);
     private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
-    private boolean pointRotation = false;
+
     private DriveCommand drivecommand;
 
     private final UpdateManager updateManager = new UpdateManager(
