@@ -6,11 +6,15 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.swerverobot.subsystems.ClimberSubsystem;
 
 public class PullandGrabCommand extends SequentialCommandGroup{
-    public PullandGrabCommand(ClimberSubsystem climb, States winch, States spool, States hook) {
+    private final ClimberSubsystem climb;
+
+    public PullandGrabCommand(ClimberSubsystem climb) {
+        this.climb = climb;
+
         addCommands(
-            new WinchLockCommand(climb, winch),
+            new WinchLockCommand(climb, States.LOCKED),
             new SpoolCommand(climb),
-            new StaticHookCommand(climb, hook)
+            new StaticHookCommand(climb, States.LOCKED)
         );
     }
 

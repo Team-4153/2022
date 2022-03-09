@@ -377,17 +377,4 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
         }
     }
 
-    public HolonomicMotionProfiledTrajectoryFollower getFollower() {
-        return follower;
-    }
-
-/*    public void setDefenseOn() {
-            synchronized (sensorLock) {
-                for (int i = 0; i < modules.length; i++) {
-                        var module = modules[i];
-                        moduleAngleEntries[i].setDouble(45);
-                    }
-            }
-    }
-*/
 }

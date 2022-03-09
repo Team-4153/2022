@@ -1,9 +1,8 @@
 package frc.swerverobot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
-import edu.wpi.first.wpilibj.ADIS16470_IMU;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //Robot Map
@@ -11,19 +10,50 @@ import static frc.swerverobot.RobotMap.*;
 
 
 public class Robot extends TimedRobot {
-    private final RobotContainer container = new RobotContainer();
+    private RobotContainer container;
+    private Command autonomousCommand;
 
     @Override
     public void robotInit() {
-
+        container = new RobotContainer();
     }
 
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
-        SmartDashboard.putNumber("IMU angle", RobotMap.imu.getAngle());
     }
 
+    @Override
+    public void disabledInit() {
+        CommandScheduler.getInstance().cancelAll();
+    }
+  
+    @Override
+    public void disabledPeriodic() {
+      CommandScheduler.getInstance().run();
+    }
 
+    @Override
+    public void autonomousInit() {
+      autonomousCommand = container.getAutonomousCommand();
+  
+      // schedule the autonomous command (example)
+      if (autonomousCommand != null) {
+        autonomousCommand.schedule();
+      }
+    }
+
+    @Override
+    public void autonomousPeriodic() {}
+
+    @Override
+    public void teleopInit() {
+        if (autonomousCommand != null) {
+            autonomousCommand.cancel();
+        }
+    }
+
+    @Override
+    public void teleopPeriodic() {}
 
 }

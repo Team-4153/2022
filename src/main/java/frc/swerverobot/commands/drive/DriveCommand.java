@@ -80,7 +80,7 @@ public class DriveCommand extends CommandBase {
         }
 
         if (Math.abs(rot) < minVal) {
-            rot = 0; // 0.0001;
+            rot = 0.0001; // 0.0001;
         }
 
 //        if (Math.abs(fw) < minVal && Math.abs(stf) < minVal && Math.abs(rot) < minVal) {
