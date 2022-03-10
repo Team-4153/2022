@@ -2,6 +2,7 @@ package frc.swerverobot;
 
 import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.swerverobot.commands.drive.*;
@@ -77,6 +78,8 @@ public class RobotContainer {
 //        updateManager.startLoop(5.0e-3);
         initRobot();
         configureButtonBindings();
+
+        addAutoChoicesToGui();
     }
 
     private void initRobot() {
@@ -169,7 +172,7 @@ public class RobotContainer {
 
  
 //        [Climber Subsystem]
- 
+
         manipulatorController.getDPadButton(Direction.UP).whenPressed(
                 new WinchLockCommand(climb, States.UNLOCKED)
         );
@@ -193,10 +196,10 @@ public class RobotContainer {
 //        [Shooter Subsystem]
         Ejectball.whenPressed(
             //Drops the first ball in storage
-            new ShootCommand(shooter, -0.2, 0.2)
+            new ShootCommand(shooter, -0.2, 0.2, DEFAULT_FEED_MOTOR_SPEED)
         );
         Shoot.whenPressed(
-            new ShootCommand(shooter, -0.3, 1.0)
+            new ShootCommand(shooter, -0.3, 1.0, DEFAULT_FEED_MOTOR_SPEED)
         );
 
 
@@ -209,5 +212,13 @@ public class RobotContainer {
         );
 
 
+    }
+
+    private void addAutoChoicesToGui() {
+        PossibleAutos[] enumValues = PossibleAutos.values();
+        for (int i = 0; i < enumValues.length; i++) {
+          autoChoice.addOption(enumValues[i].toString(), enumValues[i]);
+        }
+        SmartDashboard.putData(autoChoice);
     }
 }
