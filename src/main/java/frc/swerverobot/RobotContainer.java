@@ -31,6 +31,7 @@ import org.frcteam2910.common.robot.input.Controller;
 import org.frcteam2910.common.robot.input.XboxController;
 import org.frcteam2910.common.robot.input.DPadButton.Direction;
 import org.opencv.core.Mat;
+import frc.swerverobot.commands.climb.States;
 
 public class RobotContainer {
     private final Controller driveController = RobotMap.Driver_controller;
@@ -151,6 +152,7 @@ public class RobotContainer {
                         () -> driveController.getRightBumperButton().get()
                 )
         );
+        driveController.getBackButton().whenPressed(new LockCommand(drivetrain, States.TOGGLE));
 
 //        controller.getRightTriggerAxis().getButton(0.1).whenPressed(
 //                new FollowBallCommand(drivetrain,

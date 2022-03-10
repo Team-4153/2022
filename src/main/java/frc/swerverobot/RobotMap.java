@@ -32,7 +32,7 @@ public class RobotMap {
 //Define all ports and constants of a component, put in correct catagory, label subsystem(s) used
 
 //LEDS 
-    public static final int LEDPWMPort = 9;                                     //[LED Subsystem] Port for the LED's
+    public static final int LEDPWMPort = 5;                                     //[LED Subsystem] Port for the LED's
 
 //Sensors
     public static final ADIS16470_IMU imu = new ADIS16470_IMU();                //[DriveTrain Subsystem]Gyro and acceleration sensor

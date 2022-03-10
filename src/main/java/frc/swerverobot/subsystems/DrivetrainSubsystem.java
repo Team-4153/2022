@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.RobotController;
 import frc.swerverobot.RobotMap;
+import frc.swerverobot.commands.climb.States;
 import frc.swerverobot.drivers.T265;
 
 import org.frcteam2910.common.drivers.SwerveModule;
@@ -44,6 +45,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
     public static final double TRACKWIDTH = 19.685; //  22.5; // 1.0;
     public static final double WHEELBASE = 27.159; // 22.5; // 1.0;
     private double angle = 0;
+    private static boolean locked;
 
     public static final DrivetrainFeedforwardConstants FEEDFORWARD_CONSTANTS = new DrivetrainFeedforwardConstants(
             0.042746,
@@ -370,7 +372,25 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
 
         for (int i = 0; i < modules.length; i++) {
             var module = modules[i];
-            moduleAngleEntries[i].setDouble(Math.toDegrees(module.getCurrentAngle()));
+            if(locked){
+                moduleAngleEntries[i].setDouble(((i+1)*90)-45);
+            }
+            else{
+                moduleAngleEntries[i].setDouble(Math.toDegrees(module.getCurrentAngle()));
+            }
+        }
+    }
+    public void lock(States in){
+        switch(in){
+            case LOCKED:
+                locked = true;
+                break;
+            case UNLOCKED:
+                locked = false;
+                break;
+            case TOGGLE:
+                locked = !locked;
+                break;
         }
     }
 
