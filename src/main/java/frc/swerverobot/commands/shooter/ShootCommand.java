@@ -32,24 +32,43 @@ public class ShootCommand extends SequentialCommandGroup{
         this.topSpeed = topSpeed;
         this.botSpeed = botSpeed;
 
-        //This shoots all balls in the shooter
-        addCommands(
-            new RunShootMotors(shooter, topSpeed,  botSpeed), //Spool up shooter motors
+        if (shooter.ballCount() < 1) {
+            //2 Balls
+            //This shoots all balls in the shooter
+            addCommands(
+                new RunShootMotors(shooter, topSpeed,  botSpeed), //Spool up shooter motors
 
-            new WaitCommand(waitforSpool), //Wait for spool up of motors
-            new RunFeedMotors(shooter, feedSpeed), //Feed both balls into shooter
+                new WaitCommand(waitforSpool), //Wait for spool up of motors
+                new RunFeedMotors(shooter, feedSpeed), //Feed 1st ball into shooter
 
-            new WaitCommand(waitforShoot2),
-            new RunFeedMotors(shooter, 0), //Feed both balls into shooter
-            new WaitCommand(waitforSpool),
-            
-            new RunFeedMotors(shooter, feedSpeed), //Feed both balls into shooter
+                new WaitCommand(waitforShoot2),
+                new RunFeedMotors(shooter, 0), //Stop feed motor
+                new WaitCommand(waitforSpool),
+                
+                new RunFeedMotors(shooter, feedSpeed), //Feed second ball into shooter
 
-            new WaitCommand(waitForShoot),
-            
-            new RunFeedMotors(shooter, 0), //Stop feed motors
-            new RunShootMotors(shooter, 0,  0) //Stop shooter motors
-        );
+                new WaitCommand(waitForShoot),
+                
+                new RunFeedMotors(shooter, 0), //Stop feed motors
+                new RunShootMotors(shooter, 0,  0) //Stop shooter motors
+            );
+        }
+        else {
+            //1 Ball
+            //This shoots Just the first ball
+            addCommands(
+                new RunShootMotors(shooter, topSpeed,  botSpeed), //Spool up shooter motors
+
+                new WaitCommand(waitforSpool), //Wait for spool up of motors
+                new RunFeedMotors(shooter, feedSpeed), //Feed both balls into shooter
+
+                new WaitCommand(waitforShoot2),
+                
+                new RunFeedMotors(shooter, 0), //Stop feed motors
+                new RunShootMotors(shooter, 0,  0) //Stop shooter motors
+            );
+
+        }
     }
 
 }
