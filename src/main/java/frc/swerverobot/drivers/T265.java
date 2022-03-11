@@ -88,6 +88,10 @@ public final class T265  {
         zeroYaw = ntYaw.getDouble(0.0);
     }
 
+    public void setRotation(double set) {
+        zeroYaw = set;
+    }
+
     public Vector2 getTranslation() {
         return new Vector2(M2I*(ntZ.getDouble(0.0) - zeroZ), M2I*(ntX.getDouble(0.0) - zeroX));
     }

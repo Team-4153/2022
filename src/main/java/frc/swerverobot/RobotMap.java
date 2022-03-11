@@ -126,4 +126,10 @@ public class RobotMap {
     public static final double DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_OFFSET = -Math.toRadians(170.3+180);
     public static final int DRIVETRAIN_BACK_LEFT_MODULE_DRIVE_MOTOR = 7;
     public static final double DRIVETRAIN_BACK_LEFT_MODULE_ENCODER_VOLTAGE_MAX = 3.256;
+
+//Shooter constants
+// Defaults are used for shooting during the autonomous period (distance tuned for preplaced cargo to hub)
+    public static final double DEFAULT_BOTTOM_MOTOR_SPEED = 1.0;
+    public static final double DEFAULT_TOP_MOTOR_SPEED = 0.75;
+    public static final double DEFAULT_FEED_MOTOR_SPEED = -0.4;
 }

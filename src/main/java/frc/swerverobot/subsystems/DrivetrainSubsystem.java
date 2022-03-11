@@ -42,8 +42,9 @@ import static frc.swerverobot.RobotMap.*;
 
 public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.Updatable {
     // define the trackwidth (short side in our case) and wheelbase (long side in our case) ratio of the robot
-    public static final double TRACKWIDTH = 1.0; //  22.5; // 1.0;
-    public static final double WHEELBASE = 1.0; // 22.5; // 1.0;
+    public static final double TRACKWIDTH = 19.685; //  22.5; // 1.0;
+    public static final double WHEELBASE = 27.159; // 22.5; // 1.0;
+    private double angle = 0;
     private static boolean locked;
 
     public static final DrivetrainFeedforwardConstants FEEDFORWARD_CONSTANTS = new DrivetrainFeedforwardConstants(
@@ -206,11 +207,11 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
     public void resetPose() {
             synchronized (kinematicsLock) {
                     pose = RigidTransform2.ZERO;
-            }
 
-            odometry.resetPose(RigidTransform2.ZERO);
+            odometry.resetPose(pose);
             t265.reset();
             resetGyroAngle();
+            }
     }
 
 /*
@@ -243,6 +244,22 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
     public void resetGyroAngle() {
         synchronized (sensorLock) {
                 adisGyro.reset();
+        }
+    }
+
+    public void setAngle(double angle) {
+        this.angle = angle;
+        t265.setRotation(angle);
+    }
+
+    public double getGyroAngle() {
+        synchronized (sensorLock) {
+            if(useT265) {
+                return t265.getRotation();
+            }
+            else {
+                return adisGyro.getAngle() + angle;
+            }
         }
     }
 
@@ -295,10 +312,10 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
         double angularVelocity;
         synchronized (sensorLock) {
             if (useT265) {
-                angle = Rotation2.fromRadians(t265.getRotation());
+                angle = Rotation2.fromRadians(getGyroAngle());
                 angularVelocity = t265.getAngularVelocity();
             } else {
-                angle = Rotation2.fromDegrees(adisGyro.getAngle());
+                angle = Rotation2.fromDegrees(getGyroAngle());
                 angularVelocity = adisGyro.getRate();
             }
         }
