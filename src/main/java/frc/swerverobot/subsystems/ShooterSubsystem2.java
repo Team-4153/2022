@@ -29,7 +29,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
     }
 
     //     ----Distance Adjustments----                   [Being Written]
-    public Array SetMotorDistance(){
+    public double[] SetMotorDistance(){
         double[][] MotorSpeed = {
             {180,0.75,1,.4},
             {193,0.7,1,0.65}, 
@@ -39,9 +39,10 @@ public class ShooterSubsystem2 extends SubsystemBase {
         //skipped because no visual distance
         };
         double distance = SmartDashboard.getNumber("TargetDistance", 0);
-        double toppower;
-        double botpower;
-        double feedpower;
+
+        //0 = Top Motor, 1 = Bottom Motor, 2 = Feed Motor
+        double[] SpeedsToSet = {0,0,0};
+
         int closest = -1;
         //250
         if (distance != 0) {
@@ -55,10 +56,16 @@ public class ShooterSubsystem2 extends SubsystemBase {
                 }
             }
 
-            toppower = (MotorSpeed[closest][1] + MotorSpeed[closest + 1][1])/2;
-            botpower = (MotorSpeed[closest][2] + MotorSpeed[closest + 1][2])/2;
-            feedpower = (MotorSpeed[closest][3] + MotorSpeed[closest + 1][3])/2;
+            
+            for (int i = 0; i < SpeedsToSet.length; i++) {
+                SpeedsToSet[i] = (MotorSpeed[closest][i+1] + MotorSpeed[closest + 1][i+1])/2;
+            }
+
+            SpeedsToSet[0] = (MotorSpeed[closest][1] + MotorSpeed[closest + 1][1])/2;//Set Top Motor to average of closest below and above
+            SpeedsToSet[1] = (MotorSpeed[closest][2] + MotorSpeed[closest + 1][2])/2;//Set Bottom Motor to average of closest below and above
+            SpeedsToSet[2] = (MotorSpeed[closest][3] + MotorSpeed[closest + 1][3])/2;//Set Feed Motor to average of closest below and above
         }
+        return SpeedsToSet;
     }
 
     //      ----Shooter Motor Functions----             [SMS:Fully Functional, FMS: Fully Functional, PL: Fully Functional]
