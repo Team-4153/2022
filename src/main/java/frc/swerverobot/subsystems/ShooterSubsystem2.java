@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //Robot Map
 import static frc.swerverobot.RobotMap.*;
 
+import java.lang.reflect.Array;
+
 //Motor Controlers
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
@@ -24,6 +26,43 @@ public class ShooterSubsystem2 extends SubsystemBase {
     public ShooterSubsystem2() {
         this.topMotor = new Spark(TopMotorPort); //Defines the top motor with the port from the RobotMap
         this.botMotor = new Spark(BottomMotorPort); //Defines the bottom motor with the port from the RobotMap
+    }
+
+    //     ----Distance Adjustments----                   [Being Written]
+    public double[] SetMotorDistance(){
+        double[][] MotorSpeed = {
+            {180,0.75,1,.4},
+            {193,0.7,1,0.65}, 
+            {214,0.75,1,0.7},
+            {270,1,1,1},
+            {270,1,1,1}//Second one is here to fix issue if disance is at max
+        };
+        double distance = SmartDashboard.getNumber("TargetDistance", 0);
+
+        //0 = Top Motor, 1 = Bottom Motor, 2 = Feed Motor
+        double[] SpeedsToSet = {0,0,0};
+
+        int lowDistance = -1;
+        //250
+        if (distance != 0) {
+            for (int i = 0; i < MotorSpeed.length; i++) {
+                if (MotorSpeed[i][0] < distance && MotorSpeed[i][0] > lowDistance) {
+                    //Goes through array distances finding the lowDistance value below the current distnace
+                    lowDistance = i;
+                }
+                else {
+                    //Stops the for Loop
+                    i = MotorSpeed.length;
+                }
+            }
+            
+            for (int i = 0; i < SpeedsToSet.length; i++) {
+                //0 = Top Motor, 1 = Bottom Motor, 2 = Feed Motor
+                //                      [Low Distance]                  ["High Distance"]
+                SpeedsToSet[i] = (MotorSpeed[lowDistance][i+1] + MotorSpeed[lowDistance + 1][i+1])/2;
+            }
+        }
+        return SpeedsToSet;
     }
 
     //      ----Shooter Motor Functions----             [SMS:Fully Functional, FMS: Fully Functional, PL: Fully Functional]

@@ -15,8 +15,6 @@ import java.lang.Math;
 
 public class FollowShooterCommand extends CommandBase {
     private final DrivetrainSubsystem drivetrain;
-    private final DoubleSupplier forward;
-    private final BooleanSupplier pressed;
     private double targetAngle;
     private double rotationOutput;
     private long lastCorrection;
@@ -24,10 +22,8 @@ public class FollowShooterCommand extends CommandBase {
     // create a pid controller for robot rotation
     private PidController rotationController = new PidController(new PidConstants(0.8/DrivetrainSubsystem.WHEELBASE, 0, 0.01/DrivetrainSubsystem.WHEELBASE)); // 0.8, 0.0, 0.01)); //0.5 0.0 0.008
 
-    public FollowShooterCommand(DrivetrainSubsystem drivetrain, DoubleSupplier fwd, BooleanSupplier pressed) {
+    public FollowShooterCommand(DrivetrainSubsystem drivetrain) {
         this.drivetrain = drivetrain;
-        this.forward = fwd;
-        this.pressed = pressed;
         rotationController.setInputRange(0.0, 2*Math.PI);
         rotationController.setContinuous(true);
 
@@ -43,32 +39,12 @@ public class FollowShooterCommand extends CommandBase {
 
     @Override
     public void execute() {
-        double minVal = 0.07;
-
-        calculateCorrection(RobotController.getFPGATime());
-        double fw = 0, st = 0;
-        if (forward != null) {
-            double v = forward.getAsDouble();
-            if (Math.abs(fw) < minVal) {
-                fw = 0;
-            }
-
-            if (targetAngle != 0) {
-                fw = -v; //-v / Math.tan(targetAngle);
-                st = 0; // v * Math.tan(targetAngle);
-//                SmartDashboard.putNumber("IntakeBall/FW", fw);
-//                SmartDashboard.putNumber("IntakeBall/ST", st);
-            } else {
-                fw = -v;
-                st = 0;
-            }
-        }
  
         rotationOutput = rotationController.calculate(drivetrain.getPose().rotation.toRadians(), 0.01);
 
         // drive command, change values here to change robot speed or field oriented
             drivetrain.drive(
-                    new Vector2(fw, st),
+                    new Vector2(0, 0),
                     -rotationOutput,
                     false
             );
@@ -80,7 +56,7 @@ public class FollowShooterCommand extends CommandBase {
     }
 
     public boolean isFinished() {
-        return !pressed.getAsBoolean(); // && Math.abs(rotationOutput) < 0.02;
+        return (Math.abs(rotationOutput) < 0.05); // && Math.abs(rotationOutput) < 0.02;
     }
 
     protected void calculateCorrection(long timestamp) {
@@ -89,7 +65,6 @@ public class FollowShooterCommand extends CommandBase {
         }
 
         lastCorrection = timestamp;
-        double minVal = 0.01;
 
         double target_x = -SmartDashboard.getNumber("TargetOff", 0);
 //        double by = SmartDashboard.getNumber("IntakeBall/BallY", 0);
