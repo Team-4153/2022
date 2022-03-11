@@ -190,7 +190,7 @@ public class RobotContainer {
         manipulatorController.getLeftBumperButton().whenPressed(
                 new StaticHookCommand(climb, States.TOGGLE)
         );
-        manipulatorController.getRightBumperButton().whenPressed(
+        manipulatorController.getRightBumperButton().whenHeld(
                 new SpoolCommand(climb)
         );
 
