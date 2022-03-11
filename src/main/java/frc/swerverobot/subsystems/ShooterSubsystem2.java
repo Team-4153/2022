@@ -35,8 +35,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
             {193,0.7,1,0.65}, 
             {214,0.75,1,0.7},
             {270,1,1,1},
-            {270,1,1,1}
-        //skipped because no visual distance
+            {270,1,1,1}//Second one is here to fix issue if disance is at max
         };
         double distance = SmartDashboard.getNumber("TargetDistance", 0);
 
@@ -48,6 +47,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
         if (distance != 0) {
             for (int i = 0; i < MotorSpeed.length; i++) {
                 if (MotorSpeed[i][0] < distance && MotorSpeed[i][0] > closest) {
+                    //Goes through array distances finding the closest value below the current distnace
                     closest = i;
                 }
                 else if (MotorSpeed[i][0] < distance && MotorSpeed[i][0] > closest) {
@@ -55,15 +55,11 @@ public class ShooterSubsystem2 extends SubsystemBase {
                     i = MotorSpeed.length;
                 }
             }
-
             
             for (int i = 0; i < SpeedsToSet.length; i++) {
+                //0 = Top Motor, 1 = Bottom Motor, 2 = Feed Motor
                 SpeedsToSet[i] = (MotorSpeed[closest][i+1] + MotorSpeed[closest + 1][i+1])/2;
             }
-
-            SpeedsToSet[0] = (MotorSpeed[closest][1] + MotorSpeed[closest + 1][1])/2;//Set Top Motor to average of closest below and above
-            SpeedsToSet[1] = (MotorSpeed[closest][2] + MotorSpeed[closest + 1][2])/2;//Set Bottom Motor to average of closest below and above
-            SpeedsToSet[2] = (MotorSpeed[closest][3] + MotorSpeed[closest + 1][3])/2;//Set Feed Motor to average of closest below and above
         }
         return SpeedsToSet;
     }
