@@ -105,9 +105,13 @@ public class ClimberSubsystem extends SubsystemBase{
     }
 
     public void spool(){
-        spoolMotor.set(-0.3);
+        spoolMotor.set(-1.0);
     }
 
+    public void unspool(){
+        spoolMotor.set(1.0);
+    }
+    
     public void StopMotor(){
         spoolMotor.set(0);
     }

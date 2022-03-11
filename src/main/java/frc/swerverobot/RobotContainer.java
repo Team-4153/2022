@@ -31,7 +31,6 @@ import org.frcteam2910.common.robot.input.Controller;
 import org.frcteam2910.common.robot.input.XboxController;
 import org.frcteam2910.common.robot.input.DPadButton.Direction;
 import org.opencv.core.Mat;
-import frc.swerverobot.commands.climb.States;
 
 public class RobotContainer {
     private final Controller driveController = RobotMap.Driver_controller;
@@ -76,11 +75,11 @@ public class RobotContainer {
         ));
 */
 
-//        updateManager.startLoop(5.0e-3);
+        updateManager.startLoop(5.0e-3);
         initRobot();
         configureButtonBindings();
 
-        addAutoChoicesToGui();
+//        addAutoChoicesToGui();
     }
 
     private void initRobot() {
@@ -175,20 +174,32 @@ public class RobotContainer {
  
 //        [Climber Subsystem]
 
-        manipulatorController.getDPadButton(Direction.UP).whenPressed(
-                new WinchLockCommand(climb, States.UNLOCKED)
-        );
-        manipulatorController.getDPadButton(Direction.DOWN).whenPressed(
-                new WinchLockCommand(climb, States.LOCKED)
-        );
+        // manipulatorController.getDPadButton(Direction.UP).whenPressed(
+        //         new WinchLockCommand(climb, States.UNLOCKED)
+        // );
+        // manipulatorController.getDPadButton(Direction.DOWN).whenPressed(
+        //         new WinchLockCommand(climb, States.LOCKED)
+        // );
+        // manipulatorController.getDPadButton(Direction.LEFT).whenPressed(
+        //         new PullandGrabCommand(climb)
+        // );
+        // manipulatorController.getDPadButton(Direction.RIGHT).whenPressed(
+        //         new GetToNextRungCommand(climb)
+        // );
         manipulatorController.getDPadButton(Direction.LEFT).whenPressed(
-                new PullandGrabCommand(climb)
+                new ArmPositionCommand(climb, States.LOCKED)
         );
         manipulatorController.getDPadButton(Direction.RIGHT).whenPressed(
-                new GetToNextRungCommand(climb)
+                new ArmPositionCommand(climb, States.UNLOCKED)
         );
-        manipulatorController.getLeftBumperButton().whenPressed(
+
+
+        manipulatorController.getDPadButton(Direction.UP).whenPressed(
                 new StaticHookCommand(climb, States.TOGGLE)
+        );
+
+        manipulatorController.getLeftBumperButton().whenHeld(
+                new UnspoolCommand(climb)
         );
         manipulatorController.getRightBumperButton().whenHeld(
                 new SpoolCommand(climb)
