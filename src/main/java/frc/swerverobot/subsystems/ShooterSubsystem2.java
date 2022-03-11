@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //Robot Map
 import static frc.swerverobot.RobotMap.*;
 
+import java.lang.reflect.Array;
+
 //Motor Controlers
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
@@ -24,6 +26,39 @@ public class ShooterSubsystem2 extends SubsystemBase {
     public ShooterSubsystem2() {
         this.topMotor = new Spark(TopMotorPort); //Defines the top motor with the port from the RobotMap
         this.botMotor = new Spark(BottomMotorPort); //Defines the bottom motor with the port from the RobotMap
+    }
+
+    //     ----Distance Adjustments----                   [Being Written]
+    public Array SetMotorDistance(){
+        double[][] MotorSpeed = {
+            {180,0.75,1,.4},
+            {193,0.7,1,0.65}, 
+            {214,0.75,1,0.7},
+            {270,1,1,1},
+            {270,1,1,1}
+        //skipped because no visual distance
+        };
+        double distance = SmartDashboard.getNumber("TargetDistance", 0);
+        double toppower;
+        double botpower;
+        double feedpower;
+        int closest = -1;
+        //250
+        if (distance != 0) {
+            for (int i = 0; i < MotorSpeed.length; i++) {
+                if (MotorSpeed[i][0] < distance && MotorSpeed[i][0] > closest) {
+                    closest = i;
+                }
+                else if (MotorSpeed[i][0] < distance && MotorSpeed[i][0] > closest) {
+                    //Stops the for Loop
+                    i = MotorSpeed.length;
+                }
+            }
+
+            toppower = (MotorSpeed[closest][1] + MotorSpeed[closest + 1][1])/2;
+            botpower = (MotorSpeed[closest][2] + MotorSpeed[closest + 1][2])/2;
+            feedpower = (MotorSpeed[closest][3] + MotorSpeed[closest + 1][3])/2;
+        }
     }
 
     //      ----Shooter Motor Functions----             [SMS:Fully Functional, FMS: Fully Functional, PL: Fully Functional]
