@@ -42,15 +42,15 @@ public class ShooterSubsystem2 extends SubsystemBase {
         //0 = Top Motor, 1 = Bottom Motor, 2 = Feed Motor
         double[] SpeedsToSet = {0,0,0};
 
-        int closest = -1;
+        int lowDistance = -1;
         //250
         if (distance != 0) {
             for (int i = 0; i < MotorSpeed.length; i++) {
-                if (MotorSpeed[i][0] < distance && MotorSpeed[i][0] > closest) {
-                    //Goes through array distances finding the closest value below the current distnace
-                    closest = i;
+                if (MotorSpeed[i][0] < distance && MotorSpeed[i][0] > lowDistance) {
+                    //Goes through array distances finding the lowDistance value below the current distnace
+                    lowDistance = i;
                 }
-                else if (MotorSpeed[i][0] < distance && MotorSpeed[i][0] > closest) {
+                else {
                     //Stops the for Loop
                     i = MotorSpeed.length;
                 }
@@ -58,7 +58,8 @@ public class ShooterSubsystem2 extends SubsystemBase {
             
             for (int i = 0; i < SpeedsToSet.length; i++) {
                 //0 = Top Motor, 1 = Bottom Motor, 2 = Feed Motor
-                SpeedsToSet[i] = (MotorSpeed[closest][i+1] + MotorSpeed[closest + 1][i+1])/2;
+                //                      [Low Distance]                  ["High Distance"]
+                SpeedsToSet[i] = (MotorSpeed[lowDistance][i+1] + MotorSpeed[lowDistance + 1][i+1])/2;
             }
         }
         return SpeedsToSet;
