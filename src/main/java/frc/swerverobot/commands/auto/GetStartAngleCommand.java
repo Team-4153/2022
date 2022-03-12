@@ -1,11 +1,9 @@
 package frc.swerverobot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.swerverobot.subsystems.ClimberSubsystem;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import frc.swerverobot.commands.drive.*;
 import java.lang.Math;
-import java.util.function.DoubleSupplier;
 
 public class GetStartAngleCommand extends CommandBase{
     private final DrivetrainSubsystem drivetrain;

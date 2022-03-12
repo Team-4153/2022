@@ -9,9 +9,7 @@ import org.frcteam2910.common.math.Vector2;
 import org.frcteam2910.common.util.InterpolatingDouble;
 import org.frcteam2910.common.util.InterpolatingTreeMap;
 
-import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 @Deprecated
 public abstract class SwerveDrivetrain extends HolonomicDrivetrain {

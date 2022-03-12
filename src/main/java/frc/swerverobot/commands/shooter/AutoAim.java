@@ -5,13 +5,7 @@ import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import frc.swerverobot.subsystems.ShooterSubsystem2;
 
 public class AutoAim extends SequentialCommandGroup{
-    private final ShooterSubsystem2 shooter;
-    private final DrivetrainSubsystem drivetrain;
-
     public AutoAim(ShooterSubsystem2 shooter, DrivetrainSubsystem drivetrain) {
-        this.shooter = shooter;
-        this.drivetrain = drivetrain;
-
         double powers[] = shooter.SetMotorDistance();
 
         addCommands(

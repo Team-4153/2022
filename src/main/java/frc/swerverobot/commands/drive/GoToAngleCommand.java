@@ -1,6 +1,5 @@
 package frc.swerverobot.commands.drive;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import org.frcteam2910.common.math.Vector2;
