@@ -1,13 +1,12 @@
 package frc.swerverobot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.swerverobot.commands.shooter.ShootCommand;
+
 //Smart Dashboard (For Varaibles)
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //Robot Map
 import static frc.swerverobot.RobotMap.*;
-
-import java.lang.reflect.Array;
 
 //Motor Controlers
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
