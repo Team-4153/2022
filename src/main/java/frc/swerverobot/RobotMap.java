@@ -61,13 +61,9 @@ public class RobotMap {
     
     //Shooter/Climber Controller (Noah)
     public static final Controller Shooter_controller = new XboxController(1);//[Shooter's Controller]
-
     public static final Button Shoot = Shooter_controller.getXButton();//[Shooter Subsystem](X)
     public static final Button Ejectball = Shooter_controller.getBButton();//[Shooter Subsystem](B)
     public static final Axis AimShootHigh = Shooter_controller.getRightTriggerAxis();//[Shooter Subsystem](R-Trigger)
-    
-    public static final Button ManualShootIncrease = Shooter_controller.getYButton();//[Shooter Subsystem](Y)
-    public static final Button ManualShootDecrease = Shooter_controller.getAButton();//[Shooter Subsystem](A)
 
     
     /* Example Analog Trigger Code NOTE: put this inside your subsystem

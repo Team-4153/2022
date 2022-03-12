@@ -192,7 +192,6 @@ public class RobotContainer {
                 new ArmPositionCommand(climb, States.UNLOCKED)
         );
 
-
         manipulatorController.getDPadButton(Direction.UP).whenPressed(
                 new StaticHookCommand(climb, States.TOGGLE)
         );
