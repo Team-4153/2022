@@ -75,14 +75,12 @@ public class ClimberSubsystem extends SubsystemBase{
         this.armPiston = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, RobotMap.ARM_FORWARD, RobotMap.ARM_BACK);
         this.stathookPiston = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, RobotMap.HOOK_CLOSE, RobotMap.HOOK_OPEN);
         this.winchSolenoid = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, RobotMap.WINCH_LOCK, RobotMap.WINCH_UNLOCK);
-        this.Switch = new DigitalInput(RobotMap.CLIMBER_SWITCH);
     }
 
     private final Spark spoolMotor;
     private final DoubleSolenoid armPiston;
     private final DoubleSolenoid stathookPiston;
     private final DoubleSolenoid winchSolenoid;
-    private final DigitalInput Switch;
     private static boolean Step2;
     private boolean locked;
     private boolean armUp;
@@ -173,11 +171,7 @@ public class ClimberSubsystem extends SubsystemBase{
     public void setHookOpen(boolean set) {
         hookOpen = set;
     }
-
-    public boolean GetSwitch(){
-        return Switch.get();
-    }
-
+    
     public static boolean isStep2() {
         return Step2;
     }

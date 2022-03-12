@@ -43,7 +43,7 @@ public class StaticHookCommand extends CommandBase{
 
     @Override
     public boolean isFinished() {
-        return true; //RobotMap.StatHook1.get() && RobotMap.StatHook2.get(); // and operator so both are closed
+        return RobotMap.StatHook1.get() && RobotMap.StatHook2.get(); // and operator so both are closed
     }
 
 }
