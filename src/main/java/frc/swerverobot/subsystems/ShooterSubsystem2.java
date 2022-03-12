@@ -1,13 +1,12 @@
 package frc.swerverobot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.swerverobot.commands.shooter.ShootCommand;
 
 //Smart Dashboard (For Varaibles)
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //Robot Map
 import static frc.swerverobot.RobotMap.*;
-
-import java.lang.reflect.Array;
 
 //Motor Controlers
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -43,7 +42,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
         double distance = SmartDashboard.getNumber("TargetDistance", 0);
 
         //0 = Top Motor, 1 = Bottom Motor, 2 = Feed Motor
-        double[] SpeedsToSet = {0,0,0};
+        double[] SpeedsToSet = {DEFAULT_TOP_MOTOR_SPEED,DEFAULT_BOTTOM_MOTOR_SPEED,DEFAULT_FEED_MOTOR_SPEED};
 
         int lowDistance = -1;
         int highDistance = -1;
@@ -174,6 +173,12 @@ public class ShooterSubsystem2 extends SubsystemBase {
     public void periodic() {
 	    ballCount();
         pushDashboardVars();
+        //Triggers
+        if (AimShootHigh.get() > 0.5) {
+            double powers[] = this.SetMotorDistance();
+            //0 = Top Motor, 1 = Bottom Motor, 2 = Feed Motor
+            new ShootCommand(this, powers[0], powers[1], powers[2]);
+        }
     }
 }
 
