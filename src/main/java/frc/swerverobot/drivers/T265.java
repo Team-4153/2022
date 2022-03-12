@@ -2,14 +2,11 @@ package frc.swerverobot.drivers;
 
 //import com.kauailabs.navx.frc.AHRS;
 //import edu.wpi.first.wpilibj.SPI;
-import org.frcteam2910.common.drivers.Gyroscope;
 import org.frcteam2910.common.math.RigidTransform2;
 import org.frcteam2910.common.math.Rotation2;
 import org.frcteam2910.common.math.Vector2;
 
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.networktables.NetworkTableEntry;
 

@@ -57,9 +57,6 @@ More intuitive for driver:
 
 package frc.swerverobot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -171,7 +168,7 @@ public class ClimberSubsystem extends SubsystemBase{
     public void setHookOpen(boolean set) {
         hookOpen = set;
     }
-    
+
     public static boolean isStep2() {
         return Step2;
     }

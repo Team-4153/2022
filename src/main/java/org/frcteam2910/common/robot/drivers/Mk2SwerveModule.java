@@ -2,7 +2,6 @@ package org.frcteam2910.common.robot.drivers;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import org.frcteam2910.common.control.PidConstants;

@@ -175,6 +175,7 @@ public class RobotContainer {
                 );
 
 
+
                 //        [Shooter Subsystem]
                 Ejectball.whenPressed(
                         //Drops the first ball in storage
@@ -190,6 +191,7 @@ public class RobotContainer {
                 );
 
 
+                
                 //        [Intake Subsystem]
                 Intake_Extension.whenPressed(
                         //Run the intake (It will autofeed the first ball and stop the motor when both balls are detected)
