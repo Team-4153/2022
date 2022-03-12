@@ -30,28 +30,29 @@ import org.frcteam2910.common.robot.input.Controller;
 import org.frcteam2910.common.robot.input.XboxController;
 import org.frcteam2910.common.robot.input.DPadButton.Direction;
 import org.opencv.core.Mat;
+import org.xml.sax.ContentHandler;
 
 public class RobotContainer {
-    private final Controller driveController = RobotMap.Driver_controller;
-    private final Controller manipulatorController = RobotMap.Shooter_controller;
+private final Controller driveController = RobotMap.Driver_controller;
+private final Controller manipulatorController = RobotMap.Shooter_controller;
 
-    private final IntakeSubsystem intake = new IntakeSubsystem();
-    private final ShooterSubsystem2 shooter = new ShooterSubsystem2();
-    private final ClimberSubsystem climb = new ClimberSubsystem();
-    private final LEDSubsystem LED = new LEDSubsystem();
-    //private final LEDSubsystemCommand m_LEDCommand = new LEDSubsystemCommand(LED);
-    private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
+private final IntakeSubsystem intake = new IntakeSubsystem();
+private final ShooterSubsystem2 shooter = new ShooterSubsystem2();
+private final ClimberSubsystem climb = new ClimberSubsystem();
+private final LEDSubsystem LED = new LEDSubsystem();
+//private final LEDSubsystemCommand m_LEDCommand = new LEDSubsystemCommand(LED);
+private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
 
-    private DriveCommand drivecommand;
+private DriveCommand drivecommand;
 
-    private final UpdateManager updateManager = new UpdateManager(
-        drivetrain
-    );
+private final UpdateManager updateManager = new UpdateManager(
+drivetrain
+);
 
-    SendableChooser<PossibleAutos> autoChoice = new SendableChooser<PossibleAutos>();
+//Multiple Auto Option
+SendableChooser<PossibleAutos> autoChoice = new SendableChooser<PossibleAutos>();
 
-    
-    public RobotContainer() {
+public RobotContainer() {
         this.drivecommand = new DriveCommand(
                 drivetrain,
                 () -> driveController.getLeftXAxis().get(true),
@@ -60,11 +61,9 @@ public class RobotContainer {
                 () -> driveController.getLeftTriggerAxis().get(true),
                 () -> driveController.getRightTriggerAxis().get(true)
         );
-
         // set the drivetrain's default command to the driver's controller values
         CommandScheduler.getInstance().setDefaultCommand(drivetrain, drivecommand);
-
-/**     Point rotation control method
+        /**     Point rotation control method
         CommandScheduler.getInstance().setDefaultCommand(drivetrain, new GoToAngleCommand(
                 drivetrain,
                 () -> controller.getLeftXAxis().get(true),
@@ -72,38 +71,31 @@ public class RobotContainer {
                 () -> -controller.getRightXAxis().get(true),
                 () -> controller.getRightYAxis().get(true)
         ));
-*/
-
+        */
         updateManager.startLoop(5.0e-3);
         initRobot();
         configureButtonBindings();
+        // addAutoChoicesToGui();
+}
 
-//        addAutoChoicesToGui();
-    }
-
-    private void initRobot() {
-	intake.init();
-	climb.init();
+private void initRobot() {
+        intake.init();
+        climb.init();
         shooter.init();
         LED.init();
-    }
+}
 
-    public Command getAutonomousCommand() {
+public Command getAutonomousCommand() {
         PossibleAutos choice = autoChoice.getSelected();
         return new AutonomousCommand(drivetrain, shooter, intake, choice);
-    }
+}
 
-    private void configureButtonBindings() {
+private void configureButtonBindings() {
         //[Drive Subsystem]
         driveController.getBackButton().whenPressed(
                 //[Drive Subsystem]  Reset Gyro (Update if this is wrong I dont know)
- //               () -> drivetrain.resetGyroAngle(Rotation2.ZERO)
                 () -> drivecommand.resetPose()
         );
-//        controller.getBButton().whenPressed(
-//                //[Drive Subsystem]  Drives in Square (Update if this is wrong I dont know)
-//                new SquareCommand(drivetrain, 0.4, 1)
-//        );
         driveController.getYButton().whenPressed(
                 new GoToAngleCommand(
                         drivetrain,
@@ -111,9 +103,8 @@ public class RobotContainer {
                         () -> 0.0,
                         () -> 0.0,
                         () -> 1.0
-                        )
+                )
         );
-
         driveController.getBButton().whenPressed(
                 new GoToAngleCommand(
                         drivetrain,
@@ -121,9 +112,8 @@ public class RobotContainer {
                         () -> 0.0,
                         () -> -1.0,
                         () -> 0.0
-                        )
+                )
         );
-
         driveController.getXButton().whenPressed(
                 new GoToAngleCommand(
                         drivetrain,
@@ -131,9 +121,8 @@ public class RobotContainer {
                         () -> 0.0,
                         () -> 1.0,
                         () -> 0.0
-                        )
+                )
         );
-
         driveController.getAButton().whenPressed(
                 new GoToAngleCommand(
                         drivetrain,
@@ -141,38 +130,26 @@ public class RobotContainer {
                         () -> 0.0,
                         () -> 0.0,
                         () -> -1.0
-                        )
-        );
-
-        driveController.getRightBumperButton().whenPressed(
-                new FollowBallCommand(drivetrain,
-                        () -> driveController.getRightTriggerAxis().get(true),
-                        () -> driveController.getRightBumperButton().get()
                 )
         );
-        driveController.getBackButton().whenPressed(new LockCommand(drivetrain, States.TOGGLE));
-
-//        controller.getRightTriggerAxis().getButton(0.1).whenPressed(
-//                new FollowBallCommand(drivetrain,
-//                () -> controller.getRightTriggerAxis().get(true)
-//                )
-//        );
-
-
-/*        controller.getStartButton().whenPressed(
-                new PathCommand(drivetrain, 1.0, 0.0, 0.0)
+        driveController.getBackButton().whenPressed(
+                new LockCommand(drivetrain, States.TOGGLE)
         );
-*/
+        // driveController.getRightBumperButton().whenPressed(
+        //         //Follows Ball
+        //         new FollowBallCommand(drivetrain,
+        //                 () -> driveController.getRightTriggerAxis().get(true),
+        //                 () -> driveController.getRightBumperButton().get()
+        //         )
+        // );
+        // driveController.getStartButton().whenPressed(
+        //         //Currently broken
+        //         new PathCommand(drivetrain, 1.0, 0.0, 0.0)
+        // );
 
-/*        controller.getStartButton().whenPressed(
-                //[Drive Subsystem]  Drives in Square (Update if this is wrong I dont know)
-                () -> drivetrain.resetPose(new RigidTransform2(new Vector2(0, 0), new Rotation2(0, 0, false)))
-        );
-*/
 
- 
-//        [Climber Subsystem]
 
+        //        [Climber Subsystem]
         // manipulatorController.getDPadButton(Direction.UP).whenPressed(
         //         new WinchLockCommand(climb, States.UNLOCKED)
         // );
@@ -186,55 +163,59 @@ public class RobotContainer {
         //         new GetToNextRungCommand(climb)
         // );
         manipulatorController.getDPadButton(Direction.LEFT).whenPressed(
+                //Moves Mobile Climber
                 new ArmPositionCommand(climb, States.LOCKED)
         );
         manipulatorController.getDPadButton(Direction.RIGHT).whenPressed(
+                //Moves Mobile Climber
                 new ArmPositionCommand(climb, States.UNLOCKED)
         );
-
         manipulatorController.getDPadButton(Direction.UP).whenPressed(
+                //Lock/Unlock the static hook
                 new StaticHookCommand(climb, States.TOGGLE)
         );
-
         manipulatorController.getLeftBumperButton().whenHeld(
+                //Moves robot down using mobile climber
                 new UnspoolCommand(climb)
         );
         manipulatorController.getRightBumperButton().whenHeld(
+                //Moves robot up using mobile climber
                 new SpoolCommand(climb)
         );
 
 
-//        [Shooter Subsystem]
+        //        [Shooter Subsystem]
         Ejectball.whenPressed(
-            //Drops the first ball in storage
-            new ShootCommand(shooter, -0.2, 0.2, DEFAULT_FEED_MOTOR_SPEED)
+                //Drops the first ball in storage
+                new ShootCommand(shooter, -0.2, 0.2, DEFAULT_FEED_MOTOR_SPEED)
         );
         Shoot.whenPressed(
-            //Go to tape and then shoot into low goal
-            new ShootCommand(shooter, -0.3, 1.0, DEFAULT_FEED_MOTOR_SPEED)
+                //Go to tape and then shoot into low goal
+                new ShootCommand(shooter, -0.3, 1.0, DEFAULT_FEED_MOTOR_SPEED)
         );
         manipulatorController.getRightTriggerAxis().getButton(0.1).whenPressed(
-            //Autoaim to the high goal and then shoot
-            new AutoAim(shooter, drivetrain)
+                //Autoaim to the high goal and then shoot
+                new AutoAim(shooter, drivetrain)
         );
 
 
-//        [Intake]
+        //        [Intake Subsystem]
         Intake_Extension.whenPressed(
+                //Run the intake (It will autofeed the first ball and stop the motor when both balls are detected)
                 new IntakeSequence(intake, shooter)
         );
         Intake_Retract.whenPressed(
+                //Retracts intake 
                 new IntakeCommand(intake, true)
         );
+}
 
-
-    }
-
-    private void addAutoChoicesToGui() {
+//Add options for different start positions
+private void addAutoChoicesToGui() {
         PossibleAutos[] enumValues = PossibleAutos.values();
         for (int i = 0; i < enumValues.length; i++) {
-          autoChoice.addOption(enumValues[i].toString(), enumValues[i]);
+                autoChoice.addOption(enumValues[i].toString(), enumValues[i]);
         }
         SmartDashboard.putData(autoChoice);
-    }
+        }
 }
