@@ -213,7 +213,9 @@ public class RobotContainer {
             //Go to tape and then shoot into low goal
             new ShootCommand(shooter, -0.3, 1.0, DEFAULT_FEED_MOTOR_SPEED)
         );
-        //Shoot buttons are in shootersubsystem at the bottom in the periodic function
+        manipulatorController.getRightTriggerAxis().getButton(0.1).whenPressed(
+            new AutoAim(shooter, drivetrain)
+        );
 
 
 //        [Intake]

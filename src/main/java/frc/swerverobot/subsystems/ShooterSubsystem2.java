@@ -173,12 +173,6 @@ public class ShooterSubsystem2 extends SubsystemBase {
     public void periodic() {
 	    ballCount();
         pushDashboardVars();
-        //Triggers
-        if (AimShootHigh.get() > 0.5) {
-            double powers[] = this.SetMotorDistance();
-            //0 = Top Motor, 1 = Bottom Motor, 2 = Feed Motor
-            new ShootCommand(this, powers[0], powers[1], powers[2]);
-        }
     }
 }
 
