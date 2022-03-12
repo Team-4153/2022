@@ -86,7 +86,7 @@ public class RobotContainer {
 
         private void configureButtonBindings() {
                 //[Drive Subsystem]
-                driveController.getBackButton().whenPressed(
+                ResetGyro.whenPressed(
                         //[Drive Subsystem]  Reset Gyro (Update if this is wrong I dont know)
                         () -> drivecommand.resetPose()
                 );
@@ -156,23 +156,23 @@ public class RobotContainer {
                 // manipulatorController.getDPadButton(Direction.RIGHT).whenPressed(
                 //         new GetToNextRungCommand(climb)
                 // );
-                manipulatorController.getDPadButton(Direction.LEFT).whenPressed(
+                ClimbOut.whenPressed(
                         //Moves Mobile Climber Out
                         new ArmPositionCommand(climb, States.LOCKED)
                 );
-                manipulatorController.getDPadButton(Direction.RIGHT).whenPressed(
+                ClimbIn.whenPressed(
                         //Moves Mobile Climber In
                         new ArmPositionCommand(climb, States.UNLOCKED)
                 );
-                manipulatorController.getDPadButton(Direction.UP).whenPressed(
+                StatHook.whenPressed(
                         //Lock/Unlock the static hook
                         new StaticHookCommand(climb, States.TOGGLE)
                 );
-                manipulatorController.getLeftBumperButton().whenHeld(
+                Unspool.whenHeld(
                         //Moves robot down using mobile climber
                         new UnspoolCommand(climb)
                 );
-                manipulatorController.getRightBumperButton().whenHeld(
+                Spool.whenHeld(
                         //Moves robot up using mobile climber
                         new SpoolCommand(climb)
                 );
@@ -188,7 +188,7 @@ public class RobotContainer {
                         //Go to tape and then shoot into low goal
                         new ShootCommand(shooter, -0.3, 0.3, DEFAULT_FEED_MOTOR_SPEED)
                 );
-                manipulatorController.getRightTriggerAxis().getButton(0.1).whenPressed(
+                AimShootHigh.getButton(0.1).whenPressed(
                         //Autoaim to the high goal and then shoot
                         new AutoAim(shooter, drivetrain)
                 );
