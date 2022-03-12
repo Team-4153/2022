@@ -1,6 +1,5 @@
 package frc.swerverobot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.swerverobot.commands.shooter.ShootCommand;
 
 //Smart Dashboard (For Varaibles)
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,7 +26,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
         this.botMotor = new Spark(BottomMotorPort); //Defines the bottom motor with the port from the RobotMap
     }
 
-    //     ----Distance Adjustments----                   [Being Written]
+    //     ----Distance Adjustments----                 [Needs Testing]
     public static double lerp(double from, double to, double progress) {
         return from + ((to - from) * progress);
     }
@@ -47,7 +46,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
         int lowDistance = -1;
         int highDistance = -1;
         double progress = 0.5;
-        //250
+
         if (distance != 0) {
             for (int i = 0; i < MotorSpeed.length; i++) {
                 if (MotorSpeed[i][0] < distance && MotorSpeed[i][0] > lowDistance) {
@@ -69,6 +68,9 @@ public class ShooterSubsystem2 extends SubsystemBase {
                 SpeedsToSet[i] = lerp(MotorSpeed[lowDistance][i+1], MotorSpeed[highDistance][i+1], progress);
             }
         }
+        SmartDashboard.putNumber("Top Motor Set Speed", SpeedsToSet[0]);
+        SmartDashboard.putNumber("Bottom Motor Set Speed", SpeedsToSet[1]);
+        SmartDashboard.putNumber("Feed Motor Set Speed", SpeedsToSet[2]);
         return SpeedsToSet;
     }
 
@@ -171,8 +173,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
     }
     @Override
     public void periodic() {
-	    ballCount();
-        pushDashboardVars();
+        pushDashboardVars(); // Updates all of the Shooter Speeds on the smart dashboard
     }
 }
 
