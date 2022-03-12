@@ -3,6 +3,8 @@ package frc.swerverobot.commands.climb;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.swerverobot.subsystems.ClimberSubsystem;
 
+@SuppressWarnings("unused")
+
 public class Climb1Command extends Command {
     private final ClimberSubsystem subsystem;
     public Climb1Command(ClimberSubsystem in) {

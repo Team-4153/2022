@@ -9,6 +9,8 @@ import org.frcteam2910.common.control.PidController;
 
 import java.util.function.DoubleSupplier;
 
+@Deprecated
+
 public class DriveCommand extends CommandBase {
     private final DrivetrainSubsystem drivetrain;
     private final DoubleSupplier forward;

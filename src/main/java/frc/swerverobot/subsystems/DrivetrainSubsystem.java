@@ -33,6 +33,9 @@ import java.util.Optional;
 
 import static frc.swerverobot.RobotMap.*;
 
+@Deprecated
+@SuppressWarnings("unused")
+
 public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.Updatable {
     // define the trackwidth (short side in our case) and wheelbase (long side in our case) ratio of the robot
     public static final double TRACKWIDTH = 19.685; //  22.5; // 1.0;

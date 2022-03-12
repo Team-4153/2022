@@ -10,6 +10,8 @@ import org.frcteam2910.common.control.PidController;
 import java.util.function.DoubleSupplier;
 import java.lang.Math;
 
+@Deprecated
+
 public class GoToAngleCommand extends CommandBase {
     private final DrivetrainSubsystem drivetrain;
     private final DoubleSupplier forward;

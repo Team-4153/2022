@@ -5,9 +5,10 @@ import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import org.frcteam2910.common.control.PidConstants;
 import org.frcteam2910.common.control.PidController;
 import org.frcteam2910.common.math.Vector2;
-import org.frcteam2910.common.robot.input.Axis;
 
 import java.util.function.DoubleSupplier;
+
+@Deprecated
 
 public class DriveWithSetRotationCommand extends CommandBase {
     private final DrivetrainSubsystem drivetrain;

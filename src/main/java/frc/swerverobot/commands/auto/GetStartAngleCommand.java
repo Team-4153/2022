@@ -5,6 +5,8 @@ import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import frc.swerverobot.commands.drive.*;
 import java.lang.Math;
 
+@Deprecated
+
 public class GetStartAngleCommand extends CommandBase{
     private final DrivetrainSubsystem drivetrain;
     private final PossibleAutos choice;

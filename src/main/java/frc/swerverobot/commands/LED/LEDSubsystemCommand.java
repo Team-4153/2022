@@ -7,6 +7,8 @@ package frc.swerverobot.commands.LED;
 import frc.swerverobot.subsystems.LEDSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+@SuppressWarnings("unused")
+
 /** An example command that uses an example subsystem. */
 public class LEDSubsystemCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})

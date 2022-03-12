@@ -23,6 +23,9 @@ import org.frcteam2910.common.robot.UpdateManager;
 import org.frcteam2910.common.robot.input.Controller;
 import org.frcteam2910.common.robot.input.DPadButton.Direction;
 
+@Deprecated
+@SuppressWarnings("unused")
+
 public class RobotContainer {
         private final Controller driveController = RobotMap.Driver_controller;
         private final Controller manipulatorController = RobotMap.Shooter_controller;

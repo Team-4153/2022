@@ -24,6 +24,9 @@ import java.util.function.BiConsumer;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleSupplier;
 
+
+@Deprecated
+
 public class Mk2SwerveModuleBuilder {
     /**
      * The gear ratio of the angle motor that ships with the standard kit.

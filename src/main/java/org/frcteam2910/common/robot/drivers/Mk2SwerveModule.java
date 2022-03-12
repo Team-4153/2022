@@ -10,6 +10,7 @@ import org.frcteam2910.common.drivers.SwerveModule;
 import org.frcteam2910.common.math.Vector2;
 import com.revrobotics.CANAnalog;
 
+@Deprecated
 
 public class Mk2SwerveModule extends SwerveModule {
     /**

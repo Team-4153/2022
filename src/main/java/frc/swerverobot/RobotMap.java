@@ -46,7 +46,6 @@ public class RobotMap {
     public static final DigitalInput StatHook1 = new DigitalInput(StatHook1Port); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
    public static final DigitalInput StatHook2 = new DigitalInput(StatHook2Port); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
 
-
 //PWM Motors
     public static final int TopMotorPort = 1;                                   //[Shooter Subsystem] The Number is the RIO DIO port 
     public static final int BottomMotorPort = 2;                                //[Shooter Subsystem] The Number is the RIO DIO port

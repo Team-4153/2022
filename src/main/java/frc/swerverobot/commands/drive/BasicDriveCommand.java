@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import org.frcteam2910.common.math.Vector2;
 
+@Deprecated
+
 public class BasicDriveCommand extends CommandBase {
     private final DrivetrainSubsystem drivetrain;
     private final Vector2 translation;

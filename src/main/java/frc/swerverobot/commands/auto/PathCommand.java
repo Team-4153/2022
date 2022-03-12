@@ -9,6 +9,8 @@ import org.frcteam2910.common.control.PidController;
 
 import java.lang.Math;
 
+@Deprecated
+
 public class PathCommand extends CommandBase {
     private final DrivetrainSubsystem drivetrain;
     private final double forward;
