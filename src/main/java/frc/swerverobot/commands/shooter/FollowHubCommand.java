@@ -13,7 +13,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import java.lang.Math;
 
-public class FollowShooterCommand extends CommandBase {
+public class FollowHubCommand extends CommandBase {
     private final DrivetrainSubsystem drivetrain;
     private double targetAngle;
     private double rotationOutput;
@@ -22,7 +22,7 @@ public class FollowShooterCommand extends CommandBase {
     // create a pid controller for robot rotation
     private PidController rotationController = new PidController(new PidConstants(0.8/DrivetrainSubsystem.WHEELBASE, 0, 0.01/DrivetrainSubsystem.WHEELBASE)); // 0.8, 0.0, 0.01)); //0.5 0.0 0.008
 
-    public FollowShooterCommand(DrivetrainSubsystem drivetrain) {
+    public FollowHubCommand(DrivetrainSubsystem drivetrain) {
         this.drivetrain = drivetrain;
         rotationController.setInputRange(0.0, 2*Math.PI);
         rotationController.setContinuous(true);
