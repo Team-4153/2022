@@ -41,7 +41,12 @@ public class RobotMap {
     public static final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort); //[Shooter/Intake Subsystem] The Number is the I2C port from the RobotMap.java
     public static final int colorSensorDistance = 100;                          //[Shooter/Intake Subsystem] The Number is the distance from the sensor to the target (Small=Close, Big=Far)
     public static final DigitalInput photoEye = new DigitalInput(PhotoEyePort); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
-    public static final int CLIMBER_SWITCH = 2;                                 //Clark moved this   
+    public static final int CLIMBER_SWITCH = 2;                                 //Clark moved this  
+    public static final int StatHook1Port = 1;
+    public static final int StatHook2Port = 2;
+    public static final DigitalInput StatHook1 = new DigitalInput(StatHook1Port); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
+    public static final DigitalInput StatHook2 = new DigitalInput(StatHook2Port); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
+
 
 //PWM Motors
     public static final int TopMotorPort = 1;                                   //[Shooter Subsystem] The Number is the RIO DIO port 
