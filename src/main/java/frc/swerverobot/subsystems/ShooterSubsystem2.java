@@ -29,6 +29,9 @@ public class ShooterSubsystem2 extends SubsystemBase {
     }
 
     //     ----Distance Adjustments----                   [Being Written]
+    public static double lerp(double from, double to, double progress) {
+        return from + ((to - from) * progress);
+    }
     public double[] SetMotorDistance(){
         double[][] MotorSpeed = {
             {180,0.75,1,.4},
@@ -44,6 +47,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
 
         int lowDistance = -1;
         int highDistance = -1;
+        double progress = 0.5;
         //250
         if (distance != 0) {
             for (int i = 0; i < MotorSpeed.length; i++) {
@@ -57,12 +61,13 @@ public class ShooterSubsystem2 extends SubsystemBase {
                 }
             }
 
-            highDistance = lowDistance -1;
+            highDistance = lowDistance + 1;
             
             for (int i = 0; i < SpeedsToSet.length; i++) {
                 //0 = Top Motor, 1 = Bottom Motor, 2 = Feed Motor
-                //                      [Low Distance]                  ["High Distance"]
-                SpeedsToSet[i] = (MotorSpeed[lowDistance][i+1] + MotorSpeed[highDistance][i+1])/2;
+                //Accepts 0-1 for progress 0 is first 1 is second
+                progress = (distance-MotorSpeed[lowDistance][0])/(MotorSpeed[highDistance][0]-MotorSpeed[lowDistance][0]);
+                SpeedsToSet[i] = lerp(MotorSpeed[lowDistance][i+1], MotorSpeed[highDistance][i+1], progress);
             }
         }
         return SpeedsToSet;
