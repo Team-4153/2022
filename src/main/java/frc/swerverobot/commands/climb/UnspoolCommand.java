@@ -23,7 +23,6 @@ public class UnspoolCommand extends CommandBase{
         climb.unspool();
     }
 
-
     @Override
     public void end(boolean interrupted) {
         climb.StopMotor();

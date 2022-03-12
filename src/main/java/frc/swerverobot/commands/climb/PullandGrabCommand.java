@@ -12,7 +12,6 @@ public class PullandGrabCommand extends SequentialCommandGroup{
         this.climb = climb;
 
         addCommands(
-            new WinchLockCommand(climb, States.LOCKED),
             new SpoolCommand(climb),
             new StaticHookCommand(climb, States.LOCKED)
         );

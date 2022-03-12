@@ -173,9 +173,9 @@ public class RobotContainer {
  
 //        [Climber Subsystem]
 
-        // manipulatorController.getDPadButton(Direction.UP).whenPressed(
-        //         new WinchLockCommand(climb, States.UNLOCKED)
-        // );
+        manipulatorController.getDPadButton(Direction.DOWN).whenPressed(
+                new WinchLockCommand(climb, States.TOGGLE)
+        );
         // manipulatorController.getDPadButton(Direction.DOWN).whenPressed(
         //         new WinchLockCommand(climb, States.LOCKED)
         // );
