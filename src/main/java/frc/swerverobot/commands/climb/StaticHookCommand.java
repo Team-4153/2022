@@ -1,6 +1,7 @@
 package frc.swerverobot.commands.climb;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.swerverobot.RobotMap;
 import frc.swerverobot.subsystems.ClimberSubsystem;
 
 public class StaticHookCommand extends CommandBase{
@@ -42,7 +43,7 @@ public class StaticHookCommand extends CommandBase{
 
     @Override
     public boolean isFinished() {
-        return true;
+        return RobotMap.StatHook1.get() && RobotMap.StatHook2.get(); // and operator so both are closed
     }
 
 }

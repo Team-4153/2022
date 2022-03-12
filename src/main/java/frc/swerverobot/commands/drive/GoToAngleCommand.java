@@ -1,6 +1,5 @@
 package frc.swerverobot.commands.drive;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import org.frcteam2910.common.math.Vector2;
@@ -10,6 +9,8 @@ import org.frcteam2910.common.control.PidController;
 
 import java.util.function.DoubleSupplier;
 import java.lang.Math;
+
+@Deprecated
 
 public class GoToAngleCommand extends CommandBase {
     private final DrivetrainSubsystem drivetrain;

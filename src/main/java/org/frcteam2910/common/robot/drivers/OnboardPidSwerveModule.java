@@ -6,10 +6,11 @@ import edu.wpi.first.wpilibj.Timer;
 import org.frcteam2910.common.control.PidConstants;
 import org.frcteam2910.common.control.PidController;
 import org.frcteam2910.common.drivers.SwerveModule;
-import org.frcteam2910.common.math.Rotation2;
 import org.frcteam2910.common.math.Vector2;
 
 import java.util.function.DoubleSupplier;
+
+@Deprecated
 
 public class OnboardPidSwerveModule extends SwerveModule {
     /**

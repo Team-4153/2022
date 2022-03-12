@@ -8,8 +8,6 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -25,6 +23,9 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.DoubleConsumer;
 import java.util.function.DoubleSupplier;
+
+
+@Deprecated
 
 public class Mk2SwerveModuleBuilder {
     /**

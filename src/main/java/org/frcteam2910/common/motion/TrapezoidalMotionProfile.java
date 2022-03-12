@@ -2,6 +2,8 @@ package org.frcteam2910.common.motion;
 
 import java.io.Serializable;
 
+@SuppressWarnings("unused")
+
 public final class TrapezoidalMotionProfile extends MotionProfile implements Serializable {
 	private static final long serialVersionUID = 6593296352896093663L;
 

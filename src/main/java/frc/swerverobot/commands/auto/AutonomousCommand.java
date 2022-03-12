@@ -1,29 +1,21 @@
 package frc.swerverobot.commands.auto;
 
-import java.sql.DriverAction;
-import java.util.function.BooleanSupplier;
-
 import frc.swerverobot.commands.drive.DriveWithSetRotationCommand;
 import frc.swerverobot.commands.intake.IntakeCommand;
 import frc.swerverobot.commands.shooter.ShootCommand;
 import frc.swerverobot.subsystems.*;
 import frc.swerverobot.RobotMap;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
+@Deprecated
 
 public class AutonomousCommand extends SequentialCommandGroup{
     private final DrivetrainSubsystem drivetrain;
-    private final ShooterSubsystem2 shooter;
-    private final IntakeSubsystem intake;
-    private final PossibleAutos choice;
     private double angle;
 
     public AutonomousCommand(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake, PossibleAutos choice) {
         this.drivetrain = drivetrain;
-        this.shooter = shooter;
-        this.intake = intake;
-        this.choice = choice;
 
         addRequirements(drivetrain, shooter, intake);
 

@@ -1,12 +1,8 @@
 package frc.swerverobot.commands.intake;
-import static frc.swerverobot.RobotMap.*;
 
 import frc.swerverobot.RobotMap;
-import frc.swerverobot.commands.shooter.RunFeedMotors;
-import frc.swerverobot.subsystems.IntakeSubsystem;
 import frc.swerverobot.subsystems.ShooterSubsystem2;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.swerverobot.commands.shooter.*;
 
 /** An example command that uses an example subsystem. */
 public class FeedCommand extends CommandBase {

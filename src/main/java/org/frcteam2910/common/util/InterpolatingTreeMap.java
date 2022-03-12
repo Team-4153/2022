@@ -3,6 +3,8 @@ package org.frcteam2910.common.util;
 import java.io.Serializable;
 import java.util.TreeMap;
 
+@SuppressWarnings("unused")
+
 public class InterpolatingTreeMap<K extends InverseInterpolable<K> & Comparable<K>, V extends Interpolable<V>>
         extends TreeMap<K, V> implements Serializable {
     private static final long serialVersionUID = -2284755214507163440L;

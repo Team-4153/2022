@@ -5,8 +5,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
@@ -26,19 +24,17 @@ import org.frcteam2910.common.math.Rotation2;
 import org.frcteam2910.common.math.Vector2;
 import org.frcteam2910.common.robot.UpdateManager;
 import org.frcteam2910.common.robot.drivers.Mk2SwerveModuleBuilder;
-//import org.frcteam2910.common.robot.drivers.NavX;
 import org.frcteam2910.common.util.HolonomicDriveSignal;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.frcteam2910.common.control.*;
 import org.frcteam2910.common.util.*;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-
 import java.util.Optional;
 
 import static frc.swerverobot.RobotMap.*;
+
+@Deprecated
+@SuppressWarnings("unused")
 
 public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.Updatable {
     // define the trackwidth (short side in our case) and wheelbase (long side in our case) ratio of the robot

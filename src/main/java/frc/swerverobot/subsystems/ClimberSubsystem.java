@@ -57,12 +57,10 @@ More intuitive for driver:
 
 package frc.swerverobot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.swerverobot.RobotMap;
 
@@ -74,14 +72,12 @@ public class ClimberSubsystem extends SubsystemBase{
         this.armPiston = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, RobotMap.ARM_FORWARD, RobotMap.ARM_BACK);
         this.stathookPiston = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, RobotMap.HOOK_CLOSE, RobotMap.HOOK_OPEN);
         this.winchSolenoid = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, RobotMap.WINCH_LOCK, RobotMap.WINCH_UNLOCK);
-        this.Switch = new DigitalInput(RobotMap.CLIMBER_SWITCH);
     }
 
     private final Spark spoolMotor;
     private final DoubleSolenoid armPiston;
     private final DoubleSolenoid stathookPiston;
     private final DoubleSolenoid winchSolenoid;
-    private final DigitalInput Switch;
     private static boolean Step2;
     private boolean locked;
     private boolean armUp;
@@ -102,6 +98,9 @@ public class ClimberSubsystem extends SubsystemBase{
         spoolMotor.setSafetyEnabled(false);
 	    this.motorInit();
 	    this.solenoidInit();
+
+        SmartDashboard.putBoolean("Stat Hook 1", false);
+        SmartDashboard.putBoolean("Stat Hook 2", false);
     }
 
     public void spool(){
@@ -170,10 +169,6 @@ public class ClimberSubsystem extends SubsystemBase{
         hookOpen = set;
     }
 
-    public boolean GetSwitch(){
-        return Switch.get();
-    }
-
     public static boolean isStep2() {
         return Step2;
     }
@@ -182,6 +177,13 @@ public class ClimberSubsystem extends SubsystemBase{
         Step2 = !Step2;
     }
 
-
+    @Override
+    public void periodic()
+    {
+        // if (!RobotMap.StatHook1.get() && SmartDashboard.getBoolean("Stat Hook 1", false) || !RobotMap.StatHook2.get() && SmartDashboard.getBoolean("Stat Hook 2", false)) {
+        //     RobotMap.StatHook1.get();
+        //     RobotMap.StatHook2.get();
+        // }
+    }
 
 }

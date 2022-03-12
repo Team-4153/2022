@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 //Motors
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 //Sensors
 import edu.wpi.first.wpilibj.util.Color;

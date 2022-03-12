@@ -3,6 +3,8 @@ package frc.swerverobot.commands.LED;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.swerverobot.subsystems.LEDSubsystem;
 
+@SuppressWarnings("unused")
+
 public class LEDColorSet extends CommandBase{
     private final LEDSubsystem m_subsystem;
 

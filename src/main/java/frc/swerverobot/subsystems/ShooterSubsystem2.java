@@ -7,8 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //Robot Map
 import static frc.swerverobot.RobotMap.*;
 
-import java.lang.reflect.Array;
-
 //Motor Controlers
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
@@ -28,7 +26,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
         this.botMotor = new Spark(BottomMotorPort); //Defines the bottom motor with the port from the RobotMap
     }
 
-    //     ----Distance Adjustments----                   [Being Written]
+    //     ----Distance Adjustments----                 [Needs Testing]
     public static double lerp(double from, double to, double progress) {
         return from + ((to - from) * progress);
     }
@@ -43,12 +41,12 @@ public class ShooterSubsystem2 extends SubsystemBase {
         double distance = SmartDashboard.getNumber("TargetDistance", 0);
 
         //0 = Top Motor, 1 = Bottom Motor, 2 = Feed Motor
-        double[] SpeedsToSet = {0,0,0};
+        double[] SpeedsToSet = {DEFAULT_TOP_MOTOR_SPEED,DEFAULT_BOTTOM_MOTOR_SPEED,DEFAULT_FEED_MOTOR_SPEED};
 
         int lowDistance = -1;
         int highDistance = -1;
         double progress = 0.5;
-        //250
+
         if (distance != 0) {
             for (int i = 0; i < MotorSpeed.length; i++) {
                 if (MotorSpeed[i][0] < distance && MotorSpeed[i][0] > lowDistance) {
@@ -70,6 +68,9 @@ public class ShooterSubsystem2 extends SubsystemBase {
                 SpeedsToSet[i] = lerp(MotorSpeed[lowDistance][i+1], MotorSpeed[highDistance][i+1], progress);
             }
         }
+        SmartDashboard.putNumber("Top Motor Set Speed", SpeedsToSet[0]);
+        SmartDashboard.putNumber("Bottom Motor Set Speed", SpeedsToSet[1]);
+        SmartDashboard.putNumber("Feed Motor Set Speed", SpeedsToSet[2]);
         return SpeedsToSet;
     }
 
@@ -165,15 +166,14 @@ public class ShooterSubsystem2 extends SubsystemBase {
     }
 
     //      ----Init & Periodic Functions----           [Fully Functional]
-    public void init() {
+    public void disableMotorSafeties() {
         feedMotor.setSafetyEnabled(false);
         topMotor.setSafetyEnabled(false);
         botMotor.setSafetyEnabled(false);
     }
     @Override
     public void periodic() {
-	    ballCount();
-        pushDashboardVars();
+        pushDashboardVars(); // Updates all of the Shooter Speeds on the smart dashboard
     }
 }
 
@@ -181,8 +181,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
     - Motors
         - Prototype used 2 launch motors and 1 feed motor
         - Balls are Stored with feed Motor
-    - Distance to target with machine vision (Rasberry pie with network cable?|TODO:Figure out network tables/Rasberry pie)
-    - TODO: Redo Timing in ShootCommand.java
+    - Distance to target with machine vision (Rasberry pie with network cable?
 
     - Notes from Prototype Testing
         - With Current Motors and angle of ~30 degrees power of 0.6T 0.6B works well to get it into the goal from distance
@@ -214,7 +213,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
         - Might not be needed
 */
 
-/*      ----Driver Interaction----          (TODO: Update Controlls)
+/*      ----Driver Interaction----
     All controls should be on Noahs controller
     - shootingProcess1(X:Needs Testing) - Shoots balls this will use values from auto aim to shoot, The driver can also manually change these values with 
     - shootingProcess2(Not Needed) - Auto aims the robot but doesent shoot, the boolean is for aiming for the high or low goal (true = High || false = Low)

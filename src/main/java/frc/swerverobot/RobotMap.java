@@ -11,6 +11,7 @@ import org.frcteam2910.common.robot.input.Axis;
 import org.frcteam2910.common.robot.input.Controller;
 import org.frcteam2910.common.robot.input.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Button;
+import org.frcteam2910.common.robot.input.DPadButton.Direction;
 
 //Motor Controller Libraries
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -41,7 +42,10 @@ public class RobotMap {
     public static final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort); //[Shooter/Intake Subsystem] The Number is the I2C port from the RobotMap.java
     public static final int colorSensorDistance = 100;                          //[Shooter/Intake Subsystem] The Number is the distance from the sensor to the target (Small=Close, Big=Far)
     public static final DigitalInput photoEye = new DigitalInput(PhotoEyePort); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
-    public static final int CLIMBER_SWITCH = 2;                                 //Clark moved this   
+    public static final int StatHook1Port = 1;
+    public static final int StatHook2Port = 2;
+    public static final DigitalInput StatHook1 = new DigitalInput(StatHook1Port); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
+   public static final DigitalInput StatHook2 = new DigitalInput(StatHook2Port); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
 
 //PWM Motors
     public static final int TopMotorPort = 1;                                   //[Shooter Subsystem] The Number is the RIO DIO port 
@@ -58,17 +62,19 @@ public class RobotMap {
     public static final Axis Speed_Decrease = Driver_controller.getRightTriggerAxis();//[DriveTrain Subsystem](R-Trigger)
     public static final Button Intake_Extension = Driver_controller.getLeftBumperButton();//[Intake Subsystem](L-Bumper)
     public static final Button Intake_Retract = Driver_controller.getRightBumperButton();//[Intake Subsystem](R-Bumper)
+    public static final Button ResetGyro = Driver_controller.getBackButton();
     
     //Shooter/Climber Controller (Noah)
-    public static final Controller Manipulator_controller = new XboxController(1);//[Shooter's Controller]
-    public static final Button Shoot = Manipulator_controller.getXButton();//[Shooter Subsystem](X)
-    public static final Button Ejectball = Manipulator_controller.getBButton();//[Shooter Subsystem](B)
-    public static final Button ManualShootIncrease = Manipulator_controller.getYButton();//[Shooter Subsystem](Y)
-    public static final Button ManualShootDecrease = Manipulator_controller.getAButton();//[Shooter Subsystem](A)
-    public static final Axis AimShootLow = Manipulator_controller.getLeftTriggerAxis();//[Shooter Subsystem](L-Trigger)
-    public static final Axis AimShootHigh = Manipulator_controller.getRightTriggerAxis();//[Shooter Subsystem](R-Trigger)
+    public static final Controller Shooter_controller = new XboxController(1);//[Shooter's Controller]
+    public static final Button Shoot = Shooter_controller.getXButton();//[Shooter Subsystem](X)
+    public static final Button Ejectball = Shooter_controller.getBButton();//[Shooter Subsystem](B)
+    public static final Axis AimShootHigh = Shooter_controller.getRightTriggerAxis();//[Shooter Subsystem](R-Trigger)
+    public static final Button ClimbOut = Shooter_controller.getDPadButton(Direction.LEFT);
+    public static final Button ClimbIn = Shooter_controller.getDPadButton(Direction.RIGHT);
+    public static final Button StatHook = Shooter_controller.getDPadButton(Direction.LEFT);
+    public static final Button Unspool = Shooter_controller.getLeftBumperButton();
+    public static final Button Spool = Shooter_controller.getRightBumperButton();
 
-    
     /* Example Analog Trigger Code NOTE: put this inside your subsystem
     public void periodic() {
         // This method will be called once per scheduler run

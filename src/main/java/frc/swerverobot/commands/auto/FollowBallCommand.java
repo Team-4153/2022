@@ -13,6 +13,8 @@ import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import java.lang.Math;
 
+@Deprecated
+
 public class FollowBallCommand extends CommandBase {
     private final DrivetrainSubsystem drivetrain;
     private final DoubleSupplier forward;
