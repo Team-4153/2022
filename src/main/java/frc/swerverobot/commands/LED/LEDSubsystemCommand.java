@@ -10,17 +10,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 /** An example command that uses an example subsystem. */
 public class LEDSubsystemCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final LEDSubsystem m_subsystem;
+  private final LEDSubsystem LED;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public LEDSubsystemCommand(LEDSubsystem subsystem) {
-    m_subsystem = subsystem;
+  public LEDSubsystemCommand(LEDSubsystem LED) {
+    this.LED = LED;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(LED);
   }
 
   // Called when the command is initially scheduled.
