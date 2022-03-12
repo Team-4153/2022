@@ -214,6 +214,7 @@ public class RobotContainer {
             new ShootCommand(shooter, -0.3, 1.0, DEFAULT_FEED_MOTOR_SPEED)
         );
         manipulatorController.getRightTriggerAxis().getButton(0.1).whenPressed(
+            //Autoaim to the high goal and then shoot
             new AutoAim(shooter, drivetrain)
         );
 

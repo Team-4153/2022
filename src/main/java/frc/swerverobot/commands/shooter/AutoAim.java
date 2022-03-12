@@ -15,8 +15,10 @@ public class AutoAim extends SequentialCommandGroup{
         double powers[] = shooter.SetMotorDistance();
 
         addCommands(
+            //Points robot at hub 
             new FollowHubCommand(drivetrain),
             //0 = Top Motor, 1 = Bottom Motor, 2 = Feed Motor
+            //Shoots at the power from earlier
             new ShootCommand(shooter, powers[0], powers[1], powers[2])
         );
     }
