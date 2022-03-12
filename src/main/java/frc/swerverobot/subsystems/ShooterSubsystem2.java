@@ -181,8 +181,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
     - Motors
         - Prototype used 2 launch motors and 1 feed motor
         - Balls are Stored with feed Motor
-    - Distance to target with machine vision (Rasberry pie with network cable?|TODO:Figure out network tables/Rasberry pie)
-    - TODO: Redo Timing in ShootCommand.java
+    - Distance to target with machine vision (Rasberry pie with network cable?
 
     - Notes from Prototype Testing
         - With Current Motors and angle of ~30 degrees power of 0.6T 0.6B works well to get it into the goal from distance
@@ -214,7 +213,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
         - Might not be needed
 */
 
-/*      ----Driver Interaction----          (TODO: Update Controlls)
+/*      ----Driver Interaction----
     All controls should be on Noahs controller
     - shootingProcess1(X:Needs Testing) - Shoots balls this will use values from auto aim to shoot, The driver can also manually change these values with 
     - shootingProcess2(Not Needed) - Auto aims the robot but doesent shoot, the boolean is for aiming for the high or low goal (true = High || false = Low)
