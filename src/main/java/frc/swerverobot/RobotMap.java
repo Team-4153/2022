@@ -69,7 +69,6 @@ public class RobotMap {
     public static final Button Shoot = Shooter_controller.getXButton();//[Shooter Subsystem](X)
     public static final Button Ejectball = Shooter_controller.getBButton();//[Shooter Subsystem](B)
     public static final Axis AimShootHigh = Shooter_controller.getRightTriggerAxis();//[Shooter Subsystem](R-Trigger)
-
     
     /* Example Analog Trigger Code NOTE: put this inside your subsystem
     public void periodic() {
