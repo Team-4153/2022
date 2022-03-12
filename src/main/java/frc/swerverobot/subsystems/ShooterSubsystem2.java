@@ -166,7 +166,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
     }
 
     //      ----Init & Periodic Functions----           [Fully Functional]
-    public void init() {
+    public void disableMotorSafeties() {
         feedMotor.setSafetyEnabled(false);
         topMotor.setSafetyEnabled(false);
         botMotor.setSafetyEnabled(false);

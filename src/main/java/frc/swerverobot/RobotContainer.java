@@ -72,8 +72,8 @@ public class RobotContainer {
         private void initRobot() {
                 intake.init();
                 climb.init();
-                shooter.init();
                 LED.init();
+                shooter.disableMotorSafeties();
         }
 
         public Command getAutonomousCommand() {
