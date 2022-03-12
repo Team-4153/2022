@@ -45,7 +45,7 @@ public class RobotMap {
     public static final int StatHook1Port = 1;
     public static final int StatHook2Port = 2;
     public static final DigitalInput StatHook1 = new DigitalInput(StatHook1Port); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
-    public static final DigitalInput StatHook2 = new DigitalInput(StatHook2Port); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
+   // public static final DigitalInput StatHook2 = new DigitalInput(StatHook2Port); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
 
 
 //PWM Motors

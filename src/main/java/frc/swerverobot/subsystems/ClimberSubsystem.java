@@ -189,10 +189,10 @@ public class ClimberSubsystem extends SubsystemBase{
     @Override
     public void periodic()
     {
-        if (!RobotMap.StatHook1.get() && SmartDashboard.getBoolean("Stat Hook 1", false) || !RobotMap.StatHook2.get() && SmartDashboard.getBoolean("Stat Hook 2", false)) {
-            RobotMap.StatHook1.get();
-            RobotMap.StatHook2.get();
-        }
+        // if (!RobotMap.StatHook1.get() && SmartDashboard.getBoolean("Stat Hook 1", false) || !RobotMap.StatHook2.get() && SmartDashboard.getBoolean("Stat Hook 2", false)) {
+        //     RobotMap.StatHook1.get();
+        //     RobotMap.StatHook2.get();
+        // }
     }
 
 }
