@@ -211,8 +211,10 @@ public class RobotContainer {
             new ShootCommand(shooter, -0.2, 0.2, DEFAULT_FEED_MOTOR_SPEED)
         );
         Shoot.whenPressed(
+            //Go to tape and then shoot into low goal
             new ShootCommand(shooter, -0.3, 1.0, DEFAULT_FEED_MOTOR_SPEED)
         );
+        //Shoot buttons are in shootersubsystem
 
 
 //        [Intake]
