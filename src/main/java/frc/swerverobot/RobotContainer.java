@@ -123,10 +123,10 @@ public class RobotContainer {
                                 () -> -1.0
                         )
                 );
-                driveController.getBackButton().whenPressed(
+                driveController.getStartButton().whenPressed(
                         new LockCommand(drivetrain, States.TOGGLE)
                 );
-                // driveController.getRightBumperButton().whenPressed(
+                // driveController.getBButton().whenPressed(
                 //         //Follows Ball
                 //         new FollowBallCommand(drivetrain,
                 //                 () -> driveController.getRightTriggerAxis().get(true),
@@ -154,11 +154,11 @@ public class RobotContainer {
                 //         new GetToNextRungCommand(climb)
                 // );
                 manipulatorController.getDPadButton(Direction.LEFT).whenPressed(
-                        //Moves Mobile Climber
+                        //Moves Mobile Climber Out
                         new ArmPositionCommand(climb, States.LOCKED)
                 );
                 manipulatorController.getDPadButton(Direction.RIGHT).whenPressed(
-                        //Moves Mobile Climber
+                        //Moves Mobile Climber In
                         new ArmPositionCommand(climb, States.UNLOCKED)
                 );
                 manipulatorController.getDPadButton(Direction.UP).whenPressed(
@@ -182,7 +182,7 @@ public class RobotContainer {
                 );
                 Shoot.whenPressed(
                         //Go to tape and then shoot into low goal
-                        new ShootCommand(shooter, -0.3, 1.0, DEFAULT_FEED_MOTOR_SPEED)
+                        new ShootCommand(shooter, -0.3, 0.3, DEFAULT_FEED_MOTOR_SPEED)
                 );
                 manipulatorController.getRightTriggerAxis().getButton(0.1).whenPressed(
                         //Autoaim to the high goal and then shoot

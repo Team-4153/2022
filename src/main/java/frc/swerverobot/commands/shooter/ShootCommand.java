@@ -33,7 +33,7 @@ public class ShootCommand extends SequentialCommandGroup{
         this.botSpeed = botSpeed;
         this.feedSpeed = feedSpeed;
 
-        if (shooter.ballCount() < 1) {
+        // if (shooter.ballCount() > 1) {
             //2 Balls
             //This shoots all balls in the shooter
             addCommands(
@@ -53,23 +53,23 @@ public class ShootCommand extends SequentialCommandGroup{
                 new RunFeedMotors(shooter, 0), //Stop feed motors
                 new RunShootMotors(shooter, 0,  0) //Stop shooter motors
             );
-        }
-        else {
-            //1 Ball
-            //This shoots Just the first ball
-            addCommands(
-                new RunShootMotors(shooter, topSpeed,  botSpeed), //Spool up shooter motors
+        // }
+        // else {
+        //     //1 Ball
+        //     //This shoots Just the first ball
+        //     addCommands(
+        //         new RunShootMotors(shooter, topSpeed,  botSpeed), //Spool up shooter motors
 
-                new WaitCommand(waitforSpool), //Wait for spool up of motors
-                new RunFeedMotors(shooter, feedSpeed), //Feed both balls into shooter
+        //         new WaitCommand(waitforSpool), //Wait for spool up of motors
+        //         new RunFeedMotors(shooter, feedSpeed), //Feed both balls into shooter
 
-                new WaitCommand(waitforShoot2),
+        //         new WaitCommand(waitforShoot2),
                 
-                new RunFeedMotors(shooter, 0), //Stop feed motors
-                new RunShootMotors(shooter, 0,  0) //Stop shooter motors
-            );
+        //         new RunFeedMotors(shooter, 0), //Stop feed motors
+        //         new RunShootMotors(shooter, 0,  0) //Stop shooter motors
+        //     );
 
-        }
+        // }
     }
 
 }
