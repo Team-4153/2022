@@ -7,10 +7,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 
 //              -----Shoot Command-----
-/*
- - Count balls in shooter
- - If there are 2 balls, shoot
-*/
 public class ShootCommand extends SequentialCommandGroup{
     private double waitforSpool = 0.5;
     private double waitForShoot = 0.75;

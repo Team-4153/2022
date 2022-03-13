@@ -85,9 +85,9 @@ public class ShooterSubsystem2 extends SubsystemBase {
                 SpeedsToSet[i] = lerp(MotorSpeed[lowDistance][i+1], MotorSpeed[highDistance][i+1], progress);
             }
         }
-        SmartDashboard.putNumber("Top Motor Set Speed", SpeedsToSet[0]);
-        SmartDashboard.putNumber("Bottom Motor Set Speed", SpeedsToSet[1]);
-        SmartDashboard.putNumber("Feed Motor Set Speed", SpeedsToSet[2]);
+        SmartDashboard.putNumber("Top Motor Calculated Speed", SpeedsToSet[0]);
+        SmartDashboard.putNumber("Bottom Motor Calculated Speed", SpeedsToSet[1]);
+        SmartDashboard.putNumber("Feed Motor Calculated Speed", SpeedsToSet[2]);
         return SpeedsToSet;
     }
 

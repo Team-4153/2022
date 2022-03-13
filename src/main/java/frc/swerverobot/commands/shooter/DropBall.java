@@ -6,19 +6,16 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 
-//              -----Shoot Command-----
-/*
- - Count balls in shooter
- - If there are 2 balls, shoot
-*/
+//              -----Drop Ball Command-----
 public class DropBall extends SequentialCommandGroup{
-    private double waitforSpool = 0.5;
-
-    //2 Ball Waits
+    private double waitforSpool = 0.25;
     private double waitforShoot2 = 0.2;
 
-    public DropBall(ShooterSubsystem2 shooter, double topSpeed, double botSpeed, double feedSpeed) {
+    public DropBall(ShooterSubsystem2 shooter) {
         //This shoots all balls in the shooter
+        double topSpeed = 0.3;
+        double botSpeed = 0.3;
+        double feedSpeed = -1;
         addCommands(
             new RunShootMotors(shooter, topSpeed,  botSpeed), //Spool up shooter motors
 
@@ -31,5 +28,4 @@ public class DropBall extends SequentialCommandGroup{
             new RunShootMotors(shooter, 0,  0) //Stop shooter motors
         );
     }
-
 }
