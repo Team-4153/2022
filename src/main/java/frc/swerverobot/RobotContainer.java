@@ -178,13 +178,13 @@ public class RobotContainer {
 
 
                 //        [Shooter Subsystem]
-                Ejectball.whenPressed(
+                DropBallBTN.whenPressed(
                         //Drops the first ball in storage
-                        new ShootCommand(shooter, -0.2, 0.2, DEFAULT_FEED_MOTOR_SPEED)
+                        new DropBall(shooter, -0.2, 0.2, DEFAULT_FEED_MOTOR_SPEED)
                 );
                 Shoot.whenPressed(
-                        //Go to tape and then shoot into low goal
-                        new ShootCommand(shooter, 1, 1, -1)
+                        //Gets into low goal from 77 visual distance (77 is as close as we can get and still have a distance reading)
+                        new ShootCommand(shooter, -0.4, 0.5, -1)
                 );
                 AimShootHigh.getButton(0.1).whenPressed(
                         //Autoaim to the high goal and then shoot
