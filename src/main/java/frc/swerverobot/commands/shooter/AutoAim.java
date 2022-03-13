@@ -7,9 +7,8 @@ import frc.swerverobot.subsystems.ShooterSubsystem2;
 @Deprecated
 
 public class AutoAim extends SequentialCommandGroup{
-    public AutoAim(ShooterSubsystem2 shooter, DrivetrainSubsystem drivetrain) {
-        double powers[] = shooter.SetMotorDistance();
-
+    public AutoAim(ShooterSubsystem2 shooter, DrivetrainSubsystem drivetrain, boolean highLow) {
+        double powers[] = shooter.SetMotorDistance(highLow);
         addCommands(
             //Points robot at hub 
             new FollowHubCommand(drivetrain),

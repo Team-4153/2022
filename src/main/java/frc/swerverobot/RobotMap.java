@@ -62,18 +62,19 @@ public class RobotMap {
     public static final Axis Speed_Decrease = Driver_controller.getRightTriggerAxis();//[DriveTrain Subsystem](R-Trigger)
     public static final Button Intake_Extension = Driver_controller.getLeftBumperButton();//[Intake Subsystem](L-Bumper)
     public static final Button Intake_Retract = Driver_controller.getRightBumperButton();//[Intake Subsystem](R-Bumper)
-    public static final Button ResetGyro = Driver_controller.getBackButton();
+    public static final Button ResetGyro = Driver_controller.getBackButton();//[DriveTrain Subsystem](Back-Button)
     
     //Shooter/Climber Controller (Noah)
     public static final Controller Shooter_controller = new XboxController(1);//[Shooter's Controller]
     public static final Button Shoot = Shooter_controller.getXButton();//[Shooter Subsystem](X)
     public static final Button Ejectball = Shooter_controller.getBButton();//[Shooter Subsystem](B)
     public static final Axis AimShootHigh = Shooter_controller.getRightTriggerAxis();//[Shooter Subsystem](R-Trigger)
-    public static final Button ClimbOut = Shooter_controller.getDPadButton(Direction.LEFT);
-    public static final Button ClimbIn = Shooter_controller.getDPadButton(Direction.RIGHT);
-    public static final Button StatHook = Shooter_controller.getDPadButton(Direction.LEFT);
-    public static final Button Unspool = Shooter_controller.getLeftBumperButton();
-    public static final Button Spool = Shooter_controller.getRightBumperButton();
+    public static final Axis AimShootLow = Shooter_controller.getLeftTriggerAxis();//[Shooter Subsystem](L-Trigger)
+    public static final Button ClimbOut = Shooter_controller.getDPadButton(Direction.LEFT);//[Climber Subsystem](DPad-Left)
+    public static final Button ClimbIn = Shooter_controller.getDPadButton(Direction.RIGHT);//[Climber Subsystem](DPad-Right)
+    public static final Button StatHook = Shooter_controller.getDPadButton(Direction.UP);//[Climber Subsystem](DPad-Up)
+    public static final Button Unspool = Shooter_controller.getLeftBumperButton();//[Climber Subsystem](Left Bumper)
+    public static final Button Spool = Shooter_controller.getRightBumperButton();//[Climber Subsystem](Right Bumper)
 
     /* Example Analog Trigger Code NOTE: put this inside your subsystem
     public void periodic() {

@@ -30,14 +30,31 @@ public class ShooterSubsystem2 extends SubsystemBase {
     public static double lerp(double from, double to, double progress) {
         return from + ((to - from) * progress);
     }
-    public double[] SetMotorDistance(){
-        double[][] MotorSpeed = {
-            {180,0.75,1,.4},
-            {193,0.7,1,0.65}, 
-            {214,0.75,1,0.7},
-            {270,1,1,1},
-            {270,1,1,1}//Second one is here to fix issue if disance is at max
-        };
+    public double[] SetMotorDistance(boolean highLow) {
+        if (highLow) {
+            double[][] MotorSpeedHighGoal = {
+                //Cant make it into high goal from 100 distance
+                {133,-0.65,0.7,-1},
+                {163,-0.6,0.7,-1},
+                {183,-0.67,0.77,-1},
+                {215,-0.75,0.85,-1},
+                {250,-1,1,-1},
+                {250,-1,1,-1}//Second one is here to fix issue if disance is at max
+            };
+            return SetMotorDistanceCalc(MotorSpeedHighGoal);
+        }
+        else {
+            double[][] MotorSpeedLowGoal = {
+                {77,-0.4,0.5,-1},
+                {117,-0.45,0.55,-1},
+                {153,-0.5,0.6,-1},
+                {172,-0.55,0.65,-1},
+                {172,-0.55,0.65,-1}//Second one is here to fix issue if disance is at max
+            };
+            return SetMotorDistanceCalc(MotorSpeedLowGoal);
+        }
+    }
+    public double[] SetMotorDistanceCalc(double[][] MotorSpeed){
         double distance = SmartDashboard.getNumber("TargetDistance", 0);
 
         //0 = Top Motor, 1 = Bottom Motor, 2 = Feed Motor
@@ -221,10 +238,6 @@ public class ShooterSubsystem2 extends SubsystemBase {
     - manualShooterDistanceIncrease(Y:Functional) - Increases the power to both shooter motors by 5%, doesent shoot balls
     - manualShooterDistanceDecrease(A:Functional) - Decrease the power to both shooter motors by 5%, doesent shoot balls
     - dropBall(B:Needs Testing) - Drops the first ball in the system
-*/
-
-/*      ----Processes (Current|Shooter Subsystem #2)----
-
 */
 
 /*      ----Processes (Outdated|Shooter Subsystem #1)----

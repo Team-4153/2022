@@ -184,11 +184,17 @@ public class RobotContainer {
                 );
                 Shoot.whenPressed(
                         //Go to tape and then shoot into low goal
-                        new ShootCommand(shooter, -0.3, 0.3, DEFAULT_FEED_MOTOR_SPEED)
+                        new ShootCommand(shooter, 1, 1, -1)
                 );
                 AimShootHigh.getButton(0.1).whenPressed(
                         //Autoaim to the high goal and then shoot
-                        new AutoAim(shooter, drivetrain)
+                        //Last boolean determines which dataset to use, true = high, false = low.
+                        new AutoAim(shooter, drivetrain, true)
+                );
+                AimShootLow.getButton(0.1).whenPressed(
+                        //Autoaim to the high goal and then shoot
+                        //Last boolean determines which dataset to use, true = high, false = low.
+                        new AutoAim(shooter, drivetrain, false)
                 );
 
 
