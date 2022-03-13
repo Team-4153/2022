@@ -24,15 +24,15 @@ public class LEDSubsystem extends SubsystemBase {
 
   private int length = 8; // if you change length, the strands get messed up
 
-  private double winch = SmartDashboard.getNumber("winchsol", 0);
-  private double climberLocked = SmartDashboard.getNumber("climbrelocked", 0);
-  private double shooting = SmartDashboard.getNumber("shootingmotor", 0);
-  private double climberExtended = SmartDashboard.getNumber("climbersol", 0);
+  // private double winch = SmartDashboard.getNumber("winchsol", 0);
+  // private double climberLocked = SmartDashboard.getNumber("climbrelocked", 0);
+  // private double shooting = SmartDashboard.getNumber("shootingmotor", 0);
+  // private double climberExtended = SmartDashboard.getNumber("climbersol", 0);
 
-  // private boolean winch = false;
-  // private boolean climberLocked = false;
-  // private boolean shooting = false;
-  // private boolean climberExtended = false;
+  private boolean winch = false;
+  private boolean climberLocked = false;
+  private boolean shooting = false;
+  private boolean climberExtended = false;
 
 //SmartDashboard.getNumber("TargetOff", 0)
   /*
@@ -108,7 +108,7 @@ public class LEDSubsystem extends SubsystemBase {
 
   public void colorPositionLED() {
     if (running_LED <= lengthstrand1) {
-      if (winch == 1) {
+      if (winch) {
         m_ledBuffer.setRGB(running_LED, 55, 10, 0);
       }
       else {
@@ -120,7 +120,7 @@ public class LEDSubsystem extends SubsystemBase {
     }
     else if (running_LED <= lengthstrand1 + lengthstrand2 + lengthstrand3) {
       if (running_LED <= lengthstrand1) {
-        if (winch == 1) {
+        if (winch) {
           m_ledBuffer.setRGB(running_LED, 55, 10, 0);
         }
         else {
@@ -131,10 +131,10 @@ public class LEDSubsystem extends SubsystemBase {
 
 
     if (chasingLED <= lengthstrand1) {
-      if (climberLocked == 1) {
+      if (climberLocked) {
         m_ledBuffer.setRGB(chasingLED, 0, 50, 0);
       }
-      else if (climberExtended == 1) {
+      else if (climberExtended) {
         m_ledBuffer.setRGB(chasingLED, 50, 0, 0);
       }
       else {
@@ -148,7 +148,7 @@ public class LEDSubsystem extends SubsystemBase {
       else if (ballCount() == 1) {
         m_ledBuffer.setRGB(chasingLED, 50, 0, 0);
       }
-      else if (shooting == 1) {
+      else if (shooting) {
         m_ledBuffer.setRGB(chasingLED, 0, 50, 0);
       }
       else {
@@ -156,10 +156,10 @@ public class LEDSubsystem extends SubsystemBase {
       }
     }
     else if (running_LED <= lengthstrand1 + lengthstrand2 + lengthstrand3) {
-      if (climberLocked == 1) {
+      if (climberLocked) {
         m_ledBuffer.setRGB(chasingLED, 0, 50, 0);
       }
-      else if (climberExtended == 1) {
+      else if (climberExtended) {
         m_ledBuffer.setRGB(chasingLED, 50, 0, 0);
       }
       else {
