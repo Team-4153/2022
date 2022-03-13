@@ -44,7 +44,7 @@ public class RobotMap {
     public static final DigitalInput photoEye = new DigitalInput(PhotoEyePort); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
     public static final int StatHook1Port = 1;
     public static final int StatHook2Port = 2;
-    public static final DigitalInput StatHook1 = new DigitalInput(StatHook1Port); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
+    public static final DigitalInput StatHook1 = new DigitalInput(StatHook1Port);//[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
    public static final DigitalInput StatHook2 = new DigitalInput(StatHook2Port); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
 
 //PWM Motors
@@ -57,23 +57,24 @@ public class RobotMap {
 
 //Controls
     //DriveTrain Controller (Kendall)
-    public static final Controller Driver_controller = new XboxController(0);//[Driver's Controller]
-    public static final Axis Speed_Increase = Driver_controller.getLeftTriggerAxis();//[DriveTrain Subsystem](L-Trigger)
-    public static final Axis Speed_Decrease = Driver_controller.getRightTriggerAxis();//[DriveTrain Subsystem](R-Trigger)
-    public static final Button Intake_Extension = Driver_controller.getLeftBumperButton();//[Intake Subsystem](L-Bumper)
-    public static final Button Intake_Retract = Driver_controller.getRightBumperButton();//[Intake Subsystem](R-Bumper)
-    public static final Button ResetGyro = Driver_controller.getBackButton();
+    public static final Controller Driver_controller = new XboxController(0);               //[Driver's Controller]
+    public static final Axis Speed_Increase = Driver_controller.getLeftTriggerAxis();       //[DriveTrain Subsystem](L-Trigger)
+    public static final Axis Speed_Decrease = Driver_controller.getRightTriggerAxis();      //[DriveTrain Subsystem](R-Trigger)
+    public static final Button Intake_Extension = Driver_controller.getLeftBumperButton();  //[Intake Subsystem](L-Bumper)
+    public static final Button Intake_Retract = Driver_controller.getRightBumperButton();   //[Intake Subsystem](R-Bumper)
+    public static final Button ResetGyro = Driver_controller.getBackButton();               //[DriveTrain Subsystem](Back-Button)
     
     //Shooter/Climber Controller (Noah)
-    public static final Controller Shooter_controller = new XboxController(1);//[Shooter's Controller]
-    public static final Button Shoot = Shooter_controller.getXButton();//[Shooter Subsystem](X)
-    public static final Button Ejectball = Shooter_controller.getBButton();//[Shooter Subsystem](B)
-    public static final Axis AimShootHigh = Shooter_controller.getRightTriggerAxis();//[Shooter Subsystem](R-Trigger)
-    public static final Button ClimbOut = Shooter_controller.getDPadButton(Direction.LEFT);
-    public static final Button ClimbIn = Shooter_controller.getDPadButton(Direction.RIGHT);
-    public static final Button StatHook = Shooter_controller.getDPadButton(Direction.LEFT);
-    public static final Button Unspool = Shooter_controller.getLeftBumperButton();
-    public static final Button Spool = Shooter_controller.getRightBumperButton();
+    public static final Controller Shooter_controller = new XboxController(1);              //[Shooter's Controller]
+    public static final Button ManualShoot = Shooter_controller.getXButton();               //[Shooter Subsystem](X)
+    public static final Button DropBallBTN = Shooter_controller.getBButton();               //[Shooter Subsystem](B)
+    public static final Axis AimShootHigh = Shooter_controller.getRightTriggerAxis();       //[Shooter Subsystem](R-Trigger)
+    public static final Axis AimShootLow = Shooter_controller.getLeftTriggerAxis();         //[Shooter Subsystem](L-Trigger)
+    public static final Button ClimbOut = Shooter_controller.getDPadButton(Direction.LEFT); //[Climber Subsystem](DPad-Left)
+    public static final Button ClimbIn = Shooter_controller.getDPadButton(Direction.RIGHT); //[Climber Subsystem](DPad-Right)
+    public static final Button StatHook = Shooter_controller.getDPadButton(Direction.UP);   //[Climber Subsystem](DPad-Up)
+    public static final Button Unspool = Shooter_controller.getLeftBumperButton();          //[Climber Subsystem](Left Bumper)
+    public static final Button Spool = Shooter_controller.getRightBumperButton();           //[Climber Subsystem](Right Bumper)
 
     /* Example Analog Trigger Code NOTE: put this inside your subsystem
     public void periodic() {
@@ -94,18 +95,18 @@ public class RobotMap {
     */
 
 //Pneumatics
-    public static final int PH_CAN_ID = 1;//[Pneumatic hub CAN address]    
-    public static final int INTAKE_SOLa = 0;//[Intake Subsystem]
-    public static final int INTAKE_SOLb = 8;//[Intake Subsystem]
+    public static final int PH_CAN_ID = 1;      //[Pneumatic hub CAN address]    
+    public static final int INTAKE_SOLa = 0;    //[Intake Subsystem]
+    public static final int INTAKE_SOLb = 8;    //[Intake Subsystem]
 
-    public static final int ARM_FORWARD = 4;//[Climber Subsystem]
-    public static final int ARM_BACK = 5;//[Climber Subsystem]
+    public static final int ARM_FORWARD = 4;    //[Climber Subsystem]
+    public static final int ARM_BACK = 5;       //[Climber Subsystem]
 
-    public static final int HOOK_CLOSE = 2;//[Climber Subsystem]
-    public static final int HOOK_OPEN = 3;//[Climber Subsystem]
+    public static final int HOOK_CLOSE = 2;     //[Climber Subsystem]
+    public static final int HOOK_OPEN = 3;      //[Climber Subsystem]
 
-    public static final int WINCH_LOCK = 6;//[Climber Subsystem]
-    public static final int WINCH_UNLOCK = 7;//[Climber Subsystem]
+    public static final int WINCH_LOCK = 6;     //[Climber Subsystem]
+    public static final int WINCH_UNLOCK = 7;   //[Climber Subsystem]
 
 //Drive Train -- uses spark max CAN ID 1-8 
 // EVEN numbers are angle motors, ODD numbers are drive motors
