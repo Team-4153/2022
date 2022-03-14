@@ -279,9 +279,9 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
                      driveSignal.getRotation() / RobotController.getBatteryVoltage(),
                      driveSignal.isFieldOriented()
              );
-             SmartDashboard.putNumber("drive signal x", driveSignal.getTranslation().x);
-             SmartDashboard.putNumber("drive signal y", driveSignal.getTranslation().y);
-             SmartDashboard.putNumber("drive signal rot", driveSignal.getRotation());
+            //  SmartDashboard.putNumber("drive signal x", driveSignal.getTranslation().x);
+            //  SmartDashboard.putNumber("drive signal y", driveSignal.getTranslation().y);
+            //  SmartDashboard.putNumber("drive signal rot", driveSignal.getRotation());
 
         } else {
             synchronized (stateLock) {

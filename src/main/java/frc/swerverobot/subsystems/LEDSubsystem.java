@@ -59,52 +59,52 @@ public class LEDSubsystem extends SubsystemBase {
       ballCount = 0;
 
       //Look for first ball with color
-      if (ball1color() != "none") {
+    //   if (ball1color() != "none") {
           
-          //1 Ball Found
-          ballCount = 1;
+    //       //1 Ball Found
+    //       ballCount = 1;
 
-          //Look for second ball with photo eye
-          if (photoEye.get()) {
-              //2 Balls found
-              ballCount = 2;
-          }
-      }
-      else {
+    //       //Look for second ball with photo eye
+    //       if (photoEye.get()) {
+    //           //2 Balls found
+    //           ballCount = 2;
+    //       }
+    //   }
+    //   else {
           //Check if there is a ball in second position but not first
           if (photoEye.get()) {
               //A ball is in the second position but not the first
               ballCount = 1;
           }
-      }
+    //   }
 
       //No else statment because value is initalized at 0
       return ballCount;
   }
-  public String ball1color() {
-      //Detected Color & Proximity from Color Sensor 1
-      Color detectedColor = colorSensor.getColor();
-      int proximity = colorSensor.getProximity();
+//   public String ball1color() {
+//       //Detected Color & Proximity from Color Sensor 1
+//       Color detectedColor = colorSensor.getColor();
+//       int proximity = colorSensor.getProximity();
 
-      String ball1Color = "none";
+//       String ball1Color = "none";
 
-      //Check ball color
-      if (proximity > colorSensorDistance) {//Smaller values are closer and bigger is farther away
-          if (detectedColor.red > detectedColor.blue) {
-              //The 1st ball is Red
-              //set variable to be returned to Red
-              ball1Color = "Red";
-          }
-          else {
-              //The 1st ball is Blue
-              //set variable to be returned to Blue
-              ball1Color = "Blue";
-          }
-      }
+//       //Check ball color
+//       if (proximity > colorSensorDistance) {//Smaller values are closer and bigger is farther away
+//           if (detectedColor.red > detectedColor.blue) {
+//               //The 1st ball is Red
+//               //set variable to be returned to Red
+//               ball1Color = "Red";
+//           }
+//           else {
+//               //The 1st ball is Blue
+//               //set variable to be returned to Blue
+//               ball1Color = "Blue";
+//           }
+//       }
       
-      //No else statment because value is initalized at "none"
-      return ball1Color;
-  }
+//       //No else statment because value is initalized at "none"
+//       return ball1Color;
+//   }
 
   public void colorPositionLED() {
     if (running_LED <= lengthstrand1) {

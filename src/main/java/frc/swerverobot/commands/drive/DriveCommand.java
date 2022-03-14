@@ -88,9 +88,9 @@ public class DriveCommand extends CommandBase {
 //            return;
 //        }
 
-        SmartDashboard.putNumber("forward", fw);
-        SmartDashboard.putNumber("strafe", stf);
-        SmartDashboard.putNumber("rotation", rot);
+        // SmartDashboard.putNumber("forward", fw);
+        // SmartDashboard.putNumber("strafe", stf);
+        // SmartDashboard.putNumber("rotation", rot);
 
 
         // if the driver isn't rotating the robot, use pid to keep robot orientation constant (rotation = 0)

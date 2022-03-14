@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.swerverobot.commands.drive.*;
 import frc.swerverobot.commands.climb.*;
 import frc.swerverobot.commands.intake.*;
-// import frc.swerverobot.commands.LED.*;
+import frc.swerverobot.commands.LED.*;
 import frc.swerverobot.commands.shooter.*;
 import frc.swerverobot.commands.auto.*;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
@@ -32,7 +32,7 @@ public class RobotContainer {
         private final ShooterSubsystem2 shooter = new ShooterSubsystem2();
         private final ClimberSubsystem climb = new ClimberSubsystem();
         private final LEDSubsystem LED = new LEDSubsystem();
-        //private final LEDSubsystemCommand m_LEDCommand = new LEDSubsystemCommand(LED);
+        private final LEDSubsystemCommand m_LEDCommand = new LEDSubsystemCommand(LED);
         private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
 
         private DriveCommand drivecommand;
@@ -67,7 +67,7 @@ public class RobotContainer {
                 updateManager.startLoop(5.0e-3);
                 initRobot();
                 configureButtonBindings();
-                // addAutoChoicesToGui();
+                addAutoChoicesToGui();
         }
 
         private void initRobot() {
@@ -78,7 +78,8 @@ public class RobotContainer {
         }
 
         public Command getAutonomousCommand() {
-                PossibleAutos choice = autoChoice.getSelected();
+                String choice = SmartDashboard.getString("Auto Selector", null);
+//                return new AutonomousCommand(drivetrain, shooter, intake, choice);
                 return new AutonomousCommand(drivetrain, shooter, intake, choice);
         }
 
@@ -199,7 +200,7 @@ public class RobotContainer {
 
 
                 
-                //        [Intake Subsystem]
+                // //        [Intake Subsystem]
                 Intake_Extension.whenPressed(
                         //Run the intake (It will autofeed the first ball and stop the motor when both balls are detected)
                         new IntakeSequence(intake, shooter)
@@ -213,9 +214,12 @@ public class RobotContainer {
         //Add options for different start positions
         private void addAutoChoicesToGui() {
                 PossibleAutos[] enumValues = PossibleAutos.values();
+                String[] autoChoicesStrings = new String[enumValues.length];
+
                 for (int i = 0; i < enumValues.length; i++) {
-                        autoChoice.addOption(enumValues[i].toString(), enumValues[i]);
+                        autoChoicesStrings[i] = enumValues[i].toString();
                 }
-                SmartDashboard.putData(autoChoice);
+
+                SmartDashboard.putStringArray("Auto List", autoChoicesStrings);
         }
 }

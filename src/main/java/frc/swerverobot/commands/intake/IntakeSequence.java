@@ -9,7 +9,7 @@ public class IntakeSequence extends SequentialCommandGroup{
     public IntakeSequence(IntakeSubsystem intake, ShooterSubsystem2 shooter) {
         addCommands(
             new IntakeCommand(intake, false),
-            new FeedCommand(shooter)
+            new FeedCommand(shooter).withTimeout(0.3)
         );
     }
 

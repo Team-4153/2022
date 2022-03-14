@@ -42,6 +42,7 @@ public class FeedCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return shooter.ball1color() != "none";
+        return false;
+        // return shooter.ball1color() != "none";
     }
 }
