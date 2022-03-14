@@ -83,7 +83,7 @@ public class FollowBallCommand extends CommandBase {
 
     public boolean isFinished() {
         long tstamp = RobotController.getFPGATime();
-        return ballLastSeen > 0 && (tstamp - ballLastSeen) > 10000;
+        return ballLastSeen > 0 && (tstamp - ballLastSeen) > 1000;
     }
 
     protected void calculateCorrection(long timestamp) {

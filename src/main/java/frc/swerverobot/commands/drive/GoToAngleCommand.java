@@ -90,7 +90,8 @@ public class GoToAngleCommand extends CommandBase {
     }
 
     public boolean isFinished() {
-        return Math.abs(rotationOutput) < 0.05;
+        return Math.abs(rotationOutput) < 0.07;
+        // return false;
     }
 
 }

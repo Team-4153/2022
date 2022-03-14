@@ -5,6 +5,7 @@ import frc.swerverobot.commands.drive.DriveWithSetRotationCommand;
 import frc.swerverobot.commands.drive.GoToAngleCommand;
 import frc.swerverobot.commands.intake.IntakeCommand;
 import frc.swerverobot.commands.intake.IntakeSequence;
+import frc.swerverobot.commands.shooter.AutoAim;
 import frc.swerverobot.commands.shooter.ShootCommand;
 import frc.swerverobot.subsystems.*;
 import frc.swerverobot.RobotMap;
@@ -29,21 +30,22 @@ public class AutonomousCommand extends SequentialCommandGroup{
 
         addCommands(
             new IntakeCommand(intake, false).withTimeout(0.3),
-            new WaitCommand(0.5),            
-            new FollowBallCommand(drivetrain, () -> 0.3),
             new WaitCommand(0.5),
+            new FollowBallCommand(drivetrain, () -> 0.3),
+            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),
             new IntakeCommand(intake, true),
-            new ShootCommand(shooter, RobotMap.DEFAULT_TOP_MOTOR_SPEED, RobotMap.DEFAULT_BOTTOM_MOTOR_SPEED, RobotMap.DEFAULT_FEED_MOTOR_SPEED),
+            // new ShootCommand(shooter, RobotMap.DEFAULT_TOP_MOTOR_SPEED, RobotMap.DEFAULT_BOTTOM_MOTOR_SPEED, RobotMap.DEFAULT_FEED_MOTOR_SPEED),
+            new AutoAim(shooter, drivetrain, true),
             new WaitCommand(0.5),
 
-            new GoToAngleCommand(drivetrain, () -> 0.0, () -> 0.0, () -> 0 /*Math.tan(60*Math.PI / 180)*/, () -> -1).withTimeout(1.0),
+            new GoToAngleCommand(drivetrain, () -> 0.0, () -> 0.0, () -> 1, () -> 0),
             new WaitCommand(0.5),
             new IntakeCommand(intake, false).withTimeout(0.3),
-            new WaitCommand(0.5),            
+            new WaitCommand(0.5),
             new FollowBallCommand(drivetrain, () -> 0.3),
             new WaitCommand(0.5),
             new IntakeCommand(intake, true)
- 
+
 
 /*            
             new IntakeCommand(intake, false),
@@ -60,7 +62,7 @@ public class AutonomousCommand extends SequentialCommandGroup{
         );
 
         
-        determineAngle(choice);
+        // determineAngle(choice);
 
     }
 

@@ -38,8 +38,8 @@ public class RobotMap {
 //Sensors
     public static final ADIS16470_IMU imu = new ADIS16470_IMU();                //[DriveTrain Subsystem]Gyro and acceleration sensor
     public static final int PhotoEyePort = 0;                                   //[Shooter Subsystem] The Number is the RIO DIO port (Outputs a Digital Input|Like a Limit Switch)
-    // public static final I2C.Port i2cPort = I2C.Port.kOnboard;                   //[Shooter Subsystem] Color Sensor (Only one I2C port on the robot)
-    // public static final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort); //[Shooter/Intake Subsystem] The Number is the I2C port from the RobotMap.java
+    public static final I2C.Port i2cPort = I2C.Port.kOnboard;                   //[Shooter Subsystem] Color Sensor (Only one I2C port on the robot)
+    public static final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort); //[Shooter/Intake Subsystem] The Number is the I2C port from the RobotMap.java
     public static final int colorSensorDistance = 100;                          //[Shooter/Intake Subsystem] The Number is the distance from the sensor to the target (Small=Close, Big=Far)
     public static final DigitalInput photoEye = new DigitalInput(PhotoEyePort); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
     public static final int StatHook1Port = 1;
@@ -70,6 +70,7 @@ public class RobotMap {
     public static final Button DropBallBTN = Shooter_controller.getBButton();               //[Shooter Subsystem](B)
     public static final Axis AimShootHigh = Shooter_controller.getRightTriggerAxis();       //[Shooter Subsystem](R-Trigger)
     public static final Axis AimShootLow = Shooter_controller.getLeftTriggerAxis();         //[Shooter Subsystem](L-Trigger)
+    public static final Button AutoAim = Shooter_controller.getYButton();
     public static final Button ClimbOut = Shooter_controller.getDPadButton(Direction.LEFT); //[Climber Subsystem](DPad-Left)
     public static final Button ClimbIn = Shooter_controller.getDPadButton(Direction.RIGHT); //[Climber Subsystem](DPad-Right)
     public static final Button StatHook = Shooter_controller.getDPadButton(Direction.UP);   //[Climber Subsystem](DPad-Up)
@@ -137,6 +138,6 @@ public class RobotMap {
 //Shooter constants
 // Defaults are used for shooting during the autonomous period (distance tuned for preplaced cargo to hub)
     public static final double DEFAULT_BOTTOM_MOTOR_SPEED = 1.0;
-    public static final double DEFAULT_TOP_MOTOR_SPEED = 0.75;
+    public static final double DEFAULT_TOP_MOTOR_SPEED = -0.75;
     public static final double DEFAULT_FEED_MOTOR_SPEED = -0.4;
 }

@@ -34,4 +34,9 @@ public class RunShootMotors extends CommandBase {
         return true;
     }
 
+    public void setSpeeds(double topSpeed, double botSpeed) {
+        topMotorSpeed = topSpeed;
+        botMotorSpeed = botSpeed;
+    }
+
 }

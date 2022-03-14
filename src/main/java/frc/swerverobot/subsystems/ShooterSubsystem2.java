@@ -39,7 +39,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
                 {183,-0.67,0.77,-1},
                 {215,-0.75,0.85,-1},
                 {250,-1,1,-1},
-                {250,-1,1,-1}//Second one is here to fix issue if disance is at max
+//                {250,-1,1,-1}//Second one is here to fix issue if disance is at max
             };
             return SetMotorDistanceCalc(MotorSpeedHighGoal);
         }
@@ -49,40 +49,40 @@ public class ShooterSubsystem2 extends SubsystemBase {
                 {117,-0.45,0.55,-1},
                 {153,-0.5,0.6,-1},
                 {172,-0.55,0.65,-1},
-                {172,-0.55,0.65,-1}//Second one is here to fix issue if disance is at max
+//                {172,-0.55,0.65,-1}//Second one is here to fix issue if disance is at max
             };
             return SetMotorDistanceCalc(MotorSpeedLowGoal);
         }
     }
     public double[] SetMotorDistanceCalc(double[][] MotorSpeed){
-        double distance = SmartDashboard.getNumber("TargetDistance", 0);
+        double distance = SmartDashboard.getNumber("ShooterTarget/TargetDistance", 0);
 
         //0 = Top Motor, 1 = Bottom Motor, 2 = Feed Motor
         double[] SpeedsToSet = {DEFAULT_TOP_MOTOR_SPEED,DEFAULT_BOTTOM_MOTOR_SPEED,DEFAULT_FEED_MOTOR_SPEED};
 
-        int lowDistance = -1;
-        int highDistance = -1;
         double progress = 0.5;
 
         if (distance != 0) {
-            for (int i = 0; i < MotorSpeed.length; i++) {
-                if (MotorSpeed[i][0] < distance && MotorSpeed[i][0] > lowDistance) {
-                    //Goes through array distances finding the lowDistance value below the current distnace
-                    lowDistance = i;
-                }
-                else {
-                    //Stops the for Loop
-                    i = MotorSpeed.length;
+            int idx;
+            for (idx = 0; idx < MotorSpeed.length; idx++) {
+                if (distance < MotorSpeed[idx][0]) {
+                    break;
                 }
             }
+            SmartDashboard.putNumber("idx", idx);
 
-            highDistance = lowDistance + 1;
-            
+            if (idx == 0 || idx == MotorSpeed.length) {
+                return null;
+            }
+
+            double[] lowDistance = MotorSpeed[idx - 1];
+            double[] highDistance = MotorSpeed[idx];
+
             for (int i = 0; i < SpeedsToSet.length; i++) {
                 //0 = Top Motor, 1 = Bottom Motor, 2 = Feed Motor
                 //Accepts 0-1 for progress 0 is first 1 is second
-                progress = (distance-MotorSpeed[lowDistance][0])/(MotorSpeed[highDistance][0]-MotorSpeed[lowDistance][0]);
-                SpeedsToSet[i] = lerp(MotorSpeed[lowDistance][i+1], MotorSpeed[highDistance][i+1], progress);
+                progress = (distance-lowDistance[0])/(highDistance[0]-lowDistance[0]);
+                SpeedsToSet[i] = lerp(lowDistance[i+1], highDistance[i+1], progress);
             }
         }
         SmartDashboard.putNumber("Top Motor Calculated Speed", SpeedsToSet[0]);
@@ -115,37 +115,37 @@ public class ShooterSubsystem2 extends SubsystemBase {
     }
 
     //      ----Ball Count & Color Functions----        [BC:Fully Functional, B1C: Fully Functional]
-    public int ballCount() {
-        //Resets the ball count to 0
-        ballCount = 0;
+    // public int ballCount() {
+    //     //Resets the ball count to 0
+    //     ballCount = 0;
 
-        //Look for first ball with color
-        // if (ball1color() != "none") {
-        //     ballStuck = false;
+    //     //Look for first ball with color
+    //     // if (ball1color() != "none") {
+    //     //     ballStuck = false;
             
-        //     //1 Ball Found
-        //     ballCount = 1;
+    //     //     //1 Ball Found
+    //     //     ballCount = 1;
 
-        //     //Look for second ball with photo eye
-        //     if (photoEye.get()) {
-        //         //2 Balls found
-        //         ballCount = 2;
-        //     }
-        // }
-        // else {
-            //Check if there is a ball in second position but not first
-            if (photoEye.get()) {
-                //A ball is in the second position but not the first
-                ballCount = 1;
-                ballStuck = true;
-            }
-        // }
+    //     //     //Look for second ball with photo eye
+    //     //     if (photoEye.get()) {
+    //     //         //2 Balls found
+    //     //         ballCount = 2;
+    //     //     }
+    //     // }
+    //     // else {
+    //         //Check if there is a ball in second position but not first
+    //         if (photoEye.get()) {
+    //             //A ball is in the second position but not the first
+    //             ballCount = 1;
+    //             ballStuck = true;
+    //         }
+    //     // }
 
-        //No else statment because value is initalized at 0
-        SmartDashboard.putNumber("Ball Count", ballCount);
-        SmartDashboard.putBoolean("Ball Stuck", ballStuck);
-        return ballCount;
-    }
+    //     //No else statment because value is initalized at 0
+    //     SmartDashboard.putNumber("Ball Count", ballCount);
+    //     SmartDashboard.putBoolean("Ball Stuck", ballStuck);
+    //     return ballCount;
+    // }
     // public String ball1color() {
     //     //Detected Color & Proximity from Color Sensor 1
     //     Color detectedColor = colorSensor.getColor();
@@ -178,7 +178,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
         SmartDashboard.putNumber("Top Motor Speed", topMotor.get());
         SmartDashboard.putNumber("Bottom Motor Speed", botMotor.get());
         SmartDashboard.putNumber("Feed Motor Speed", feedMotor.get());
-        SmartDashboard.putNumber("Ball Count", ballCount());
+        // SmartDashboard.putNumber("Ball Count", ballCount());
         SmartDashboard.putBoolean("Ball Stuck", ballStuck);
     }
 

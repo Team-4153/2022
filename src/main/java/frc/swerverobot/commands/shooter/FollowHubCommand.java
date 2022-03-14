@@ -20,7 +20,8 @@ public class FollowHubCommand extends CommandBase {
     private long lastCorrection;
 
     // create a pid controller for robot rotation
-    private PidController rotationController = new PidController(new PidConstants(0.8/DrivetrainSubsystem.WHEELBASE, 0, 0.01/DrivetrainSubsystem.WHEELBASE)); // 0.8, 0.0, 0.01)); //0.5 0.0 0.008
+    // private PidController rotationController = new PidController(new PidConstants(0.8/DrivetrainSubsystem.WHEELBASE, 0, 0.01/DrivetrainSubsystem.WHEELBASE)); // 0.8, 0.0, 0.01)); //0.5 0.0 0.008
+    private PidController rotationController = new PidController(new PidConstants(1.0, 0.0, 0.01)); // 0.8, 0.0, 0.01)); //0.5 0.0 0.008
 
     public FollowHubCommand(DrivetrainSubsystem drivetrain) {
         this.drivetrain = drivetrain;
@@ -39,7 +40,9 @@ public class FollowHubCommand extends CommandBase {
 
     @Override
     public void execute() {
- 
+        long tstamp = RobotController.getFPGATime();
+        calculateCorrection(tstamp);
+
         rotationOutput = rotationController.calculate(drivetrain.getPose().rotation.toRadians(), 0.01);
 
         // drive command, change values here to change robot speed or field oriented
@@ -48,7 +51,7 @@ public class FollowHubCommand extends CommandBase {
                     -rotationOutput,
                     false
             );
-        }
+    }
 
     @Override
     public void end(boolean interrupted) {
@@ -56,17 +59,18 @@ public class FollowHubCommand extends CommandBase {
     }
 
     public boolean isFinished() {
-        return (Math.abs(rotationOutput) < 0.05); // && Math.abs(rotationOutput) < 0.02;
+        return (Math.abs(rotationOutput) < 0.07); // && Math.abs(rotationOutput) < 0.02;
+        // return false;
     }
 
     protected void calculateCorrection(long timestamp) {
-        if (timestamp < lastCorrection + 100000) {  // 100 ms per correction
-            return;
-        }
+        // if (timestamp < lastCorrection + 100000) {  // 100 ms per correction
+        //     return;
+        // }
 
         lastCorrection = timestamp;
 
-        double target_x = -SmartDashboard.getNumber("TargetOff", 0);
+        double target_x = SmartDashboard.getNumber("ShooterTarget/TargetOff", 0);
 //        double by = SmartDashboard.getNumber("IntakeBall/BallY", 0);
 //        double tr = SmartDashboard.getNumber("IntakeBall/BallRadius", 0);
 

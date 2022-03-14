@@ -32,4 +32,8 @@ public class RunFeedMotors extends CommandBase{
         return true;
     }
 
+    public void setSpeeds(double feedSpeed) {
+        feedMotorSpeed = feedSpeed;
+    }
+
 }

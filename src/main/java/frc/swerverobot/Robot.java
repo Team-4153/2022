@@ -28,6 +28,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledPeriodic() {
       CommandScheduler.getInstance().run();
+      container.checkColor();
     }
 
     @Override

@@ -38,9 +38,9 @@ import static frc.swerverobot.RobotMap.*;
 
 public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.Updatable {
     // define the trackwidth (short side in our case) and wheelbase (long side in our case) ratio of the robot
-    public static final double TRACKWIDTH = 19.685; //  22.5; // 1.0;
-    public static final double WHEELBASE = 27.159; // 22.5; // 1.0;
-    private double angle = 0;
+    public static final double TRACKWIDTH = 0.7248; // 19.685; //  22.5; // 1.0;
+    public static final double WHEELBASE = 1; // 27.159; // 22.5; // 1.0;
+    // private double angle = 0;
     private static boolean locked;
 
     public static final DrivetrainFeedforwardConstants FEEDFORWARD_CONSTANTS = new DrivetrainFeedforwardConstants(
@@ -244,7 +244,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
     }
 
     public void setAngle(double angle) {
-        this.angle = angle;
+        // this.angle = angle;
         t265.setRotation(angle);
     }
 
@@ -254,7 +254,7 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
                 return t265.getRotation();
             }
             else {
-                return adisGyro.getAngle() + angle;
+                return adisGyro.getAngle(); // + angle;
             }
         }
     }
@@ -368,26 +368,26 @@ public class DrivetrainSubsystem extends SubsystemBase implements UpdateManager.
 
         for (int i = 0; i < modules.length; i++) {
             var module = modules[i];
-            if(locked){
+            // if(locked){
                 moduleAngleEntries[i].setDouble(((i+1)*90)-45);
-            }
-            else{
+            // }
+            // else{
                 moduleAngleEntries[i].setDouble(Math.toDegrees(module.getCurrentAngle()));
-            }
+            // }
         }
     }
-    public void lock(States in){
-        switch(in){
-            case LOCKED:
-                locked = true;
-                break;
-            case UNLOCKED:
-                locked = false;
-                break;
-            case TOGGLE:
-                locked = !locked;
-                break;
-        }
-    }
+    // public void lock(States in){
+    //     switch(in){
+    //         case LOCKED:
+    //             locked = true;
+    //             break;
+    //         case UNLOCKED:
+    //             locked = false;
+    //             break;
+    //         case TOGGLE:
+    //             locked = !locked;
+    //             break;
+    //     }
+    // }
 
 }

@@ -1,5 +1,8 @@
 package frc.swerverobot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -35,6 +38,8 @@ public class RobotContainer {
         private final LEDSubsystemCommand m_LEDCommand = new LEDSubsystemCommand(LED);
         private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
 
+        private int allianceColor = 0;
+
         private DriveCommand drivecommand;
 
         private final UpdateManager updateManager = new UpdateManager(
@@ -55,15 +60,15 @@ public class RobotContainer {
                 );
                 // set the drivetrain's default command to the driver's controller values
                 CommandScheduler.getInstance().setDefaultCommand(drivetrain, drivecommand);
-                /**     Point rotation control method
-                CommandScheduler.getInstance().setDefaultCommand(drivetrain, new GoToAngleCommand(
-                        drivetrain,
-                        () -> controller.getLeftXAxis().get(true),
-                        () -> -controller.getLeftYAxis().get(true),
-                        () -> -controller.getRightXAxis().get(true),
-                        () -> controller.getRightYAxis().get(true)
-                ));
-                */
+                /**     Point rotation control method*/
+                // CommandScheduler.getInstance().setDefaultCommand(drivetrain, new GoToAngleCommand(
+                //         drivetrain,
+                //         () -> driveController.getLeftXAxis().get(true),
+                //         () -> -driveController.getLeftYAxis().get(true),
+                //         () -> -driveController.getRightXAxis().get(true),
+                //         () -> driveController.getRightYAxis().get(true)
+                // ));
+                
                 updateManager.startLoop(5.0e-3);
                 initRobot();
                 configureButtonBindings();
@@ -71,6 +76,18 @@ public class RobotContainer {
         }
 
         private void initRobot() {
+                NetworkTableInstance inst = NetworkTableInstance.getDefault();
+                NetworkTable table = inst.getTable("FMSInfo");
+                NetworkTableEntry isRedAlliance = table.getEntry("IsRedAlliance");
+
+                if(isRedAlliance.getBoolean(false)) {
+                        allianceColor = 1; // if red then color is 1
+                } else {
+                        allianceColor = 2; // if blue then color is 2
+                }
+                SmartDashboard.putNumber("IntakeBall/BallColor", allianceColor);
+
+
                 intake.init();
                 climb.init();
                 LED.init();
@@ -125,9 +142,9 @@ public class RobotContainer {
                                 () -> -1.0
                         )
                 );
-                driveController.getStartButton().whenPressed(
-                        new LockCommand(drivetrain, States.TOGGLE)
-                );
+                // driveController.getStartButton().whenPressed(
+                //         new LockCommand(drivetrain, States.TOGGLE)
+                // );
                 // driveController.getBButton().whenPressed(
                 //         //Follows Ball
                 //         new FollowBallCommand(drivetrain,
@@ -196,6 +213,10 @@ public class RobotContainer {
                         //Autoaim to the high goal and then shoot
                         //Last boolean determines which dataset to use, true = high, false = low.
                         new AutoAim(shooter, drivetrain, false)
+                        // new ShootCommand(shooter, -0.7, 1.0, -0.4)
+                );
+                AutoAim.whenPressed(
+                        new FollowHubCommand(drivetrain)
                 );
 
 
@@ -222,4 +243,18 @@ public class RobotContainer {
 
                 SmartDashboard.putStringArray("Auto List", autoChoicesStrings);
         }
+
+        public void checkColor() {
+                NetworkTableInstance inst = NetworkTableInstance.getDefault();
+                NetworkTable table = inst.getTable("FMSInfo");
+                NetworkTableEntry isRedAlliance = table.getEntry("IsRedAlliance");
+        
+                if(isRedAlliance.getBoolean(false)) {
+                        allianceColor = 1; // if red then color is 1
+                } else {
+                        allianceColor = 2; // if blue then color is 2
+                }
+                SmartDashboard.putNumber("IntakeBall/BallColor", allianceColor);
+        }
+        
 }
