@@ -27,6 +27,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   //Motor for spinning wheels
   private PWMVictorSPX Intake_Motor = new PWMVictorSPX(Intake_Motor_PWM);
+  
   //      ----Ball Count & Color Functions----        [BC:Fully Functional, B1C: Fully Functional]
   public int ballCount() {
     // Starts the count of balls at 0
