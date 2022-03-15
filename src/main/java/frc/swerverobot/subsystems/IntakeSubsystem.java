@@ -27,8 +27,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   //Motor for spinning wheels
   private PWMVictorSPX Intake_Motor = new PWMVictorSPX(Intake_Motor_PWM);
-
-  //Ball functions needed for knowing whether or not shooting is allowed
+  //      ----Ball Count & Color Functions----        [BC:Fully Functional, B1C: Fully Functional]
   public int ballCount() {
     // Starts the count of balls at 0
     int ballCount = 0;
@@ -58,29 +57,30 @@ public class IntakeSubsystem extends SubsystemBase {
   }
   public String ball1color() {
     String ball1Color = "none";
-
-    if (photoEye2.get()) {
-      // Detected Color & Proximity from Color Sensor 1
-      Color detectedColor = colorSensor.getColor();
-      int proximity = colorSensor.getProximity();
-
-      // Check ball color
-      if (proximity > colorSensorDistance) { // Smaller values are closer and bigger is farther away
-        if (detectedColor.red > detectedColor.blue)// The 1st ball is Red
-        {
-          // set variable to be returned to Red
-          ball1Color = "Red";
-        } 
-        else { // The 1st ball is Blue 
-          // set variable to be returned to Blue
-          ball1Color = "Blue";
-        }
-      }
-
-      // No else statment because value is initalized at "none"
-      SmartDashboard.putString("Ball 1 Color", ball1Color);
+    if (photoEye2.get() && !phe2) {
+      phe2 = true;
+      ball1Color = colorSensor();
+    }
+    else if (!photoEye2.get()) {
+      phe2 = false;
     }
     return ball1Color;
+  }
+  public String colorSensor() {
+    String ballColor = "none";
+    Color detectedColor = colorSensor.getColor();
+    int proximity = colorSensor.getProximity();
+    // Check ball color
+    if (proximity > colorSensorDistance) { // Smaller values are closer and bigger is farther away
+      if (detectedColor.red > detectedColor.blue)// The 1st ball is Red
+      {
+        ballColor = "Red";
+      } 
+      else { // The 1st ball is Blue 
+        ballColor = "Blue";
+      }
+    }
+    return ballColor;
   }
 
   @Override
