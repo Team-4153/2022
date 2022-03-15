@@ -9,6 +9,7 @@ import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.frcteam2910.common.control.PidConstants;
 import org.frcteam2910.common.control.PidController;
@@ -191,11 +192,18 @@ public class Mk2SwerveModuleBuilder {
         final double off = offset;
         angleSupplier = () -> {
             double angle = (1.0 - enc.getPosition() / voltageMax) * 2.0 * Math.PI;
+
+            SmartDashboard.putNumber(String.format("%d: encoder raw", motor.getDeviceId()), angle*180/Math.PI);
+            SmartDashboard.putNumber(String.format("%d: encoder voltage", motor.getDeviceId()), enc.getPosition());
+
             angle += off;
             angle %= 2.0 * Math.PI;
             if (angle < 0.0) {
                 angle += 2.0 * Math.PI;
             }
+
+            SmartDashboard.putNumber(String.format("%d: encoder", motor.getDeviceId()), angle*180/Math.PI);
+
             return angle;
         };
 

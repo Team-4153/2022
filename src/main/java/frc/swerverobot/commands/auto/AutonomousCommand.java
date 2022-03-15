@@ -69,19 +69,19 @@ public class AutonomousCommand extends SequentialCommandGroup{
 
     }
 
-    private void determineAngle(String choice) {
-        switch(choice) {
-            case "LEFT":
-                angle = 136.5;
-            case "CENTER":
-                angle = 226.5;
-            case "RIGHT":
-                angle = 271.5;
-            default:
-                angle = 0;
-        }
+    // private void determineAngle(String choice) {
+    //     switch(choice) {
+    //         case "LEFT":
+    //             angle = 136.5;
+    //         case "CENTER":
+    //             angle = 226.5;
+    //         case "RIGHT":
+    //             angle = 271.5;
+    //         default:
+    //             angle = 0;
+    //     }
 
-        drivetrain.setAngle(angle);
-    }
+    //     drivetrain.setAngle(angle);
+    // }
 
 }
