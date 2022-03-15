@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 //Motors
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //Sensors
 import edu.wpi.first.wpilibj.util.Color;
 
@@ -31,6 +31,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public int ballCount() {
     // Starts the count of balls at 0
     int ballCount = 0;
+    boolean ballStuck = false;
 
     // Look for first ball with color
     if (ball1color() != "none") {
@@ -49,8 +50,11 @@ public class IntakeSubsystem extends SubsystemBase {
       if (photoEye.get()) {
         // A ball is in the second position but not the first
         ballCount = 1;
+        ballStuck = true;
       }
     }
+    SmartDashboard.putNumber("Ball Count", ballCount);
+    SmartDashboard.putBoolean("Ball Stuck", ballStuck);
 
     // No else statment because value is initalized at 0
     return ballCount;
@@ -64,6 +68,7 @@ public class IntakeSubsystem extends SubsystemBase {
     else if (!photoEye2.get()) {
       phe2 = false;
     }
+    SmartDashboard.putString("Ball 1 Color", ball1Color);
     return ball1Color;
   }
   public String colorSensor() {
