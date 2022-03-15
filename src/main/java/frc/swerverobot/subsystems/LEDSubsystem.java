@@ -138,7 +138,7 @@ public class LEDSubsystem extends SubsystemBase {
         m_ledBuffer.setRGB(running_LED, 100, 0, 0);//Red
       }
       else {
-        m_ledBuffer.setRGB(running_LED, idleWormColor[1], idleWormColor[2], idleWormColor[3]);//White
+        m_ledBuffer.setRGB(running_LED, idleWormColor[0], idleWormColor[1], idleWormColor[2]);//White
       }
     }
     else if (running_LED <= lengthstrand1 + lengthstrand2) {
@@ -151,7 +151,7 @@ public class LEDSubsystem extends SubsystemBase {
         m_ledBuffer.setRGB(running_LED, 100, 0, 0);//Red
       }
       else {
-        m_ledBuffer.setRGB(running_LED, 30, 30, 30);//White
+        m_ledBuffer.setRGB(running_LED, idleWormColor[0], idleWormColor[1], idleWormColor[2]);//White
       }
     }
 
@@ -168,7 +168,7 @@ public class LEDSubsystem extends SubsystemBase {
       }
       else {
         //Else
-        m_ledBuffer.setRGB(chasingLED, idleColor[1], idleColor[2], idleColor[3]);//Teal
+        m_ledBuffer.setRGB(chasingLED, idleColor[0], idleColor[1], idleColor[2]);//Teal
       }
     }
     else if (chasingLED <= lengthstrand1 + lengthstrand2) {
@@ -186,7 +186,7 @@ public class LEDSubsystem extends SubsystemBase {
         m_ledBuffer.setRGB(chasingLED, 50, 0, 0);//Red 
       }
       else {
-        m_ledBuffer.setRGB(chasingLED, idleColor[1], idleColor[2], idleColor[3]);//Teal
+        m_ledBuffer.setRGB(chasingLED, idleColor[0], idleColor[1], idleColor[2]);//Teal
       }
     }
     else if (chasingLED <= lengthstrand1 + lengthstrand2 + lengthstrand3) {
@@ -199,7 +199,7 @@ public class LEDSubsystem extends SubsystemBase {
         m_ledBuffer.setRGB(chasingLED, 50, 0, 0);//Red
       }
       else {
-        m_ledBuffer.setRGB(chasingLED, idleColor[1], idleColor[2], idleColor[3]);//Teal
+        m_ledBuffer.setRGB(chasingLED, idleColor[0], idleColor[1], idleColor[2]);//Teal
       }
     }
     
