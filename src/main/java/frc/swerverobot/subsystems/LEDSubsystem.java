@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.util.Color;
 
 public class LEDSubsystem extends SubsystemBase {
   private int lengthstrand1 = 89;
-  private int lengthstrand2 = 42;
+  private int lengthstrand2 = 34;
   private int lengthstrand3 = 82;
 
   private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(lengthstrand1 + lengthstrand2 + lengthstrand3);
