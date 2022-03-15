@@ -22,7 +22,7 @@ public class LEDSubsystem extends SubsystemBase {
   private int running_LED = 1;
   private int chasingLED = 0;
 
-  private int length = 8;
+  private int length = 10;
 
 //SmartDashboard.getNumber("TargetOff", 0)
   /*
@@ -39,8 +39,6 @@ public class LEDSubsystem extends SubsystemBase {
    * Wich Active: Moving Orange Light
    */
   public LEDSubsystem() {}
-
-  boolean phe2 = false;
 
   boolean shooting = false;
   boolean winch = false;
