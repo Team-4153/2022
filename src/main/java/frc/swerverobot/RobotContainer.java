@@ -159,18 +159,6 @@ public class RobotContainer {
 
 
                 //        [Climber Subsystem]
-                // manipulatorController.getDPadButton(Direction.UP).whenPressed(
-                //         new WinchLockCommand(climb, States.UNLOCKED)
-                // );
-                // manipulatorController.getDPadButton(Direction.DOWN).whenPressed(
-                //         new WinchLockCommand(climb, States.LOCKED)
-                // );
-                // manipulatorController.getDPadButton(Direction.LEFT).whenPressed(
-                //         new PullandGrabCommand(climb)
-                // );
-                // manipulatorController.getDPadButton(Direction.RIGHT).whenPressed(
-                //         new GetToNextRungCommand(climb)
-                // );
                 ClimbOut.whenPressed(
                         //Moves Mobile Climber Out
                         new ArmPositionCommand(climb, States.LOCKED)
@@ -221,7 +209,7 @@ public class RobotContainer {
 
 
                 
-                // //        [Intake Subsystem]
+                //        [Intake Subsystem]
                 Intake_Extension.whenPressed(
                         //Run the intake (It will autofeed the first ball and stop the motor when both balls are detected)
                         new IntakeSequence(intake, shooter)
