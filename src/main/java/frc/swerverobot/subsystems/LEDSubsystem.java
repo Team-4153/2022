@@ -53,10 +53,12 @@ public class LEDSubsystem extends SubsystemBase {
   boolean climberExtended2 = false;
   boolean climberLocked2 = false;
 
+  
   //      ----Ball Count & Color Functions----        [BC:Fully Functional, B1C: Fully Functional]
   public int ballCount() {
     // Starts the count of balls at 0
     int ballCount = 0;
+    boolean ballStuck = false;
 
     // Look for first ball with color
     if (ball1color() != "none") {
@@ -75,22 +77,25 @@ public class LEDSubsystem extends SubsystemBase {
       if (photoEye.get()) {
         // A ball is in the second position but not the first
         ballCount = 1;
+        ballStuck = true;
       }
     }
+    SmartDashboard.putNumber("Ball Count", ballCount);
+    SmartDashboard.putBoolean("Ball Stuck", ballStuck);
 
     // No else statment because value is initalized at 0
     return ballCount;
   }
-
   public String ball1color() {
     String ball1Color = "none";
-    if (photoEye2.get() && !phe2) {
+    if (photoEye2.get() != phe2 && photoEye2.get()) {
       phe2 = true;
       ball1Color = colorSensor();
     }
-    else if (!photoEye2.get()) {
-      phe2 = false;
+    else if (photoEye2.get() != phe2) {
+      phe2 = photoEye2.get();
     }
+    SmartDashboard.putString("Ball 1 Color", ball1Color);
     return ball1Color;
   }
   public String colorSensor() {

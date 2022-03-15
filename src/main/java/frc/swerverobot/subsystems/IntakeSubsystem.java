@@ -61,12 +61,12 @@ public class IntakeSubsystem extends SubsystemBase {
   }
   public String ball1color() {
     String ball1Color = "none";
-    if (photoEye2.get() && !phe2) {
+    if (photoEye2.get() != phe2 && photoEye2.get()) {
       phe2 = true;
       ball1Color = colorSensor();
     }
-    else if (!photoEye2.get()) {
-      phe2 = false;
+    else if (photoEye2.get() != phe2) {
+      phe2 = photoEye2.get();
     }
     SmartDashboard.putString("Ball 1 Color", ball1Color);
     return ball1Color;
