@@ -72,10 +72,10 @@ public class RobotMap {
     public static final Button DropBallBTN = Shooter_controller.getBButton();               //[Shooter Subsystem](B)
     public static final Axis AimShootHigh = Shooter_controller.getRightTriggerAxis();       //[Shooter Subsystem](R-Trigger)
     public static final Axis AimShootLow = Shooter_controller.getLeftTriggerAxis();         //[Shooter Subsystem](L-Trigger)
-    public static final Button AutoAim = Shooter_controller.getYButton();
     public static final Button ClimbOut = Shooter_controller.getDPadButton(Direction.LEFT); //[Climber Subsystem](DPad-Left)
     public static final Button ClimbIn = Shooter_controller.getDPadButton(Direction.RIGHT); //[Climber Subsystem](DPad-Right)
-    public static final Button StatHook = Shooter_controller.getDPadButton(Direction.UP);   //[Climber Subsystem](DPad-Up)
+    public static final Button StatHookClose = Shooter_controller.getYButton();   //[Climber Subsystem](DPad-Up)
+    public static final Button StatHookOpen = Shooter_controller.getXButton();   //[Climber Subsystem](DPad-Down)
     public static final Button Unspool = Shooter_controller.getLeftBumperButton();          //[Climber Subsystem](Left Bumper)
     public static final Button Spool = Shooter_controller.getRightBumperButton();           //[Climber Subsystem](Right Bumper)
 

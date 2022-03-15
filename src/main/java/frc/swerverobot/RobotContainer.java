@@ -179,9 +179,13 @@ public class RobotContainer {
                         //Moves Mobile Climber In
                         new ArmPositionCommand(climb, States.UNLOCKED)
                 );
-                StatHook.whenPressed(
+                StatHookClose.whenPressed(
                         //Lock/Unlock the static hook
-                        new StaticHookCommand(climb, States.TOGGLE)
+                        new StaticHookCommand(climb, States.UNLOCKED)
+                );
+                StatHookOpen.whenPressed(
+                        //Lock/Unlock the static hook
+                        new StaticHookCommand(climb, States.LOCKED)
                 );
                 Unspool.whenHeld(
                         //Moves robot down using mobile climber
@@ -213,9 +217,6 @@ public class RobotContainer {
                         //Last boolean determines which dataset to use, true = high, false = low.
                         new AutoAim(shooter, drivetrain, false)
                         // new ShootCommand(shooter, -0.7, 1.0, -0.4)
-                );
-                AutoAim.whenPressed(
-                        new FollowHubCommand(drivetrain)
                 );
 
 
