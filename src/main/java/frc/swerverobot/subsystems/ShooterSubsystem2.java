@@ -124,7 +124,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
     }
     @Override
     public void periodic() {
-        pushDashboardVars(); // Updates all of the Shooter Speeds on the smart dashboard
+        pushDashboardVars();
     }
 }
 
