@@ -62,6 +62,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.swerverobot.Robot;
 import frc.swerverobot.RobotMap;
 
 public class ClimberSubsystem extends SubsystemBase{
@@ -180,10 +181,8 @@ public class ClimberSubsystem extends SubsystemBase{
     @Override
     public void periodic()
     {
-        // if (!RobotMap.StatHook1.get() && SmartDashboard.getBoolean("Stat Hook 1", false) || !RobotMap.StatHook2.get() && SmartDashboard.getBoolean("Stat Hook 2", false)) {
-        //     RobotMap.StatHook1.get();
-        //     RobotMap.StatHook2.get();
-        // }
+        SmartDashboard.putBoolean("Stat Hook 1", RobotMap.StatHook1.get());
+        SmartDashboard.putBoolean("Stat Hook 2", RobotMap.StatHook2.get());
     }
 
 }
