@@ -34,24 +34,16 @@ public class IntakeSubsystem extends SubsystemBase {
     boolean ballStuck = false;
 
     // Look for first ball with color
-    if (ball1color() != "none") {
+    if (photoEye2.get()) {
 
       // 1 Ball Found
       ballCount = 1;
 
-      // Look for second ball with photo eye
-      if (photoEye.get()) {
-        // 2 Balls found
-        ballCount = 2;
-      }
     } 
-    else {
-      // Check if there is a ball in second position but not first
-      if (photoEye.get()) {
-        // A ball is in the second position but not the first
-        ballCount = 1;
-        ballStuck = true;
-      }
+    // Look for second ball with photo eye
+    if (photoEye.get()) {
+      // 2 Balls found
+      ballCount = ballCount + 1;
     }
     SmartDashboard.putNumber("Ball Count", ballCount);
     SmartDashboard.putBoolean("Ball Stuck", ballStuck);
