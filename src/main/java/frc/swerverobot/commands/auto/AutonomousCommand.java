@@ -45,6 +45,8 @@ public class AutonomousCommand extends SequentialCommandGroup{
             new FollowBallCommand(drivetrain, () -> 0.3),
             new WaitCommand(0.5),
             new IntakeCommand(intake, true)
+            // new GoToAngleCommand(drivetrain, () -> 0, () -> 0, () -> 1, () -> 0),
+            // new AutoAim(shooter, drivetrain, true)
 
 
 /*            
