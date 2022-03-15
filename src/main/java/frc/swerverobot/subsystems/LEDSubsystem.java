@@ -13,9 +13,9 @@ import static frc.swerverobot.RobotMap.*;
 import edu.wpi.first.wpilibj.util.Color;
 
 public class LEDSubsystem extends SubsystemBase {
-  private int lengthstrand1 = 89;
+  private int lengthstrand1 = 80;
   private int lengthstrand2 = 34;
-  private int lengthstrand3 = 82;
+  private int lengthstrand3 = 80;
 
   private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(lengthstrand1 + lengthstrand2 + lengthstrand3);
   private AddressableLED m_led = new AddressableLED(LEDPWMPort);
