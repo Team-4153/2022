@@ -23,7 +23,7 @@ public class LEDSubsystem extends SubsystemBase {
   private int running_LED = 1;
   private int chasingLED = 0;
 
-  private int length = 8; // if you change length, the strands get messed up
+  private int length = 8;
 
 //SmartDashboard.getNumber("TargetOff", 0)
   /*
@@ -116,6 +116,9 @@ public class LEDSubsystem extends SubsystemBase {
     climberExtended = SmartDashboard.getBoolean("Climb Arm Extention", false);
     climberLocked = SmartDashboard.getBoolean("Climb Hook Locked", false);
 
+    int[] idleColor = {0,50,50};
+    int[] idleWormColor = {60,60,60}; 
+
     if (shooting != shooting2) {
       running_LED = lengthstrand1;
     }
@@ -135,7 +138,7 @@ public class LEDSubsystem extends SubsystemBase {
         m_ledBuffer.setRGB(running_LED, 100, 0, 0);//Red
       }
       else {
-        m_ledBuffer.setRGB(running_LED, 30, 30, 30);//White
+        m_ledBuffer.setRGB(running_LED, idleWormColor[1], idleWormColor[2], idleWormColor[3]);//White
       }
     }
     else if (running_LED <= lengthstrand1 + lengthstrand2) {
@@ -165,10 +168,10 @@ public class LEDSubsystem extends SubsystemBase {
       }
       else {
         //Else
-        m_ledBuffer.setRGB(chasingLED, 0, 50, 50);//Teal
+        m_ledBuffer.setRGB(chasingLED, idleColor[1], idleColor[2], idleColor[3]);//Teal
       }
     }
-    else if (running_LED <= lengthstrand1 + lengthstrand2) {
+    else if (chasingLED <= lengthstrand1 + lengthstrand2) {
       //Strand 2
       if (shooting) {
         //If The Robot is Shooting
@@ -183,10 +186,10 @@ public class LEDSubsystem extends SubsystemBase {
         m_ledBuffer.setRGB(chasingLED, 50, 0, 0);//Red 
       }
       else {
-        m_ledBuffer.setRGB(chasingLED, 0, 50, 50);//Teal
+        m_ledBuffer.setRGB(chasingLED, idleColor[1], idleColor[2], idleColor[3]);//Teal
       }
     }
-    else if (running_LED <= lengthstrand1 + lengthstrand2 + lengthstrand3) {
+    else if (chasingLED <= lengthstrand1 + lengthstrand2 + lengthstrand3) {
       //Strand 3
       if (winch) {
         //If Climber Is winching
@@ -196,7 +199,7 @@ public class LEDSubsystem extends SubsystemBase {
         m_ledBuffer.setRGB(chasingLED, 50, 0, 0);//Red
       }
       else {
-        m_ledBuffer.setRGB(chasingLED, 0, 50, 50);//Teal
+        m_ledBuffer.setRGB(chasingLED, idleColor[1], idleColor[2], idleColor[3]);//Teal
       }
     }
     
