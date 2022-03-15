@@ -12,6 +12,7 @@ import org.frcteam2910.common.control.PidController;
 import java.lang.Math;
 
 @Deprecated
+@SuppressWarnings("unused")
 
 public class FollowHubCommand extends CommandBase {
     private final DrivetrainSubsystem drivetrain;

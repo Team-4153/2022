@@ -3,7 +3,6 @@ package frc.swerverobot.subsystems;
 //Setup
 import static frc.swerverobot.RobotMap.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //Pneumatics
 import edu.wpi.first.wpilibj.DoubleSolenoid;

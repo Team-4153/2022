@@ -10,15 +10,10 @@ import static frc.swerverobot.RobotMap.*;
 //Motor Controlers
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
-// Color Sensor
-import edu.wpi.first.wpilibj.util.Color;
-
 public class ShooterSubsystem2 extends SubsystemBase {
     //     ----Variable Initialization----
     private final Spark topMotor;
     private final Spark botMotor;
-    private int ballCount = 0;
-    private boolean ballStuck = false;
 
     //     ----Motor Declarations----                   [Fully Functional]
     public ShooterSubsystem2() {

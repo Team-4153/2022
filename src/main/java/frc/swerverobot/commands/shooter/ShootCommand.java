@@ -3,7 +3,6 @@ package frc.swerverobot.commands.shooter;
 import frc.swerverobot.subsystems.ShooterSubsystem2;
 
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 
@@ -23,25 +22,6 @@ public class ShootCommand extends SequentialCommandGroup{
         this.runShootMotors = new RunShootMotors(shooter, 0, 0);
         this.runFeedMotors1 = new RunFeedMotors(shooter, 0);
         this.runFeedMotors2 = new RunFeedMotors(shooter, 0);
-
-        //This shoots all balls in the shooter
-        // addCommands(
-        //     new RunShootMotors(shooter, topSpeed,  botSpeed), //Spool up shooter motors
-
-        //     new WaitCommand(waitforSpool), //Wait for spool up of motors
-        //     new RunFeedMotors(shooter, feedSpeed), //Feed 1st ball into shooter
-
-        //     new WaitCommand(waitforShoot2),
-        //     new RunFeedMotors(shooter, 0), //Stop feed motor
-        //     new WaitCommand(waitforSpool),
-            
-        //     new RunFeedMotors(shooter, feedSpeed), //Feed second ball into shooter
-
-        //     new WaitCommand(waitForShoot),
-            
-        //     new RunFeedMotors(shooter, 0), //Stop feed motors
-        //     new RunShootMotors(shooter, 0,  0) //Stop shooter motors
-        // );
 
         addCommands(
             runShootMotors,
