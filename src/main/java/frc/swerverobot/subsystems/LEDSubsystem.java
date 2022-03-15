@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static frc.swerverobot.RobotMap.*;
-import edu.wpi.first.wpilibj.util.Color;
 
 public class LEDSubsystem extends SubsystemBase {
   private int lengthstrand1 = 80;
@@ -60,9 +59,6 @@ public class LEDSubsystem extends SubsystemBase {
     climberExtended = SmartDashboard.getBoolean("Climb Arm Extention", false);
     climberLocked = SmartDashboard.getBoolean("Climb Hook Locked", false);
     count = SmartDashboard.getNumber("Ball Count", 0);
-
-    int[] idleColor = {0,50,50};
-    int[] idleWormColor = {60,60,60}; 
 
     if (shooting != shooting2) {
       running_LED = lengthstrand1;
