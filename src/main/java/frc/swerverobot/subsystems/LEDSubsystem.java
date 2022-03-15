@@ -25,11 +25,6 @@ public class LEDSubsystem extends SubsystemBase {
 
   private int length = 8; // if you change length, the strands get messed up
 
-  private boolean shooting = SmartDashboard.getBoolean("Shooting", false);
-  private boolean winch = SmartDashboard.getBoolean("Climbing", false);
-  private boolean climberExtended = SmartDashboard.getBoolean("Climb Arm Extention", false);
-  private boolean climberLocked = SmartDashboard.getBoolean("Climb Hook Locked", false);
-
 //SmartDashboard.getNumber("TargetOff", 0)
   /*
    * LED Strip Lengths
@@ -47,6 +42,10 @@ public class LEDSubsystem extends SubsystemBase {
   public LEDSubsystem() {}
 
   boolean phe2 = false;
+  boolean shooting = false;
+  boolean winch = false;
+  boolean climberExtended = false;
+  boolean climberLocked = false;
 
   //      ----Ball Count & Color Functions----        [BC:Fully Functional, B1C: Fully Functional]
   public int ballCount() {
@@ -106,63 +105,80 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   public void colorPositionLED() {
+    shooting = SmartDashboard.getBoolean("Shooting", false);
+    winch = SmartDashboard.getBoolean("Climbing", false);
+    climberExtended = SmartDashboard.getBoolean("Climb Arm Extention", false);
+    climberLocked = SmartDashboard.getBoolean("Climb Hook Locked", false);
+
     if (running_LED <= lengthstrand1) {
+      //Strand 1
       if (winch) {
-        m_ledBuffer.setRGB(running_LED, 55, 10, 0);
+        m_ledBuffer.setRGB(running_LED, 50, 0, 0);//Red
       }
       else {
-        m_ledBuffer.setRGB(running_LED, 30, 30, 30);
+        m_ledBuffer.setRGB(running_LED, 30, 30, 30);//White
       }
     }
     else if (running_LED <= lengthstrand1 + lengthstrand2) {
-      m_ledBuffer.setRGB(running_LED, 30, 30, 30);
+      //Strand 2
+      m_ledBuffer.setRGB(running_LED, 50, 50, 50);//White
     }
     else if (running_LED <= lengthstrand1 + lengthstrand2 + lengthstrand3) {
+      //Strand 3
       if (running_LED <= lengthstrand1) {
         if (winch) {
-          m_ledBuffer.setRGB(running_LED, 55, 10, 0);
+          m_ledBuffer.setRGB(running_LED, 50, 0, 0);//Red
         }
         else {
-          m_ledBuffer.setRGB(running_LED, 30, 30, 30);
+          m_ledBuffer.setRGB(running_LED, 30, 30, 30);//White
         }
       }
     }
 
 
     if (chasingLED <= lengthstrand1) {
+      //Strand 1
       if (climberLocked) {
-        m_ledBuffer.setRGB(chasingLED, 0, 50, 0);
+        //If Climber Is Locked
+        m_ledBuffer.setRGB(chasingLED, 0, 50, 0);//Green
       }
       else if (climberExtended) {
-        m_ledBuffer.setRGB(chasingLED, 50, 0, 0);
+        //If Climber Is Extended
+        m_ledBuffer.setRGB(chasingLED, 50, 0, 0);//Red
       }
       else {
-        m_ledBuffer.setRGB(chasingLED, 0, 50, 50);
+        //Else
+        m_ledBuffer.setRGB(chasingLED, 0, 50, 50);//Teal
       }
     }
     else if (running_LED <= lengthstrand1 + lengthstrand2) {
-      if (ballCount() == 2) {
-        m_ledBuffer.setRGB(chasingLED, 63, 43, 0);
+      //Strand 2
+      if (shooting) {
+        //If The Robot is Shooting
+        m_ledBuffer.setRGB(chasingLED, 0, 50, 0);//Green
+      }
+      else if (ballCount() == 2) {
+        //If there are 2 Balls
+        m_ledBuffer.setRGB(chasingLED, 50, 50, 0);//Orange
       }
       else if (ballCount() == 1) {
-        m_ledBuffer.setRGB(chasingLED, 50, 0, 0);
-      }
-      else if (shooting) {
-        m_ledBuffer.setRGB(chasingLED, 0, 50, 0);
+        //If there is 1 Ball
+        m_ledBuffer.setRGB(chasingLED, 50, 0, 0);//Red 
       }
       else {
-        m_ledBuffer.setRGB(chasingLED, 0, 50, 50);
+        m_ledBuffer.setRGB(chasingLED, 0, 50, 50);//Teal
       }
     }
     else if (running_LED <= lengthstrand1 + lengthstrand2 + lengthstrand3) {
+      //Strand 3
       if (climberLocked) {
-        m_ledBuffer.setRGB(chasingLED, 0, 50, 0);
+        m_ledBuffer.setRGB(chasingLED, 0, 50, 0);//Green
       }
       else if (climberExtended) {
-        m_ledBuffer.setRGB(chasingLED, 50, 0, 0);
+        m_ledBuffer.setRGB(chasingLED, 50, 0, 0);//Red
       }
       else {
-        m_ledBuffer.setRGB(chasingLED, 0, 50, 50);
+        m_ledBuffer.setRGB(chasingLED, 0, 50, 50);//Teal
       }
     }
   }
