@@ -199,6 +199,11 @@ public class LEDSubsystem extends SubsystemBase {
         m_ledBuffer.setRGB(chasingLED, 0, 50, 50);//Teal
       }
     }
+    
+    shooting = shooting2;
+    winch = winch2;
+    climberExtended = climberExtended2;
+    climberLocked = climberLocked2;
   }
 
   @Override
