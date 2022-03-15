@@ -7,6 +7,8 @@ package frc.swerverobot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import static frc.swerverobot.RobotMap.*;
 import edu.wpi.first.wpilibj.util.Color;
 
@@ -23,15 +25,10 @@ public class LEDSubsystem extends SubsystemBase {
 
   private int length = 8; // if you change length, the strands get messed up
 
-  // private double winch = SmartDashboard.getNumber("winchsol", 0);
-  // private double climberLocked = SmartDashboard.getNumber("climbrelocked", 0);
-  // private double shooting = SmartDashboard.getNumber("shootingmotor", 0);
-  // private double climberExtended = SmartDashboard.getNumber("climbersol", 0);
-
-  private boolean winch = false;
-  private boolean climberLocked = false;
-  private boolean shooting = false;
-  private boolean climberExtended = false;
+  private boolean shooting = SmartDashboard.getBoolean("Shooting", false);
+  private boolean winch = SmartDashboard.getBoolean("Climbing", false);
+  private boolean climberExtended = SmartDashboard.getBoolean("Climb Arm Extention", false);
+  private boolean climberLocked = SmartDashboard.getBoolean("Climb Hook Locked", false);
 
 //SmartDashboard.getNumber("TargetOff", 0)
   /*
@@ -79,6 +76,7 @@ public class LEDSubsystem extends SubsystemBase {
     // No else statment because value is initalized at 0
     return ballCount;
   }
+
   public String ball1color() {
     String ball1Color = "none";
     if (photoEye2.get() && !phe2) {
@@ -113,11 +111,11 @@ public class LEDSubsystem extends SubsystemBase {
         m_ledBuffer.setRGB(running_LED, 55, 10, 0);
       }
       else {
-        m_ledBuffer.setRGB(running_LED, 10, 10, 10);
+        m_ledBuffer.setRGB(running_LED, 30, 30, 30);
       }
     }
     else if (running_LED <= lengthstrand1 + lengthstrand2) {
-      m_ledBuffer.setRGB(running_LED, 10, 10, 10);
+      m_ledBuffer.setRGB(running_LED, 30, 30, 30);
     }
     else if (running_LED <= lengthstrand1 + lengthstrand2 + lengthstrand3) {
       if (running_LED <= lengthstrand1) {
@@ -125,7 +123,7 @@ public class LEDSubsystem extends SubsystemBase {
           m_ledBuffer.setRGB(running_LED, 55, 10, 0);
         }
         else {
-          m_ledBuffer.setRGB(running_LED, 10, 10, 10);
+          m_ledBuffer.setRGB(running_LED, 30, 30, 30);
         }
       }
     }
@@ -139,7 +137,7 @@ public class LEDSubsystem extends SubsystemBase {
         m_ledBuffer.setRGB(chasingLED, 50, 0, 0);
       }
       else {
-        m_ledBuffer.setRGB(chasingLED, 0, 3, 3);
+        m_ledBuffer.setRGB(chasingLED, 0, 50, 50);
       }
     }
     else if (running_LED <= lengthstrand1 + lengthstrand2) {
@@ -153,7 +151,7 @@ public class LEDSubsystem extends SubsystemBase {
         m_ledBuffer.setRGB(chasingLED, 0, 50, 0);
       }
       else {
-        m_ledBuffer.setRGB(chasingLED, 0, 3, 3);
+        m_ledBuffer.setRGB(chasingLED, 0, 50, 50);
       }
     }
     else if (running_LED <= lengthstrand1 + lengthstrand2 + lengthstrand3) {
@@ -164,7 +162,7 @@ public class LEDSubsystem extends SubsystemBase {
         m_ledBuffer.setRGB(chasingLED, 50, 0, 0);
       }
       else {
-        m_ledBuffer.setRGB(chasingLED, 0, 3, 3);
+        m_ledBuffer.setRGB(chasingLED, 0, 50, 50);
       }
     }
   }

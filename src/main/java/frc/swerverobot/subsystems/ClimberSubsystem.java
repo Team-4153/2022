@@ -85,13 +85,13 @@ public class ClimberSubsystem extends SubsystemBase{
 
 
     public void motorInit() {
-	spoolMotor.setSafetyEnabled(false);
+	    spoolMotor.setSafetyEnabled(false);
     }
 
     public void solenoidInit() {
-	armPiston.set(DoubleSolenoid.Value.kReverse);
-	stathookPiston.set(DoubleSolenoid.Value.kReverse);
-	winchSolenoid.set(DoubleSolenoid.Value.kReverse);
+        armPiston.set(DoubleSolenoid.Value.kReverse);
+        stathookPiston.set(DoubleSolenoid.Value.kReverse);
+        winchSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
 
     public void init() {
@@ -105,33 +105,40 @@ public class ClimberSubsystem extends SubsystemBase{
 
     public void spool(){
         spoolMotor.set(-1.0);
+        SmartDashboard.putBoolean("Climbing", true);
     }
 
     public void unspool(){
         spoolMotor.set(1.0);
+        SmartDashboard.putBoolean("Climbing", true);
     }
     
     public void StopMotor(){
         spoolMotor.set(0);
+        SmartDashboard.putBoolean("Climbing", false);
     }
 
     public void armUp(){
         armPiston.set(DoubleSolenoid.Value.kForward);
+        SmartDashboard.putBoolean("Climb Arm Extention", false);
         setArmUp(true);
     }
 
     public void armDown() {
         armPiston.set(DoubleSolenoid.Value.kReverse);
+        SmartDashboard.putBoolean("Climb Arm Extention", true);
         setArmUp(false);
     }
 
     public void hookClose(){
         stathookPiston.set(DoubleSolenoid.Value.kForward);
+        SmartDashboard.putBoolean("Climb Hook Locked", false);
         setHookOpen(false);
     }
 
     public void hookOpen() {
         stathookPiston.set(DoubleSolenoid.Value.kReverse);
+        SmartDashboard.putBoolean("Climb Hook Locked", true);
         setHookOpen(true);
     }
 

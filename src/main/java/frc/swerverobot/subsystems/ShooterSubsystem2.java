@@ -33,8 +33,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
                 {163,-0.6,0.7,-1},
                 {183,-0.67,0.77,-1},
                 {215,-0.75,0.85,-1},
-                {250,-1,1,-1},
-//                {250,-1,1,-1}//Second one is here to fix issue if disance is at max
+                {250,-1,1,-1}
             };
             return SetMotorDistanceCalc(MotorSpeedHighGoal);
         }
@@ -43,8 +42,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
                 {77,-0.4,0.5,-1},
                 {117,-0.45,0.55,-1},
                 {153,-0.5,0.6,-1},
-                {172,-0.55,0.65,-1},
-//                {172,-0.55,0.65,-1}//Second one is here to fix issue if disance is at max
+                {172,-0.55,0.65,-1}
             };
             return SetMotorDistanceCalc(MotorSpeedLowGoal);
         }
@@ -88,6 +86,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
 
     //      ----Shooter Motor Functions----             [SMS:Fully Functional, FMS: Fully Functional, PL: Fully Functional]
     public void setShootMotorSpeeds(double topSpeed, double botSpeed) {
+        SmartDashboard.putBoolean("Shooting", topSpeed != 0);
         //Sets the speed of the top and bottom motors to the inputed speed variables
 	    topMotor.set(motorPowerLimits(topSpeed)); //Sets the top motor speed to the topSpeed variable (Range: -1 to 1)
 	    botMotor.set(motorPowerLimits(botSpeed)); //Sets the bottom motor speed to the botSpeed variable (Range: -1 to 1)
