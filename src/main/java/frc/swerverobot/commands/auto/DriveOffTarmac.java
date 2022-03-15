@@ -1,8 +1,7 @@
 package frc.swerverobot.commands.auto;
 
 import frc.swerverobot.commands.drive.DriveWithSetRotationCommand;
-import frc.swerverobot.subsystems.*;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 @Deprecated

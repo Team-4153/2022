@@ -4,6 +4,8 @@ import frc.swerverobot.RobotMap;
 import frc.swerverobot.subsystems.ShooterSubsystem2;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+@SuppressWarnings("unused")
+
 /** An example command that uses an example subsystem. */
 public class FeedCommand extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })

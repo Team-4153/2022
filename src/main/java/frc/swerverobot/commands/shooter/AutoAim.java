@@ -6,6 +6,7 @@ import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import frc.swerverobot.subsystems.ShooterSubsystem2;
 
 @Deprecated
+@SuppressWarnings("unused")
 
 public class AutoAim extends SequentialCommandGroup{
     private final ShooterSubsystem2 shooter;

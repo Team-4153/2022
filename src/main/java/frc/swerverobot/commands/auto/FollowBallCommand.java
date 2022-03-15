@@ -9,7 +9,6 @@ import org.frcteam2910.common.math.Vector2;
 import org.frcteam2910.common.control.PidConstants;
 import org.frcteam2910.common.control.PidController;
 
-import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import java.lang.Math;
 
