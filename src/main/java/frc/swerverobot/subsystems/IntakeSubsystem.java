@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.util.Color;
 
 public class IntakeSubsystem extends SubsystemBase {
   public  boolean feedStatus = false;
+  public boolean phe2 = false;
 
   //Creates a new IntakeSubsystem
   public IntakeSubsystem() {}
