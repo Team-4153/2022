@@ -218,9 +218,6 @@ public class RobotContainer {
                         new AutoAim(shooter, drivetrain, false)
                         // new ShootCommand(shooter, -0.7, 1.0, -0.4)
                 );
-                // AutoAim.whenPressed(
-                //         new FollowHubCommand(drivetrain)
-                // );
 
 
                 
