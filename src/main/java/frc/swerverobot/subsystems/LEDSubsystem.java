@@ -52,65 +52,14 @@ public class LEDSubsystem extends SubsystemBase {
   boolean winch2 = false;
   boolean climberExtended2 = false;
   boolean climberLocked2 = false;
-  
-  //      ----Ball Count & Color Functions----        [BC:Fully Functional, B1C: Fully Functional]
-  public int ballCount() {
-    // Starts the count of balls at 0
-    int ballCount = 0;
-    boolean ballStuck = false;
-
-    // Look for first ball with color
-    if (photoEye2.get()) {
-
-      // 1 Ball Found
-      ballCount = 1;
-
-    } 
-    // Look for second ball with photo eye
-    if (photoEye.get()) {
-      // 2 Balls found
-      ballCount = ballCount + 1;
-    }
-    SmartDashboard.putNumber("Ball Count", ballCount);
-    SmartDashboard.putBoolean("Ball Stuck", ballStuck);
-
-    // No else statment because value is initalized at 0
-    return ballCount;
-  }
-  public String ball1color() {
-    String ball1Color = "none";
-    if ((photoEye2.get() != phe2) && photoEye2.get()) {
-      phe2 = true;
-      ball1Color = colorSensor();
-    }
-    else if (!photoEye2.get()) {
-      phe2 = photoEye2.get();
-    }
-    SmartDashboard.putString("Ball 1 Color", ball1Color);
-    return ball1Color;
-  }
-  public String colorSensor() {
-    String ballColor = "none";
-    Color detectedColor = colorSensor.getColor();
-    int proximity = colorSensor.getProximity();
-    // Check ball color
-    if (proximity > colorSensorDistance) { // Smaller values are closer and bigger is farther away
-      if (detectedColor.red > detectedColor.blue)// The 1st ball is Red
-      {
-        ballColor = "Red";
-      } 
-      else { // The 1st ball is Blue 
-        ballColor = "Blue";
-      }
-    }
-    return ballColor;
-  }
+  double count = 0;
 
   public void colorPositionLED() {
     shooting = SmartDashboard.getBoolean("Shooting", false);
     winch = SmartDashboard.getBoolean("Climbing", false);
     climberExtended = SmartDashboard.getBoolean("Climb Arm Extention", false);
     climberLocked = SmartDashboard.getBoolean("Climb Hook Locked", false);
+    count = SmartDashboard.getNumber("Ball Count", 0);
 
     int[] idleColor = {0,50,50};
     int[] idleWormColor = {60,60,60}; 
@@ -173,11 +122,11 @@ public class LEDSubsystem extends SubsystemBase {
         //If The Robot is Shooting
         m_ledBuffer.setRGB(chasingLED, 0, 50, 0);//Green
       }
-      else if (ballCount() == 2) {
+      else if (count == 2) {
         //If there are 2 Balls
         m_ledBuffer.setRGB(chasingLED, 50, 50, 0);//Orange
       }
-      else if (ballCount() == 1) {
+      else if (count == 1) {
         //If there is 1 Ball
         m_ledBuffer.setRGB(chasingLED, 50, 0, 0);//Red 
       }
