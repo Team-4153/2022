@@ -3,6 +3,7 @@ package frc.swerverobot.commands.auto;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.swerverobot.RobotMap;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import org.frcteam2910.common.math.Vector2;
 
@@ -82,7 +83,7 @@ public class FollowBallCommand extends CommandBase {
 
     public boolean isFinished() {
         long tstamp = RobotController.getFPGATime();
-        return ballLastSeen > 0 && (tstamp - ballLastSeen) > 1000;
+        return (ballLastSeen > 0 && (tstamp - ballLastSeen) > 1000) || RobotMap.photoEye.get();
     }
 
     protected void calculateCorrection(long timestamp) {
