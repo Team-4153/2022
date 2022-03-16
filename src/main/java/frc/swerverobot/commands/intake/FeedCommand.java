@@ -1,6 +1,7 @@
 package frc.swerverobot.commands.intake;
 
 import frc.swerverobot.RobotMap;
+import static frc.swerverobot.RobotMap.*;
 import frc.swerverobot.subsystems.ShooterSubsystem2;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -44,7 +45,6 @@ public class FeedCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
-        // return shooter.ball1color() != "none";
+        return photoEye2.get();
     }
 }
