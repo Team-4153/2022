@@ -31,7 +31,7 @@ public class OneBallAuto extends SequentialCommandGroup{
 
         addCommands(
             new DriveCommand(drivetrain, () -> -0.3, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.2),
-            new AutoAim(shooter, drivetrain, true).withTimeout(10)
+            new AutoAim(shooter, drivetrain, true)
         );
 
     }

@@ -36,7 +36,7 @@ public class TwoBallAuto extends SequentialCommandGroup{
             new FollowBallCommand(drivetrain, () -> 0.3),
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),
             new IntakeCommand(intake, true),
-            new AutoAim(shooter, drivetrain, true).withTimeout(5)
+            new AutoAim(shooter, drivetrain, true)
         );
       
     }
