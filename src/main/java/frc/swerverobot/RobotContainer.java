@@ -13,6 +13,10 @@ import frc.swerverobot.commands.intake.*;
 import frc.swerverobot.commands.LED.*;
 import frc.swerverobot.commands.shooter.*;
 import frc.swerverobot.commands.auto.*;
+import frc.swerverobot.commands.auto.competition.FourBallAuto;
+import frc.swerverobot.commands.auto.competition.OneBallAuto;
+import frc.swerverobot.commands.auto.competition.ThreeBallAuto;
+import frc.swerverobot.commands.auto.competition.TwoBallAuto;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import frc.swerverobot.subsystems.ClimberSubsystem;
 import frc.swerverobot.subsystems.IntakeSubsystem;
@@ -95,8 +99,20 @@ public class RobotContainer {
 
         public Command getAutonomousCommand() {
                 String choice = SmartDashboard.getString("Auto Selector", null);
-//                return new AutonomousCommand(drivetrain, shooter, intake, choice);
-                return new AutonomousCommand(drivetrain, shooter, intake, choice);
+
+                switch(choice) {
+                        case "ONE_BALL":
+                                return new OneBallAuto(drivetrain, shooter, intake);
+                        case "TWO_BALL":
+                                return new TwoBallAuto(drivetrain, shooter, intake);
+                        case "THREE_BALL":
+                                return new ThreeBallAuto(drivetrain, shooter, intake);
+                        case "FOUR_BALL":
+                                return new FourBallAuto(drivetrain, shooter, intake);
+                        default:
+                                return null;
+                }
+
         }
 
         private void configureButtonBindings() {

@@ -1,4 +1,4 @@
-package frc.swerverobot.commands.auto;
+package frc.swerverobot.commands.auto.rando;
 
 import frc.swerverobot.commands.drive.DriveWithSetRotationCommand;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;

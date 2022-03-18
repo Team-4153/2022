@@ -1,3 +1,4 @@
+package frc.swerverobot.commands.auto.rando;
 // package frc.swerverobot.commands.auto;
 
 // import edu.wpi.first.wpilibj2.command.CommandBase;

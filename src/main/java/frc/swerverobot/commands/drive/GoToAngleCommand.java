@@ -18,8 +18,11 @@ public class GoToAngleCommand extends CommandBase {
     private final DoubleSupplier strafe;
     private final DoubleSupplier rotation_x;
     private final DoubleSupplier rotation_y;
+    private double angle;
 //    private final double setPoint;
     private double rotationOutput;
+    private boolean usingAngle;
+    private double angleTarget;
 
     // create a pid controller for robot rotation
     private PidController rotationController = new PidController(new PidConstants(0.8/DrivetrainSubsystem.WHEELBASE, 0.0, 0.01/DrivetrainSubsystem.WHEELBASE)); //0.5 0.0 0.008
@@ -32,7 +35,6 @@ public class GoToAngleCommand extends CommandBase {
         this.drivetrain = drivetrain;
         this.forward = forward;
         this.strafe = strafe;
-//        this.setPoint = setPoint;
         this.rotation_x = rotation_x;
         this.rotation_y = rotation_y;
 
@@ -43,11 +45,41 @@ public class GoToAngleCommand extends CommandBase {
         addRequirements(drivetrain);
     }
 
+    public GoToAngleCommand(DrivetrainSubsystem drivetrain,
+            DoubleSupplier forward,
+            DoubleSupplier strafe,
+            double angle) {
+        this.drivetrain = drivetrain;
+        this.forward = forward;
+        this.strafe = strafe;
+        this.rotation_x = null;
+        this.rotation_y = null;
+        this.angle = angle;
+
+        rotationController.setInputRange(0.0, 2 * Math.PI);
+        rotationController.setContinuous(true);
+
+        addRequirements(drivetrain);
+    }
+
 
     @Override
     public void initialize() {
         rotationController.reset();
         rotationController.setSetpoint(0.0);
+
+        if (rotation_x == null) {
+            double a = angle + drivetrain.getPose().rotation.toRadians();
+            if (a < -2*Math.PI) {
+                a += 2*Math.PI;
+            }
+            else if (a > 2*Math.PI) {
+                a -= 2*Math.PI;
+            }
+
+            usingAngle = true;
+            angleTarget = a;
+        }
     }
 
     @Override
@@ -67,10 +99,17 @@ public class GoToAngleCommand extends CommandBase {
             stf = 0.0;
         }
 
-        if (Math.abs(rot_x) >= minVal || Math.abs(rot_y) >= minVal) {
-            rotationController.setSetpoint(Math.atan2(rot_x, rot_y));
+        if (usingAngle) {
+            if (Math.abs(angleTarget) >= minVal) {
+                rotationController.setSetpoint(angleTarget);
+            }
         }
-//       drivetrain.unsetAngleReset();
+        else {
+            if (Math.abs(rot_x) >= minVal || Math.abs(rot_y) >= minVal) {
+                rotationController.setSetpoint(Math.atan2(rot_x, rot_y));
+            }
+        }
+
 
         rotationOutput = rotationController.calculate(drivetrain.getPose().rotation.toRadians(), 0.01);
 

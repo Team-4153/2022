@@ -1,3 +1,4 @@
+package frc.swerverobot.commands.auto.rando;
 /**
  *  Broken, working on PathCommand for now
  */

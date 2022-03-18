@@ -1,7 +1,8 @@
 package frc.swerverobot.commands.auto;
 
 public enum PossibleAutos {
-    LEFT,
-    CENTER,
-    RIGHT
+    ONE_BALL,
+    TWO_BALL,
+    THREE_BALL,
+    FOUR_BALL
 }
