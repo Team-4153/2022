@@ -35,10 +35,19 @@ public class TwoBallAuto extends SequentialCommandGroup{
             new WaitCommand(0.5),
             new FollowBallCommand(drivetrain, () -> 0.3),
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),
-            new IntakeCommand(intake, true),
-            new AutoAim(shooter, drivetrain, true)
+            new IntakeCommand(intake, true)
+//            new AutoAim(shooter, drivetrain, true)
         );
-      
+
     }
 
+
+    public void initialize() {
+        angle = drivetrain.getPose().rotation.toRadians();
+
+        addCommands(
+            new GoToAngleCommand(drivetrain, () -> 0, () -> 0, angle),
+            new ShootCommand(shooter, RobotMap.DEFAULT_TOP_MOTOR_SPEED, RobotMap.DEFAULT_BOTTOM_MOTOR_SPEED, RobotMap.DEFAULT_FEED_MOTOR_SPEED)
+        );
+    }
 }
