@@ -189,7 +189,8 @@ public class RobotContainer {
                 //        [Shooter Subsystem]
                 DropBallBTN.whenPressed(
                         //Drops the first ball in storage
-                        new DropBall(shooter)
+//                        new DropBall(shooter)
+                        new ShootCommand(shooter, -1, 1, -1)
                 );
                 ManualShoot.whenPressed(
                         //Gets into low goal from 77 visual distance (77 is as close as we can get and still have a distance reading)
