@@ -7,14 +7,14 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 
 //              -----Shoot Command-----
-public class ShootCommand extends SequentialCommandGroup{
+public class ManualShoot extends SequentialCommandGroup{
     private RunShootMotors runShootMotors;
     private RunFeedMotors runFeedMotors1;
     private RunFeedMotors runFeedMotors2;
 
-    // private double topSpeed;
-    // private double botSpeed;
-    // private double feedSpeed;
+    private double topSpeed;
+    private double botSpeed;
+    private double feedSpeed;
 
     private double waitforSpool = 0.5;
     private double waitForShoot = 0.75;
@@ -22,10 +22,14 @@ public class ShootCommand extends SequentialCommandGroup{
     //2 Ball Waits
     private double waitforShoot2 = 0.2;
 
-    public ShootCommand(ShooterSubsystem2 shooter, double topSpeed, double botSpeed, double feedSpeed) {
-        this.runShootMotors = new RunShootMotors(shooter, 0, 0);
-        this.runFeedMotors1 = new RunFeedMotors(shooter, 0);
-        this.runFeedMotors2 = new RunFeedMotors(shooter, 0);
+    public ManualShoot(ShooterSubsystem2 shooter, double topSpeed, double botSpeed, double feedSpeed) {
+        this.topSpeed = topSpeed;
+        this.botSpeed = botSpeed;
+        this.feedSpeed = feedSpeed;
+
+        this.runShootMotors = new RunShootMotors(shooter, topSpeed, botSpeed);
+        this.runFeedMotors1 = new RunFeedMotors(shooter, feedSpeed);
+        this.runFeedMotors2 = new RunFeedMotors(shooter, feedSpeed);
 
 
         addCommands(
@@ -45,13 +49,6 @@ public class ShootCommand extends SequentialCommandGroup{
             new RunFeedMotors(shooter, 0), //Stop feed motors
             new RunShootMotors(shooter, 0,  0) //Stop shooter motors
         );
-    }
-
-
-    public void setSpeeds(double topSpeed, double botSpeed, double feedSpeed) {
-        runShootMotors.setSpeeds(topSpeed, botSpeed);
-        runFeedMotors1.setSpeeds(feedSpeed);
-        runFeedMotors2.setSpeeds(feedSpeed);
     }
 
 }

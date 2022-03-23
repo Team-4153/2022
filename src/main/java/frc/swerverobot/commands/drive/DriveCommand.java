@@ -61,15 +61,19 @@ public class DriveCommand extends CommandBase {
         double rot = rotation.getAsDouble();
 
         double speed;
+        double rot_speed;
 
         if (leftTrigger.getAsDouble() > 0.05) {
             speed = 0.5;
+            rot_speed = 1;
         }
         else if (rightTrigger.getAsDouble() > 0.05) {
-            speed = 1.5;
+            speed = 1;
+            rot_speed = 2.0;
         }
         else {
             speed = 1;
+            rot_speed = 1;
         }
 
         if (Math.abs(fw) < minVal) {
@@ -111,7 +115,7 @@ public class DriveCommand extends CommandBase {
                             fw * speed,
                             stf * speed
                     ),
-                    -rotationOutput,
+                    -rotationOutput * rot_speed,
                     true
             );
         }
@@ -121,7 +125,7 @@ public class DriveCommand extends CommandBase {
             rotating = true;
             drivetrain.drive(
                     new Vector2(fw * speed, stf * speed),
-                    rot/(2*DrivetrainSubsystem.WHEELBASE),
+                    rot/(2*DrivetrainSubsystem.WHEELBASE) * rot_speed,
                     true
             );
         }

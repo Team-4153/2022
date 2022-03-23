@@ -14,9 +14,13 @@ import frc.swerverobot.commands.LED.*;
 import frc.swerverobot.commands.shooter.*;
 import frc.swerverobot.commands.auto.*;
 import frc.swerverobot.commands.auto.competition.FourBallAuto;
+import frc.swerverobot.commands.auto.competition.LowOneBall;
+import frc.swerverobot.commands.auto.competition.LowTwoBall;
 import frc.swerverobot.commands.auto.competition.OneBallAuto;
 import frc.swerverobot.commands.auto.competition.ThreeBallAuto;
 import frc.swerverobot.commands.auto.competition.TwoBallAuto;
+import frc.swerverobot.commands.auto.rando.DriveOffTarmac;
+import frc.swerverobot.commands.auto.rando.HardIntake;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import frc.swerverobot.subsystems.ClimberSubsystem;
 import frc.swerverobot.subsystems.IntakeSubsystem;
@@ -101,16 +105,16 @@ public class RobotContainer {
                 String choice = SmartDashboard.getString("Auto Selector", null);
 
                 switch(choice) {
-                        case "ONE_BALL":
-                                return new OneBallAuto(drivetrain, shooter, intake);
-                        case "TWO_BALL":
-                                return new TwoBallAuto(drivetrain, shooter, intake);
-                        case "THREE_BALL":
-                                return new ThreeBallAuto(drivetrain, shooter, intake);
-                        case "FOUR_BALL":
-                                return new FourBallAuto(drivetrain, shooter, intake);
+                        case "LOW_ONE":
+                                return new LowOneBall(drivetrain, shooter, intake);
+                        case "LOW_TWO":
+                                return new LowTwoBall(drivetrain, shooter, intake);
+                        // case "THREE_BALL":
+                        //         return new ThreeBallAuto(drivetrain, shooter, intake);
+                        // case "FOUR_BALL":
+                        //         return new FourBallAuto(drivetrain, shooter, intake);
                         default:
-                                return null;
+                                return new LowOneBall(drivetrain, shooter, intake);
                 }
 
         }
@@ -206,11 +210,11 @@ public class RobotContainer {
                 DropBallBTN.whenPressed(
                         //Drops the first ball in storage
 //                        new DropBall(shooter)
-                        new ShootCommand(shooter, -1, 1, -1)
+                        new ManualShoot(shooter, RobotMap.DEFAULT_TOP_MOTOR_SPEED, RobotMap.DEFAULT_BOTTOM_MOTOR_SPEED, RobotMap.DEFAULT_FEED_MOTOR_SPEED)
                 );
                 ManualShoot.whenPressed(
                         //Gets into low goal from 77 visual distance (77 is as close as we can get and still have a distance reading)
-                        new ShootCommand(shooter, -0.4, 0.5, -1)
+                        new ManualShoot(shooter, -0.4, 0.5, -1)
                 );
                 AimShootHigh.getButton(0.1).whenPressed(
                         //Autoaim to the high goal and then shoot

@@ -2,6 +2,7 @@ package frc.swerverobot.commands.auto.rando;
 
 import frc.swerverobot.Robot;
 import frc.swerverobot.RobotMap;
+import frc.swerverobot.commands.drive.DriveCommand;
 import frc.swerverobot.commands.drive.DriveWithSetRotationCommand;
 import frc.swerverobot.commands.intake.IntakeCommand;
 import frc.swerverobot.commands.shooter.ManualShoot;
@@ -14,13 +15,13 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 @Deprecated
 
-public class DriveOffTarmac extends SequentialCommandGroup{
+public class HardIntake extends SequentialCommandGroup{
     private final DrivetrainSubsystem drivetrain;
     private final ShooterSubsystem2 shooter;
     private final IntakeSubsystem intake;
     private double angle;
 
-    public DriveOffTarmac(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake) {
+    public HardIntake(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake) {
         this.drivetrain = drivetrain;
         this.shooter = shooter;
         this.intake = intake;
@@ -30,15 +31,14 @@ public class DriveOffTarmac extends SequentialCommandGroup{
         // determineAngle(choice);
 
         addCommands(
-            // new IntakeCommand(intake, false).withTimeout(3),
-            // new WaitCommand(1),
             new ManualShoot(shooter, -0.4, 0.5, -1),
-            new DriveWithSetRotationCommand(drivetrain, () -> -0.5, () -> 0.0, 0.0).withTimeout(2),
-            new DriveWithSetRotationCommand(drivetrain, () -> -0.0, () -> 0.0, 0.0).withTimeout(1)
-            // new WaitCommand(1),
-            // new IntakeCommand(intake, true),
-            // new WaitCommand(1),
-            // new ShootCommand(shooter, RobotMap.DEFAULT_TOP_MOTOR_SPEED, RobotMap.DEFAULT_BOTTOM_MOTOR_SPEED, RobotMap.DEFAULT_FEED_MOTOR_SPEED)
+            new WaitCommand(0.5),
+            new IntakeCommand(intake, false).withTimeout(0.2),
+            new WaitCommand(0.2),
+            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),
+            new IntakeCommand(intake, true).withTimeout(0.2),
+            new DriveCommand(drivetrain, () -> 0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),
+            new ManualShoot(shooter, -0.4, 0.5, -1)
         );
     }
 
