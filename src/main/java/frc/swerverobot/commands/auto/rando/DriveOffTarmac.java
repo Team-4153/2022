@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 @Deprecated
+@SuppressWarnings("unused")
 
 public class DriveOffTarmac extends SequentialCommandGroup{
     private final DrivetrainSubsystem drivetrain;

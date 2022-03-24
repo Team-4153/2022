@@ -2,6 +2,7 @@ package frc.swerverobot.commands.auto.competition;
 
 import frc.swerverobot.Robot;
 import frc.swerverobot.RobotMap;
+import frc.swerverobot.commands.drive.DriveCommand;
 import frc.swerverobot.commands.drive.DriveWithSetRotationCommand;
 import frc.swerverobot.commands.intake.IntakeCommand;
 import frc.swerverobot.commands.shooter.ManualShoot;
@@ -13,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 @Deprecated
+@SuppressWarnings("unused")
 
 public class LowOneBall extends SequentialCommandGroup{
     private final DrivetrainSubsystem drivetrain;
@@ -31,8 +33,9 @@ public class LowOneBall extends SequentialCommandGroup{
 
         addCommands(
             new ManualShoot(shooter, -0.4, 0.5, -1),
-            new DriveWithSetRotationCommand(drivetrain, () -> -0.5, () -> 0.0, 0.0).withTimeout(2),
-            new DriveWithSetRotationCommand(drivetrain, () -> -0.0, () -> 0.0, 0.0).withTimeout(1)
+            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1),
+            new DriveCommand(drivetrain, () -> 0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1)
+            // new DriveWithSetRotationCommand(drivetrain, () -> -0.0, () -> 0.0, 0.0).withTimeout(1)
         );
     }
 
