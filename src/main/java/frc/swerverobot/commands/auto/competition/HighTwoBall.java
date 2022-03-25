@@ -1,6 +1,5 @@
 package frc.swerverobot.commands.auto.competition;
 
-import frc.swerverobot.Robot;
 import frc.swerverobot.RobotMap;
 import frc.swerverobot.commands.drive.DriveCommand;
 import frc.swerverobot.commands.drive.DriveWithSetRotationCommand;
@@ -16,13 +15,13 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 @Deprecated
 @SuppressWarnings("unused")
 
-public class LowOneBall extends SequentialCommandGroup{
+public class HighTwoBall extends SequentialCommandGroup{
     private final DrivetrainSubsystem drivetrain;
     private final ShooterSubsystem2 shooter;
     private final IntakeSubsystem intake;
     private double angle;
 
-    public LowOneBall(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake) {
+    public HighTwoBall(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake) {
         this.drivetrain = drivetrain;
         this.shooter = shooter;
         this.intake = intake;
@@ -30,8 +29,11 @@ public class LowOneBall extends SequentialCommandGroup{
         addRequirements(drivetrain);
 
         addCommands(
-            new ManualShoot(shooter, -0.4, 0.5, -1),
-            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5)
+            new IntakeCommand(intake, false).withTimeout(0.1),
+            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),
+            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),
+            new IntakeCommand(intake, true).withTimeout(0.1),
+            new ManualShoot(shooter, RobotMap.DEFAULT_TOP_MOTOR_SPEED, RobotMap.DEFAULT_BOTTOM_MOTOR_SPEED, RobotMap.DEFAULT_FEED_MOTOR_SPEED)
         );
     }
 

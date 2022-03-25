@@ -88,8 +88,17 @@ public class GoToAngleCommand extends CommandBase {
 
         double fw = forward.getAsDouble();
         double stf = strafe.getAsDouble();
-        double rot_x = rotation_x.getAsDouble();
-        double rot_y = rotation_y.getAsDouble();
+        double rot_x;
+        double rot_y;    
+
+        if(rotation_x != null) {
+            rot_x = rotation_x.getAsDouble();
+            rot_y = rotation_y.getAsDouble();    
+        }
+        else {
+            rot_x = 0;
+            rot_y = 0;
+        }
 
         if (Math.abs(fw) < minVal) {
             fw = 0.0;
