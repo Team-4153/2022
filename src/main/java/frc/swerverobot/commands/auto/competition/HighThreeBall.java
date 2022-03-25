@@ -30,12 +30,19 @@ public class HighThreeBall extends SequentialCommandGroup{
         addRequirements(drivetrain);
 
         addCommands(
-            // new IntakeCommand(intake, false).withTimeout(0.1),
-            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),
-            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),
-            // new IntakeCommand(intake, true).withTimeout(0.1),
-            // new ManualShoot(shooter, RobotMap.DEFAULT_TOP_MOTOR_SPEED, RobotMap.DEFAULT_BOTTOM_MOTOR_SPEED, RobotMap.DEFAULT_FEED_MOTOR_SPEED),
-            new GoToAngleCommand(drivetrain, () -> 0, () -> 0, -Math.PI/6)
+            new IntakeCommand(intake, false).withTimeout(0.1),
+            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.1),
+            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1),
+            new IntakeCommand(intake, true).withTimeout(0.5),
+            new WaitCommand(0.3),
+            new ManualShoot(shooter, -0.4, 0.5, -1),    // set to low goal for testing SWITCH TO ACTUAL NUMBERS LATER!!!!!!
+            new GoToAngleCommand(drivetrain, () -> 0, () -> 0, -2*Math.PI/3),
+            new IntakeCommand(intake, false).withTimeout(0.2),
+            new DriveCommand(drivetrain, () -> 0.25, () -> 0.5, () -> 0, () -> 0, () -> 0).withTimeout(1.5),
+            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.0),
+            new IntakeCommand(intake, true).withTimeout(0.5),
+            new GoToAngleCommand(drivetrain, () -> 0, () -> 0, Math.PI/3),
+            new ManualShoot(shooter, -0.4, 0.5, -1)
         );
     }
 
