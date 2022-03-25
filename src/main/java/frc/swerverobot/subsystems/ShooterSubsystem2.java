@@ -123,6 +123,9 @@ public class ShooterSubsystem2 extends SubsystemBase {
         feedMotor.setSafetyEnabled(false);
         topMotor.setSafetyEnabled(false);
         botMotor.setSafetyEnabled(false);
+        feedMotor.set(0);
+        topMotor.set(0);
+        botMotor.set(0);
     }
     @Override
     public void periodic() {
