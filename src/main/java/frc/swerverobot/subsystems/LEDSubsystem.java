@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import static frc.swerverobot.RobotMap.*;
 
 public class LEDSubsystem extends SubsystemBase {
-  private int lengthstrand1 = 33;
+  private int lengthstrand1 = 29;
   private int lengthstrand2 = 34;
   private int lengthstrand3 = 80;
 
