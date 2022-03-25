@@ -20,20 +20,8 @@
 			<Item Name="Adjust Dashboard Window.vi" Type="VI" URL="../Adjust Dashboard Window.vi"/>
 		</Item>
 		<Item Name="custom" Type="Folder">
-			<Item Name="data" Type="Folder">
-				<Item Name="Ball.png" Type="Document" URL="../data/Ball.png"/>
-				<Item Name="BlueBall.png" Type="Document" URL="../data/BlueBall.png"/>
-				<Item Name="Intake Closed.png" Type="Document" URL="../data/Intake Closed.png"/>
-				<Item Name="Intake Extended.png" Type="Document" URL="../data/Intake Extended.png"/>
-				<Item Name="RedBall.png" Type="Document" URL="../data/RedBall.png"/>
-				<Item Name="Robot Top view.png" Type="Document" URL="../data/Robot Top view.png"/>
-				<Item Name="Side View Climb at Angle Closed.png" Type="Document" URL="../data/Side View Climb at Angle Closed.png"/>
-				<Item Name="Side View Climb at Angle Extended.png" Type="Document" URL="../data/Side View Climb at Angle Extended.png"/>
-				<Item Name="Side View Climb Extended.png" Type="Document" URL="../data/Side View Climb Extended.png"/>
-				<Item Name="Side View.png" Type="Document" URL="../data/Side View.png"/>
-				<Item Name="Static Hook Closed.png" Type="Document" URL="../data/Static Hook Closed.png"/>
-				<Item Name="Static Hook Open.png" Type="Document" URL="../data/Static Hook Open.png"/>
-				<Item Name="Top_Wheel.png" Type="Document" URL="../data/Top_Wheel.png"/>
+			<Item Name="data" Type="Folder" URL="../data">
+				<Property Name="NI.DISK" Type="Bool">true</Property>
 			</Item>
 			<Item Name="DashboardTest.vi" Type="VI" URL="../DashboardTest.vi"/>
 		</Item>
@@ -299,7 +287,7 @@
 				<Property Name="Bld_localDestDirType" Type="Str">relativeToCommon</Property>
 				<Property Name="Bld_modifyLibraryFile" Type="Bool">true</Property>
 				<Property Name="Bld_previewCacheID" Type="Str">{F12754D6-B5E0-496F-B50C-3EDB6F368199}</Property>
-				<Property Name="Bld_version.build" Type="Int">14</Property>
+				<Property Name="Bld_version.build" Type="Int">16</Property>
 				<Property Name="Bld_version.major" Type="Int">17</Property>
 				<Property Name="Bld_version.patch" Type="Int">1</Property>
 				<Property Name="Destination[0].destName" Type="Str">Dashboard.exe</Property>

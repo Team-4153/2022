@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import static frc.swerverobot.RobotMap.*;
 
 public class LEDSubsystem extends SubsystemBase {
-  private int lengthstrand1 = 80;
+  private int lengthstrand1 = 33;
   private int lengthstrand2 = 34;
   private int lengthstrand3 = 80;
 
@@ -71,10 +71,17 @@ public class LEDSubsystem extends SubsystemBase {
       running_LED = lengthstrand1;
     }
 
+    //If CLimber is Locked The Worm is Green
+    //If WInch is active background on Climber LED's is Orange
+    //If Climber is extended and winch is not active Climber LED's are Red
+    //IF there is 1 ball Shooter LED's are Red
+    //If there are 2 Balls Shooter LED's are Orange
+    //IF it is Shooting Shooter LED's are Green 
+
     if (running_LED <= lengthstrand1) {
       //Strand 1
       if (climberLocked) {
-        m_ledBuffer.setRGB(running_LED, 200, 0, 0);//Red
+        m_ledBuffer.setRGB(running_LED, 0, 150, 0);//Green
       }
       else {
         m_ledBuffer.setRGB(running_LED, 60, 60, 60);//White
@@ -82,12 +89,17 @@ public class LEDSubsystem extends SubsystemBase {
     }
     else if (running_LED <= lengthstrand1 + lengthstrand2) {
       //Strand 2
-      m_ledBuffer.setRGB(running_LED, 50, 50, 50);//White
+      if (climberLocked) {
+        m_ledBuffer.setRGB(running_LED, 0, 75, 0);//Green
+      }
+      else {
+        m_ledBuffer.setRGB(running_LED, 30, 30, 30);//White
+      }
     }
     else if (running_LED <= lengthstrand1 + lengthstrand2 + lengthstrand3) {
       //Strand 3
       if (climberLocked) {
-        m_ledBuffer.setRGB(running_LED, 100, 0, 0);//Red
+        m_ledBuffer.setRGB(running_LED, 0, 75, 0);//Red
       }
       else {
         m_ledBuffer.setRGB(running_LED, 30, 30, 30);//White

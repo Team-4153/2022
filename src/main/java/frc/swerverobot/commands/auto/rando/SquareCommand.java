@@ -1,4 +1,4 @@
-package frc.swerverobot.commands.auto;
+package frc.swerverobot.commands.auto.rando;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;

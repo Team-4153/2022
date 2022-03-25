@@ -1,5 +1,6 @@
-package frc.swerverobot.commands.auto;
+package frc.swerverobot.commands.auto.competition;
 
+import frc.swerverobot.commands.auto.FollowBallCommand;
 import frc.swerverobot.commands.drive.DriveCommand;
 import frc.swerverobot.commands.drive.DriveWithSetRotationCommand;
 import frc.swerverobot.commands.drive.GoToAngleCommand;
@@ -16,13 +17,13 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 @Deprecated
 @SuppressWarnings("unused")
 
-public class AutonomousCommand extends SequentialCommandGroup{
+public class FourBallAuto extends SequentialCommandGroup{
     private final DrivetrainSubsystem drivetrain;
     private final ShooterSubsystem2 shooter;
     private final IntakeSubsystem intake;
     private double angle;
 
-    public AutonomousCommand(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake, String choice) {
+    public FourBallAuto(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake) {
         this.drivetrain = drivetrain;
         this.shooter = shooter;
         this.intake = intake;
@@ -35,7 +36,6 @@ public class AutonomousCommand extends SequentialCommandGroup{
             new FollowBallCommand(drivetrain, () -> 0.3),
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),
             new IntakeCommand(intake, true),
-            // new ShootCommand(shooter, RobotMap.DEFAULT_TOP_MOTOR_SPEED, RobotMap.DEFAULT_BOTTOM_MOTOR_SPEED, RobotMap.DEFAULT_FEED_MOTOR_SPEED),
             new AutoAim(shooter, drivetrain, true),
             new WaitCommand(0.5),
 

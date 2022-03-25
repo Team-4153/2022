@@ -1,4 +1,4 @@
-package frc.swerverobot.commands.shooter;
+package frc.swerverobot.commands.auto;
 
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
