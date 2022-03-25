@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import static frc.swerverobot.RobotMap.*;
 
 public class LEDSubsystem extends SubsystemBase {
-  private int lengthstrand1 = 30;
-  private int lengthstrand2 = 43;
+  private int lengthstrand1 = 27;
+  private int lengthstrand2 = 46;
   private int lengthstrand3 = 75;
 
   private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(lengthstrand1 + lengthstrand2 + lengthstrand3);
@@ -57,26 +57,26 @@ public class LEDSubsystem extends SubsystemBase {
     shooting = SmartDashboard.getBoolean("Shooting", false);
     winch = SmartDashboard.getBoolean("Climbing", false);
     climberExtended = SmartDashboard.getBoolean("Climb Arm Extention", false);
-    climberLockedR = StatHook1.get();
-    climberLockedL = StatHook2.get();
+    climberLockedR = !StatHook1.get();
+    climberLockedL = !StatHook2.get();
     // climberLocked = SmartDashboard.getBoolean("Climb Hook Locked", false);
     count = SmartDashboard.getNumber("Ball Count", 0);
 
-    if (shooting != shooting2) {
-      running_LED = lengthstrand1;
-    }
-    else if (winch != winch2) {
-      running_LED = lengthstrand1;
-    }
-    else if (climberExtended != climberExtended2) {
-      running_LED = 1;
-    }
-    else if (climberLockedR != climberLockedR2) {
-      running_LED = 0;
-    }
-    else if (climberLockedL != climberLockedL2) {
-      running_LED = lengthstrand1 + lengthstrand2 + lengthstrand3;
-    }
+    // if (shooting != shooting2) {
+    //   running_LED = lengthstrand1;
+    // }
+    // else if (winch != winch2) {
+    //   running_LED = lengthstrand1;
+    // }
+    // else if (climberExtended != climberExtended2) {
+    //   running_LED = 1;
+    // }
+    // else if (climberLockedR != climberLockedR2) {
+    //   running_LED = 0;
+    // }
+    // else if (climberLockedL != climberLockedL2) {
+    //   running_LED = lengthstrand1 + lengthstrand2 + lengthstrand3;
+    // }
 
     //If CLimber is Locked The Worm is Green
     //If WInch is active background on Climber LED's is Orange
