@@ -74,10 +74,10 @@ public class LEDSubsystem extends SubsystemBase {
     if (running_LED <= lengthstrand1) {
       //Strand 1
       if (climberLocked) {
-        m_ledBuffer.setRGB(running_LED, 100, 0, 0);//Red
+        m_ledBuffer.setRGB(running_LED, 200, 0, 0);//Red
       }
       else {
-        m_ledBuffer.setRGB(running_LED, 30, 30, 30);//White
+        m_ledBuffer.setRGB(running_LED, 60, 60, 60);//White
       }
     }
     else if (running_LED <= lengthstrand1 + lengthstrand2) {
@@ -99,15 +99,15 @@ public class LEDSubsystem extends SubsystemBase {
       //Strand 1
       if (winch) {
         //If Climber Is winching
-        m_ledBuffer.setRGB(chasingLED, 50, 50, 0);//Orange
+        m_ledBuffer.setRGB(chasingLED, 100, 100, 0);//Orange
       }
       else if (climberExtended) {
         //If Climber Is Extended
-        m_ledBuffer.setRGB(chasingLED, 50, 0, 0);//Red
+        m_ledBuffer.setRGB(chasingLED, 100, 0, 0);//Red
       }
       else {
         //Else
-        m_ledBuffer.setRGB(chasingLED, 0, 50, 50);//Teal
+        m_ledBuffer.setRGB(chasingLED, 0, 100, 100);//Teal
       }
     }
     else if (chasingLED <= lengthstrand1 + lengthstrand2) {
