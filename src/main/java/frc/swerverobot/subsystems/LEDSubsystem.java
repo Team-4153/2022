@@ -60,26 +60,20 @@ public class LEDSubsystem extends SubsystemBase {
       for (int i = 0; i < lengthstrand3; i++) {
         rightLED(lengthstrand1 + lengthstrand2 + i);
       }
-      return lengthstrand1 + lengthstrand2;
     }
     else if (climberLockedL != climberLockedL2) {
       //First Strand
       for (int i = 0; i < lengthstrand1; i++) {
         leftLED(i);
       }
-      return 0;
     }
     else if (count != count2 || shooting != shooting2) {
       //Second Strand
       for (int i = 0; i < lengthstrand2; i++) {
         shooterLED(lengthstrand1 + i);
       }
-      return lengthstrand1;
     }
-    else {
-      //No changes to variables
-      return pos+1;
-    }
+    return pos+1;
   }
 
   public void shooterLED(int pos) {
