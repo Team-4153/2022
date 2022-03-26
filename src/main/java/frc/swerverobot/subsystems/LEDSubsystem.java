@@ -68,7 +68,7 @@ public class LEDSubsystem extends SubsystemBase {
     }
     else {
       //No changes to variables
-      return pos;
+      return pos+1;
     }
   }
 
