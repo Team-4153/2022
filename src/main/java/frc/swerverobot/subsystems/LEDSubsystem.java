@@ -45,13 +45,32 @@ public class LEDSubsystem extends SubsystemBase {
   boolean climberExtended = false;
   boolean climberLockedR = false;
   boolean climberLockedL = false;
+  double count = 0;
 
   boolean shooting2 = false;
   boolean winch2 = false;
-  boolean climberExtended2 = false;
   boolean climberLockedR2 = false;
   boolean climberLockedL2 = false;
-  double count = 0;
+  double count2 = 0;
+
+  public int ledJump(int pos) {
+    if (climberLockedR != climberLockedR2) {
+      //Third Strand
+      return lengthstrand1 + lengthstrand2;
+    }
+    else if (climberLockedL != climberLockedL2) {
+      //First Strand
+      return 0;
+    }
+    else if (count != count2 || shooting != shooting2) {
+      //Second Strand
+      return lengthstrand1;
+    }
+    else {
+      //No changes to variables
+      return pos;
+    }
+  }
 
   public void colorPositionLED() {
     shooting = SmartDashboard.getBoolean("Shooting", false);
@@ -61,22 +80,6 @@ public class LEDSubsystem extends SubsystemBase {
     climberLockedL = !StatHook2.get();
     // climberLocked = SmartDashboard.getBoolean("Climb Hook Locked", false);
     count = SmartDashboard.getNumber("Ball Count", 0);
-
-    // if (shooting != shooting2) {
-    //   running_LED = lengthstrand1;
-    // }
-    // else if (winch != winch2) {
-    //   running_LED = lengthstrand1;
-    // }
-    // else if (climberExtended != climberExtended2) {
-    //   running_LED = 1;
-    // }
-    // else if (climberLockedR != climberLockedR2) {
-    //   running_LED = 0;
-    // }
-    // else if (climberLockedL != climberLockedL2) {
-    //   running_LED = lengthstrand1 + lengthstrand2 + lengthstrand3;
-    // }
 
     //If CLimber is Locked The Worm is Green
     //If WInch is active background on Climber LED's is Orange
@@ -177,12 +180,6 @@ public class LEDSubsystem extends SubsystemBase {
         m_ledBuffer.setRGB(chasingLED, 0, 50, 50);//Teal
       }
     }
-    
-    shooting = shooting2;
-    winch = winch2;
-    climberExtended = climberExtended2;
-    climberLockedL = climberLockedL2;
-    climberLockedR = climberLockedR2;
   }
 
   @Override
@@ -195,7 +192,14 @@ public class LEDSubsystem extends SubsystemBase {
     colorPositionLED();
 
     //Change Positions
-    running_LED++;
+    running_LED = ledJump(running_LED);
+
+    shooting2 = shooting;
+    winch2 = winch;
+    count2 = count;
+    climberLockedL2 = climberLockedL;
+    climberLockedR2 = climberLockedR;
+
     if (running_LED >= m_ledBuffer.getLength()) { //reset the position back to start
       running_LED = 0;
     }
