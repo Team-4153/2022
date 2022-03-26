@@ -57,19 +57,102 @@ public class LEDSubsystem extends SubsystemBase {
   public int ledJump(int pos) {
     if (climberLockedR != climberLockedR2) {
       //Third Strand
+      for (int i = 0; i < lengthstrand3; i++) {
+        rightLED(lengthstrand1 + lengthstrand2 + i);
+      }
       return lengthstrand1 + lengthstrand2;
     }
     else if (climberLockedL != climberLockedL2) {
       //First Strand
+      for (int i = 0; i < lengthstrand1; i++) {
+        leftLED(i);
+      }
       return 0;
     }
     else if (count != count2 || shooting != shooting2) {
       //Second Strand
+      for (int i = 0; i < lengthstrand2; i++) {
+        shooterLED(lengthstrand1 + i);
+      }
       return lengthstrand1;
     }
     else {
       //No changes to variables
       return pos+1;
+    }
+  }
+
+  public void shooterLED(int pos) {
+    if (shooting) {
+      //If The Robot is Shooting
+      m_ledBuffer.setRGB(pos, 0, 50, 0);//Green
+    }
+    else if (count == 2) {
+      //If there are 2 Balls
+      m_ledBuffer.setRGB(pos, 50, 50, 0);//Orange
+    }
+    else if (count == 1) {
+      //If there is 1 Ball
+      m_ledBuffer.setRGB(pos, 50, 0, 0);//Red 
+    }
+    else {
+      //Idle
+      m_ledBuffer.setRGB(pos, 0, 50, 50);//Teal
+    }
+  }
+
+  public void rightLED(int pos) {
+    if (climberLockedR) {
+      //If Right Static Hook is Locked
+      m_ledBuffer.setRGB(pos, 0, 75, 0);//Green
+    }
+    else if (winch) {
+      //If Robot is Winching
+      m_ledBuffer.setRGB(pos, 50, 50, 0);//Orange
+    }
+    else if (climberExtended) {
+      //If Climber is Extended
+      m_ledBuffer.setRGB(pos, 50, 0, 0);//Red
+    }
+    else if (mode) {
+      m_ledBuffer.setRGB(pos, 0, 75, 0);//Green
+    }
+    else {
+      //Idle
+      m_ledBuffer.setRGB(pos, 0, 50, 50);//Teal
+    }
+  }
+
+  public void leftLED(int pos) {
+    if (climberLockedL) {
+      //If Left Static Hook is Locked
+      m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
+    }
+    else if (winch) {
+      //If Robot is Winching
+      m_ledBuffer.setRGB(pos, 100, 100, 0);//Orange
+    }
+    else if (climberExtended) {
+      //If Climber Is Extended
+      m_ledBuffer.setRGB(pos, 100, 0, 0);//Red
+    }
+    else if (mode) {
+      m_ledBuffer.setRGB(pos, 0, 75, 0);//Green
+    }
+    else {
+      //Idle
+      m_ledBuffer.setRGB(pos, 0, 100, 100);//Teal
+    }
+  }
+
+  public void wormLED(int pos) {
+    if (winch) {
+      //If Robot is Winching
+      m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
+    }
+    else {
+      //Idle
+      m_ledBuffer.setRGB(pos, 60, 60, 60);//White
     }
   }
 
@@ -97,101 +180,28 @@ public class LEDSubsystem extends SubsystemBase {
 
     if (running_LED <= lengthstrand1) {
       //Strand 1
-      if (winch) {
-        //If Robot is Winching
-        m_ledBuffer.setRGB(running_LED, 0, 150, 0);//Green
-      }
-      else {
-        //Idle
-        m_ledBuffer.setRGB(running_LED, 60, 60, 60);//White
-      }
+      wormLED(running_LED);
     }
     else if (running_LED <= lengthstrand1 + lengthstrand2) {
       //Strand 2
-      if (winch) {
-        //If Robot is Winching
-        m_ledBuffer.setRGB(running_LED, 0, 75, 0);//Green
-      }
-      else {
-        //Idle
-        m_ledBuffer.setRGB(running_LED, 30, 30, 30);//White
-      }
+      wormLED(running_LED);
     }
     else if (running_LED <= lengthstrand1 + lengthstrand2 + lengthstrand3) {
       //Strand 3
-      if (winch) {
-        //If Robot is Winching
-        m_ledBuffer.setRGB(running_LED, 0, 75, 0);//Red
-      }
-      else {
-        //Idle
-        m_ledBuffer.setRGB(running_LED, 30, 30, 30);//White
-      }
+      wormLED(running_LED);
     }
-
 
     if (chasingLED <= lengthstrand1) {
       //Strand 1
-      if (climberLockedL) {
-        //If Left Static Hook is Locked
-        m_ledBuffer.setRGB(chasingLED, 0, 150, 0);//Green
-      }
-      else if (winch) {
-        //If Robot is Winching
-        m_ledBuffer.setRGB(chasingLED, 100, 100, 0);//Orange
-      }
-      else if (climberExtended) {
-        //If Climber Is Extended
-        m_ledBuffer.setRGB(chasingLED, 100, 0, 0);//Red
-      }
-      else if (mode) {
-        m_ledBuffer.setRGB(chasingLED, 0, 75, 0);//Green
-      }
-      else {
-        //Idle
-        m_ledBuffer.setRGB(chasingLED, 0, 100, 100);//Teal
-      }
+      leftLED(chasingLED);
     }
     else if (chasingLED <= lengthstrand1 + lengthstrand2) {
       //Strand 2
-      if (shooting) {
-        //If The Robot is Shooting
-        m_ledBuffer.setRGB(chasingLED, 0, 50, 0);//Green
-      }
-      else if (count == 2) {
-        //If there are 2 Balls
-        m_ledBuffer.setRGB(chasingLED, 50, 50, 0);//Orange
-      }
-      else if (count == 1) {
-        //If there is 1 Ball
-        m_ledBuffer.setRGB(chasingLED, 50, 0, 0);//Red 
-      }
-      else {
-        //Idle
-        m_ledBuffer.setRGB(chasingLED, 0, 50, 50);//Teal
-      }
+      shooterLED(chasingLED);
     }
     else if (chasingLED <= lengthstrand1 + lengthstrand2 + lengthstrand3) {
       //Strand 3
-      if (climberLockedR) {
-        //If Right Static Hook is Locked
-        m_ledBuffer.setRGB(chasingLED, 0, 75, 0);//Green
-      }
-      else if (winch) {
-        //If Robot is Winching
-        m_ledBuffer.setRGB(chasingLED, 50, 50, 0);//Orange
-      }
-      else if (climberExtended) {
-        //If Climber is Extended
-        m_ledBuffer.setRGB(chasingLED, 50, 0, 0);//Red
-      }
-      else if (mode) {
-        m_ledBuffer.setRGB(chasingLED, 0, 75, 0);//Green
-      }
-      else {
-        //Idle
-        m_ledBuffer.setRGB(chasingLED, 0, 50, 50);//Teal
-      }
+      rightLED(chasingLED);
     }
   }
 
