@@ -46,6 +46,7 @@ public class LEDSubsystem extends SubsystemBase {
   boolean climberLockedR = false;
   boolean climberLockedL = false;
   double count = 0;
+  boolean mode = false;
 
   boolean shooting2 = false;
   boolean winch2 = false;
@@ -80,6 +81,12 @@ public class LEDSubsystem extends SubsystemBase {
     climberLockedL = !StatHook2.get();
     // climberLocked = SmartDashboard.getBoolean("Climb Hook Locked", false);
     count = SmartDashboard.getNumber("Ball Count", 0);
+    if (SmartDashboard.getString("Mode", "tele") == "auto") {
+      mode = true;
+    }
+    else {
+      mode = false;
+    }
 
     //If CLimber is Locked The Worm is Green
     //If WInch is active background on Climber LED's is Orange
@@ -137,6 +144,9 @@ public class LEDSubsystem extends SubsystemBase {
         //If Climber Is Extended
         m_ledBuffer.setRGB(chasingLED, 100, 0, 0);//Red
       }
+      else if (mode) {
+        m_ledBuffer.setRGB(chasingLED, 0, 75, 0);//Green
+      }
       else {
         //Idle
         m_ledBuffer.setRGB(chasingLED, 0, 100, 100);//Teal
@@ -174,6 +184,9 @@ public class LEDSubsystem extends SubsystemBase {
       else if (climberExtended) {
         //If Climber is Extended
         m_ledBuffer.setRGB(chasingLED, 50, 0, 0);//Red
+      }
+      else if (mode) {
+        m_ledBuffer.setRGB(chasingLED, 0, 75, 0);//Green
       }
       else {
         //Idle

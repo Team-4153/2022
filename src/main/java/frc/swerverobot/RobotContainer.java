@@ -212,14 +212,17 @@ public class RobotContainer {
                         //Moves robot up using mobile climber
                         new SpoolCommand(climb)
                 );
+/*
+-0.65, 0.825, -1
+Miss - 7
+Hit  - 13
 
-
-
+*/
                 //        [Shooter Subsystem]
                 DropBallBTN.whenPressed(
                         //Drops the first ball in storage
 //                        new DropBall(shooter)
-                        new ManualShoot(shooter, RobotMap.DEFAULT_TOP_MOTOR_SPEED, RobotMap.DEFAULT_BOTTOM_MOTOR_SPEED, RobotMap.DEFAULT_FEED_MOTOR_SPEED)
+                        new ManualShoot(shooter, -0.72, 0.72, -0.4) // -0.7625, 0.7625, -0.4
                 );
                 ManualShoot.whenPressed(
                         //Gets into low goal from 77 visual distance (77 is as close as we can get and still have a distance reading)

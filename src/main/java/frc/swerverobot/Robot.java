@@ -34,11 +34,11 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-      SmartDashboard.putString("Mode", "Auto");
       autonomousCommand = container.getAutonomousCommand();
   
       // schedule the autonomous command (example)
       if (autonomousCommand != null) {
+        SmartDashboard.putString("Mode", "auto");
         autonomousCommand.schedule();
       }
     }
@@ -48,10 +48,10 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-      SmartDashboard.putString("Mode", "Tele");
       if (autonomousCommand != null) {
           autonomousCommand.cancel();
       }
+      SmartDashboard.putString("Mode", "tele");
     }
 
     @Override
