@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import static frc.swerverobot.RobotMap.*;
 
 public class LEDSubsystem extends SubsystemBase {
-  private int lengthstrand1 = 27;
-  private int lengthstrand2 = 46;
-  private int lengthstrand3 = 75;
+  private int lengthstrand1 = 25;
+  private int lengthstrand2 = 53;
+  private int lengthstrand3 = 70;
 
   private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(lengthstrand1 + lengthstrand2 + lengthstrand3);
   private AddressableLED m_led = new AddressableLED(LEDPWMPort);
