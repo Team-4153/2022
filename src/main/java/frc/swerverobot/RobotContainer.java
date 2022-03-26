@@ -17,6 +17,7 @@ import frc.swerverobot.commands.auto.competition.FourBallAuto;
 import frc.swerverobot.commands.auto.competition.HighThreeBall;
 import frc.swerverobot.commands.auto.competition.HighTwoBall;
 import frc.swerverobot.commands.auto.competition.LowOneBall;
+import frc.swerverobot.commands.auto.competition.LowThreeBall;
 import frc.swerverobot.commands.auto.competition.LowTwoBall;
 import frc.swerverobot.commands.auto.competition.OneBallAuto;
 import frc.swerverobot.commands.auto.competition.ThreeBallAuto;
@@ -111,12 +112,14 @@ public class RobotContainer {
                                 return new LowOneBall(drivetrain, shooter, intake);
                         case "LOW_TWO":
                                 return new LowTwoBall(drivetrain, shooter, intake);
+                        case "LOW_THREE":
+                                return new LowThreeBall(drivetrain, shooter, intake);
                         case "HIGH_TWO":
                                 return new HighTwoBall(drivetrain, shooter, intake);
                         case "HIGH_THREE":
                                 return new HighThreeBall(drivetrain, shooter, intake);
-                        // case "THREE_BALL":
-                        //         return new ThreeBallAuto(drivetrain, shooter, intake);
+                        case "THREE_BALL":
+                                return new ThreeBallAuto(drivetrain, shooter, intake);
                         // case "FOUR_BALL":
                         //         return new FourBallAuto(drivetrain, shooter, intake);
                         default:

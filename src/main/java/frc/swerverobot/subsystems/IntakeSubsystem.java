@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.util.Color;
 public class IntakeSubsystem extends SubsystemBase {
   public  boolean feedStatus = false;
   public boolean phe2 = false;
+  public boolean ballColorRun = false;
 
   //Creates a new IntakeSubsystem
   public IntakeSubsystem() {}
@@ -90,6 +91,11 @@ public class IntakeSubsystem extends SubsystemBase {
     {
       Intake_Motor.stopMotor();
     }
+    
+    if (ballColorRun != photoEye2.get()) {
+      ball1color();
+    }
+    ballColorRun = photoEye2.get();
 }
 
   @Override
