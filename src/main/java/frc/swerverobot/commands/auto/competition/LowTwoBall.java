@@ -30,14 +30,14 @@ public class LowTwoBall extends SequentialCommandGroup{
         addRequirements(drivetrain);
 
         addCommands(
-            new ManualShoot(shooter, -0.4, 0.5, -1),
+            new ManualShoot(shooter, -0.5, 0.5, -1),
             new IntakeCommand(intake, false).withTimeout(0.1),
             new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),
-            new DriveCommand(drivetrain, () -> 0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),
-            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),
             new IntakeCommand(intake, true).withTimeout(0.1),
-            new ManualShoot(shooter, -0.4, 0.5, -1)
+            new DriveCommand(drivetrain, () -> 0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.4),
+            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),
+            new ManualShoot(shooter, -0.5, 0.5, -1)
         );
     }
 

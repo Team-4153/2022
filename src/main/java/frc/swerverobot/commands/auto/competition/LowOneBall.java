@@ -30,7 +30,7 @@ public class LowOneBall extends SequentialCommandGroup{
         addRequirements(drivetrain);
 
         addCommands(
-            new ManualShoot(shooter, -0.4, 0.5, -1),
+            new ManualShoot(shooter, -0.5, 0.5, -1),
             new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5)
         );
     }
