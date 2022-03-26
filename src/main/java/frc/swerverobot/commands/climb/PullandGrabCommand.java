@@ -6,6 +6,7 @@ import frc.swerverobot.subsystems.ClimberSubsystem;
 public class PullandGrabCommand extends SequentialCommandGroup{
     public PullandGrabCommand(ClimberSubsystem climb) {
         addCommands(
+            new WinchLockCommand(climb, States.LOCKED),
             new SpoolCommand(climb),
             new StaticHookCommand(climb, States.LOCKED)
         );

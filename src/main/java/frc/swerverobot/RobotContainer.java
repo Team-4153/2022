@@ -33,6 +33,8 @@ import frc.swerverobot.subsystems.ShooterSubsystem2;
 //Robot Map
 import static frc.swerverobot.RobotMap.*;
 
+import java.lang.Thread.State;
+
 import org.frcteam2910.common.robot.UpdateManager;
 import org.frcteam2910.common.robot.input.Controller;
 
@@ -211,6 +213,12 @@ public class RobotContainer {
                 Spool.whenHeld(
                         //Moves robot up using mobile climber
                         new SpoolCommand(climb)
+                );
+                WinchLock.whenPressed(
+                        new WinchLockCommand(climb, States.LOCKED)
+                );
+                WinchUnlock.whenPressed(
+                        new WinchLockCommand(climb, States.UNLOCKED)
                 );
 /*
 -0.65, 0.825, -1

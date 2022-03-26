@@ -67,17 +67,22 @@ public class RobotMap {
     public static final Button ResetGyro = Driver_controller.getBackButton();               //[DriveTrain Subsystem](Back-Button|Reset Gyro)
     
     //Shooter/Climber Controller (Noah)
-    public static final Controller Shooter_controller = new XboxController(1);              //[Shooter's Controller]
-    public static final Button ManualShoot = Shooter_controller.getXButton();               //[Shooter Subsystem] (X|Manual Shoot)
-    public static final Button DropBallBTN = Shooter_controller.getBButton();               //[Shooter Subsystem] (B|Drop Ball)
-    public static final Axis AimShootHigh = Shooter_controller.getRightTriggerAxis();       //[Shooter Subsystem] (R-Trigger|Aim & Shoot High Goal) 
-    public static final Axis AimShootLow = Shooter_controller.getLeftTriggerAxis();         //[Shooter Subsystem] (L-Trigger|Aim & Shoot Low Goal)
-    public static final Button ClimbOut = Shooter_controller.getDPadButton(Direction.LEFT); //[Climber Subsystem] (DPad-Left|Climber Out)
-    public static final Button ClimbIn = Shooter_controller.getDPadButton(Direction.RIGHT); //[Climber Subsystem] (DPad-Right|Climber In)
-    public static final Button StatHookClose = Shooter_controller.getYButton();             //[Climber Subsystem] (Y|Close Hook)
-    public static final Button StatHookOpen = Shooter_controller.getAButton();              //[Climber Subsystem] (A|Open Hook)
-    public static final Button Unspool = Shooter_controller.getLeftBumperButton();          //[Climber Subsystem] (Left Bumper|Unspool Climber)
-    public static final Button Spool = Shooter_controller.getRightBumperButton();           //[Climber Subsystem] (Right Bumper|Spool Climber)
+    public static final Controller Shooter_controller = new XboxController(1);                  //[Shooter's Controller]
+    public static final Button ManualShoot = Shooter_controller.getXButton();                   //[Shooter Subsystem] (X|Manual Shoot)
+    public static final Button DropBallBTN = Shooter_controller.getBButton();                   //[Shooter Subsystem] (B|Drop Ball)
+    public static final Axis AimShootHigh = Shooter_controller.getRightTriggerAxis();           //[Shooter Subsystem] (R-Trigger|Aim & Shoot High Goal) 
+    public static final Axis AimShootLow = Shooter_controller.getLeftTriggerAxis();             //[Shooter Subsystem] (L-Trigger|Aim & Shoot Low Goal)
+    public static final Button ClimbOut = Shooter_controller.getDPadButton(Direction.LEFT);     //[Climber Subsystem] (DPad-Left|Climber Out)
+    public static final Button ClimbIn = Shooter_controller.getDPadButton(Direction.RIGHT);     //[Climber Subsystem] (DPad-Right|Climber In)
+    public static final Button StatHookClose = Shooter_controller.getYButton();                 //[Climber Subsystem] (Y|Close Hook)
+    public static final Button StatHookOpen = Shooter_controller.getAButton();                  //[Climber Subsystem] (A|Open Hook)
+    public static final Button Unspool = Shooter_controller.getLeftBumperButton();              //[Climber Subsystem] (Left Bumper|Unspool Climber)
+    public static final Button Spool = Shooter_controller.getRightBumperButton();               //[Climber Subsystem] (Right Bumper|Spool Climber)
+    public static final Button WinchLock = Shooter_controller.getDPadButton(Direction.UP);      //[Climber Subsystem] (DPad-Up|Lock Winch)
+    public static final Button WinchUnlock = Shooter_controller.getDPadButton(Direction.DOWN);  //[Climber Subsystem] (DPad-Down|Lock Unwinch)
+    public static final Button GetToNextRung = Shooter_controller.getStartButton();             //[Climber Subsystem] (Start|GetToNextRung Command)
+    public static final Button PullAndGrab = Shooter_controller.getBackButton();                //[Climber Subsystem] (Back|PullAndGrab Command)
+
 
     /* Example Analog Trigger Code NOTE: put this inside your subsystem
     public void periodic() {
