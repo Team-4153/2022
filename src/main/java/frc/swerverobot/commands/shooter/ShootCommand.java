@@ -1,5 +1,6 @@
 package frc.swerverobot.commands.shooter;
 
+import frc.swerverobot.commands.intake.FeedCommand;
 import frc.swerverobot.subsystems.ShooterSubsystem2;
 
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -35,7 +36,8 @@ public class ShootCommand extends SequentialCommandGroup{
             runFeedMotors1,
 
             new WaitCommand(waitforShoot2),
-            new RunFeedMotors(shooter, 0), //Stop feed motor
+            new FeedCommand(shooter),
+            // new RunFeedMotors(shooter, 0), //Stop feed motor
             new WaitCommand(waitforSpool),
             
             runFeedMotors2,

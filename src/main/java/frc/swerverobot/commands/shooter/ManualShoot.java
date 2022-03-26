@@ -4,6 +4,7 @@ import frc.swerverobot.subsystems.ShooterSubsystem2;
 
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.swerverobot.commands.intake.FeedCommand;
 
 @SuppressWarnings("unused")
 
@@ -40,7 +41,9 @@ public class ManualShoot extends SequentialCommandGroup{
             runFeedMotors1,
 
             new WaitCommand(waitforShoot2),
-            new RunFeedMotors(shooter, 0), //Stop feed motor
+            
+            new FeedCommand(shooter),
+            // new RunFeedMotors(shooter, 0), //Stop feed motor
             new WaitCommand(waitforSpool),
             
             runFeedMotors2,
