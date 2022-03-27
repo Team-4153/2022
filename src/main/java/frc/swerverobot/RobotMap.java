@@ -13,6 +13,7 @@ import org.frcteam2910.common.robot.input.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import org.frcteam2910.common.robot.input.DPadButton.Direction;
 
+import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 //Motor Controller Libraries
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
@@ -55,6 +56,7 @@ public class RobotMap {
     public static final int FeedMotorPort = 0;                                  //[Shooter Subsystem] The Number is the RIO DIO port
     public static final Spark feedMotor = new Spark(FeedMotorPort);             //[Shooter / Intake Subsystems]
     public static final int Intake_Motor_PWM = 3;                               //[Intake Subsystem] PWM for intake motor
+    public static final PWMVictorSPX Intake_Motor = new PWMVictorSPX(Intake_Motor_PWM);     //[Intake Subsystem] PWM for intake motor
     public static final int CLIMBER_MOTOR = 4;                                  //[Climber Subsystem] The Number is the RIO DIO port (Winch)
 
 //Controls

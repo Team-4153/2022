@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
-//Motors
-import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //Sensors
 import edu.wpi.first.wpilibj.util.Color;
@@ -25,9 +23,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
   //Solenoid for intake extension and compression
   private DoubleSolenoid Intake_Sol = new DoubleSolenoid(PH_CAN_ID, PneumaticsModuleType.REVPH, INTAKE_SOLa, INTAKE_SOLb);
-
-  //Motor for spinning wheels
-  private PWMVictorSPX Intake_Motor = new PWMVictorSPX(Intake_Motor_PWM);
   
   //      ----Ball Count & Color Functions----        [BC:Fully Functional, B1C: Fully Functional]
   public int ballCount() {

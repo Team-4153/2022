@@ -42,6 +42,7 @@ public class LEDSubsystem extends SubsystemBase {
 
   boolean shooting = false;
   boolean winch = false;
+  boolean intake = false;
   boolean climberExtended = false;
   boolean climberLockedR = false;
   boolean climberLockedL = false;
@@ -50,18 +51,19 @@ public class LEDSubsystem extends SubsystemBase {
 
   boolean shooting2 = false;
   boolean winch2 = false;
+  boolean intake2 = false;
   boolean climberLockedR2 = false;
   boolean climberLockedL2 = false;
   double count2 = 0;
 
   public int ledJump(int pos) {
-    if (climberLockedR != climberLockedR2) {
+    if (climberLockedR != climberLockedR2 || intake != intake2) {
       //Third Strand
       for (int i = 0; i < lengthstrand3; i++) {
         rightLED(lengthstrand1 + lengthstrand2 + i);
       }
     }
-    else if (climberLockedL != climberLockedL2) {
+    else if (climberLockedL != climberLockedL2 || intake != intake2) {
       //First Strand
       for (int i = 0; i < lengthstrand1; i++) {
         leftLED(i);
@@ -108,6 +110,10 @@ public class LEDSubsystem extends SubsystemBase {
       //If Climber is Extended
       m_ledBuffer.setRGB(pos, 50, 0, 0);//Red
     }
+    else if (intake) {
+      //If Robot is Running Intake
+      m_ledBuffer.setRGB(pos, 125, 75, 0);//Red-Orange
+    }
     else if (mode) {
       m_ledBuffer.setRGB(pos, 0, 75, 0);//Green
     }
@@ -130,7 +136,12 @@ public class LEDSubsystem extends SubsystemBase {
       //If Climber Is Extended
       m_ledBuffer.setRGB(pos, 100, 0, 0);//Red
     }
+    else if (intake) {
+      //If Robot is Running Intake
+      m_ledBuffer.setRGB(pos, 125, 75, 0);//Red-Orange
+    }
     else if (mode) {
+      //If Robot is in Auto
       m_ledBuffer.setRGB(pos, 0, 75, 0);//Green
     }
     else {
@@ -144,11 +155,29 @@ public class LEDSubsystem extends SubsystemBase {
       //If Robot is Winching
       m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
     }
+    else if (shooting) {
+      m_ledBuffer.setRGB(pos, 100, 100, 0);//Orange
+    }
     else {
       //Idle
       m_ledBuffer.setRGB(pos, 60, 60, 60);//White
     }
   }
+
+  /*
+  Moving Worm
+    If winch is active color is green
+    else if  shooter is active color is Orange
+    defaults to white
+
+  Climber Sides
+    If Static Hooks are in locked position the Relative side turns green
+    else if robot is winching color is Orange
+    else if climber is extended color is red
+    else if the intake is running color is red orange
+    else if robot is in auto color is green
+    defaults to team color
+  */
 
   public void colorPositionLED() {
     shooting = SmartDashboard.getBoolean("Shooting", false);
@@ -156,21 +185,10 @@ public class LEDSubsystem extends SubsystemBase {
     climberExtended = SmartDashboard.getBoolean("Climb Arm Extention", false);
     climberLockedR = !StatHook1.get();
     climberLockedL = !StatHook2.get();
+    intake = Intake_Motor.get() != 0;
     // climberLocked = SmartDashboard.getBoolean("Climb Hook Locked", false);
     count = SmartDashboard.getNumber("Ball Count", 0);
-    if (SmartDashboard.getString("Mode", "tele") == "auto") {
-      mode = true;
-    }
-    else {
-      mode = false;
-    }
-
-    //If CLimber is Locked The Worm is Green
-    //If WInch is active background on Climber LED's is Orange
-    //If Climber is extended and winch is not active Climber LED's are Red
-    //IF there is 1 ball Shooter LED's are Red
-    //If there are 2 Balls Shooter LED's are Orange
-    //IF it is Shooting Shooter LED's are Green 
+    mode = SmartDashboard.getString("Mode", "null") != "tele";
 
     if (running_LED <= lengthstrand1) {
       //Strand 1
