@@ -84,11 +84,11 @@ public class LEDSubsystem extends SubsystemBase {
       m_ledBuffer.setRGB(pos, 0, 50, 0);//Green
     }
     else if (count == 2) {
-      //If there are 2 Balls
+      //else if there are 2 Balls
       m_ledBuffer.setRGB(pos, 50, 50, 0);//Orange
     }
     else if (count == 1) {
-      //If there is 1 Ball
+      //esle if there is 1 Ball
       m_ledBuffer.setRGB(pos, 50, 0, 0);//Red 
     }
     else {
@@ -103,23 +103,24 @@ public class LEDSubsystem extends SubsystemBase {
       m_ledBuffer.setRGB(pos, 0, 75, 0);//Green
     }
     else if (winch) {
-      //If Robot is Winching
-      m_ledBuffer.setRGB(pos, 50, 50, 0);//Orange
+      //else if Robot is Winching
+      m_ledBuffer.setRGB(pos, 100, 100, 0);//Orange
     }
     else if (climberExtended) {
-      //If Climber is Extended
-      m_ledBuffer.setRGB(pos, 50, 0, 0);//Red
+      //else if Climber Is Extended
+      m_ledBuffer.setRGB(pos, 100, 0, 0);//Red
     }
     else if (intake) {
-      //If Robot is Running Intake
+      //else if Robot is Running Intake
       m_ledBuffer.setRGB(pos, 125, 75, 0);//Red-Orange
     }
     else if (mode) {
+      //else if Robot is in Auto
       m_ledBuffer.setRGB(pos, 0, 75, 0);//Green
     }
     else {
       //Idle
-      m_ledBuffer.setRGB(pos, 0, 50, 50);//Teal
+      m_ledBuffer.setRGB(pos, 0, 100, 100);//Teal
     }
   }
 
@@ -129,19 +130,19 @@ public class LEDSubsystem extends SubsystemBase {
       m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
     }
     else if (winch) {
-      //If Robot is Winching
+      //else if Robot is Winching
       m_ledBuffer.setRGB(pos, 100, 100, 0);//Orange
     }
     else if (climberExtended) {
-      //If Climber Is Extended
+      //else if Climber Is Extended
       m_ledBuffer.setRGB(pos, 100, 0, 0);//Red
     }
     else if (intake) {
-      //If Robot is Running Intake
+      //else if Robot is Running Intake
       m_ledBuffer.setRGB(pos, 125, 75, 0);//Red-Orange
     }
     else if (mode) {
-      //If Robot is in Auto
+      //else if Robot is in Auto
       m_ledBuffer.setRGB(pos, 0, 75, 0);//Green
     }
     else {
@@ -156,6 +157,7 @@ public class LEDSubsystem extends SubsystemBase {
       m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
     }
     else if (shooting) {
+      //else if robot is shooting
       m_ledBuffer.setRGB(pos, 100, 100, 0);//Orange
     }
     else {
@@ -186,7 +188,6 @@ public class LEDSubsystem extends SubsystemBase {
     climberLockedR = !StatHook1.get();
     climberLockedL = !StatHook2.get();
     intake = Intake_Motor.get() != 0;
-    // climberLocked = SmartDashboard.getBoolean("Climb Hook Locked", false);
     count = SmartDashboard.getNumber("Ball Count", 0);
     mode = SmartDashboard.getString("Mode", "null") != "tele";
 
