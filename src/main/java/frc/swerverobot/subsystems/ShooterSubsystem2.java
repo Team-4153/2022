@@ -33,6 +33,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
                 {163,-0.6,0.7,-1},
                 {183,-0.67,0.77,-1},
                 {215,-0.75,0.85,-1},
+                {250,-1,1,-1},
                 {250,-1,1,-1}
                 //215=141in
                 //
@@ -44,6 +45,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
                 {77,-0.4,0.5,-1},
                 {117,-0.45,0.55,-1},
                 {153,-0.5,0.6,-1},
+                {172,-0.55,0.65,-1},
                 {172,-0.55,0.65,-1}
             };
             return SetMotorDistanceCalc(MotorSpeedLowGoal);

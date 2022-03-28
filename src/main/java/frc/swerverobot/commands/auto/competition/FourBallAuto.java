@@ -11,6 +11,7 @@ import frc.swerverobot.commands.shooter.ShootCommand;
 import frc.swerverobot.subsystems.*;
 import frc.swerverobot.RobotMap;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -29,6 +30,8 @@ public class FourBallAuto extends SequentialCommandGroup{
         this.intake = intake;
 
         addRequirements(drivetrain, shooter, intake);
+        
+        SmartDashboard.putString("Mode", "auto-high");
 
         addCommands(
             new IntakeCommand(intake, false).withTimeout(0.3),

@@ -38,7 +38,6 @@ public class Robot extends TimedRobot {
   
       // schedule the autonomous command (example)
       if (autonomousCommand != null) {
-        SmartDashboard.putString("Mode", "auto");
         autonomousCommand.schedule();
       }
     }
@@ -48,10 +47,10 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+      SmartDashboard.putString("Mode", "tele");
       if (autonomousCommand != null) {
           autonomousCommand.cancel();
       }
-      SmartDashboard.putString("Mode", "tele");
     }
 
     @Override

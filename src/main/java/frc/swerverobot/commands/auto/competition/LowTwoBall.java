@@ -10,6 +10,7 @@ import frc.swerverobot.commands.shooter.ShootCommand;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import frc.swerverobot.subsystems.IntakeSubsystem;
 import frc.swerverobot.subsystems.ShooterSubsystem2;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
@@ -28,6 +29,8 @@ public class LowTwoBall extends SequentialCommandGroup{
         this.intake = intake;
 
         addRequirements(drivetrain);
+
+        SmartDashboard.putString("Mode", "auto-low");
 
         addCommands(
             new ManualShoot(shooter, -0.5, 0.5, -1),

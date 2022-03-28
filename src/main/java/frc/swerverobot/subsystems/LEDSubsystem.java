@@ -47,7 +47,7 @@ public class LEDSubsystem extends SubsystemBase {
   boolean climberLockedR = false;
   boolean climberLockedL = false;
   double count = 0;
-  boolean mode = false;
+  String mode = "tele";
 
   boolean shooting2 = false;
   boolean winch2 = false;
@@ -114,9 +114,13 @@ public class LEDSubsystem extends SubsystemBase {
       //else if Robot is Running Intake
       m_ledBuffer.setRGB(pos, 125, 75, 0);//Red-Orange
     }
-    else if (mode) {
+    else if (mode == "auto-high") {
       //else if Robot is in Auto
-      m_ledBuffer.setRGB(pos, 0, 75, 0);//Green
+      m_ledBuffer.setRGB(pos, 0, 75, 0);//Orange
+    }
+    else if (mode == "auto-low") {
+      //else if Robot is in Auto
+      m_ledBuffer.setRGB(pos, 125, 75, 0);//Red-Orange
     }
     else {
       //Idle
@@ -141,9 +145,13 @@ public class LEDSubsystem extends SubsystemBase {
       //else if Robot is Running Intake
       m_ledBuffer.setRGB(pos, 125, 75, 0);//Red-Orange
     }
-    else if (mode) {
+    else if (mode == "auto-high") {
       //else if Robot is in Auto
-      m_ledBuffer.setRGB(pos, 0, 75, 0);//Green
+      m_ledBuffer.setRGB(pos, 0, 75, 0);//Orange
+    }
+    else if (mode == "auto-low") {
+      //else if Robot is in Auto
+      m_ledBuffer.setRGB(pos, 125, 75, 0);//Red-Orange
     }
     else {
       //Idle
@@ -189,7 +197,7 @@ public class LEDSubsystem extends SubsystemBase {
     climberLockedL = !StatHook2.get();
     intake = Intake_Motor.get() != 0;
     count = SmartDashboard.getNumber("Ball Count", 0);
-    mode = SmartDashboard.getString("Mode", "null") == "auto";
+    mode = SmartDashboard.getString("Mode", "null");
 
     if (running_LED <= lengthstrand1) {
       //Strand 1

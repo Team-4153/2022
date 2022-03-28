@@ -10,6 +10,7 @@ import frc.swerverobot.commands.shooter.ShootCommand;
 import frc.swerverobot.subsystems.*;
 import frc.swerverobot.RobotMap;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -26,6 +27,8 @@ public class OneBallAuto extends SequentialCommandGroup{
         this.drivetrain = drivetrain;
         this.shooter = shooter;
         this.intake = intake;
+        
+        SmartDashboard.putString("Mode", "auto-high");
 
         addRequirements(drivetrain, shooter, intake);
 
