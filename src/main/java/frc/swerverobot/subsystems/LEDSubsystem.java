@@ -116,15 +116,15 @@ public class LEDSubsystem extends SubsystemBase {
     }
     else if (mode == "auto-high") {
       //else if Robot is in Auto
-      m_ledBuffer.setRGB(pos, 0, 75, 0);//Orange
+      m_ledBuffer.setRGB(pos, 143, 50, 168);//Purple
     }
     else if (mode == "auto-low") {
       //else if Robot is in Auto
-      m_ledBuffer.setRGB(pos, 125, 75, 0);//Red-Orange
+      m_ledBuffer.setRGB(pos, 0, 56, 153);//Dark-Blue
     }
     else {
       //Idle
-      m_ledBuffer.setRGB(pos, 0, 100, 100);//Teal
+      m_ledBuffer.setRGB(pos, 0, 176, 170);//Teal
     }
   }
 
@@ -147,15 +147,15 @@ public class LEDSubsystem extends SubsystemBase {
     }
     else if (mode == "auto-high") {
       //else if Robot is in Auto
-      m_ledBuffer.setRGB(pos, 0, 75, 0);//Orange
+      m_ledBuffer.setRGB(pos, 143, 50, 168);//Purple
     }
     else if (mode == "auto-low") {
       //else if Robot is in Auto
-      m_ledBuffer.setRGB(pos, 125, 75, 0);//Red-Orange
+      m_ledBuffer.setRGB(pos, 0, 56, 153);//Dark-Blue
     }
     else {
       //Idle
-      m_ledBuffer.setRGB(pos, 0, 100, 100);//Teal
+      m_ledBuffer.setRGB(pos, 0, 176, 170);//Teal
     }
   }
 
