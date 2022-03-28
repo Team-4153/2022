@@ -189,7 +189,7 @@ public class LEDSubsystem extends SubsystemBase {
     climberLockedL = !StatHook2.get();
     intake = Intake_Motor.get() != 0;
     count = SmartDashboard.getNumber("Ball Count", 0);
-    mode = SmartDashboard.getString("Mode", "null") != "tele";
+    mode = SmartDashboard.getString("Mode", "null") == "auto";
 
     if (running_LED <= lengthstrand1) {
       //Strand 1
