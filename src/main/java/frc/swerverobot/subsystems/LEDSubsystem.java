@@ -57,16 +57,26 @@ public class LEDSubsystem extends SubsystemBase {
   double count2 = 0;
 
   public int ledJump(int pos) {
-    if (climberLockedR != climberLockedR2 || intake != intake2 || winch != winch2) {
+    if (climberLockedR != climberLockedR2) {
       //Third Strand
       for (int i = 0; i < lengthstrand3; i++) {
         rightLED(lengthstrand1 + lengthstrand2 + i);
       }
     }
-    else if (climberLockedL != climberLockedL2 || intake != intake2 || winch != winch2) {
+    else if (climberLockedL != climberLockedL2) {
       //First Strand
       for (int i = 0; i < lengthstrand1; i++) {
         leftLED(i);
+      }
+    }
+    else if (intake != intake2 || winch != winch2) {
+      //First Strand
+      for (int i = 0; i < lengthstrand1; i++) {
+        leftLED(i);
+      }
+      //Third Strand
+      for (int i = 0; i < lengthstrand3; i++) {
+        rightLED(lengthstrand1 + lengthstrand2 + i);
       }
     }
     else if (count != count2 || shooting != shooting2) {
