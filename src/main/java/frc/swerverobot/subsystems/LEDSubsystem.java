@@ -191,7 +191,7 @@ public class LEDSubsystem extends SubsystemBase {
   public void colorPositionLED() {
     shooting = SmartDashboard.getBoolean("Shooting", false);
     winch = SmartDashboard.getBoolean("Climbing", false);
-    climberExtended = SmartDashboard.getBoolean("Climb Arm Extention", false);
+    climberExtended = !SmartDashboard.getBoolean("Climb Arm Extention", true);
     climberLockedR = !StatHook1.get();
     climberLockedL = !StatHook2.get();
     intake = Intake_Motor.get() != 0;
