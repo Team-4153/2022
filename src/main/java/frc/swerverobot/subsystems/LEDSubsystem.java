@@ -57,13 +57,13 @@ public class LEDSubsystem extends SubsystemBase {
   double count2 = 0;
 
   public int ledJump(int pos) {
-    if (climberLockedR != climberLockedR2 || intake != intake2) {
+    if (climberLockedR != climberLockedR2 || intake != intake2 || winch != winch2) {
       //Third Strand
       for (int i = 0; i < lengthstrand3; i++) {
         rightLED(lengthstrand1 + lengthstrand2 + i);
       }
     }
-    else if (climberLockedL != climberLockedL2 || intake != intake2) {
+    else if (climberLockedL != climberLockedL2 || intake != intake2 || winch != winch2) {
       //First Strand
       for (int i = 0; i < lengthstrand1; i++) {
         leftLED(i);
@@ -127,7 +127,6 @@ public class LEDSubsystem extends SubsystemBase {
       m_ledBuffer.setRGB(pos, 0, 176, 170);//Teal
     }
   }
-
   public void leftLED(int pos) {
     if (climberLockedL) {
       //If Left Static Hook is Locked
@@ -229,7 +228,6 @@ public class LEDSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-
 
     //Set LED's
     //Worm
