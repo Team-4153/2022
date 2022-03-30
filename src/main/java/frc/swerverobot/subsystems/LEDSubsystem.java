@@ -121,34 +121,35 @@ public class LEDSubsystem extends SubsystemBase {
   public void rightLED(int pos) {
     if (climberLockedR) {
       //If Right Static Hook is Locked
-      m_ledBuffer.setRGB(pos, 0, 75, 0);//Green
+      m_ledBuffer.setRGB(pos, 0, 65, 0);//Green
     }
     else if (winch) {
       //else if Robot is Winching
-      m_ledBuffer.setRGB(pos, 100, 100, 0);//Orange
+      m_ledBuffer.setRGB(pos, 90, 90, 0);//Orange
     }
     else if (climberExtended) {
       //else if Climber Is Extended
-      m_ledBuffer.setRGB(pos, 100, 0, 0);//Red
+      m_ledBuffer.setRGB(pos, 90, 0, 0);//Red
     }
     else if (intake) {
       //else if Robot is Running Intake
-      m_ledBuffer.setRGB(pos, 125, 75, 0);//Red-Orange
+      m_ledBuffer.setRGB(pos, 115, 65, 0);//Red-Orange
     }
     else if (mode == "auto-high") {
       //else if Robot is in Auto
-      m_ledBuffer.setRGB(pos, 143, 50, 168);//Purple
+      m_ledBuffer.setRGB(pos, 133, 40, 158);//Purple
     }
     else if (mode == "auto-low") {
       //else if Robot is in Auto
-      m_ledBuffer.setRGB(pos, 0, 56, 153);//Dark-Blue
+      m_ledBuffer.setRGB(pos, 0, 46, 143);//Dark-Blue
     }
     else {
       //Idle
-      m_ledBuffer.setRGB(pos, 0, 176, 170);//Teal
+      m_ledBuffer.setRGB(pos, 0, 156, 150);//Teal
     }
   }
   public void leftLED(int pos) {
+    //Low Density Strand so Increased Brightness
     if (climberLockedL) {
       //If Left Static Hook is Locked
       m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
@@ -225,6 +226,7 @@ public class LEDSubsystem extends SubsystemBase {
     }
     else if (ypluggedin) {
       if (running_LED <= lengthstrand1 + lengthstrandy) {
+        //The Y
         m_ledBuffer.setRGB(running_LED, 0, 176, 170);//Teal
       }
       else if (running_LED <= lengthstrand1 + lengthstrandy + lengthstrand2) {
@@ -253,7 +255,8 @@ public class LEDSubsystem extends SubsystemBase {
     }
     else if (ypluggedin) {
       if (chasingLED <= lengthstrand1 + lengthstrandy) {
-        m_ledBuffer.setRGB(chasingLED, 0, 176, 170);//Teal
+        //The Y
+        m_ledBuffer.setRGB(chasingLED, 0, 156, 150);//Teal
       }
       else if (chasingLED <= lengthstrand1 + lengthstrandy + lengthstrand2) {
         //Strand 2
