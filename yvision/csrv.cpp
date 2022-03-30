@@ -46,7 +46,7 @@
 #define MAXAREA	(MAXRAD*MAXRAD*M_PI)
 
 // Target minimum and maximum area
-#define TMINAREA	(0.01*0.005)
+#define TMINAREA	(0.02*0.005)
 #define TMAXAREA	(0.02*0.1)
 
 /*
@@ -98,6 +98,7 @@ struct CameraImpl : Camera {
 };
 
 static const char* configFile = "/boot/frc.json";
+//static const char* configFile = "frc.json";
 unsigned int team;
 bool server = false;
 
@@ -179,6 +180,9 @@ Target *processContour(OutputArrayOfArrays contour, Mat &dst) {
 	if (area/maskarea > TMAXAREA)
 		return NULL;
 
+	if (brect.width / brect.height > 3)
+		return NULL;
+
 	return new Target(brect);
 }
 
@@ -201,8 +205,16 @@ void processTargets(Mat &src, Mat &dst, Mat &mask, const CameraImpl& c, uint64_t
 	// Get only pixels that have the colors we expect the stripes to be
 	inRange(hsv, Scalar(c.targetHLow, c.targetSLow, c.targetVLow), Scalar(c.targetHHigh, c.targetSHigh, c.targetVHigh), mask);
 
+	// filter out white colors by filtering out greens that also have blue
+	Mat bmask, nmask, mask2;
+	Scalar blueLow(90, c.ballSLow, c.ballVLow);
+	Scalar blueHigh(128, c.ballSHigh, c.ballVHigh);
+	inRange(hsv, blueLow, blueHigh, bmask);
+	cv::bitwise_not(bmask, nmask);
+	cv::bitwise_and(mask, nmask, mask2);
+
 	// Find contours
-	cv::findContours(mask, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+	cv::findContours(mask2, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
 
 	// Identify targets
 	tgt = NULL;
@@ -241,7 +253,7 @@ void processTargets(Mat &src, Mat &dst, Mat &mask, const CameraImpl& c, uint64_t
 	c.ntbl->PutNumber("TargetOff", x);
 
 	char buf[128];
-	snprintf(buf, sizeof(buf), "%3.5f", dist);
+	snprintf(buf, sizeof(buf), "%3.5f %3.5f %3.5f", y, dist, x);
 	cv::putText(dst, buf, cv::Point(100, 200), cv::FONT_HERSHEY_SIMPLEX, 0.7, CV_RGB(255,0,0), 1, 8);
 }
 
@@ -377,6 +389,10 @@ bool readCameraConfig(const wpi::json& config) {
 	c.targetHHigh = 180;
 	c.targetSHigh = 255;
 	c.targetVHigh = 255;
+	c.ballVLow = 50;
+	c.ballSLow = 80;
+	c.ballVHigh = 255;
+	c.ballSHigh = 255;
 	c.savePeriod = 0;
 	c.ntbl = NULL;
 	c.frameCallback = NULL;
