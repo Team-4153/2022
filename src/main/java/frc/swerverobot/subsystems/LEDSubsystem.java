@@ -12,9 +12,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import static frc.swerverobot.RobotMap.*;
 
 public class LEDSubsystem extends SubsystemBase {
-  private int lengthstrand1 = 25;
-  private int lengthstrand2 = 53;
-  private int lengthstrand3 = 70;
+  private int lengthstrand1 = 25;//Left Climber
+  private int lengthstrandy = 26;//Length of the Y
+  private boolean ypluggedin = false;
+  private int lengthstrand2 = 53;//Shooter
+  private int lengthstrand3 = 70;//Right CLimber
 
   private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(lengthstrand1 + lengthstrand2 + lengthstrand3);
   private AddressableLED m_led = new AddressableLED(LEDPWMPort);
@@ -212,6 +214,9 @@ public class LEDSubsystem extends SubsystemBase {
       //Strand 1
       wormLED(running_LED);
     }
+    else if (running_LED <= lengthstrand1 && ypluggedin) {
+      m_ledBuffer.setRGB(running_LED, 0, 176, 170);//Teal
+    }
     else if (running_LED <= lengthstrand1 + lengthstrand2) {
       //Strand 2
       wormLED(running_LED);
@@ -224,6 +229,9 @@ public class LEDSubsystem extends SubsystemBase {
     if (chasingLED <= lengthstrand1) {
       //Strand 1
       leftLED(chasingLED);
+    }
+    else if (chasingLED <= lengthstrand1 && ypluggedin) {
+      m_ledBuffer.setRGB(chasingLED, 0, 176, 170);//Teal
     }
     else if (chasingLED <= lengthstrand1 + lengthstrand2) {
       //Strand 2
