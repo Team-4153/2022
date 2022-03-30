@@ -38,7 +38,7 @@ public class ShootCommand extends SequentialCommandGroup{
 
             //Second Ball
             new FeedCommand(shooter).withTimeout(1),//Feed the second ball into the fiering position
-            new WaitCommand(waitforSpool),//Wait for shooter to get up to speed again
+            new WaitCommand(waitforSpool/2),//Wait for shooter to get up to speed again
             runFeedMotors2,//Feed the second ball into the shooter
             new WaitCommand(waitForShoot),//Wait for ball to exit shooter
 

@@ -18,7 +18,7 @@ public class ManualShoot extends SequentialCommandGroup{
     private double botSpeed;
     private double feedSpeed;
 
-    private double waitforSpool = 0.5;
+    private double waitforSpool = 0.75;
     private double waitForShoot = 0.75;
 
     //2 Ball Waits
@@ -43,7 +43,7 @@ public class ManualShoot extends SequentialCommandGroup{
 
             //Second Ball
             new FeedCommand(shooter).withTimeout(1),//Feed the second ball into the fiering position
-            new WaitCommand(waitforSpool),//Wait for shooter to get up to speed again
+            new WaitCommand(waitforSpool/2),//Wait for shooter to get up to speed again
             runFeedMotors2,//Feed the second ball into the shooter
             new WaitCommand(waitForShoot),//Wait for ball to exit shooter
 
