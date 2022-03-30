@@ -1,6 +1,7 @@
 package frc.swerverobot.commands.auto.competition;
 
 import frc.swerverobot.RobotMap;
+import frc.swerverobot.commands.LED.SetT;
 import frc.swerverobot.commands.drive.DriveCommand;
 import frc.swerverobot.commands.drive.DriveWithSetRotationCommand;
 import frc.swerverobot.commands.intake.IntakeCommand;
@@ -40,7 +41,8 @@ public class HighTwoBall extends SequentialCommandGroup{
             new IntakeCommand(intake, true).withTimeout(0.1),                                               //Retract Intake
             new ManualShoot(shooter, -0.4, 1, -0.6),                                                        //Shoot balls into high goal
             new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.2),  //Drive backwards a little more to make sure it is out of tape
-            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1)        //Stop Driving backwards
+            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1),       //Stop Driving backwards
+            new SetT()                                                                                      //Change Auto LED's to tele Mode
         );
     }
 

@@ -48,7 +48,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-      SmartDashboard.putString("Mode", "tele");
       if (autonomousCommand != null) {
           autonomousCommand.cancel();
       }

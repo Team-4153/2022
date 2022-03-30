@@ -1,5 +1,6 @@
 package frc.swerverobot.commands.auto.competition;
 
+import frc.swerverobot.commands.LED.SetT;
 import frc.swerverobot.commands.auto.FollowBallCommand;
 import frc.swerverobot.commands.drive.DriveCommand;
 import frc.swerverobot.commands.drive.DriveWithSetRotationCommand;
@@ -41,7 +42,8 @@ public class TwoBallAuto extends SequentialCommandGroup{
             new FollowBallCommand(drivetrain, () -> 0.3),                                               //Turn to the ball
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5), //Drive to the ball
             new IntakeCommand(intake, true),                                                            //Retract Intake
-            new AutoAim(shooter, drivetrain, true)                                                      //Auto aim and shoot for the high goal
+            new AutoAim(shooter, drivetrain, true),                                                     //Auto aim and shoot for the high goal
+            new SetT()                                                                                  //Change Auto LED's to tele Mode
         );
 
     }

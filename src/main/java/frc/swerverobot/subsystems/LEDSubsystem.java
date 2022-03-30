@@ -49,7 +49,7 @@ public class LEDSubsystem extends SubsystemBase {
   boolean climberLockedR = false;
   boolean climberLockedL = false;
   double count = 0;
-  String mode = "tele";
+  String mode = "null";
 
   boolean shooting2 = false;
   boolean winch2 = false;
@@ -135,16 +135,20 @@ public class LEDSubsystem extends SubsystemBase {
       m_ledBuffer.setRGB(pos, 115, 65, 0);//Red-Orange
     }
     else if (mode == "auto-high") {
-      //else if Robot is in Auto
+      //else if Robot is in a High Goal Auto
       m_ledBuffer.setRGB(pos, 133, 40, 158);//Purple
     }
     else if (mode == "auto-low") {
-      //else if Robot is in Auto
+      //else if Robot is in a Low Goal Auto
       m_ledBuffer.setRGB(pos, 0, 46, 143);//Dark-Blue
+    }
+    else if (mode == "tele") {
+      //else if Robot is in Tele
+      m_ledBuffer.setRGB(pos, 0, 156, 150);//Teal
     }
     else {
       //Idle
-      m_ledBuffer.setRGB(pos, 0, 156, 150);//Teal
+      m_ledBuffer.setRGB(pos, 0, 56, 50);//Teal
     }
   }
   public void leftLED(int pos) {
@@ -173,9 +177,13 @@ public class LEDSubsystem extends SubsystemBase {
       //else if Robot is in Auto
       m_ledBuffer.setRGB(pos, 0, 56, 153);//Dark-Blue
     }
+    else if (mode == "tele") {
+      //else if Robot is in Tele
+      m_ledBuffer.setRGB(pos, 0, 176, 170);//Teal
+    }
     else {
       //Idle
-      m_ledBuffer.setRGB(pos, 0, 176, 170);//Teal
+      m_ledBuffer.setRGB(pos, 0, 76, 70);//Teal
     }
   }
 

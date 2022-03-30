@@ -1,5 +1,6 @@
 package frc.swerverobot.commands.auto.competition;
 
+import frc.swerverobot.commands.LED.SetT;
 import frc.swerverobot.commands.drive.DriveCommand;
 import frc.swerverobot.commands.drive.DriveWithSetRotationCommand;
 import frc.swerverobot.commands.drive.GoToAngleCommand;
@@ -36,7 +37,8 @@ public class OneBallAuto extends SequentialCommandGroup{
 
         addCommands(
             new DriveCommand(drivetrain, () -> -0.3, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.2),  //Drive Backwards
-            new AutoAim(shooter, drivetrain, true)                                                          //Auto aim and shoot to the high goal
+            new AutoAim(shooter, drivetrain, true),                                                         //Auto aim and shoot to the high goal
+            new SetT()                                                                                      //Change Auto LED's to tele Mode
         );
 
     }

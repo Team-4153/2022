@@ -1,6 +1,7 @@
 package frc.swerverobot.commands.auto.competition;
 
 import frc.swerverobot.RobotMap;
+import frc.swerverobot.commands.LED.SetT;
 import frc.swerverobot.commands.drive.DriveCommand;
 import frc.swerverobot.commands.drive.DriveWithSetRotationCommand;
 import frc.swerverobot.commands.drive.GoToAngleCommand;
@@ -48,7 +49,8 @@ public class LowThreeBall extends SequentialCommandGroup{
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.0),     //Stop Driving
             new IntakeCommand(intake, true).withTimeout(0.5),                                               //Retract Intake
             new GoToAngleCommand(drivetrain, () -> 0, () -> 0, Math.PI/2.25),                               //Turn to hub
-            new ManualShoot(shooter, -0.5, 0.75, -1)                                                        //Shoot 3rd ball into low goal
+            new ManualShoot(shooter, -0.5, 0.75, -1),                                                       //Shoot 3rd ball into low goal
+            new SetT()                                                                                      //Change Auto LED's to tele Mode
         );
     }
 
