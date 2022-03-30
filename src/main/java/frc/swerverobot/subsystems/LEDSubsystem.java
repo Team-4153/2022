@@ -14,11 +14,11 @@ import static frc.swerverobot.RobotMap.*;
 public class LEDSubsystem extends SubsystemBase {
   private int lengthstrand1 = 25;//Left Climber
   private int lengthstrandy = 26;//Length of the Y
-  private boolean ypluggedin = false;
+  private boolean ypluggedin = true;
   private int lengthstrand2 = 53;//Shooter
   private int lengthstrand3 = 70;//Right CLimber
 
-  private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(lengthstrand1 + lengthstrand2 + lengthstrand3);
+  private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(lengthstrand1 + lengthstrand2 + lengthstrand3 + (50));
   private AddressableLED m_led = new AddressableLED(LEDPWMPort);
 
   private int running_LED = 1;
@@ -57,6 +57,15 @@ public class LEDSubsystem extends SubsystemBase {
   boolean climberLockedR2 = false;
   boolean climberLockedL2 = false;
   double count2 = 0;
+
+  public int ledCount() {
+    if (ypluggedin) {
+      return lengthstrand1 + lengthstrandy + lengthstrand2 + lengthstrand3;
+    }
+    else {
+      return lengthstrand1 + lengthstrand2 + lengthstrand3;
+    }
+  }
 
   public int ledJump(int pos) {
     if (climberLockedR != climberLockedR2) {
@@ -214,32 +223,56 @@ public class LEDSubsystem extends SubsystemBase {
       //Strand 1
       wormLED(running_LED);
     }
-    else if (running_LED <= lengthstrand1 && ypluggedin) {
+    else if (running_LED <= lengthstrand1 + lengthstrandy && ypluggedin) {
       m_ledBuffer.setRGB(running_LED, 0, 176, 170);//Teal
     }
-    else if (running_LED <= lengthstrand1 + lengthstrand2) {
-      //Strand 2
-      wormLED(running_LED);
+    else if (ypluggedin) {
+      if (running_LED <= lengthstrand1 + lengthstrandy + lengthstrand2) {
+        //Strand 2
+        wormLED(running_LED);
+      }
+      else if (running_LED <= lengthstrand1 + lengthstrandy + lengthstrand2 + lengthstrand3) {
+        //Strand 3
+        wormLED(running_LED);
+      }
     }
-    else if (running_LED <= lengthstrand1 + lengthstrand2 + lengthstrand3) {
-      //Strand 3
-      wormLED(running_LED);
+    else {
+      if (running_LED <= lengthstrand1 + lengthstrand2) {
+        //Strand 2
+        wormLED(running_LED);
+      }
+      else if (running_LED <= lengthstrand1 + lengthstrand2 + lengthstrand3) {
+        //Strand 3
+        wormLED(running_LED);
+      }
     }
 
     if (chasingLED <= lengthstrand1) {
       //Strand 1
       leftLED(chasingLED);
     }
-    else if (chasingLED <= lengthstrand1 && ypluggedin) {
-      m_ledBuffer.setRGB(chasingLED, 0, 176, 170);//Teal
+    else if (ypluggedin) {
+      if (chasingLED <= lengthstrand1 + lengthstrandy) {
+        m_ledBuffer.setRGB(chasingLED, 0, 176, 170);//Teal
+      }
+      else if (chasingLED <= lengthstrand1 + lengthstrandy + lengthstrand2) {
+        //Strand 2
+        shooterLED(chasingLED);
+      }
+      else if (chasingLED <= lengthstrand1 + lengthstrandy + lengthstrand2 + lengthstrand3) {
+        //Strand 3
+        rightLED(chasingLED);
+      }
     }
-    else if (chasingLED <= lengthstrand1 + lengthstrand2) {
-      //Strand 2
-      shooterLED(chasingLED);
-    }
-    else if (chasingLED <= lengthstrand1 + lengthstrand2 + lengthstrand3) {
-      //Strand 3
-      rightLED(chasingLED);
+    else {
+      if (chasingLED <= lengthstrand1 + lengthstrand2) {
+        //Strand 2
+        shooterLED(chasingLED);
+      }
+      else if (chasingLED <= lengthstrand1 + lengthstrand2 + lengthstrand3) {
+        //Strand 3
+        rightLED(chasingLED);
+      }
     }
   }
 
