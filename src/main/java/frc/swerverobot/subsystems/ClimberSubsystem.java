@@ -57,24 +57,33 @@ More intuitive for driver:
 
 package frc.swerverobot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.swerverobot.RobotMap;
 
-public class ClimberSubsystem extends SubsystemBase{
-    //Initiator
+public class ClimberSubsystem extends SubsystemBase {
+    // Initiator
+
     public ClimberSubsystem() {
         super();
-        this.spoolMotor = new Spark(RobotMap.CLIMBER_MOTOR);
-        this.armPiston = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, RobotMap.ARM_FORWARD, RobotMap.ARM_BACK);
-        this.stathookPiston = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, RobotMap.HOOK_CLOSE, RobotMap.HOOK_OPEN);
-        this.winchSolenoid = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, RobotMap.WINCH_LOCK, RobotMap.WINCH_UNLOCK);
+        // this.spoolMotor = new Spark(RobotMap.CLIMBER_MOTOR);
+        this.spoolMotor = new CANSparkMax(RobotMap.CLIMBER_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
+        this.armPiston = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, RobotMap.ARM_FORWARD,
+                RobotMap.ARM_BACK);
+        this.stathookPiston = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, RobotMap.HOOK_CLOSE,
+                RobotMap.HOOK_OPEN);
+        this.winchSolenoid = new DoubleSolenoid(RobotMap.PH_CAN_ID, PneumaticsModuleType.REVPH, RobotMap.WINCH_LOCK,
+                RobotMap.WINCH_UNLOCK);
     }
 
-    private final Spark spoolMotor;
+    private final CANSparkMax spoolMotor;
     private final DoubleSolenoid armPiston;
     private final DoubleSolenoid stathookPiston;
     private final DoubleSolenoid winchSolenoid;
@@ -83,9 +92,8 @@ public class ClimberSubsystem extends SubsystemBase{
     private boolean armUp;
     private boolean hookOpen;
 
-
     public void motorInit() {
-	    spoolMotor.setSafetyEnabled(false);
+        // spoolMotor.setSafetyEnabled(false);
     }
 
     public void solenoidInit() {
@@ -95,30 +103,30 @@ public class ClimberSubsystem extends SubsystemBase{
     }
 
     public void init() {
-        spoolMotor.setSafetyEnabled(false);
-	    this.motorInit();
-	    this.solenoidInit();
+        // spoolMotor.setSafetyEnabled(false);
+        this.motorInit();
+        this.solenoidInit();
 
         SmartDashboard.putBoolean("Stat Hook 1", false);
         SmartDashboard.putBoolean("Stat Hook 2", false);
     }
 
-    public void spool(){
+    public void spool() {
         spoolMotor.set(-1.0);
-        SmartDashboard.putBoolean("Climbing", true);
+        SmartDashboard.putBoolean("Winch", true);
     }
 
-    public void unspool(){
+    public void unspool() {
         spoolMotor.set(1.0);
-        SmartDashboard.putBoolean("Climbing", true);
-    }
-    
-    public void StopMotor(){
-        spoolMotor.set(0);
-        SmartDashboard.putBoolean("Climbing", false);
+        SmartDashboard.putBoolean("Winch", true);
     }
 
-    public void armUp(){
+    public void StopMotor() {
+        spoolMotor.set(0);
+        SmartDashboard.putBoolean("Winch", false);
+    }
+
+    public void armUp() {
         armPiston.set(DoubleSolenoid.Value.kForward);
         SmartDashboard.putBoolean("Climb Arm Extention", false);
         setArmUp(true);
@@ -130,24 +138,22 @@ public class ClimberSubsystem extends SubsystemBase{
         setArmUp(false);
     }
 
-    public void hookClose(){
+    public void hookClose() {
         stathookPiston.set(DoubleSolenoid.Value.kForward);
-        SmartDashboard.putBoolean("Climb Hook Locked", false);
         setHookOpen(false);
     }
 
     public void hookOpen() {
         stathookPiston.set(DoubleSolenoid.Value.kReverse);
-        SmartDashboard.putBoolean("Climb Hook Locked", true);
         setHookOpen(true);
     }
 
-    public void winchLock(){
+    public void winchLock() {
         winchSolenoid.set(DoubleSolenoid.Value.kForward);
         setLocked(true);
     }
 
-    public void winchUnlock(){
+    public void winchUnlock() {
         winchSolenoid.set(DoubleSolenoid.Value.kReverse);
         setLocked(false);
     }
@@ -180,13 +186,12 @@ public class ClimberSubsystem extends SubsystemBase{
         return Step2;
     }
 
-    public static void flipStep2(){
+    public static void flipStep2() {
         Step2 = !Step2;
     }
 
     @Override
-    public void periodic()
-    {
+    public void periodic() {
         SmartDashboard.putBoolean("Stat Hook 1", RobotMap.StatHook1.get());
         SmartDashboard.putBoolean("Stat Hook 2", RobotMap.StatHook2.get());
     }

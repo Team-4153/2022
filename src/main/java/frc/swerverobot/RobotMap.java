@@ -57,7 +57,7 @@ public class RobotMap {
     public static final Spark feedMotor = new Spark(FeedMotorPort);             //[Shooter / Intake Subsystems]
     public static final int Intake_Motor_PWM = 3;                               //[Intake Subsystem] PWM for intake motor
     public static final PWMVictorSPX Intake_Motor = new PWMVictorSPX(Intake_Motor_PWM);     //[Intake Subsystem] PWM for intake motor
-    public static final int CLIMBER_MOTOR = 4;                                  //[Climber Subsystem] The Number is the RIO DIO port (Winch)
+    // public static final int CLIMBER_MOTOR = 4;                                  //[Climber Subsystem] The Number is the RIO DIO port (Winch)
 
 //Controls
     //DriveTrain Controller (Kendall)
@@ -128,7 +128,7 @@ public class RobotMap {
 
     public static final int DRIVETRAIN_BACK_RIGHT_MODULE_ANGLE_ENCODER = -1;
     public static final int DRIVETRAIN_BACK_RIGHT_MODULE_ANGLE_MOTOR = 4;
-    public static final double DRIVETRAIN_BACK_RIGHT_MODULE_ANGLE_OFFSET = -Math.toRadians(72.65);
+    public static final double DRIVETRAIN_BACK_RIGHT_MODULE_ANGLE_OFFSET = -Math.toRadians(258.6-180);
     public static final int DRIVETRAIN_BACK_RIGHT_MODULE_DRIVE_MOTOR = 3;
     public static final double DRIVETRAIN_BACK_RIGHT_MODULE_ENCODER_VOLTAGE_MAX = 3.330;
 
@@ -143,6 +143,8 @@ public class RobotMap {
     public static final double DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_OFFSET = -Math.toRadians(170.3+180);
     public static final int DRIVETRAIN_BACK_LEFT_MODULE_DRIVE_MOTOR = 7;
     public static final double DRIVETRAIN_BACK_LEFT_MODULE_ENCODER_VOLTAGE_MAX = 3.256;
+
+    public static final int CLIMBER_MOTOR = 9;
 
 //Shooter constants
 // Defaults are used for shooting during the autonomous period (distance tuned for preplaced cargo to hub)
