@@ -83,7 +83,8 @@ public class RobotMap {
     public static final Button WinchLock = Shooter_controller.getDPadButton(Direction.UP);      //[Climber Subsystem] (DPad-Up|Lock Winch)
     public static final Button WinchUnlock = Shooter_controller.getDPadButton(Direction.DOWN);  //[Climber Subsystem] (DPad-Down|Lock Unwinch)
     public static final Button GetToNextRung = Shooter_controller.getStartButton();             //[Climber Subsystem] (Start|GetToNextRung Command)
-    public static final Button PullAndGrab = Shooter_controller.getBackButton();                //[Climber Subsystem] (Back|PullAndGrab Command)
+    // public static final Button PullAndGrab = Shooter_controller.getBackButton();                //[Climber Subsystem] (Back|PullAndGrab Command)
+    public static final Button TestButton = Shooter_controller.getBackButton();                //[Climber Subsystem] (Back|PullAndGrab Command)
 
 
     /* Example Analog Trigger Code NOTE: put this inside your subsystem

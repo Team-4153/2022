@@ -217,6 +217,9 @@ public class RobotContainer {
                         //Moves robot up using mobile climber
                         new SpoolCommand(climb)
                 );
+                // TestButton.whenPressed(
+                        // new TestCommand(drivetrain, shooter, intake, climb)
+                // );
                 // WinchLock.whenPressed(
                 //         new WinchLockCommand(climb, States.LOCKED)
                 // );
@@ -237,7 +240,7 @@ Hit  - 13
                 );
                 ManualShoot.whenPressed(
                         //Gets into low goal from 77 visual distance (77 is as close as we can get and still have a distance reading)
-                        new ManualShoot(shooter, -0.4, 0.5, -1)
+                        new ManualShoot(shooter, -0.5, 0.5, -1)
                 );
                 AimShootHigh.getButton(0.1).whenPressed(
                         //Autoaim to the high goal and then shoot
