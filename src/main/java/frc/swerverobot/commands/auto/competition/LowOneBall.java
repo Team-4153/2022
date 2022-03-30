@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 @Deprecated
 @SuppressWarnings("unused")
 
+//Hard Coded 1 Ball Low Goal
+
 public class LowOneBall extends SequentialCommandGroup{
     private final DrivetrainSubsystem drivetrain;
     private final ShooterSubsystem2 shooter;

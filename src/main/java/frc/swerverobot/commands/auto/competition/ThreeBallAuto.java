@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 @Deprecated
 @SuppressWarnings("unused")
 
+//Raspi Auto 3 Ball High Goal
+
 public class ThreeBallAuto extends SequentialCommandGroup{
     private final DrivetrainSubsystem drivetrain;
     private final ShooterSubsystem2 shooter;
