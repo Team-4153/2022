@@ -33,26 +33,26 @@ public class ThreeBallAuto extends SequentialCommandGroup{
 
         addRequirements(drivetrain, shooter, intake);
         
-        SmartDashboard.putString("Mode", "auto-high");
+        SmartDashboard.putString("Mode", "auto-high");                                                  //Set the LED's to high goal colors
 
         addCommands(
-            new IntakeCommand(intake, false).withTimeout(0.3),
-            new WaitCommand(0.5),
-            new FollowBallCommand(drivetrain, () -> 0.3),
-            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),
-            new IntakeCommand(intake, true),
-            new AutoAim(shooter, drivetrain, true),
-            new WaitCommand(0.5),
+            new IntakeCommand(intake, false).withTimeout(0.3),                                          //Extend Intake
+            new WaitCommand(0.5),                                                                       //Wait 0.5s
+            new FollowBallCommand(drivetrain, () -> 0.3),                                               //Turn to the ball
+            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5), //Drive to the ball
+            new IntakeCommand(intake, true),                                                            //Retract the intake
+            new AutoAim(shooter, drivetrain, true),                                                     //Auto aim to the high goal
+            new WaitCommand(0.5),                                                                       //Wait 0.5s
 
-            new GoToAngleCommand(drivetrain, () -> 0.0, () -> 0.0, () -> 1, () -> 0),
-            new WaitCommand(0.5),
-            new IntakeCommand(intake, false).withTimeout(0.3),
-            new WaitCommand(0.5),
-            new FollowBallCommand(drivetrain, () -> 0.3),
-            new WaitCommand(0.5),
-            new IntakeCommand(intake, true),
-            new GoToAngleCommand(drivetrain, () -> 0, () -> 0, () -> 1, () -> 0),
-            new AutoAim(shooter, drivetrain, true)
+            new GoToAngleCommand(drivetrain, () -> 0.0, () -> 0.0, () -> 1, () -> 0),                   //Turn 
+            new WaitCommand(0.5),                                                                       //Wait 0.5s
+            new IntakeCommand(intake, false).withTimeout(0.3),                                          //Extend Intake
+            new WaitCommand(0.5),                                                                       //Wait 0.5s
+            new FollowBallCommand(drivetrain, () -> 0.3),                                               //Turn to the ball
+            new WaitCommand(0.5),                                                                       //Wait 0.5s
+            new IntakeCommand(intake, true),                                                            //Retract the intake
+            new GoToAngleCommand(drivetrain, () -> 0, () -> 0, () -> 1, () -> 0),                       //Turn roughly to shooter
+            new AutoAim(shooter, drivetrain, true)                                                      //Autoaim for the high goal
         );
 
     }

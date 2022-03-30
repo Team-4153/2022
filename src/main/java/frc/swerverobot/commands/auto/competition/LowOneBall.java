@@ -32,11 +32,11 @@ public class LowOneBall extends SequentialCommandGroup{
 
         addRequirements(drivetrain);
 
-        SmartDashboard.putString("Mode", "auto-low");
+        SmartDashboard.putString("Mode", "auto-low");                                                   //Set the LED's to low goal colors
 
         addCommands(
-            new ManualShoot(shooter, -0.5, 0.5, -1),
-            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5)
+            new ManualShoot(shooter, -0.5, 0.5, -1),                                                    //Shoot first ball into low goal
+            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5)//Drive backwards
         );
     }
 

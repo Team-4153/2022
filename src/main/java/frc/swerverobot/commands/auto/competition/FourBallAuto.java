@@ -33,7 +33,9 @@ public class FourBallAuto extends SequentialCommandGroup{
 
         addRequirements(drivetrain, shooter, intake);
         
-        SmartDashboard.putString("Mode", "auto-high");
+        SmartDashboard.putString("Mode", "auto-high");//Set the LED's to low goal colors
+
+        //Didn't add comments to this one because I have no idea what is going on
 
         addCommands(
             new IntakeCommand(intake, false).withTimeout(0.3),

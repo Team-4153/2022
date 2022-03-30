@@ -31,16 +31,16 @@ public class HighTwoBall extends SequentialCommandGroup{
 
         addRequirements(drivetrain);
 
-        SmartDashboard.putString("Mode", "auto-high");
+        SmartDashboard.putString("Mode", "auto-high");                                                      //Set the LED's to low goal colors
 
         addCommands(
-            new IntakeCommand(intake, false).withTimeout(0.1),
-            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.8),
-            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),
-            new IntakeCommand(intake, true).withTimeout(0.1),
-            new ManualShoot(shooter, -0.4, 1, -0.6),
-            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.2),
-            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1)
+            new IntakeCommand(intake, false).withTimeout(0.1),                                              //Extend Intake
+            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.8),  //Drive to second ball
+            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),     //Stop Driving
+            new IntakeCommand(intake, true).withTimeout(0.1),                                               //Retract Intake
+            new ManualShoot(shooter, -0.4, 1, -0.6),                                                        //Shoot balls into high goal
+            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.2),  //Drive backwards a little more to make sure it is out of tape
+            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1)        //Stop Driving backwards
         );
     }
 

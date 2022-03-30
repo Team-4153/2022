@@ -32,17 +32,17 @@ public class LowTwoBall extends SequentialCommandGroup{
 
         addRequirements(drivetrain);
 
-        SmartDashboard.putString("Mode", "auto-low");
+        SmartDashboard.putString("Mode", "auto-low");                                                       //Set the LED's to low goal colors
 
         addCommands(
-            new ManualShoot(shooter, -0.5, 0.5, -1),
-            new IntakeCommand(intake, false).withTimeout(0.1),
-            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),
-            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),
-            new IntakeCommand(intake, true).withTimeout(0.1),
-            new DriveCommand(drivetrain, () -> 0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.4),
-            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),
-            new ManualShoot(shooter, -0.5, 0.5, -1)
+            new ManualShoot(shooter, -0.5, 0.5, -1),                                                        //Shoot 1st ball
+            new IntakeCommand(intake, false).withTimeout(0.1),                                              //Extend Intake
+            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),  //Drive Backwards
+            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),     //Stop Driving
+            new IntakeCommand(intake, true).withTimeout(0.1),                                               //Retract Intake
+            new DriveCommand(drivetrain, () -> 0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.4),   //Drive Forwards to hub
+            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),     //Stop Driving
+            new ManualShoot(shooter, -0.5, 0.5, -1)                                                         //Shoot 2nd ball
         );
     }
 

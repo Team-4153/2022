@@ -30,13 +30,13 @@ public class OneBallAuto extends SequentialCommandGroup{
         this.shooter = shooter;
         this.intake = intake;
         
-        SmartDashboard.putString("Mode", "auto-high");
+        SmartDashboard.putString("Mode", "auto-high");                                                      //Set the LED's to high goal colors
 
         addRequirements(drivetrain, shooter, intake);
 
         addCommands(
-            new DriveCommand(drivetrain, () -> -0.3, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.2),
-            new AutoAim(shooter, drivetrain, true)
+            new DriveCommand(drivetrain, () -> -0.3, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.2),  //Drive Backwards
+            new AutoAim(shooter, drivetrain, true)                                                          //Auto aim and shoot to the high goal
         );
 
     }
