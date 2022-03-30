@@ -68,32 +68,64 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   public int ledJump(int pos) {
-    if (climberLockedR != climberLockedR2) {
-      //Third Strand
-      for (int i = 0; i < lengthstrand3; i++) {
-        rightLED(lengthstrand1 + lengthstrand2 + i);
+    if (ypluggedin) {
+      if (climberLockedR != climberLockedR2) {
+        //Third Strand
+        for (int i = 0; i < lengthstrand3; i++) {
+          rightLED(lengthstrand1 + lengthstrandy + lengthstrand2 + i);
+        }
+      }
+      else if (climberLockedL != climberLockedL2) {
+        //First Strand
+        for (int i = 0; i < lengthstrand1; i++) {
+          leftLED(i);
+        }
+      }
+      else if (intake != intake2 || winch != winch2) {
+        //First Strand
+        for (int i = 0; i < lengthstrand1; i++) {
+          leftLED(i);
+        }
+        //Third Strand
+        for (int i = 0; i < lengthstrand3; i++) {
+          rightLED(lengthstrand1 + lengthstrandy + lengthstrand2 + i);
+        }
+      }
+      else if (count != count2 || shooting != shooting2) {
+        //Second Strand
+        for (int i = 0; i < lengthstrand2; i++) {
+          shooterLED(lengthstrand1 + lengthstrandy + i + 1);
+        }
       }
     }
-    else if (climberLockedL != climberLockedL2) {
-      //First Strand
-      for (int i = 0; i < lengthstrand1; i++) {
-        leftLED(i);
+    else {
+      if (climberLockedR != climberLockedR2) {
+        //Third Strand
+        for (int i = 0; i < lengthstrand3; i++) {
+          rightLED(lengthstrand1 + lengthstrand2 + i);
+        }
       }
-    }
-    else if (intake != intake2 || winch != winch2) {
-      //First Strand
-      for (int i = 0; i < lengthstrand1; i++) {
-        leftLED(i);
+      else if (climberLockedL != climberLockedL2) {
+        //First Strand
+        for (int i = 0; i < lengthstrand1; i++) {
+          leftLED(i);
+        }
       }
-      //Third Strand
-      for (int i = 0; i < lengthstrand3; i++) {
-        rightLED(lengthstrand1 + lengthstrand2 + i);
+      else if (intake != intake2 || winch != winch2) {
+        //First Strand
+        for (int i = 0; i < lengthstrand1; i++) {
+          leftLED(i);
+        }
+        //Third Strand
+        for (int i = 0; i < lengthstrand3; i++) {
+          rightLED(lengthstrand1 + lengthstrand2 + i);
+        }
       }
-    }
-    else if (count != count2 || shooting != shooting2) {
-      //Second Strand
-      for (int i = 0; i < lengthstrand2; i++) {
-        shooterLED(lengthstrand1 + i);
+      else if (count != count2 || shooting != shooting2) {
+        //Second Strand
+        for (int i = 0; i < lengthstrand2; i++) {
+          shooterLED(lengthstrand1 + i);
+        }
       }
     }
     return pos+1;
@@ -231,58 +263,37 @@ public class LEDSubsystem extends SubsystemBase {
       //Strand 1
       wormLED(running_LED);
     }
-    else if (ypluggedin) {
-      if (running_LED <= lengthstrand1 + lengthstrandy) {
-        //The Y
-        m_ledBuffer.setRGB(running_LED, 0, 176, 170);//Teal
-      }
-      else if (running_LED <= lengthstrand1 + lengthstrandy + lengthstrand2) {
-        //Strand 2
-        wormLED(running_LED);
-      }
-      else if (running_LED <= lengthstrand1 + lengthstrandy + lengthstrand2 + lengthstrand3) {
-        //Strand 3
-        wormLED(running_LED);
-      }
+    else if (running_LED <= lengthstrand1 + lengthstrandy) {
+      //The Y
+      m_ledBuffer.setRGB(running_LED, 0, 156, 150);//Teal
     }
-    else {
-      if (running_LED <= lengthstrand1 + lengthstrand2) {
-        //Strand 2
-        wormLED(running_LED);
-      }
-      else if (running_LED <= lengthstrand1 + lengthstrand2 + lengthstrand3) {
-        //Strand 3
-        wormLED(running_LED);
-      }
+    else if (running_LED <= lengthstrand1 + lengthstrandy + lengthstrand2) {
+      //Strand 2
+      wormLED(running_LED);
+    }
+    else if (running_LED <= lengthstrand1 + lengthstrandy + lengthstrand2 + lengthstrand3) {
+      //Strand 3
+      wormLED(running_LED);
     }
 
     if (chasingLED <= lengthstrand1) {
       //Strand 1
       leftLED(chasingLED);
+      // m_ledBuffer.setRGB(chasingLED, 0, 150, 0);//Green
     }
-    else if (ypluggedin) {
-      if (chasingLED <= lengthstrand1 + lengthstrandy) {
-        //The Y
-        m_ledBuffer.setRGB(chasingLED, 0, 156, 150);//Teal
-      }
-      else if (chasingLED <= lengthstrand1 + lengthstrandy + lengthstrand2) {
-        //Strand 2
-        shooterLED(chasingLED);
-      }
-      else if (chasingLED <= lengthstrand1 + lengthstrandy + lengthstrand2 + lengthstrand3) {
-        //Strand 3
-        rightLED(chasingLED);
-      }
+    else if (chasingLED <= lengthstrand1 + lengthstrandy) {
+      //The Y
+      m_ledBuffer.setRGB(chasingLED, 0, 156, 150);//Teal
     }
-    else {
-      if (chasingLED <= lengthstrand1 + lengthstrand2) {
-        //Strand 2
-        shooterLED(chasingLED);
-      }
-      else if (chasingLED <= lengthstrand1 + lengthstrand2 + lengthstrand3) {
-        //Strand 3
-        rightLED(chasingLED);
-      }
+    else if (chasingLED <= lengthstrand1 + lengthstrandy + lengthstrand2) {
+      //Strand 2
+      shooterLED(chasingLED);
+      // m_ledBuffer.setRGB(chasingLED, 150, 0, 0);//Red
+    }
+    else if (chasingLED <= lengthstrand1 + lengthstrandy + lengthstrand2 + lengthstrand3) {
+      //Strand 3
+      rightLED(chasingLED);
+      // m_ledBuffer.setRGB(chasingLED, 0, 150, 0);//Green
     }
   }
 
