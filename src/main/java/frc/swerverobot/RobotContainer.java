@@ -130,6 +130,10 @@ public class RobotContainer {
 
         }
 
+        public Command getTestCommand() {
+                return new TestCommand(drivetrain, shooter, intake, climb);
+        }
+
         private void configureButtonBindings() {
                 //[Drive Subsystem]
                 ResetGyro.whenPressed(
@@ -214,12 +218,12 @@ public class RobotContainer {
                         //Moves robot up using mobile climber
                         new SpoolCommand(climb)
                 );
-                WinchLock.whenPressed(
-                        new WinchLockCommand(climb, States.LOCKED)
-                );
-                WinchUnlock.whenPressed(
-                        new WinchLockCommand(climb, States.UNLOCKED)
-                );
+                // WinchLock.whenPressed(
+                //         new WinchLockCommand(climb, States.LOCKED)
+                // );
+                // WinchUnlock.whenPressed(
+                //         new WinchLockCommand(climb, States.UNLOCKED)
+                // );
 /*
 -0.65, 0.825, -1
 Miss - 7

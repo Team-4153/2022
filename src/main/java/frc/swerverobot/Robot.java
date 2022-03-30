@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
     private RobotContainer container;
     private Command autonomousCommand;
+    private Command testCommand;
 
     @Override
     public void robotInit() {
@@ -25,7 +26,7 @@ public class Robot extends TimedRobot {
     public void disabledInit() {
         CommandScheduler.getInstance().cancelAll();
     }
-  
+
     @Override
     public void disabledPeriodic() {
       CommandScheduler.getInstance().run();
@@ -55,5 +56,17 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {}
+
+    @Override
+    public void testInit() {
+      testCommand = container.getTestCommand();
+
+      if (testCommand != null) {
+        testCommand.schedule();
+      }
+    }
+
+    @Override
+    public void testPeriodic() {}
 
 }
