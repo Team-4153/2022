@@ -35,21 +35,19 @@ public class ManualShoot extends SequentialCommandGroup{
 
 
         addCommands(
-            runShootMotors,
-
+            //First Ball
+            runShootMotors,//Get Shoot Motors up to speed
             new WaitCommand(waitforSpool), //Wait for spool up of motors
-            runFeedMotors1,
+            runFeedMotors1,//Feed first ball into the shooter
+            new WaitCommand(waitforShoot2),//wait for ball to exit shooter 
 
-            new WaitCommand(waitforShoot2),
-            
-            new FeedCommand(shooter).withTimeout(1),
-            // new RunFeedMotors(shooter, 0), //Stop feed motor
-            new WaitCommand(waitforSpool),
-            
-            runFeedMotors2,
+            //Second Ball
+            new FeedCommand(shooter).withTimeout(1),//Feed the second ball into the fiering position
+            new WaitCommand(waitforSpool),//Wait for shooter to get up to speed again
+            runFeedMotors2,//Feed the second ball into the shooter
+            new WaitCommand(waitForShoot),//Wait for ball to exit shooter
 
-            new WaitCommand(waitForShoot),
-            
+            //End
             new RunFeedMotors(shooter, 0), //Stop feed motors
             new RunShootMotors(shooter, 0,  0) //Stop shooter motors
         );
