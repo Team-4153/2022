@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.swerverobot.subsystems.ClimberSubsystem;
 
+@Deprecated
+
 public class GetToNextRungCommand extends SequentialCommandGroup{
     private double time = 0.2;
 

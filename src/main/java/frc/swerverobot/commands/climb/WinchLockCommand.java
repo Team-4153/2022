@@ -3,6 +3,8 @@ package frc.swerverobot.commands.climb;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.swerverobot.subsystems.ClimberSubsystem;
 
+@Deprecated
+
 public class WinchLockCommand extends CommandBase{
     private ClimberSubsystem climb;
     private final States state;

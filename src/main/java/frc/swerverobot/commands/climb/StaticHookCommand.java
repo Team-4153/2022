@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.swerverobot.RobotMap;
 import frc.swerverobot.subsystems.ClimberSubsystem;
 
+@Deprecated
+
 public class StaticHookCommand extends CommandBase{
     private final ClimberSubsystem climb;
     private final States state;

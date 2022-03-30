@@ -68,6 +68,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.swerverobot.RobotMap;
 
+@Deprecated
+@SuppressWarnings("unused")
+
 public class ClimberSubsystem extends SubsystemBase {
     // Initiator
 
@@ -117,7 +120,7 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     public void unspool() {
-        spoolMotor.set(1.0);
+        spoolMotor.set(0.7);
         SmartDashboard.putBoolean("Winch", true);
     }
 
