@@ -12,13 +12,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import static frc.swerverobot.RobotMap.*;
 
 public class LEDSubsystem extends SubsystemBase {
-  private int lengthstrand1 = 25;//Left Climber
-  private int lengthstrandy = 26;//Length of the Y
+  private int lengthstrand1 = 30;//Left Climber(Old 25)
+  private int lengthstrandy = 42;//Length of the Y
   private boolean ypluggedin = true;
-  private int lengthstrand2 = 53;//Shooter
-  private int lengthstrand3 = 70;//Right CLimber
+  private int lengthstrand2 = 34;//Shooter (Old 53)
+  private int lengthstrand3 = 84;//Right CLimber (Old 70)
 
-  private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(lengthstrand1 + lengthstrand2 + lengthstrand3 + (50));
+  private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(ledCount());
   private AddressableLED m_led = new AddressableLED(LEDPWMPort);
 
   private int running_LED = 1;
@@ -210,24 +210,24 @@ public class LEDSubsystem extends SubsystemBase {
   */
 
   public void colorPositionLED() {
-    shooting = SmartDashboard.getBoolean("Shooting", false);
-    winch = SmartDashboard.getBoolean("Climbing", false);
-    climberExtended = !SmartDashboard.getBoolean("Climb Arm Extention", true);
-    climberLockedR = !StatHook1.get();
-    climberLockedL = !StatHook2.get();
-    intake = Intake_Motor.get() != 0;
-    count = SmartDashboard.getNumber("Ball Count", 0);
-    mode = SmartDashboard.getString("Mode", "null");
+    shooting = SmartDashboard.getBoolean("Shooting", false); // Shooting (true|false)
+    winch = SmartDashboard.getBoolean("Winch", false); // Winch Active (true|false)
+    climberExtended = !SmartDashboard.getBoolean("Climb Arm Extention", true);//Climber Arm Extention (true|false)
+    climberLockedR = !StatHook1.get();//Right Static Arm (true|false)
+    climberLockedL = !StatHook2.get();//Left Static Arm (true|false)
+    intake = Intake_Motor.get() != 0;//Intake Motor (true|false)
+    count = SmartDashboard.getNumber("Ball Count", 0);//Ball Count (0|1|2)
+    mode = SmartDashboard.getString("Mode", "null");//Mode (auto-high|auto-low|tele)
 
     if (running_LED <= lengthstrand1) {
       //Strand 1
       wormLED(running_LED);
     }
-    else if (running_LED <= lengthstrand1 + lengthstrandy && ypluggedin) {
-      m_ledBuffer.setRGB(running_LED, 0, 176, 170);//Teal
-    }
     else if (ypluggedin) {
-      if (running_LED <= lengthstrand1 + lengthstrandy + lengthstrand2) {
+      if (running_LED <= lengthstrand1 + lengthstrandy) {
+        m_ledBuffer.setRGB(running_LED, 0, 176, 170);//Teal
+      }
+      else if (running_LED <= lengthstrand1 + lengthstrandy + lengthstrand2) {
         //Strand 2
         wormLED(running_LED);
       }
