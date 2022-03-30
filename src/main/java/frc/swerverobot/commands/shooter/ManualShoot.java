@@ -42,7 +42,7 @@ public class ManualShoot extends SequentialCommandGroup{
 
             new WaitCommand(waitforShoot2),
             
-            new FeedCommand(shooter),
+            new FeedCommand(shooter).withTimeout(1),
             // new RunFeedMotors(shooter, 0), //Stop feed motor
             new WaitCommand(waitforSpool),
             
