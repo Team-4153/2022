@@ -13,9 +13,12 @@ import frc.swerverobot.commands.intake.*;
 import frc.swerverobot.commands.LED.*;
 import frc.swerverobot.commands.shooter.*;
 import frc.swerverobot.commands.auto.*;
+import frc.swerverobot.commands.auto.competition.Drive;
 import frc.swerverobot.commands.auto.competition.FourBallAuto;
 import frc.swerverobot.commands.auto.competition.HighThreeBall;
 import frc.swerverobot.commands.auto.competition.HighTwoBall;
+import frc.swerverobot.commands.auto.competition.LowHighThreeBall;
+import frc.swerverobot.commands.auto.competition.LowHighTwoBall;
 import frc.swerverobot.commands.auto.competition.LowOneBall;
 import frc.swerverobot.commands.auto.competition.LowThreeBall;
 import frc.swerverobot.commands.auto.competition.LowTwoBall;
@@ -109,24 +112,24 @@ public class RobotContainer {
         public Command getAutonomousCommand() {
                 String choice = SmartDashboard.getString("Auto Selector", null);
 
-                switch(choice) {
-                        case "LOW_ONE":
-                                return new LowOneBall(drivetrain, shooter, intake);
-                        case "LOW_TWO":
-                                return new LowTwoBall(drivetrain, shooter, intake);
-                        case "LOW_THREE":
-                                return new LowThreeBall(drivetrain, shooter, intake);
-                        case "HIGH_TWO":
-                                return new HighTwoBall(drivetrain, shooter, intake);
-                        case "HIGH_THREE":
-                                return new HighThreeBall(drivetrain, shooter, intake);
-                        case "THREE_BALL":
-                                return new ThreeBallAuto(drivetrain, shooter, intake);
-                        // case "FOUR_BALL":
-                        //         return new FourBallAuto(drivetrain, shooter, intake);
-                        default:
-                                return new HighTwoBall(drivetrain, shooter, intake);
-                }
+                // switch(choice) {
+                //         case "LOW_ONE":
+                //                 return new LowOneBall(drivetrain, shooter, intake);
+                //         case "LOW_TWO":
+                //                 return new LowTwoBall(drivetrain, shooter, intake);
+                //         case "LOW_THREE":
+                //                 return new LowThreeBall(drivetrain, shooter, intake);
+                //         case "HIGH_TWO":
+                //                 return new HighTwoBall(drivetrain, shooter, intake);
+                //         case "HIGH_THREE":
+                //                 return new HighThreeBall(drivetrain, shooter, intake);
+                //         // case "THREE_BALL":
+                //                 // return new ThreeBallAuto(drivetrain, shooter, intake);
+                //         // case "FOUR_BALL":
+                //         //         return new FourBallAuto(drivetrain, shooter, intake);
+                //         default:
+                                return new LowHighThreeBall(drivetrain, shooter, intake);
+                // }
         }
 
         public Command getTestCommand() {
@@ -146,7 +149,7 @@ public class RobotContainer {
                                 () -> 0.0,
                                 () -> 0.0,
                                 () -> 1.0
-                        )
+                        ).withTimeout(2)
                 );
                 driveController.getBButton().whenPressed(
                         new GoToAngleCommand(
@@ -155,7 +158,7 @@ public class RobotContainer {
                                 () -> 0.0,
                                 () -> -1.0,
                                 () -> 0.0
-                        )
+                        ).withTimeout(2)
                 );
                 driveController.getXButton().whenPressed(
                         new GoToAngleCommand(
@@ -164,7 +167,7 @@ public class RobotContainer {
                                 () -> 0.0,
                                 () -> 1.0,
                                 () -> 0.0
-                        )
+                        ).withTimeout(2)
                 );
                 driveController.getAButton().whenPressed(
                         new GoToAngleCommand(
@@ -173,7 +176,7 @@ public class RobotContainer {
                                 () -> 0.0,
                                 () -> 0.0,
                                 () -> -1.0
-                        )
+                        ).withTimeout(2)
                 );
                 // driveController.getStartButton().whenPressed(
                 //         new LockCommand(drivetrain, States.TOGGLE)
@@ -217,9 +220,9 @@ public class RobotContainer {
                         //Moves robot up using mobile climber
                         new SpoolCommand(climb)
                 );
-                // TestButton.whenPressed(
-                        // new TestCommand(drivetrain, shooter, intake, climb)
-                // );
+                TestButton.whenPressed(
+                        new TestCommand(drivetrain, shooter, intake, climb)
+                );
                 // WinchLock.whenPressed(
                 //         new WinchLockCommand(climb, States.LOCKED)
                 // );
@@ -236,21 +239,21 @@ Hit  - 13
                 DropBallBTN.whenPressed(
                         //Drops the first ball in storage
 //                        new DropBall(shooter)
-                        new ManualShoot(shooter, -0.72, 0.72, -0.4) // -0.7625, 0.7625, -0.4
+                        new ManualShoot(shooter, -0.7625, 0.7625, -1) // -0.7625, 0.7625, -0.4
                 );
                 ManualShoot.whenPressed(
                         //Gets into low goal from 77 visual distance (77 is as close as we can get and still have a distance reading)
-                        new ManualShoot(shooter, -0.5, 0.5, -1)
+                        new ManualShoot(shooter, -0.475, 0.475, -1)
                 );
                 AimShootHigh.getButton(0.1).whenPressed(
                         //Autoaim to the high goal and then shoot
                         //Last boolean determines which dataset to use, true = high, false = low.
-                        new AutoAim(shooter, drivetrain, true)
+                        new AutoAim(shooter, drivetrain, true).withTimeout(4)
                 );
                 AimShootLow.getButton(0.1).whenPressed(
                         //Autoaim to the high goal and then shoot
                         //Last boolean determines which dataset to use, true = high, false = low.
-                        new AutoAim(shooter, drivetrain, false)
+                        new AutoAim(shooter, drivetrain, false).withTimeout(4)
                         // new ShootCommand(shooter, -0.7, 1.0, -0.4)
                 );
 

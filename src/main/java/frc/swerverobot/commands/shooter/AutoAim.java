@@ -25,7 +25,7 @@ public class AutoAim extends SequentialCommandGroup{
 
         addCommands(
             //Points robot at hub 
-            new FollowHubCommand(drivetrain).withTimeout(5),
+            new FollowHubCommand(drivetrain).withTimeout(2),
             //0 = Top Motor, 1 = Bottom Motor, 2 = Feed Motor
             //Shoots at the power from earlier
             shootCommand
@@ -40,7 +40,7 @@ public class AutoAim extends SequentialCommandGroup{
             return;
         }
 
-        shootCommand.setSpeeds(powers[0], powers[1], powers[2]);
+        shootCommand.setSpeeds(powers[0]-0.022, powers[1]+0.022, powers[2]);
     }
 
 }

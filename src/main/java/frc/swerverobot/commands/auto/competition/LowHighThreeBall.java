@@ -1,5 +1,6 @@
 package frc.swerverobot.commands.auto.competition;
 
+import frc.swerverobot.Robot;
 import frc.swerverobot.RobotMap;
 import frc.swerverobot.commands.LED.SetT;
 import frc.swerverobot.commands.drive.DriveCommand;
@@ -18,42 +19,43 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 @Deprecated
 @SuppressWarnings("unused")
 
-//Hard Coded 3 Ball Low Goal
+//Hard Coded 2 Ball Low Goal
 
-public class LowThreeBall extends SequentialCommandGroup{
+public class LowHighThreeBall extends SequentialCommandGroup{
     private final DrivetrainSubsystem drivetrain;
     private final ShooterSubsystem2 shooter;
     private final IntakeSubsystem intake;
     private double angle;
 
-    public LowThreeBall(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake) {
+    public LowHighThreeBall(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake) {
         this.drivetrain = drivetrain;
         this.shooter = shooter;
         this.intake = intake;
 
         addRequirements(drivetrain);
 
-        
         SmartDashboard.putString("Mode", "auto-low");                                                       //Set the LED's to low goal colors
 
         addCommands(
-            new ManualShoot(shooter, -0.45, 0.45, -1).withTimeout(1.3),                                       //Shoot 1st ball
+            new ManualShoot(shooter, -0.475, 0.475, -1).withTimeout(1.5),                                   //Shoot 1st ball
             new IntakeCommand(intake, false).withTimeout(0.1),                                              //Extend Intake
-            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.0), //Drive Backwards
-            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),     //Stop Driving
-            new IntakeCommand(intake, true).withTimeout(0.5),                                               //Retract Intake
-            new WaitCommand(0.3),                                                                           //Wait 0.3s
-            new ManualShoot(shooter, -0.5, 0.75, -1).withTimeout(1.3),                                                        //Shoot both balls into low goal
+            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.9),   //Drive Backwards
+            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.0),     //Stop Driving
+            new IntakeCommand(intake, true).withTimeout(1.0),                                               //Retract Intake
+            // new DriveCommand(drivetrain, () -> 0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.4),  //Drive Forwards to hub
+            // new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),     //Stop Driving
+            new ManualShoot(shooter, -0.5, 0.8, -1),                                                        //Shoot 2nd ball
+            // new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),   //Drive Backwards
+            // new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.0),     //Stop Driving
             new GoToAngleCommand(drivetrain, () -> 0, () -> 0, -2*Math.PI/3.25).withTimeout(1.3),           //Turn to 3rd ball
             new IntakeCommand(intake, false).withTimeout(0.2),                                              //Extend intake
-            new DriveCommand(drivetrain, () -> 0.15, () -> 0.5, () -> 0, () -> 0, () -> 0).withTimeout(1.5), //Drive to 3rd ball
+            new DriveCommand(drivetrain, () -> 0.11, () -> 0.5, () -> 0, () -> 0, () -> 0).withTimeout(1.6), //Drive to 3rd ball
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.0),     //Stop Driving
             new IntakeCommand(intake, true).withTimeout(0.5),                                               //Retract Intake
             new GoToAngleCommand(drivetrain, () -> 0, () -> 0, Math.PI/2.25).withTimeout(1.3),              //Turn to hub
-            new ManualShoot(shooter, -0.5, 0.75, -1).withTimeout(1.3),                                                       //Shoot 3rd ball into low goal
+            new ManualShoot(shooter, -0.62, 0.75, -1).withTimeout(1.3),                                                       //Shoot 3rd ball into low goal
             new SetT()                                                                                      //Change Auto LED's to tele Mode
         );
     }
 
 }
-

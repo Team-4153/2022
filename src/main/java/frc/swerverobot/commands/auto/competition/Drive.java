@@ -20,13 +20,13 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 //Hard Coded 2 Ball Low Goal
 
-public class LowTwoBall extends SequentialCommandGroup{
+public class Drive extends SequentialCommandGroup{
     private final DrivetrainSubsystem drivetrain;
     private final ShooterSubsystem2 shooter;
     private final IntakeSubsystem intake;
     private double angle;
 
-    public LowTwoBall(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake) {
+    public Drive(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake) {
         this.drivetrain = drivetrain;
         this.shooter = shooter;
         this.intake = intake;
@@ -37,13 +37,13 @@ public class LowTwoBall extends SequentialCommandGroup{
 
         addCommands(
             new ManualShoot(shooter, -0.475, 0.475, -1),                                                        //Shoot 1st ball
-            new IntakeCommand(intake, false).withTimeout(0.1),                                              //Extend Intake
+            // new IntakeCommand(intake, false).withTimeout(0.1),                                              //Extend Intake
             new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),   //Drive Backwards
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),     //Stop Driving
-            new IntakeCommand(intake, true).withTimeout(0.1),                                               //Retract Intake
-            new DriveCommand(drivetrain, () -> 0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.4),  //Drive Forwards to hub
-            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),     //Stop Driving
-            new ManualShoot(shooter, -0.475, 0.475, -1),                                                        //Shoot 2nd ball
+            // // new IntakeCommand(intake, true).withTimeout(0.1),                                               //Retract Intake
+            // new DriveCommand(drivetrain, () -> 0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.4),  //Drive Forwards to hub
+            // new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),     //Stop Driving
+            // new ManualShoot(shooter, -0.475, 0.475, -1),                                                        //Shoot 2nd ball
             new SetT()                                                                                      //Change Auto LED's to tele Mode
         );
     }

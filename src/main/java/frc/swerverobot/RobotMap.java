@@ -113,8 +113,8 @@ public class RobotMap {
     public static final int ARM_FORWARD = 4;    //[Climber Subsystem]
     public static final int ARM_BACK = 5;       //[Climber Subsystem]
 
-    public static final int HOOK_CLOSE = 2;     //[Climber Subsystem]
-    public static final int HOOK_OPEN = 3;      //[Climber Subsystem]
+    public static final int HOOK_CLOSE = 2;     //[Climber Subsystem] #2
+    public static final int HOOK_OPEN = 3;      //[Climber Subsystem] #1
 
     public static final int WINCH_LOCK = 6;     //[Climber Subsystem]
     public static final int WINCH_UNLOCK = 7;   //[Climber Subsystem]
@@ -123,25 +123,25 @@ public class RobotMap {
 // EVEN numbers are angle motors, ODD numbers are drive motors
     public static final int DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_ENCODER = -1;
     public static final int DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_MOTOR = 2;
-    public static final double DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_OFFSET = -Math.toRadians(356.08);
+    public static final double DRIVETRAIN_FRONT_RIGHT_MODULE_ANGLE_OFFSET = -Math.toRadians(197.0-180);
     public static final int DRIVETRAIN_FRONT_RIGHT_MODULE_DRIVE_MOTOR = 1;
     public static final double DRIVETRAIN_FRONT_RIGHT_MODULE_ENCODER_VOLTAGE_MAX = 3.300;
 
     public static final int DRIVETRAIN_BACK_RIGHT_MODULE_ANGLE_ENCODER = -1;
     public static final int DRIVETRAIN_BACK_RIGHT_MODULE_ANGLE_MOTOR = 4;
-    public static final double DRIVETRAIN_BACK_RIGHT_MODULE_ANGLE_OFFSET = -Math.toRadians(258.6-180);
+    public static final double DRIVETRAIN_BACK_RIGHT_MODULE_ANGLE_OFFSET = -Math.toRadians(145.0+180);
     public static final int DRIVETRAIN_BACK_RIGHT_MODULE_DRIVE_MOTOR = 3;
     public static final double DRIVETRAIN_BACK_RIGHT_MODULE_ENCODER_VOLTAGE_MAX = 3.330;
 
     public static final int DRIVETRAIN_FRONT_LEFT_MODULE_ANGLE_ENCODER = -1;
     public static final int DRIVETRAIN_FRONT_LEFT_MODULE_ANGLE_MOTOR = 6;
-    public static final double DRIVETRAIN_FRONT_LEFT_MODULE_ANGLE_OFFSET = -Math.toRadians(77.2);
+    public static final double DRIVETRAIN_FRONT_LEFT_MODULE_ANGLE_OFFSET = -Math.toRadians(257.1-180);
     public static final int DRIVETRAIN_FRONT_LEFT_MODULE_DRIVE_MOTOR = 5;
     public static final double DRIVETRAIN_FRONT_LEFT_MODULE_ENCODER_VOLTAGE_MAX = 3.36;
 
     public static final int DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_ENCODER = -1;
     public static final int DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_MOTOR = 8;
-    public static final double DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_OFFSET = -Math.toRadians(170.3+180);
+    public static final double DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_OFFSET = -Math.toRadians(351.5);
     public static final int DRIVETRAIN_BACK_LEFT_MODULE_DRIVE_MOTOR = 7;
     public static final double DRIVETRAIN_BACK_LEFT_MODULE_ENCODER_VOLTAGE_MAX = 3.256;
 

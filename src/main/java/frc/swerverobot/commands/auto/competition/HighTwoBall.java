@@ -36,7 +36,7 @@ public class HighTwoBall extends SequentialCommandGroup{
 
         addCommands(
             new IntakeCommand(intake, false).withTimeout(0.1),                                              //Extend Intake
-            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.8),  //Drive to second ball
+            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.0),  //Drive to second ball
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),     //Stop Driving
             new IntakeCommand(intake, true).withTimeout(0.1),                                               //Retract Intake
             new ManualShoot(shooter, -0.4, 1, -0.6),                                                        //Shoot balls into high goal
