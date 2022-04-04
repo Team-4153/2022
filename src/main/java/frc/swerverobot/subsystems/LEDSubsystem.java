@@ -12,13 +12,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import static frc.swerverobot.RobotMap.*;
 
 public class LEDSubsystem extends SubsystemBase {
-  private int lengthstrand1 = 30;//Left Climber(Old 25)
+  private int lengthstrand1 = 30;//Left Climber
   private int lengthstrandlefty = 42;//Length of the left Y
-  private boolean leftypluggedin = true;
+  private boolean leftypluggedin = false;
+  private int lengthstrand2 = 34;//Shooter
   private int lengthstrandrighty = 42;//Length of the left Y
   private boolean rightypluggedin = false;
-  private int lengthstrand2 = 34;//Shooter (Old 53)
-  private int lengthstrand3 = 84;//Right CLimber (Old 70)
+  private int lengthstrand3 = 84;//Right CLimber
 
   private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(ledCount());
   private AddressableLED m_led = new AddressableLED(LEDPWMPort);

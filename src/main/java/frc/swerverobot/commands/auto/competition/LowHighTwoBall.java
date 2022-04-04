@@ -38,13 +38,13 @@ public class LowHighTwoBall extends SequentialCommandGroup{
         addCommands(
             new ManualShoot(shooter, -0.475, 0.475, -1).withTimeout(1.5),                                   //Shoot 1st ball
             new IntakeCommand(intake, false).withTimeout(0.1),                                              //Extend Intake
-            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.0),   //Drive Backwards
+            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.0),  //Drive Backwards
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.0),     //Stop Driving
             new IntakeCommand(intake, true).withTimeout(1.0),                                               //Retract Intake
-            // new DriveCommand(drivetrain, () -> 0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.4),  //Drive Forwards to hub
+            // new DriveCommand(drivetrain, () -> 0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.4),   //Drive Forwards to hub
             // new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),     //Stop Driving
-            new ManualShoot(shooter, -0.6, 0.75, -1),                                                        //Shoot 2nd ball
-            // new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),   //Drive Backwards
+            new ManualShoot(shooter, -0.6, 0.75, -1),                                                       //Shoot 2nd ball
+            // new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),  //Drive Backwards
             // new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.0),     //Stop Driving
             new SetT()                                                                                      //Change Auto LED's to tele Mode
         );

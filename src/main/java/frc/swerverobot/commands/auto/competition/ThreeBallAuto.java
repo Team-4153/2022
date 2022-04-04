@@ -53,8 +53,8 @@ public class ThreeBallAuto extends SequentialCommandGroup{
             new WaitCommand(0.5),                                                                       //Wait 0.5s
             new IntakeCommand(intake, true),                                                            //Retract the intake
             new GoToAngleCommand(drivetrain, () -> 0, () -> 0, () -> 1, () -> 0),                       //Turn roughly to shooter
-            new AutoAim(shooter, drivetrain, true),                                                      //Autoaim for the high goal
-            new SetT()                                                                                      //Change Auto LED's to tele Mode
+            new AutoAim(shooter, drivetrain, true),                                                     //Autoaim for the high goal
+            new SetT()                                                                                  //Change Auto LED's to tele Mode
         );
 
     }

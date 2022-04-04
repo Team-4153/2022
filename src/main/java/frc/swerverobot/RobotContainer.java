@@ -112,24 +112,30 @@ public class RobotContainer {
         public Command getAutonomousCommand() {
                 String choice = SmartDashboard.getString("Auto Selector", null);
 
-                // switch(choice) {
-                //         case "LOW_ONE":
-                //                 return new LowOneBall(drivetrain, shooter, intake);
-                //         case "LOW_TWO":
-                //                 return new LowTwoBall(drivetrain, shooter, intake);
-                //         case "LOW_THREE":
-                //                 return new LowThreeBall(drivetrain, shooter, intake);
-                //         case "HIGH_TWO":
-                //                 return new HighTwoBall(drivetrain, shooter, intake);
-                //         case "HIGH_THREE":
-                //                 return new HighThreeBall(drivetrain, shooter, intake);
-                //         // case "THREE_BALL":
-                //                 // return new ThreeBallAuto(drivetrain, shooter, intake);
-                //         // case "FOUR_BALL":
-                //         //         return new FourBallAuto(drivetrain, shooter, intake);
-                //         default:
+                switch(choice) {
+                        case "LOW_ONE":
+                                return new LowOneBall(drivetrain, shooter, intake);
+                        case "LOW_TWO":
+                                return new LowTwoBall(drivetrain, shooter, intake);
+                        case "LOW_THREE":
+                                return new LowThreeBall(drivetrain, shooter, intake);
+                        case "LO_HI_TWO":
+                                return new LowTwoBall(drivetrain, shooter, intake);
+                        case "LO_HI_THREE":
+                                return new LowThreeBall(drivetrain, shooter, intake);
+                        case "HIGH_TWO":
+                                return new HighTwoBall(drivetrain, shooter, intake);
+                        case "HIGH_THREE":
+                                return new HighThreeBall(drivetrain, shooter, intake);
+                        case "FAST_THREE":
+                                return new HighThreeBall(drivetrain, shooter, intake);
+                        // case "THREE_BALL":
+                                // return new ThreeBallAuto(drivetrain, shooter, intake);
+                        // case "FOUR_BALL":
+                        //         return new FourBallAuto(drivetrain, shooter, intake);
+                        default:
                                 return new LowHighThreeBall(drivetrain, shooter, intake);
-                // }
+                }
         }
 
         public Command getTestCommand() {
