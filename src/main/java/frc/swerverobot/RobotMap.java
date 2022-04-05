@@ -41,6 +41,8 @@ public class RobotMap {
 
 //LEDS 
     public static final int LEDPWMPort = 5;                                     //[LED Subsystem] Port for the LED's
+    public static final boolean RightY = false;                                 //[LED Subsystem] Right Y plugged into the LED strip
+    public static final boolean LeftY = false;                                  //[LED Subsystem] Left Y plugged into the LED strip
 
 //Sensors
     public static final ADIS16470_IMU imu = new ADIS16470_IMU();                //[DriveTrain Subsystem]Gyro and acceleration sensor
