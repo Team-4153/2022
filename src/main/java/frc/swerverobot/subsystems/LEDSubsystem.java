@@ -526,11 +526,6 @@ public class LEDSubsystem extends SubsystemBase {
     m_led.setData(m_ledBuffer);
   }
 
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
-  }
-
   public void init() {
     m_led.setLength(m_ledBuffer.getLength());
     m_led.start();
