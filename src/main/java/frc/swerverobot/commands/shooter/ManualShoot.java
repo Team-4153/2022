@@ -11,6 +11,7 @@ import frc.swerverobot.commands.intake.FeedCommand;
 //              -----Shoot Command-----
 public class ManualShoot extends SequentialCommandGroup{
     private RunShootMotors runShootMotors;
+    private RunShootMotors runShootMotors2;
     private RunFeedMotors runFeedMotors1;
     private RunFeedMotors runFeedMotors2;
 
@@ -29,7 +30,8 @@ public class ManualShoot extends SequentialCommandGroup{
         this.botSpeed = botSpeed;
         this.feedSpeed = feedSpeed;
 
-        this.runShootMotors = new RunShootMotors(shooter, topSpeed, botSpeed);
+        this.runShootMotors = new RunShootMotors(shooter, topSpeed*1.1, botSpeed*1.1);
+        this.runShootMotors2 = new RunShootMotors(shooter, topSpeed, botSpeed);
         this.runFeedMotors1 = new RunFeedMotors(shooter, feedSpeed);
         this.runFeedMotors2 = new RunFeedMotors(shooter, feedSpeed);
 
@@ -42,6 +44,7 @@ public class ManualShoot extends SequentialCommandGroup{
             new WaitCommand(waitforShoot2),//wait for ball to exit shooter 
 
             //Second Ball
+            new RunShootMotors(shooter, topSpeed, botSpeed),
             new FeedCommand(shooter).withTimeout(1),//Feed the second ball into the fiering position
             new WaitCommand(waitforSpool/2),//Wait for shooter to get up to speed again
             runFeedMotors2,//Feed the second ball into the shooter

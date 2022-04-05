@@ -40,7 +40,7 @@ public class AutoAim extends SequentialCommandGroup{
             return;
         }
 
-        shootCommand.setSpeeds(powers[0]-0.022, powers[1]+0.022, powers[2]);
+        shootCommand.setSpeeds(powers[0], powers[1], powers[2]);
     }
 
 }

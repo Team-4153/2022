@@ -62,7 +62,6 @@ public class LEDSubsystem extends SubsystemBase {
   double count2 = 0;
 
   public int loopPos(int pos) {
-    pos = loopPos(pos);
     if (pos > m_ledBuffer.getLength()) { //reset the position back to start
       return pos - m_ledBuffer.getLength();
     }
@@ -91,8 +90,7 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
 
-  public int ledFill(int pos) {
-    pos = loopPos(pos);
+  public int ledFillWhenChanged(int pos) {
     if (leftypluggedin && rightypluggedin) {
       //Both Y's plugged in
       if (climberLockedR != climberLockedR2) {
@@ -220,7 +218,6 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   public void shooterLED(int pos) {
-    pos = loopPos(pos);
     if (shooting) {
       //If The Robot is Shooting
       m_ledBuffer.setRGB(pos, 0, 50, 0);//Green
@@ -239,7 +236,6 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
   public void rightLED(int pos) {
-    pos = loopPos(pos);
     if (climberLockedR) {
       //If Right Static Hook is Locked
       m_ledBuffer.setRGB(pos, 0, 65, 0);//Green
@@ -274,7 +270,6 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
   public void leftLED(int pos) {
-    pos = loopPos(pos);
     //Low Density Strand so Increased Brightness
     if (climberLockedL) {
       //If Left Static Hook is Locked
@@ -310,7 +305,6 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
   public void leftyLED(int pos) {
-    pos = loopPos(pos);
     //True is red and False is blue
     if (climberLockedL) {
       m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
@@ -323,7 +317,6 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
   public void rightyLED(int pos) {
-    pos = loopPos(pos);
     //True is red and False is blue
     if (climberLockedR) {
       m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
@@ -337,7 +330,6 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   public void wormLED(int pos) {
-    pos = loopPos(pos);
     if (winch) {
       //If Robot is Winching
       m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
@@ -498,7 +490,7 @@ public class LEDSubsystem extends SubsystemBase {
     colorPositionLED();
 
     //Change Positions
-    running_LED = ledFill(running_LED);
+    running_LED = ledFillWhenChanged(running_LED);
 
     climberLockedR2 = climberLockedR;
     climberLockedL2 = climberLockedL;
@@ -507,8 +499,13 @@ public class LEDSubsystem extends SubsystemBase {
     count2 = count;
     shooting2 = shooting;
 
-    running_LED = loopPos(running_LED);
-    chasingLED = loopPos(running_LED-length);
+    if (running_LED >= m_ledBuffer.getLength()) { //reset the position back to start
+      running_LED = 0;
+    }
+    chasingLED = running_LED-length;
+    if (chasingLED < 0) {
+      chasingLED = m_ledBuffer.getLength()+chasingLED;
+    }
 
     m_led.setData(m_ledBuffer);
   }

@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 //              -----Shoot Command-----
 public class ShootCommand extends SequentialCommandGroup{
     private RunShootMotors runShootMotors;
+    private RunShootMotors runShootMotors2;
     private RunFeedMotors runFeedMotors1;
     private RunFeedMotors runFeedMotors2;
 
@@ -17,7 +18,7 @@ public class ShootCommand extends SequentialCommandGroup{
     // private double botSpeed;
     // private double feedSpeed;
 
-    private double waitforSpool = 0.5;
+    private double waitforSpool = 0.7;
     private double waitForShoot = 0.75;
 
     //2 Ball Waits
@@ -25,6 +26,7 @@ public class ShootCommand extends SequentialCommandGroup{
 
     public ShootCommand(ShooterSubsystem2 shooter, double topSpeed, double botSpeed, double feedSpeed) {
         this.runShootMotors = new RunShootMotors(shooter, 0, 0);
+        this.runShootMotors2 = new RunShootMotors(shooter, 0, 0);
         this.runFeedMotors1 = new RunFeedMotors(shooter, 0);
         this.runFeedMotors2 = new RunFeedMotors(shooter, 0);
 
@@ -37,6 +39,7 @@ public class ShootCommand extends SequentialCommandGroup{
             new WaitCommand(waitforShoot2),//wait for ball to exit shooter 
 
             //Second Ball
+            runShootMotors2,
             new FeedCommand(shooter).withTimeout(1),//Feed the second ball into the fiering position
             new WaitCommand(waitforSpool/2),//Wait for shooter to get up to speed again
             runFeedMotors2,//Feed the second ball into the shooter
@@ -50,7 +53,8 @@ public class ShootCommand extends SequentialCommandGroup{
 
 
     public void setSpeeds(double topSpeed, double botSpeed, double feedSpeed) {
-        runShootMotors.setSpeeds(topSpeed, botSpeed);
+        runShootMotors.setSpeeds(topSpeed*1.1, botSpeed*1.1);
+        runShootMotors2.setSpeeds(topSpeed, botSpeed);
         runFeedMotors1.setSpeeds(feedSpeed);
         runFeedMotors2.setSpeeds(feedSpeed);
     }

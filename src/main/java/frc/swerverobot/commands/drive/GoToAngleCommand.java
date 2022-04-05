@@ -137,9 +137,13 @@ public class GoToAngleCommand extends CommandBase {
         drivetrain.drive(Vector2.ZERO, 0.0, false);
     }
 
-    public boolean isFinished() {
-        return Math.abs(rotationOutput) < 0.07;
-        // return false;
-    }
+    // public boolean isFinished() {
+    //     return Math.abs(rotationOutput) < 0.07;
+    //     // return false;
+    // }
 
+    // public synchronized void resetPose() {
+    //     drivetrain.resetPose();
+    //     rotationController.setSetpoint(0); //drivetrain.getPose().rotation.toRadians());
+    // }
 }
