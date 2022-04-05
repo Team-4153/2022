@@ -1,5 +1,6 @@
 package frc.swerverobot.commands.auto.competition;
 
+import frc.swerverobot.commands.LED.SetHighGoalAuto;
 import frc.swerverobot.commands.LED.SetT;
 import frc.swerverobot.commands.auto.FollowBallCommand;
 import frc.swerverobot.commands.drive.DriveCommand;
@@ -33,10 +34,9 @@ public class TwoBallAuto extends SequentialCommandGroup{
         this.intake = intake;
 
         addRequirements(drivetrain, shooter, intake);
-        
-        SmartDashboard.putString("Mode", "auto-high");                                                  //Set the LED's to high goal colors
 
         addCommands(
+            new SetHighGoalAuto(),                                                                      //Set the LED's to High goal colors
             new IntakeCommand(intake, false).withTimeout(0.3),                                          //Extend Intake
             new WaitCommand(0.5),                                                                       //Wait 0.5s
             new FollowBallCommand(drivetrain, () -> 0.3),                                               //Turn to the ball

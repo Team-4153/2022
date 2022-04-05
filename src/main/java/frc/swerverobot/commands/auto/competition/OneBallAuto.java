@@ -1,5 +1,6 @@
 package frc.swerverobot.commands.auto.competition;
 
+import frc.swerverobot.commands.LED.SetHighGoalAuto;
 import frc.swerverobot.commands.LED.SetT;
 import frc.swerverobot.commands.drive.DriveCommand;
 import frc.swerverobot.commands.drive.DriveWithSetRotationCommand;
@@ -30,12 +31,11 @@ public class OneBallAuto extends SequentialCommandGroup{
         this.drivetrain = drivetrain;
         this.shooter = shooter;
         this.intake = intake;
-        
-        SmartDashboard.putString("Mode", "auto-high");                                                      //Set the LED's to high goal colors
 
         addRequirements(drivetrain, shooter, intake);
 
         addCommands(
+            new SetHighGoalAuto(),                                                                          //Set the LED's to High goal colors
             new DriveCommand(drivetrain, () -> -0.3, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.2),  //Drive Backwards
             new AutoAim(shooter, drivetrain, true),                                                         //Auto aim and shoot to the high goal
             new SetT()                                                                                      //Change Auto LED's to tele Mode

@@ -1,6 +1,7 @@
 package frc.swerverobot.commands.auto.competition;
 
 import frc.swerverobot.RobotMap;
+import frc.swerverobot.commands.LED.SetHighGoalAuto;
 import frc.swerverobot.commands.LED.SetT;
 import frc.swerverobot.commands.drive.DriveCommand;
 import frc.swerverobot.commands.drive.DriveWithSetRotationCommand;
@@ -33,9 +34,8 @@ public class HighThreeBall extends SequentialCommandGroup{
 
         addRequirements(drivetrain);
 
-        SmartDashboard.putString("Mode", "auto-high");                                                      //Set the LED's to high goal colors
-
         addCommands(
+            new SetHighGoalAuto(),                                                                          //Set the LED's to High goal colors
             new IntakeCommand(intake, false).withTimeout(0.1),                                              //Extend intake
             new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.1),  //Drive backwards
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1),       //Stop Driving
