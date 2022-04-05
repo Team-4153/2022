@@ -35,6 +35,9 @@ public class RobotMap {
 
 //Config Variables
     public static final double firstBallPowerMultiplier = 1.1;
+    public static final double autoAimTopMotorPowerMultipler = 1;
+    public static final double autoAimBottomMotorPowerMultipler = 1;
+    public static final double autoAimFeedMotorPowerMultipler = 1;
 
 //LEDS 
     public static final int LEDPWMPort = 5;                                     //[LED Subsystem] Port for the LED's
