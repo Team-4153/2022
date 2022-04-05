@@ -33,6 +33,9 @@ Compressor(1)
 public class RobotMap {
 //Define all ports and constants of a component, put in correct catagory, label subsystem(s) used
 
+//Config Variables
+    public static final double firstBallPowerMultiplier = 1.1;
+
 //LEDS 
     public static final int LEDPWMPort = 5;                                     //[LED Subsystem] Port for the LED's
 

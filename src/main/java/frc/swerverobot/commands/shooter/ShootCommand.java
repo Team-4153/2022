@@ -1,5 +1,6 @@
 package frc.swerverobot.commands.shooter;
 
+import frc.swerverobot.RobotMap;
 import frc.swerverobot.commands.intake.FeedCommand;
 import frc.swerverobot.subsystems.ShooterSubsystem2;
 
@@ -53,7 +54,7 @@ public class ShootCommand extends SequentialCommandGroup{
 
 
     public void setSpeeds(double topSpeed, double botSpeed, double feedSpeed) {
-        runShootMotors.setSpeeds(topSpeed*1.1, botSpeed*1.1);
+        runShootMotors.setSpeeds(topSpeed*RobotMap.firstBallPowerMultiplier, botSpeed*RobotMap.firstBallPowerMultiplier);
         runShootMotors2.setSpeeds(topSpeed, botSpeed);
         runFeedMotors1.setSpeeds(feedSpeed);
         runFeedMotors2.setSpeeds(feedSpeed);

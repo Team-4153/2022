@@ -4,6 +4,7 @@ import frc.swerverobot.subsystems.ShooterSubsystem2;
 
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.swerverobot.RobotMap;
 import frc.swerverobot.commands.intake.FeedCommand;
 
 @SuppressWarnings("unused")
@@ -30,7 +31,7 @@ public class ManualShoot extends SequentialCommandGroup{
         this.botSpeed = botSpeed;
         this.feedSpeed = feedSpeed;
 
-        this.runShootMotors = new RunShootMotors(shooter, topSpeed*1.1, botSpeed*1.1);
+        this.runShootMotors = new RunShootMotors(shooter, topSpeed*RobotMap.firstBallPowerMultiplier, botSpeed*RobotMap.firstBallPowerMultiplier);
         this.runShootMotors2 = new RunShootMotors(shooter, topSpeed, botSpeed);
         this.runFeedMotors1 = new RunFeedMotors(shooter, feedSpeed);
         this.runFeedMotors2 = new RunFeedMotors(shooter, feedSpeed);
