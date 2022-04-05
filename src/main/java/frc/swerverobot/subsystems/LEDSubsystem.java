@@ -238,6 +238,10 @@ public class LEDSubsystem extends SubsystemBase {
       //If The Robot is Shooting
       m_ledBuffer.setRGB(pos, 0, 50, 0);//Green
     }
+    else if (distance > 150 && distance < 200) {
+      //else if robot is in the ideal shooting zone
+      m_ledBuffer.setRGB(pos, 0, 137, 100);//Dark Green
+    }
     else if (count == 2) {
       //else if there are 2 Balls
       m_ledBuffer.setRGB(pos, 50, 50, 0);//Orange
