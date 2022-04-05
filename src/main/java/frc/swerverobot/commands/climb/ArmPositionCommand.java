@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.swerverobot.subsystems.ClimberSubsystem;
 
 @Deprecated
-@SuppressWarnings("unused")
 
 public class ArmPositionCommand extends CommandBase{
     private final ClimberSubsystem climb;
