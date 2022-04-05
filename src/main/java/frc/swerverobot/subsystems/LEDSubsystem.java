@@ -5,6 +5,7 @@
 package frc.swerverobot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.swerverobot.RobotMap;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,11 +15,13 @@ import static frc.swerverobot.RobotMap.*;
 public class LEDSubsystem extends SubsystemBase {
   private int lengthstrand1 = 30;//Left Climber
   private int lengthstrandlefty = 42;//Length of the left Y
-  private boolean leftypluggedin = false;
   private int lengthstrand2 = 34;//Shooter
   private int lengthstrandrighty = 42;//Length of the left Y
-  private boolean rightypluggedin = false;
   private int lengthstrand3 = 84;//Right CLimber
+
+  //Change Values in the RobotMap.java file
+  private boolean rightypluggedin = RobotMap.RightYLEDS;
+  private boolean leftypluggedin = RobotMap.LeftYLEDS;
 
   private AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(ledCount());
   private AddressableLED m_led = new AddressableLED(LEDPWMPort);
@@ -61,11 +64,13 @@ public class LEDSubsystem extends SubsystemBase {
   boolean climberLockedL2 = false;
   double count2 = 0;
 
-  public int loopPos(int pos) {
-    if (pos > m_ledBuffer.getLength()) { //reset the position back to start
+  public int loopLEDPos(int pos) {
+    if (pos > m_ledBuffer.getLength()) {
+      //When Position is above the length of the LED strip, return the position from 0
       return pos - m_ledBuffer.getLength();
     }
     else if (pos < 0) {
+      //When Position is bellow the length of the LED strip, return the position from the end
       return pos + m_ledBuffer.getLength();
     }
     return pos;
@@ -218,6 +223,7 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   public void shooterLED(int pos) {
+    pos = loopLEDPos(pos);
     if (shooting) {
       //If The Robot is Shooting
       m_ledBuffer.setRGB(pos, 0, 50, 0);//Green
@@ -236,6 +242,7 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
   public void rightLED(int pos) {
+    pos = loopLEDPos(pos);
     if (climberLockedR) {
       //If Right Static Hook is Locked
       m_ledBuffer.setRGB(pos, 0, 65, 0);//Green
@@ -270,6 +277,7 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
   public void leftLED(int pos) {
+    pos = loopLEDPos(pos);
     //Low Density Strand so Increased Brightness
     if (climberLockedL) {
       //If Left Static Hook is Locked
@@ -305,6 +313,7 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
   public void leftyLED(int pos) {
+    pos = loopLEDPos(pos);
     //True is red and False is blue
     if (climberLockedL) {
       m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
@@ -317,6 +326,7 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
   public void rightyLED(int pos) {
+    pos = loopLEDPos(pos);
     //True is red and False is blue
     if (climberLockedR) {
       m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
@@ -330,6 +340,7 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   public void wormLED(int pos) {
+    pos = loopLEDPos(pos);
     if (winch) {
       //If Robot is Winching
       m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
@@ -489,9 +500,6 @@ public class LEDSubsystem extends SubsystemBase {
     //Worm
     colorPositionLED();
 
-    //Change Positions
-    running_LED = ledFillWhenChanged(running_LED);
-
     climberLockedR2 = climberLockedR;
     climberLockedL2 = climberLockedL;
     intake2 = intake;
@@ -499,14 +507,18 @@ public class LEDSubsystem extends SubsystemBase {
     count2 = count;
     shooting2 = shooting;
 
+    //Update Running LED Position and trim position
+    running_LED = loopLEDPos(ledFillWhenChanged(running_LED));
+    //Move Running LED to start if beyond end of LED Strip
     if (running_LED >= m_ledBuffer.getLength()) { //reset the position back to start
       running_LED = 0;
     }
-    chasingLED = running_LED-length;
+    //Update Chasing LED Position and trim position
+    chasingLED = loopLEDPos(running_LED-length);
     if (chasingLED < 0) {
       chasingLED = m_ledBuffer.getLength()+chasingLED;
     }
-
+    
     m_led.setData(m_ledBuffer);
   }
 
