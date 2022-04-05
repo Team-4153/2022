@@ -37,14 +37,14 @@ public class Drive extends SequentialCommandGroup{
 
         addCommands(
             new ManualShoot(shooter, -0.475, 0.475, -1),                                                        //Shoot 1st ball
-            // new IntakeCommand(intake, false).withTimeout(0.1),                                              //Extend Intake
-            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),   //Drive Backwards
-            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),     //Stop Driving
-            // // new IntakeCommand(intake, true).withTimeout(0.1),                                               //Retract Intake
-            // new DriveCommand(drivetrain, () -> 0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.4),  //Drive Forwards to hub
-            // new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),     //Stop Driving
-            // new ManualShoot(shooter, -0.475, 0.475, -1),                                                        //Shoot 2nd ball
-            new SetT()                                                                                      //Change Auto LED's to tele Mode
+            // new IntakeCommand(intake, false).withTimeout(0.1),                                               //Extend Intake
+            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),      //Drive Backwards
+            new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),         //Stop Driving
+            // // new IntakeCommand(intake, true).withTimeout(0.1),                                             //Retract Intake
+            // new DriveCommand(drivetrain, () -> 0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.4),    //Drive Forwards to hub
+            // new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),      //Stop Driving
+            // new ManualShoot(shooter, -0.475, 0.475, -1),                                                     //Shoot 2nd ball
+            new SetT()                                                                                          //Change Auto LED's to tele Mode
         );
     }
 

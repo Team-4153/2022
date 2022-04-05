@@ -39,21 +39,21 @@ public class LowHighThreeBall extends SequentialCommandGroup{
         addCommands(
             new ManualShoot(shooter, -0.475, 0.475, -1).withTimeout(1.5),                                   //Shoot 1st ball
             new IntakeCommand(intake, false).withTimeout(0.1),                                              //Extend Intake
-            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.9),   //Drive Backwards
+            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.9),  //Drive Backwards
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.0),     //Stop Driving
             new IntakeCommand(intake, true).withTimeout(1.0),                                               //Retract Intake
-            // new DriveCommand(drivetrain, () -> 0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.4),  //Drive Forwards to hub
+            // new DriveCommand(drivetrain, () -> 0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.4),   //Drive Forwards to hub
             // new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),     //Stop Driving
             new ManualShoot(shooter, -0.5, 0.8, -1),                                                        //Shoot 2nd ball
-            // new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),   //Drive Backwards
+            // new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),  //Drive Backwards
             // new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.0),     //Stop Driving
             new GoToAngleCommand(drivetrain, () -> 0, () -> 0, -2*Math.PI/3.25).withTimeout(1.3),           //Turn to 3rd ball
             new IntakeCommand(intake, false).withTimeout(0.2),                                              //Extend intake
-            new DriveCommand(drivetrain, () -> 0.11, () -> 0.5, () -> 0, () -> 0, () -> 0).withTimeout(1.6), //Drive to 3rd ball
+            new DriveCommand(drivetrain, () -> 0.11, () -> 0.5, () -> 0, () -> 0, () -> 0).withTimeout(1.6),//Drive to 3rd ball
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.0),     //Stop Driving
             new IntakeCommand(intake, true).withTimeout(0.5),                                               //Retract Intake
             new GoToAngleCommand(drivetrain, () -> 0, () -> 0, Math.PI/2.25).withTimeout(1.3),              //Turn to hub
-            new ManualShoot(shooter, -0.62, 0.75, -1).withTimeout(1.3),                                                       //Shoot 3rd ball into low goal
+            new ManualShoot(shooter, -0.62, 0.75, -1).withTimeout(1.3),                                     //Shoot 3rd ball into low goal
             new SetT()                                                                                      //Change Auto LED's to tele Mode
         );
     }
