@@ -44,8 +44,10 @@ public class FastThreeBall extends SequentialCommandGroup{
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.0),             //Stop Driving
             new IntakeCommand(intake, true).withTimeout(1.0),                                                       //Retract Intake
             new ManualShoot(shooter, -0.5, 0.8, -1),                                                                //Shoot 2nd ball
+            new GoToAngleCommand(drivetrain, () -> 0, () -> 0, -2*Math.PI/3.25).withTimeout(1.3),           //Turn to 3rd ball
             new IntakeCommand(intake, false).withTimeout(0.2),                                                      //Extend intake
-            new DriveWithSetRotationCommand(drivetrain, () -> 0.11, () -> 0.5, -2*Math.PI/3.25).withTimeout(1.6),   //Turn and drive to 3rd ball
+            new DriveCommand(drivetrain, () -> 0.11, () -> 0.5, () -> 0, () -> 0, () -> 0).withTimeout(1.6),//Drive to 3rd ball
+            // new DriveWithSetRotationCommand(drivetrain, () -> 0.11, () -> 0.5, -2*Math.PI/3.25).withTimeout(1.6),   //Turn and drive to 3rd ball
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.75),            //Stop Driving
             new IntakeCommand(intake, true).withTimeout(0.5),                                                       //Retract Intake
             new AutoAim(shooter, drivetrain, true).withTimeout(3),

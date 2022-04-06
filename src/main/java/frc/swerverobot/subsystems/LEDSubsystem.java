@@ -54,7 +54,7 @@ public class LEDSubsystem extends SubsystemBase {
   boolean allianceColor = false;    //What Alliance color the robot is on (false = blue, true = red)
   double count = 0;                 //How many balls are in the robot (0,1,2)
   String mode = "null";             //What mode the robot is in (null, auto-high, auto-low, tele)
-  int distance = 0;                 //How far the robot is from the target (132-250)
+  double distance = 0;                 //How far the robot is from the target (132-250)
 
   boolean shooting2 = false;        //The second variable is to check for changes since the led's were last changed
   boolean winch2 = false;           //The second variable is to check for changes since the led's were last changed
@@ -375,6 +375,7 @@ public class LEDSubsystem extends SubsystemBase {
     count = SmartDashboard.getNumber("Ball Count", 0);//Ball Count (0|1|2)
     mode = SmartDashboard.getString("Mode", "null");//Mode (auto-high|auto-low|tele)
     allianceColor = SmartDashboard.getNumber("IntakeBall/BallColor", 1) == 1;//Ball Color (1=red|2=blue)
+    distance = SmartDashboard.getNumber("ShooterTarget/TargetDistance", 1);
 
     if (leftypluggedin && rightypluggedin) {
       //Both LEDs are plugged in
