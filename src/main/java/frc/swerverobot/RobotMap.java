@@ -48,8 +48,8 @@ public class RobotMap {
     public static final ADIS16470_IMU imu = new ADIS16470_IMU();                //[DriveTrain Subsystem]Gyro and acceleration sensor
     public static final int PhotoEyePort = 0;                                   //[Shooter Subsystem] The Number is the RIO DIO port (Outputs a Digital Input|Like a Limit Switch)
     public static final int PhotoEye2Port = 3;                                  //[Shooter Subsystem] The Photoeye below the color sensor
-    public static final I2C.Port i2cPort = I2C.Port.kOnboard;                   //[Shooter Subsystem] Color Sensor (Only one I2C port on the robot)
-    public static final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort); //[Shooter/Intake Subsystem] The Number is the I2C port from the RobotMap.java
+    // public static final I2C.Port i2cPort = I2C.Port.kOnboard;                   //[Shooter Subsystem] Color Sensor (Only one I2C port on the robot)
+    // public static final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort); //[Shooter/Intake Subsystem] The Number is the I2C port from the RobotMap.java
     public static final int colorSensorDistance = 100;                          //[Shooter/Intake Subsystem] The Number is the distance from the sensor to the target (Small=Close, Big=Far)
     public static final DigitalInput photoEye = new DigitalInput(PhotoEyePort); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
     public static final DigitalInput photoEye2 = new DigitalInput(PhotoEye2Port); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
