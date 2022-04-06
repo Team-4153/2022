@@ -394,7 +394,7 @@ public class LEDSubsystem extends SubsystemBase {
       }
       else if (running_LED <= lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty && running_LED > lengthstrand1 + lengthstrandlefty + lengthstrand2) {
         //The Right Y
-        rightLED(running_LED);
+        rightyLED(running_LED);
       }
       else {
         //Everything Else
@@ -415,7 +415,7 @@ public class LEDSubsystem extends SubsystemBase {
       }
       else if (chasingLED <= lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty) {
         //The Right Y
-        leftyLED(chasingLED);
+        rightyLED(chasingLED);
       }
       else if (chasingLED <= lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty + lengthstrand3) {
         //Strand 3
