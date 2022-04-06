@@ -72,6 +72,15 @@ public class LEDSubsystem extends SubsystemBase {
     }
     return pos;
   }
+  public int trimPos(int pos) {
+    if (pos > m_ledBuffer.getLength()) { //reset the position back to start
+      return 1;
+    }
+    else if (pos < 0) {
+      return 1;
+    }
+    return pos;
+  }
 
   public int ledCount() {
     if (leftypluggedin && rightypluggedin) {
@@ -97,30 +106,30 @@ public class LEDSubsystem extends SubsystemBase {
       //Both Y's plugged in
       if (climberLockedR != climberLockedR2) {
         //Third Strand & Right Y
-        for (int i = 0; i < lengthstrand3 + lengthstrandrighty; i++) {
+        for (int i = 1; i < lengthstrand3 + lengthstrandrighty - 1; i++) {
           rightLED(lengthstrand1 + lengthstrandlefty + lengthstrand2 + i);
         }
       }
       else if (climberLockedL != climberLockedL2) {
         //First Strand & Left Y
-        for (int i = 0; i < lengthstrand1 + lengthstrandlefty; i++) {
+        for (int i = 1; i < lengthstrand1 + lengthstrandlefty - 1; i++) {
           leftLED(i);
         }
       }
       else if (intake != intake2 || winch != winch2) {
         //First Strand
-        for (int i = 0; i < lengthstrand1; i++) {
+        for (int i = 1; i < lengthstrand1  - 1; i++) {
           leftLED(i);
         }
         //Third Strand
-        for (int i = 0; i < lengthstrand3; i++) {
+        for (int i = 1; i < lengthstrand3  - 1; i++) {
           rightLED(lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty + i);
         }
       }
       else if (count != count2 || shooting != shooting2) {
         //Second Strand
-        for (int i = 0; i < lengthstrand2; i++) {
-          shooterLED(lengthstrand1 + lengthstrandlefty + i + 1);
+        for (int i = 1; i < lengthstrand2 - 1; i++) {
+          shooterLED(lengthstrand1 + lengthstrandlefty + i);
         }
       }
     }
