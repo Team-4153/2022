@@ -18,8 +18,6 @@ public class LEDSubsystem extends SubsystemBase {
   private int lengthstrand2 = 34;//Shooter
   private int lengthstrandrighty = 42;//Length of the left Y
   private int lengthstrand3 = 84;//Right CLimber
-
-  //Change Values in the RobotMap.java file
   private boolean rightypluggedin = RobotMap.RightYLEDS;
   private boolean leftypluggedin = RobotMap.LeftYLEDS;
 
@@ -65,23 +63,12 @@ public class LEDSubsystem extends SubsystemBase {
   boolean climberLockedL2 = false;  //The second variable is to check for changes since the led's were last changed
   double count2 = 0;                //The second variable is to check for changes since the led's were last changed
 
-  public int loopLEDPos(int pos) {
-    //Tries to move the led's to be within the bounds of the array
-    if (pos > m_ledBuffer.getLength()) {
-      //When Position is above the length of the LED strip, return the position from 0
-      return trimLEDPos(pos - m_ledBuffer.getLength());
+  public int loopPos(int pos) {
+    if (pos > m_ledBuffer.getLength()) { //reset the position back to start
+      return pos - m_ledBuffer.getLength();
     }
     else if (pos < 0) {
-      //When Position is bellow the length of the LED strip, return the position from the end
-      return trimLEDPos(pos + m_ledBuffer.getLength());
-    }
-    return pos;
-  }
-  public int trimLEDPos(int pos) {
-    //Limits the LED's to the bounds of the array.
-    if (pos > m_ledBuffer.getLength() || pos < 0) {
-      //When Position is outside of the array set it to 1
-      return 1;
+      return pos + m_ledBuffer.getLength();
     }
     return pos;
   }
@@ -233,14 +220,9 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   public void shooterLED(int pos) {
-    pos = loopLEDPos(pos);
     if (shooting) {
       //If The Robot is Shooting
       m_ledBuffer.setRGB(pos, 0, 50, 0);//Green
-    }
-    else if (distance > 150 && distance < 200) {
-      //else if robot is in the ideal shooting zone
-      m_ledBuffer.setRGB(pos, 0, 137, 100);//Dark Green
     }
     else if (count == 2) {
       //else if there are 2 Balls
@@ -255,8 +237,12 @@ public class LEDSubsystem extends SubsystemBase {
       m_ledBuffer.setRGB(pos, 0, 50, 50);//Teal
     }
   }
-  public void climberLEDS(int pos) {
-    if (winch) {
+  public void rightLED(int pos) {
+    if (climberLockedR) {
+      //If Right Static Hook is Locked
+      m_ledBuffer.setRGB(pos, 0, 65, 0);//Green
+    }
+    else if (winch) {
       //else if Robot is Winching
       m_ledBuffer.setRGB(pos, 90, 90, 0);//Orange
     }
@@ -267,10 +253,6 @@ public class LEDSubsystem extends SubsystemBase {
     else if (intake) {
       //else if Robot is Running Intake
       m_ledBuffer.setRGB(pos, 115, 65, 0);//Red-Orange
-    }
-    else if (distance > 150 && distance < 200) {
-      //else if robot is in the ideal shooting zone
-      m_ledBuffer.setRGB(pos, 0, 137, 100);//Dark Green
     }
     else if (mode == "auto-high") {
       //else if Robot is in a High Goal Auto
@@ -289,66 +271,71 @@ public class LEDSubsystem extends SubsystemBase {
       m_ledBuffer.setRGB(pos, 0, 56, 50);//Teal
     }
   }
-  public void yLEDS(int pos) {
-    if (allianceColor) {
-      //if the robot is on the Red alliance
-      m_ledBuffer.setRGB(pos, 175, 0, 0);//Red
-    }
-    else {
-      //else if the robot is on the Blue alliance
-      m_ledBuffer.setRGB(pos, 0, 156, 150);//Blue
-    }
-  }
-  
-  public void rightLED(int pos) {
-    pos = loopLEDPos(pos);
-    if (climberLockedR) {
-      //If Right Static Hook is Locked
-      m_ledBuffer.setRGB(pos, 0, 65, 0);//Green
-    }
-    else {
-      //The rest of the LED's are the same for left and right strands
-      climberLEDS(pos);
-    }
-  }
   public void leftLED(int pos) {
-    pos = loopLEDPos(pos);
     //Low Density Strand so Increased Brightness
     if (climberLockedL) {
       //If Left Static Hook is Locked
       m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
     }
+    else if (winch) {
+      //else if Robot is Winching
+      m_ledBuffer.setRGB(pos, 100, 100, 0);//Orange
+    }
+    else if (climberExtended) {
+      //else if Climber Is Extended
+      m_ledBuffer.setRGB(pos, 100, 0, 0);//Red
+    }
+    else if (intake) {
+      //else if Robot is Running Intake
+      m_ledBuffer.setRGB(pos, 125, 75, 0);//Red-Orange
+    }
+    else if (mode == "auto-high") {
+      //else if Robot is in Auto
+      m_ledBuffer.setRGB(pos, 143, 50, 168);//Purple
+    }
+    else if (mode == "auto-low") {
+      //else if Robot is in Auto
+      m_ledBuffer.setRGB(pos, 0, 56, 153);//Dark-Blue
+    }
+    else if (mode == "tele") {
+      //else if Robot is in Tele
+      m_ledBuffer.setRGB(pos, 0, 176, 170);//Teal
+    }
     else {
-      //The rest of the LED's are the same for left and right strands
-      climberLEDS(pos);
+      //Idle
+      m_ledBuffer.setRGB(pos, 0, 76, 70);//Teal
     }
   }
 
+  public void bothLEDYs(int pos) {
+    if (allianceColor) {
+      m_ledBuffer.setRGB(pos, 175, 0, 0);//Red
+    }
+    else {
+      m_ledBuffer.setRGB(pos, 0, 156, 150);//Blue
+    }
+  }
+  
   public void leftyLED(int pos) {
-    pos = loopLEDPos(pos);
+    //True is red and False is blue
     if (climberLockedL) {
-      //If Left Static Hook is Locked
       m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
     }
     else {
-      //The rest of the LED's are the same for left and right strands
-      yLEDS(pos);
+      bothLEDYs(pos);
     }
   }
   public void rightyLED(int pos) {
-    pos = loopLEDPos(pos);
+    //True is red and False is blue
     if (climberLockedR) {
-      //If Right Static Hook is Locked
       m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
     }
     else {
-      //The rest of the LED's are the same for left and right strands
-      yLEDS(pos);
+      bothLEDYs(pos);
     }
   }
 
   public void wormLED(int pos) {
-    pos = loopLEDPos(pos);
     if (winch) {
       //If Robot is Winching
       m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
@@ -388,7 +375,6 @@ public class LEDSubsystem extends SubsystemBase {
     count = SmartDashboard.getNumber("Ball Count", 0);//Ball Count (0|1|2)
     mode = SmartDashboard.getString("Mode", "null");//Mode (auto-high|auto-low|tele)
     allianceColor = SmartDashboard.getNumber("IntakeBall/BallColor", 1) == 1;//Ball Color (1=red|2=blue)
-    distance = (int) SmartDashboard.getNumber("ShooterTarget/TargetDistance", 0);//Distance (132-250)
 
     if (leftypluggedin && rightypluggedin) {
       //Both LEDs are plugged in
@@ -505,8 +491,12 @@ public class LEDSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    //Set LED's to the correct color
+    //Set LED's
+    //Worm
     colorPositionLED();
+
+    //Change Positions
+    running_LED = ledFillWhenChanged(running_LED);
 
     climberLockedR2 = climberLockedR;
     climberLockedL2 = climberLockedL;
@@ -515,19 +505,20 @@ public class LEDSubsystem extends SubsystemBase {
     count2 = count;
     shooting2 = shooting;
 
-    //Update Running LED Position and trim position
-    running_LED = loopLEDPos(ledFillWhenChanged(running_LED));
-    //Move Running LED to start if beyond end of LED Strip
     if (running_LED >= m_ledBuffer.getLength()) { //reset the position back to start
       running_LED = 0;
     }
-    //Update Chasing LED Position and trim position
-    chasingLED = loopLEDPos(running_LED-length);
+    chasingLED = running_LED-length;
     if (chasingLED < 0) {
       chasingLED = m_ledBuffer.getLength()+chasingLED;
     }
-    
+
     m_led.setData(m_ledBuffer);
+  }
+
+  @Override
+  public void simulationPeriodic() {
+    // This method will be called once per scheduler run during simulation
   }
 
   public void init() {
