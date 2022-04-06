@@ -48,34 +48,34 @@ public class IntakeSubsystem extends SubsystemBase {
     // No else statment because value is initalized at 0
     return ballCount;
   }
-  public String ball1color() {
-    String ball1Color = "none";
-    if ((photoEye2.get() != phe2) && photoEye2.get()) {
-      phe2 = true;
-      ball1Color = colorSensor();
-    }
-    else if (!photoEye2.get()) {
-      phe2 = photoEye2.get();
-    }
-    SmartDashboard.putString("Ball 1 Color", ball1Color);
-    return ball1Color;
-  }
-  public String colorSensor() {
-    String ballColor = "none";
-    Color detectedColor = colorSensor.getColor();
-    int proximity = colorSensor.getProximity();
-    // Check ball color
-    if (proximity > colorSensorDistance) { // Smaller values are closer and bigger is farther away
-      if (detectedColor.red > detectedColor.blue)// The 1st ball is Red
-      {
-        ballColor = "Red";
-      } 
-      else { // The 1st ball is Blue 
-        ballColor = "Blue";
-      }
-    }
-    return ballColor;
-  }
+  // public String ball1color() {
+  //   String ball1Color = "none";
+  //   if ((photoEye2.get() != phe2) && photoEye2.get()) {
+  //     phe2 = true;
+  //     ball1Color = colorSensor();
+  //   }
+  //   else if (!photoEye2.get()) {
+  //     phe2 = photoEye2.get();
+  //   }
+  //   SmartDashboard.putString("Ball 1 Color", ball1Color);
+  //   return ball1Color;
+  // }
+  // public String colorSensor() {
+  //   String ballColor = "none";
+  //   Color detectedColor = colorSensor.getColor();
+  //   int proximity = colorSensor.getProximity();
+  //   // Check ball color
+  //   if (proximity > colorSensorDistance) { // Smaller values are closer and bigger is farther away
+  //     if (detectedColor.red > detectedColor.blue)// The 1st ball is Red
+  //     {
+  //       ballColor = "Red";
+  //     } 
+  //     else { // The 1st ball is Blue 
+  //       ballColor = "Blue";
+  //     }
+  //   }
+  //   return ballColor;
+  // }
 
   @Override
   public void periodic() 
@@ -87,10 +87,10 @@ public class IntakeSubsystem extends SubsystemBase {
       Intake_Motor.stopMotor();
     }
     
-    if (ballColorRun != photoEye2.get()) {
-      ball1color();
-    }
-    ballColorRun = photoEye2.get();
+    // if (ballColorRun != photoEye2.get()) {
+    //   ball1color();
+    // }
+    // ballColorRun = photoEye2.get();
 }
 
   @Override
