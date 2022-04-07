@@ -29,19 +29,25 @@ public class ShooterSubsystem2 extends SubsystemBase {
         if (highLow) {
             double[][] MotorSpeedHighGoal = {
                 //Cant make it into high goal from 100 distance
+                
+                //Test Actual Values at 161,183,215
+                //Test Middle Values at 145,175,210,215,230,
+
+                //Distance, Top Motor, Bottom Motor, Feed Motor
                 {132,-0.6, 0.75, -1},//Updated
-                {161,-0.675, 0.7, -1},//Updated
+                {161,-0.675, 0.7, -1},
                 {172,-0.65,0.75,-1},//Updated
                 {183,-0.67,0.77,-1},
                 {200,-0.725, 0.75,-1},//New
                 {215,-0.75,0.85,-1},
                 {250,-0.8, 0.9,-1},//Updated
-                {250,-0.8, 0.9,-1}//Updated
+                {250,-0.8, 0.9,-1}//Filler Value (Should repeat above numbers)
             };
             return SetMotorDistanceCalc(MotorSpeedHighGoal);
         }
         else {
             double[][] MotorSpeedLowGoal = {
+                //Distance, Top Motor, Bottom Motor, Feed Motor
                 {77,-0.4,0.5,-1},
                 {117,-0.45,0.55,-1},
                 {153,-0.5,0.6,-1},
