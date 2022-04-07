@@ -1,10 +1,10 @@
 package frc.swerverobot;
 
 //Sensor Library
-import edu.wpi.first.wpilibj.I2C;
+// import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.DigitalInput; //Photo Eye
-import com.revrobotics.ColorSensorV3;//Color Sensor
+// import com.revrobotics.ColorSensorV3;//Color Sensor
 
 //Controller Libraries
 import org.frcteam2910.common.robot.input.Axis;
