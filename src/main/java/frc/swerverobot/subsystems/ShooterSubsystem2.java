@@ -29,7 +29,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
         if (highLow) {
             double[][] MotorSpeedHighGoal = {
                 //Cant make it into high goal from 100 distance
-                
+
                 //Test Actual Values at 161,183,215
                 //Test Middle Values at 145,175,210,215,230,
 
@@ -48,6 +48,8 @@ public class ShooterSubsystem2 extends SubsystemBase {
         else {
             double[][] MotorSpeedLowGoal = {
                 //Distance, Top Motor, Bottom Motor, Feed Motor
+
+                //None of this is tested
                 {77,-0.4,0.5,-1},
                 {117,-0.45,0.55,-1},
                 {153,-0.5,0.6,-1},
