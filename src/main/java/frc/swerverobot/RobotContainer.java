@@ -120,7 +120,7 @@ public class RobotContainer {
                         case "LOW_THREE":
                                 return new LowThreeBall(drivetrain, shooter, intake);
                         case "LO_HI_TWO":
-                                return new LowTwoBall(drivetrain, shooter, intake);
+                                return new LowHighTwoBall(drivetrain, shooter, intake);
                         case "LO_HI_THREE":
                                 return new LowThreeBall(drivetrain, shooter, intake);
                         case "HIGH_TWO":
