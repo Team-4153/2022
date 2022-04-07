@@ -118,17 +118,17 @@ public class LEDSubsystem extends SubsystemBase {
       }
       else if (intake != intake2 || winch != winch2) {
         //First Strand
-        for (int i = 1; i < lengthstrand1  - 1; i++) {
+        for (int i = 1; i < lengthstrand1 - 1; i++) {
           leftLED(i);
         }
         //Third Strand
-        for (int i = 1; i < lengthstrand3  - 1; i++) {
+        for (int i = 1; i < lengthstrand3 - 1; i++) {
           rightLED(lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty + i);
         }
       }
       else if (count != count2 || shooting != shooting2) {
         //Second Strand
-        for (int i = 1; i < lengthstrand2 - 1; i++) {
+        for (int i = 1; i < lengthstrand2; i++) {
           shooterLED(lengthstrand1 + lengthstrandlefty + i);
         }
       }
@@ -246,47 +246,8 @@ public class LEDSubsystem extends SubsystemBase {
       m_ledBuffer.setRGB(pos, 0, 50, 50);//Teal
     }
   }
-  public void rightLED(int pos) {
-    if (climberLockedR) {
-      //If Right Static Hook is Locked
-      m_ledBuffer.setRGB(pos, 0, 65, 0);//Green
-    }
-    else if (winch) {
-      //else if Robot is Winching
-      m_ledBuffer.setRGB(pos, 90, 90, 0);//Orange
-    }
-    else if (climberExtended) {
-      //else if Climber Is Extended
-      m_ledBuffer.setRGB(pos, 90, 0, 0);//Red
-    }
-    else if (intake) {
-      //else if Robot is Running Intake
-      m_ledBuffer.setRGB(pos, 115, 65, 0);//Red-Orange
-    }
-    else if (mode == "auto-high") {
-      //else if Robot is in a High Goal Auto
-      m_ledBuffer.setRGB(pos, 133, 40, 158);//Purple
-    }
-    else if (mode == "auto-low") {
-      //else if Robot is in a Low Goal Auto
-      m_ledBuffer.setRGB(pos, 0, 46, 143);//Dark-Blue
-    }
-    else if (mode == "tele") {
-      //else if Robot is in Tele
-      m_ledBuffer.setRGB(pos, 0, 156, 150);//Teal
-    }
-    else {
-      //Idle
-      m_ledBuffer.setRGB(pos, 0, 56, 50);//Teal
-    }
-  }
-  public void leftLED(int pos) {
-    //Low Density Strand so Increased Brightness
-    if (climberLockedL) {
-      //If Left Static Hook is Locked
-      m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
-    }
-    else if (winch) {
+  public void climberLEDS(int pos) {
+    if (winch) {
       //else if Robot is Winching
       m_ledBuffer.setRGB(pos, 100, 100, 0);//Orange
     }
@@ -297,6 +258,10 @@ public class LEDSubsystem extends SubsystemBase {
     else if (intake) {
       //else if Robot is Running Intake
       m_ledBuffer.setRGB(pos, 125, 75, 0);//Red-Orange
+    }
+    else if (distance >= 160 && distance <= 180) {
+      //else if Robot is in Auto
+      m_ledBuffer.setRGB(pos, 143, 50, 168);//Purple
     }
     else if (mode == "auto-high") {
       //else if Robot is in Auto
@@ -313,6 +278,27 @@ public class LEDSubsystem extends SubsystemBase {
     else {
       //Idle
       m_ledBuffer.setRGB(pos, 0, 76, 70);//Teal
+    }
+  }
+  public void rightLED(int pos) {
+    if (climberLockedR) {
+      //If Right Static Hook is Locked
+      m_ledBuffer.setRGB(pos, 0, 65, 0);//Green
+    }
+    else {
+      //Add the LEDS that arent different for each side
+      climberLEDS(pos);
+    }
+  }
+  public void leftLED(int pos) {
+    //Low Density Strand so Increased Brightness
+    if (climberLockedL) {
+      //If Left Static Hook is Locked
+      m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
+    }
+    else {
+      //Add the LEDS that arent different for each side
+      climberLEDS(pos);
     }
   }
 
