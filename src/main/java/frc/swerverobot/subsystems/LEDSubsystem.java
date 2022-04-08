@@ -233,58 +233,78 @@ public class LEDSubsystem extends SubsystemBase {
 
   public void posFunctions(int pos) {
     if (rightypluggedin && leftypluggedin) {
+      //If both Y's are plugged in
       if (pos < lengthstrand1) {
+        //Third Strand
         leftLED(pos);
       }
       else if (pos < lengthstrand1 + lengthstrandlefty) {
+        //Left Y
         leftyLED(pos);
       }
       else if (pos < lengthstrand1 + lengthstrandlefty + lengthstrand2) {
+        //Second Strand
         shooterLED(pos);
       }
       else if (pos < lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty) {
+        //Right Y
         rightyLED(pos);
       }
       else if (pos < lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty + lengthstrand3) {
+        //Third Strand
         rightLED(pos);
       }
     } 
     else if (leftypluggedin) {
+      //If the left Y is plugged in
       if (pos < lengthstrand1) {
+        //First Strand
         leftLED(pos);
       }
       else if (pos < lengthstrand1 + lengthstrandlefty) {
+        //Left Y
         leftyLED(pos);
       }
       else if (pos < lengthstrand1 + lengthstrandlefty + lengthstrand2) {
+        //Second Strand
         shooterLED(pos);
       }
       else if (pos < lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrand3) {
+        //Third Strand
         rightLED(pos);
       }
     }
     else if (rightypluggedin) {
+      //If the right Y is plugged in
       if (pos < lengthstrand1) {
+        //First Strand
         leftLED(pos);
       }
       else if (pos < lengthstrand1 + lengthstrand2) {
+        //Second Strand
         shooterLED(pos);
       }
       else if (pos < lengthstrand1 + lengthstrand2 + lengthstrandrighty) {
+        //Right Y
         rightyLED(pos);
       }
       else if (pos < lengthstrand1 + lengthstrand2 + lengthstrandrighty + lengthstrand3) {
+        //Third Strand
         rightLED(pos);
       }
     }
     else {
+      //If none of the Y's are plugged in 
       if (pos < lengthstrand1) {
+        //First Strand
         leftLED(pos);
       }
       else if (pos < lengthstrand1 + lengthstrand2) {
+        //Second Strand
         shooterLED(pos);
       }
       else if (pos < lengthstrand1 + lengthstrand2 + lengthstrand3) {
+        //Third Strand
         rightLED(pos);
       }
     }
