@@ -121,7 +121,7 @@ public class LEDSubsystem extends SubsystemBase {
           leftLED(i);
         }
       }
-      else if (intake != intake2 || winch != winch2 || goldenZone || redZone) {
+      else if (intake != intake2 || winch != winch2 || goldenZone != goldenZone2 || redZone != redZone2) {
         //First Strand
         for (int i = 1; i < lengthstrand1 - 1; i++) {
           leftLED(i);
