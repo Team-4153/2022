@@ -35,8 +35,8 @@ public class RobotMap {
 
 //Config Variables
     public static final double firstBallPowerMultiplier = 1;
-    public static final double autoAimTopMotorPowerMultipler = 1.05;
-    public static final double autoAimBottomMotorPowerMultipler = 1.05;
+    public static final double autoAimTopMotorPowerMultipler = 1.12;
+    public static final double autoAimBottomMotorPowerMultipler = 1.12;
     public static final double autoAimFeedMotorPowerMultipler = 1;
 
 //LEDS 
