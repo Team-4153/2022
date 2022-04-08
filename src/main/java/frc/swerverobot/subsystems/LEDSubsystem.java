@@ -56,10 +56,14 @@ public class LEDSubsystem extends SubsystemBase {
   double count = 0;                 //How many balls are in the robot (0,1,2)
   String mode = "null";             //What mode the robot is in (null, auto-high, auto-low, tele)
   double distance = 0;                 //How far the robot is from the target (132-250)
+  boolean goldenZone = false;
+  boolean redZone = false;
 
   boolean shooting2 = false;        //The second variable is to check for changes since the led's were last changed
   boolean winch2 = false;           //The second variable is to check for changes since the led's were last changed
   boolean intake2 = false;          //The second variable is to check for changes since the led's were last changed
+  boolean goldenZone2 = false;
+  boolean redZone2 = false;
   boolean climberLockedR2 = false;  //The second variable is to check for changes since the led's were last changed
   boolean climberLockedL2 = false;  //The second variable is to check for changes since the led's were last changed
   double count2 = 0;                //The second variable is to check for changes since the led's were last changed
@@ -105,13 +109,13 @@ public class LEDSubsystem extends SubsystemBase {
   public int ledFillWhenChanged(int pos) {
     if (leftypluggedin && rightypluggedin) {
       //Both Y's plugged in
-      if (climberLockedR != climberLockedR2) {
+      if (climberLockedR != climberLockedR2 || goldenZone || redZone) {
         //Third Strand & Right Y
         for (int i = 1; i < lengthstrand3 + lengthstrandrighty - 1; i++) {
           rightLED(lengthstrand1 + lengthstrandlefty + lengthstrand2 + i);
         }
       }
-      else if (climberLockedL != climberLockedL2) {
+      else if (climberLockedL != climberLockedL2 || goldenZone || redZone) {
         //First Strand & Left Y
         for (int i = 1; i < lengthstrand1 + lengthstrandlefty - 1; i++) {
           leftLED(i);
@@ -242,7 +246,7 @@ public class LEDSubsystem extends SubsystemBase {
       //esle if there is 1 Ball
       m_ledBuffer.setRGB(pos, 50, 0, 0);//Red 
     }
-    else if (distance >= 160 && distance <= 190) {
+    else if (redZone) {
       //else if Robot is in Golden Zone
       m_ledBuffer.setRGB(pos, 143, 50, 168);//Purple
     }
@@ -264,11 +268,11 @@ public class LEDSubsystem extends SubsystemBase {
       //else if Robot is Running Intake
       m_ledBuffer.setRGB(pos, 125, 75, 0);//Red-Orange
     }
-    else if (distance >= 160 && distance <= 190) {
+    else if (redZone) {
       //else if Robot is in Golden Zone
       m_ledBuffer.setRGB(pos, 100, 0, 0);//Red
     }
-    else if (distance > RobotMap.AutoAimMaxDistance && distance < RobotMap.AutoAimMinDistance) {
+    else if (goldenZone) {
       //else if Robot is outside of Auto-Aim shooting zone
       m_ledBuffer.setRGB(pos, 143, 50, 168);//Purple
     }
@@ -380,6 +384,10 @@ public class LEDSubsystem extends SubsystemBase {
     mode = SmartDashboard.getString("Mode", "null");//Mode (auto-high|auto-low|tele)
     allianceColor = SmartDashboard.getNumber("IntakeBall/BallColor", 1) == 1;//Ball Color (1=red|2=blue)
     distance = SmartDashboard.getNumber("ShooterTarget/TargetDistance", 1);
+    goldenZone = (distance < RobotMap.AutoAimMaxDistance && distance > RobotMap.AutoAimMinDistance);
+    redZone = (distance <= 160 || distance >= 190);
+    SmartDashboard.putBoolean("goldenZone", goldenZone);
+    SmartDashboard.putBoolean("redZone", redZone);
 
     if (leftypluggedin && rightypluggedin) {
       //Both LEDs are plugged in
@@ -509,6 +517,8 @@ public class LEDSubsystem extends SubsystemBase {
     winch2 = winch;
     count2 = count;
     shooting2 = shooting;
+    goldenZone2 = goldenZone;
+    redZone2 = redZone;
 
     if (running_LED >= m_ledBuffer.getLength()) { //reset the position back to start
       running_LED = 0;
