@@ -242,6 +242,10 @@ public class LEDSubsystem extends SubsystemBase {
       //esle if there is 1 Ball
       m_ledBuffer.setRGB(pos, 50, 0, 0);//Red 
     }
+    else if (distance >= 160 && distance <= 190) {
+      //else if Robot is in Golden Zone
+      m_ledBuffer.setRGB(pos, 143, 50, 168);//Purple
+    }
     else {
       //Idle
       m_ledBuffer.setRGB(pos, 0, 50, 50);//Teal
