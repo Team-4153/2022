@@ -34,9 +34,9 @@ public class RobotMap {
 //Define all ports and constants of a component, put in correct catagory, label subsystem(s) used
 
 //Config Variables
-    public static final double firstBallPowerMultiplier = 1.1;
-    public static final double autoAimTopMotorPowerMultipler = 1;
-    public static final double autoAimBottomMotorPowerMultipler = 1;
+    public static final double firstBallPowerMultiplier = 1;
+    public static final double autoAimTopMotorPowerMultipler = 1.08;
+    public static final double autoAimBottomMotorPowerMultipler = 1.08;
     public static final double autoAimFeedMotorPowerMultipler = 1;
 
 //LEDS 
