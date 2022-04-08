@@ -249,7 +249,7 @@ Hit  - 13
                 );
                 ManualShoot.whenPressed(
                         //Gets into low goal from 77 visual distance (77 is as close as we can get and still have a distance reading)
-                        new ManualShoot(shooter, -0.425, 0.425, -1)
+                        new ManualShoot(shooter, -0.45, 0.45, -1)
                 );
                 AimShootHigh.getButton(0.1).whenPressed(
                         //Autoaim to the high goal and then shoot
