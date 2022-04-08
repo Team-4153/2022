@@ -31,7 +31,7 @@ public class ManualShoot extends SequentialCommandGroup{
         this.botSpeed = botSpeed;
         this.feedSpeed = feedSpeed;
 
-        this.runShootMotors = new RunShootMotors(shooter, topSpeed*RobotMap.firstBallPowerMultiplier, botSpeed*RobotMap.firstBallPowerMultiplier);
+        this.runShootMotors = new RunShootMotors(shooter, topSpeed, botSpeed);
         this.runShootMotors2 = new RunShootMotors(shooter, topSpeed, botSpeed);
         this.runFeedMotors1 = new RunFeedMotors(shooter, feedSpeed);
         this.runFeedMotors2 = new RunFeedMotors(shooter, feedSpeed);
