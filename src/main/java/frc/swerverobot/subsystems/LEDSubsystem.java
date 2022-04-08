@@ -110,29 +110,29 @@ public class LEDSubsystem extends SubsystemBase {
       if (climberLockedR != climberLockedR2) {
         //Third Strand & Right Y
         for (int i = 1; i < lengthstrand3 + lengthstrandrighty - 1; i++) {
-          rightLED(lengthstrand1 + lengthstrandlefty + lengthstrand2 + i);
+          posFunctions(lengthstrand1 + lengthstrandlefty + lengthstrand2 + i);
         }
       }
       else if (climberLockedL != climberLockedL2) {
         //First Strand & Left Y
         for (int i = 1; i < lengthstrand1 + lengthstrandlefty - 1; i++) {
-          leftLED(i);
+          posFunctions(i);
         }
       }
       else if (intake != intake2 || winch != winch2 || goldenZone != goldenZone2) {
         //First Strand
         for (int i = 1; i < lengthstrand1 - 1; i++) {
-          leftLED(i);
+          posFunctions(i);
         }
         //Third Strand
         for (int i = 1; i < lengthstrand3 - 1; i++) {
-          rightLED(lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty + i);
+          posFunctions(lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty + i);
         }
       }
       else if (count != count2 || shooting != shooting2) {
         //Second Strand
         for (int i = 1; i < lengthstrand2; i++) {
-          shooterLED(lengthstrand1 + lengthstrandlefty + i);
+          posFunctions(lengthstrand1 + lengthstrandlefty + i);
         }
       }
     }
@@ -231,6 +231,65 @@ public class LEDSubsystem extends SubsystemBase {
     return pos+1;
   }
 
+  public void posFunctions(int pos) {
+    if (rightypluggedin && leftypluggedin) {
+      if (pos < lengthstrand1) {
+        leftLED(pos);
+      }
+      else if (pos < lengthstrand1 + lengthstrandlefty) {
+        leftyLED(pos);
+      }
+      else if (pos < lengthstrand1 + lengthstrandlefty + lengthstrand2) {
+        shooterLED(pos);
+      }
+      else if (pos < lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty) {
+        rightyLED(pos);
+      }
+      else if (pos < lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty + lengthstrand3) {
+        rightLED(pos);
+      }
+    } 
+    else if (leftypluggedin) {
+      if (pos < lengthstrand1) {
+        leftLED(pos);
+      }
+      else if (pos < lengthstrand1 + lengthstrandlefty) {
+        leftyLED(pos);
+      }
+      else if (pos < lengthstrand1 + lengthstrandlefty + lengthstrand2) {
+        shooterLED(pos);
+      }
+      else if (pos < lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrand3) {
+        rightLED(pos);
+      }
+    }
+    else if (rightypluggedin) {
+      if (pos < lengthstrand1) {
+        leftLED(pos);
+      }
+      else if (pos < lengthstrand1 + lengthstrand2) {
+        shooterLED(pos);
+      }
+      else if (pos < lengthstrand1 + lengthstrand2 + lengthstrandrighty) {
+        rightyLED(pos);
+      }
+      else if (pos < lengthstrand1 + lengthstrand2 + lengthstrandrighty + lengthstrand3) {
+        rightLED(pos);
+      }
+    }
+    else {
+      if (pos < lengthstrand1) {
+        leftLED(pos);
+      }
+      else if (pos < lengthstrand1 + lengthstrand2) {
+        shooterLED(pos);
+      }
+      else if (pos < lengthstrand1 + lengthstrand2 + lengthstrand3) {
+        rightLED(pos);
+      }
+    }
+  }
+ 
   public void shooterLED(int pos) {
     if (shooting) {
       //If The Robot is Shooting
