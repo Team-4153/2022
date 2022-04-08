@@ -37,10 +37,10 @@ public class LowTwoBall extends SequentialCommandGroup{
         addCommands(
             new SetLowGoalAuto(),                                                                           //Set the LED's to low goal colors
             new ManualShoot(shooter, -0.425, 0.425, -1),                                                    //Shoot 1st ball
-            new IntakeCommand(intake, false).withTimeout(0.1),                                              //Extend Intake
+            new IntakeCommand(intake, false).withTimeout(0.2),                                              //Extend Intake
             new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),  //Drive Backwards
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),     //Stop Driving
-            new IntakeCommand(intake, true).withTimeout(0.1),                                               //Retract Intake
+            new IntakeCommand(intake, true).withTimeout(0.2),                                               //Retract Intake
             new DriveCommand(drivetrain, () -> 0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.4),   //Drive Forwards to hub
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),     //Stop Driving
             new ManualShoot(shooter, -0.45, 0.45, -1),                                                    //Shoot 2nd ball
