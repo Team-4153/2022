@@ -30,7 +30,11 @@ public class ShooterSubsystem2 extends SubsystemBase {
             double[][] MotorSpeedHighGoal = {
                 //Cant make it into high goal from 100 distance
                 
-                //Test 
+                //Test 250,200,190,And Gaps, Prioritize High Goal
+                //Create 140,222.5,330,240
+                //Launch Pad Distance 
+
+                //Golden Zone = 160-190
 
                 //Distance, Top Motor, Bottom Motor, Feed Motor
                 {132,-0.6, 0.75, -1},//Updated (Home)
@@ -70,6 +74,12 @@ public class ShooterSubsystem2 extends SubsystemBase {
     }
     public double[] SetMotorDistanceCalc(double[][] MotorSpeed){
         double distance = SmartDashboard.getNumber("ShooterTarget/TargetDistance", 0);
+
+        double[] zeroValues = {0,0,0};
+
+        if (distance == -1) {
+            return zeroValues;
+        }
 
         //0 = Top Motor, 1 = Bottom Motor, 2 = Feed Motor
         double[] SpeedsToSet = {DEFAULT_TOP_MOTOR_SPEED,DEFAULT_BOTTOM_MOTOR_SPEED,DEFAULT_FEED_MOTOR_SPEED};
