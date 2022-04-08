@@ -5,6 +5,7 @@
 package frc.swerverobot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.swerverobot.Robot;
 import frc.swerverobot.RobotMap;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
@@ -259,9 +260,13 @@ public class LEDSubsystem extends SubsystemBase {
       //else if Robot is Running Intake
       m_ledBuffer.setRGB(pos, 125, 75, 0);//Red-Orange
     }
-    else if (distance >= 160 && distance <= 180) {
-      //else if Robot is in Auto
+    else if (distance >= 160 && distance <= 190) {
+      //else if Robot is in Golden Zone
       m_ledBuffer.setRGB(pos, 143, 50, 168);//Purple
+    }
+    else if (distance < RobotMap.AutoAimMaxDistance || distance > RobotMap.AutoAimMinDistance) {
+      //else if Robot is outside of Auto-Aim shooting zone
+      m_ledBuffer.setRGB(pos, 100, 0, 0);//Red
     }
     else if (mode == "auto-high") {
       //else if Robot is in Auto
