@@ -110,29 +110,29 @@ public class LEDSubsystem extends SubsystemBase {
       if (climberLockedR != climberLockedR2) {
         //Third Strand & Right Y
         for (int i = 1; i < lengthstrand3 + lengthstrandrighty - 1; i++) {
-          posFunctions(lengthstrand1 + lengthstrandlefty + lengthstrand2 + i);
+          posledFunctions(lengthstrand1 + lengthstrandlefty + lengthstrand2 + i);
         }
       }
       else if (climberLockedL != climberLockedL2) {
         //First Strand & Left Y
         for (int i = 1; i < lengthstrand1 + lengthstrandlefty - 1; i++) {
-          posFunctions(i);
+          posledFunctions(i);
         }
       }
       else if (intake != intake2 || winch != winch2 || goldenZone != goldenZone2) {
         //First Strand
         for (int i = 1; i < lengthstrand1 - 1; i++) {
-          posFunctions(i);
+          posledFunctions(i);
         }
         //Third Strand
         for (int i = 1; i < lengthstrand3 - 1; i++) {
-          posFunctions(lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty + i);
+          posledFunctions(lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty + i);
         }
       }
       else if (count != count2 || shooting != shooting2) {
         //Second Strand
         for (int i = 1; i < lengthstrand2; i++) {
-          posFunctions(lengthstrand1 + lengthstrandlefty + i);
+          posledFunctions(lengthstrand1 + lengthstrandlefty + i);
         }
       }
     }
@@ -141,29 +141,29 @@ public class LEDSubsystem extends SubsystemBase {
       if (climberLockedR != climberLockedR2) {
         //Third Strand
         for (int i = 0; i < lengthstrand3; i++) {
-          rightLED(lengthstrand1 + lengthstrandlefty + lengthstrand2 + i);
+          posledFunctions(lengthstrand1 + lengthstrandlefty + lengthstrand2 + i);
         }
       }
       else if (climberLockedL != climberLockedL2) {
         //First Strand & Left Y
         for (int i = 0; i < lengthstrand1 + lengthstrandlefty; i++) {
-          leftLED(i);
+          posledFunctions(i);
         }
       }
       else if (intake != intake2 || winch != winch2) {
         //First Strand
         for (int i = 0; i < lengthstrand1 + lengthstrandlefty; i++) {
-          leftLED(i);
+          posledFunctions(i);
         }
         //Third Strand
         for (int i = 0; i < lengthstrand3; i++) {
-          rightLED(lengthstrand1 + lengthstrandlefty + lengthstrand2 + i);
+          posledFunctions(lengthstrand1 + lengthstrandlefty + lengthstrand2 + i);
         }
       }
       else if (count != count2 || shooting != shooting2) {
         //Second Strand
         for (int i = 0; i < lengthstrand2; i++) {
-          shooterLED(lengthstrand1 + lengthstrandlefty + i);
+          posledFunctions(lengthstrand1 + lengthstrandlefty + i);
         }
       }
     }
@@ -172,29 +172,29 @@ public class LEDSubsystem extends SubsystemBase {
       if (climberLockedR != climberLockedR2) {
         //Third Strand & Right Y
         for (int i = 0; i < lengthstrand3 + lengthstrandrighty; i++) {
-          rightLED(lengthstrand1 + lengthstrand2 + i);
+          posledFunctions(lengthstrand1 + lengthstrand2 + i);
         }
       }
       else if (climberLockedL != climberLockedL2) {
         //First Strand
         for (int i = 0; i < lengthstrand1; i++) {
-          leftLED(i);
+          posledFunctions(i);
         }
       }
       else if (intake != intake2 || winch != winch2) {
         //First Strand
         for (int i = 0; i < lengthstrand1; i++) {
-          leftLED(i);
+          posledFunctions(i);
         }
         //Third Strand
         for (int i = 0; i < lengthstrand3; i++) {
-          rightLED(lengthstrand1 + lengthstrand2 + lengthstrandrighty + i);
+          posledFunctions(lengthstrand1 + lengthstrand2 + lengthstrandrighty + i);
         }
       }
       else if (count != count2 || shooting != shooting2) {
         //Second Strand
         for (int i = 0; i < lengthstrand2; i++) {
-          shooterLED(lengthstrand1 + i + 1);
+          posledFunctions(lengthstrand1 + i + 1);
         }
       }
     }
@@ -202,36 +202,36 @@ public class LEDSubsystem extends SubsystemBase {
       if (climberLockedR != climberLockedR2) {
         //Third Strand
         for (int i = 0; i < lengthstrand3; i++) {
-          rightLED(lengthstrand1 + lengthstrand2 + i);
+          posledFunctions(lengthstrand1 + lengthstrand2 + i);
         }
       }
       else if (climberLockedL != climberLockedL2) {
         //First Strand
         for (int i = 0; i < lengthstrand1; i++) {
-          leftLED(i);
+          posledFunctions(i);
         }
       }
       else if (intake != intake2 || winch != winch2) {
         //First Strand
         for (int i = 0; i < lengthstrand1; i++) {
-          leftLED(i);
+          posledFunctions(i);
         }
         //Third Strand
         for (int i = 0; i < lengthstrand3; i++) {
-          rightLED(lengthstrand1 + lengthstrand2 + i);
+          posledFunctions(lengthstrand1 + lengthstrand2 + i);
         }
       }
       else if (count != count2 || shooting != shooting2) {
         //Second Strand
         for (int i = 0; i < lengthstrand2; i++) {
-          shooterLED(lengthstrand1 + i);
+          posledFunctions(lengthstrand1 + i);
         }
       }
     }
     return pos+1;
   }
 
-  public void posFunctions(int pos) {
+  public void posledFunctions(int pos) {
     if (rightypluggedin && leftypluggedin) {
       //If both Y's are plugged in
       if (pos < lengthstrand1) {
