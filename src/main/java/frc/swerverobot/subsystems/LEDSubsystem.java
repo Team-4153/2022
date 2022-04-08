@@ -109,19 +109,19 @@ public class LEDSubsystem extends SubsystemBase {
   public int ledFillWhenChanged(int pos) {
     if (leftypluggedin && rightypluggedin) {
       //Both Y's plugged in
-      if (climberLockedR != climberLockedR2 || goldenZone || redZone) {
+      if (climberLockedR != climberLockedR2) {
         //Third Strand & Right Y
         for (int i = 1; i < lengthstrand3 + lengthstrandrighty - 1; i++) {
           rightLED(lengthstrand1 + lengthstrandlefty + lengthstrand2 + i);
         }
       }
-      else if (climberLockedL != climberLockedL2 || goldenZone || redZone) {
+      else if (climberLockedL != climberLockedL2) {
         //First Strand & Left Y
         for (int i = 1; i < lengthstrand1 + lengthstrandlefty - 1; i++) {
           leftLED(i);
         }
       }
-      else if (intake != intake2 || winch != winch2) {
+      else if (intake != intake2 || winch != winch2 || goldenZone || redZone) {
         //First Strand
         for (int i = 1; i < lengthstrand1 - 1; i++) {
           leftLED(i);
@@ -268,13 +268,13 @@ public class LEDSubsystem extends SubsystemBase {
       //else if Robot is Running Intake
       m_ledBuffer.setRGB(pos, 125, 75, 0);//Red-Orange
     }
-    else if (redZone) {
-      //else if Robot is in Golden Zone
-      m_ledBuffer.setRGB(pos, 100, 0, 0);//Red
-    }
     else if (goldenZone) {
       //else if Robot is outside of Auto-Aim shooting zone
       m_ledBuffer.setRGB(pos, 143, 50, 168);//Purple
+    }
+    else if (redZone) {
+      //else if Robot is in Golden Zone
+      m_ledBuffer.setRGB(pos, 100, 0, 0);//Red
     }
     else if (mode == "auto-high") {
       //else if Robot is in Auto
