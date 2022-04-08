@@ -385,9 +385,7 @@ public class LEDSubsystem extends SubsystemBase {
     allianceColor = SmartDashboard.getNumber("IntakeBall/BallColor", 1) == 1;//Ball Color (1=red|2=blue)
     distance = SmartDashboard.getNumber("ShooterTarget/TargetDistance", 1);
     goldenZone = (distance < RobotMap.AutoAimMaxDistance && distance > RobotMap.AutoAimMinDistance);
-    redZone = (distance <= 160 || distance >= 190);
-    SmartDashboard.putBoolean("goldenZone", goldenZone);
-    SmartDashboard.putBoolean("redZone", redZone);
+    redZone = (distance >= RobotMap.AutoAimMaxDistance || distance <= RobotMap.AutoAimMaxDistance);
 
     if (leftypluggedin && rightypluggedin) {
       //Both LEDs are plugged in
