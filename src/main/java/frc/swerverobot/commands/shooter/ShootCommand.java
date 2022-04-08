@@ -19,7 +19,7 @@ public class ShootCommand extends SequentialCommandGroup{
     // private double botSpeed;
     // private double feedSpeed;
 
-    private double waitforSpool = 0.7;
+    private double waitforSpool = 1;
     private double waitForShoot = 0.75;
 
     //2 Ball Waits

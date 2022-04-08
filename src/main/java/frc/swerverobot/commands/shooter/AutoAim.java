@@ -2,6 +2,7 @@ package frc.swerverobot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.swerverobot.RobotMap;
 import frc.swerverobot.commands.auto.FollowHubCommand;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
@@ -29,6 +30,7 @@ public class AutoAim extends SequentialCommandGroup{
         addCommands(
             runShootMotors,//Starts the shooting motors early
             new FollowHubCommand(drivetrain).withTimeout(2),//Points robot at hub 
+            new WaitCommand(0.3),//Give Extra Time for Motors to Spool Up
             shootCommand//Shoots at the power defined in initalization
         );
     }
@@ -48,7 +50,7 @@ public class AutoAim extends SequentialCommandGroup{
         shootCommand.setSpeeds(powers[0]*RobotMap.autoAimTopMotorPowerMultipler, powers[1]*RobotMap.autoAimBottomMotorPowerMultipler, powers[2]*RobotMap.autoAimFeedMotorPowerMultipler);
 
         //Used for early motor spinup
-        runShootMotors.setSpeeds(powers[0]*RobotMap.autoAimTopMotorPowerMultipler, powers[1]*RobotMap.autoAimBottomMotorPowerMultipler);
+        runShootMotors.setSpeeds(powers[0]*RobotMap.autoAimTopMotorPowerMultipler*RobotMap.firstBallPowerMultiplier, powers[1]*RobotMap.autoAimBottomMotorPowerMultipler*RobotMap.firstBallPowerMultiplier);
     }
 
 }

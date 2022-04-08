@@ -31,7 +31,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
                 //Cant make it into high goal from 100 distance
                 
                 //Test 250,200,190,And Gaps, Prioritize High Goal
-                //Create 140,222.5,330,240
+                //Create 140,222.5,230,240
                 //Launch Pad Distance 
 
                 //Golden Zone = 160-190
@@ -39,22 +39,24 @@ public class ShooterSubsystem2 extends SubsystemBase {
                 //Distance, Top Motor, Bottom Motor, Feed Motor
                 {132,-0.6, 0.75, -1},//Updated (Home)
                 //Gap of ~20
-                {151,-0.61, 0.75, -1}, //Updated (Comp)
+                
+                {151,-0.61, 0.75, -1},//Updated (Comp)
                 //Gap of 10
-                {161,-0.62, 0.75, -1}, //Updated (Comp)
+                {161,-0.62, 0.75, -1},//Updated (Comp)
                 //Gap of 11
                 {172,-0.65,0.75,-1},//Updated (Home)
                 //Gap of 11
                 {183,-0.67,0.77,-1},//Old But Tested (Comp)
                 //Gap of 7
-                {190,-0.75,0.775,-1},//New (Comp)
+                {190,-0.75,0.775,-1},//New (Comp|Tested)
+
                 //Gap of 10
-                {200,-0.8, 0.86,-1},//New (Home)
+                {200,-0.875, 0.91,-1},//New (Home)
                 //Gap of 15
-                {215,-0.85,0.89,-1},//New (Updated before kicked off of practice field)
+                {215,-1,1,-1},//New (Updated before kicked off of practice field)
                 //Gap of 35
-                {250,-0.8, 0.9,-1},//Updated(Home)
-                {250,-0.8, 0.9,-1}//Filler Value (Should repeat above numbers)
+                {250,-1, 1,-1},//Updated(Home)
+                {250,-1, 1,-1}//Filler Value (Should repeat above numbers)
             };
             return SetMotorDistanceCalc(MotorSpeedHighGoal);
         }

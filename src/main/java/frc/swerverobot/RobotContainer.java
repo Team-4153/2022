@@ -243,9 +243,9 @@ Hit  - 13
 */
                 //        [Shooter Subsystem]
                 DropBallBTN.whenPressed(
-                        //Drops the first ball in storage
+                        //High Goal Manual Shoot
 //                        new DropBall(shooter)
-                        new ManualShoot(shooter, -0.6, 0.75, -1) // -0.7625, 0.7625, -1
+                        new ManualShoot(shooter, -0.7625, 0.7625, -1) // -0.7625, 0.7625, -1
                 );
                 ManualShoot.whenPressed(
                         //Gets into low goal from 77 visual distance (77 is as close as we can get and still have a distance reading)
