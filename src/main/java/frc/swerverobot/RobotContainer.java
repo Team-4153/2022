@@ -134,7 +134,7 @@ public class RobotContainer {
                         // case "FOUR_BALL":
                         //         return new FourBallAuto(drivetrain, shooter, intake);
                         default:
-                                return new LowHighTwoBall(drivetrain, shooter, intake);
+                                return new Drive(drivetrain, shooter, intake);
                 }
         }
 

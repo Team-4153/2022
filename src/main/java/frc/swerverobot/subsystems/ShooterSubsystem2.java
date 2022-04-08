@@ -42,13 +42,13 @@ public class ShooterSubsystem2 extends SubsystemBase {
                 
                 {151,-0.61, 0.75, -1},//Updated (Comp)
                 //Gap of 10
-                {161,-0.62, 0.75, -1},//Updated (Comp)
+                {160,-0.635, 0.755, -1},//Updated (Comp)
                 //Gap of 11
                 {172,-0.65,0.76,-1},//Updated (Home)
                 //Gap of 11
-                {183,-0.7,0.76,-1},//Old But Tested (Comp)
+                {183,-0.75,0.77,-1},//Old (Comp)
                 //Gap of 7
-                {190,-0.75,0.775,-1},//New (Comp|Tested)
+                {190,-0.85,0.88,-1},//New (Comp|Tested)
 
                 //Gap of 10
                 {200,-0.875, 0.91,-1},//New (Home)
