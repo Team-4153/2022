@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //Sensors
-import edu.wpi.first.wpilibj.util.Color;
+// import edu.wpi.first.wpilibj.util.Color;
 
 
 public class IntakeSubsystem extends SubsystemBase {
