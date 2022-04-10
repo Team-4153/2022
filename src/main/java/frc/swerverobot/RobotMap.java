@@ -38,7 +38,7 @@ public class RobotMap {
     public static final double autoAimTopMotorPowerMultipler = 1.125;
     public static final double autoAimBottomMotorPowerMultipler = 1.125;
     public static final double autoAimFeedMotorPowerMultipler = 1;
-    public static final int driveCurrent = 60;
+    public static final int driveCurrent = 30;
 
 //LEDS 
     public static final int LEDPWMPort = 5;                                     //[LED Subsystem] Port for the LED's
