@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.swerverobot.RobotMap;
 
 import org.frcteam2910.common.control.PidConstants;
 import org.frcteam2910.common.control.PidController;
@@ -345,7 +346,7 @@ public class Mk2SwerveModuleBuilder {
         encoder.setPositionConversionFactor(wheelDiameter * Math.PI / reduction);
         encoder.setVelocityConversionFactor(wheelDiameter * Math.PI / reduction * (1.0 / 60.0)); // RPM to units per second
 
-        motor.setSmartCurrentLimit(30);
+        motor.setSmartCurrentLimit(RobotMap.driveCurrent);
 
         currentDrawSupplier = motor::getOutputCurrent;
         distanceSupplier = encoder::getPosition;
