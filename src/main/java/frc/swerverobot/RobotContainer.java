@@ -254,26 +254,26 @@ Hit  - 13
                 AimShootHigh.getButton(0.1).whenPressed(
                         //Autoaim to the high goal and then shoot
                         //Last boolean determines which dataset to use, true = high, false = low.
-                        new AutoAim(shooter, drivetrain, true).withTimeout(4.5)
+                        new AutoAim(shooter, drivetrain, true).withTimeout(7.5)
                 );
                 AimShootLow.getButton(0.1).whenPressed(
                         //Autoaim to the high goal and then shoot
                         //Last boolean determines which dataset to use, true = high, false = low.
-                        new AutoAim(shooter, drivetrain, false).withTimeout(4)
+                        new AutoAim(shooter, drivetrain, false).withTimeout(7.5)
                         // new ShootCommand(shooter, -0.7, 1.0, -0.4)
                 );
 
 
                 
                 //        [Intake Subsystem]
-                Intake_Extension.whenPressed(
-                        //Run the intake (It will autofeed the first ball and stop the motor when both balls are detected)
-                        new IntakeSequence(intake, shooter)
-                );
-                Intake_Retract.whenPressed(
-                        //Retracts intake 
-                        new IntakeCommand(intake, true)
-                );
+                // Intake_Extension.whenPressed(
+                //         //Run the intake (It will autofeed the first ball and stop the motor when both balls are detected)
+                //         new IntakeSequence(intake, shooter)
+                // );
+                // Intake_Retract.whenPressed(
+                //         //Retracts intake 
+                //         new IntakeCommand(intake, true)
+                // );
         }
 
         //Add options for different start positions

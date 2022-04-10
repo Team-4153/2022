@@ -11,7 +11,7 @@ import frc.swerverobot.subsystems.ShooterSubsystem2;
 @Deprecated
 @SuppressWarnings("unused")
 
-public class AutoAim extends SequentialCommandGroup{
+public class AutoShoot extends SequentialCommandGroup{
     private final ShooterSubsystem2 shooter;
     private final DrivetrainSubsystem drivetrain;
     private final boolean highLow;
@@ -20,7 +20,7 @@ public class AutoAim extends SequentialCommandGroup{
     private RunShootMotors runShootMotors;
 
 
-    public AutoAim(ShooterSubsystem2 shooter, DrivetrainSubsystem drivetrain, boolean highLow) {
+    public AutoShoot(ShooterSubsystem2 shooter, DrivetrainSubsystem drivetrain, boolean highLow) {
         this.shooter = shooter;
         this.drivetrain = drivetrain;
         this.highLow = highLow;
@@ -28,10 +28,7 @@ public class AutoAim extends SequentialCommandGroup{
         this.runShootMotors = new RunShootMotors(shooter, 0, 0);
 
         addCommands(
-            runShootMotors,//Starts the shooting motors early
-            new FollowHubCommand(drivetrain).withTimeout(2),//Points robot at hub 
-            new WaitCommand(0.3),//Give Extra Time for Motors to Spool Up
-            new AutoShoot(shooter, drivetrain, highLow).withTimeout(4)
+            shootCommand//Shoots at the power defined in initalization
         );
     }
 
@@ -46,8 +43,8 @@ public class AutoAim extends SequentialCommandGroup{
             return;
         }
 
-        //Used for early motor spinup
-        runShootMotors.setSpeeds(powers[0]*RobotMap.autoAimTopMotorPowerMultipler*RobotMap.firstBallPowerMultiplier, powers[1]*RobotMap.autoAimBottomMotorPowerMultipler*RobotMap.firstBallPowerMultiplier);
+        //1 = Top Motor, 2 = Bottom Motor, 3 = Feed Motor
+        shootCommand.setSpeeds(powers[0]*RobotMap.autoAimTopMotorPowerMultipler, powers[1]*RobotMap.autoAimBottomMotorPowerMultipler, powers[2]*RobotMap.autoAimFeedMotorPowerMultipler);
     }
 
 }
