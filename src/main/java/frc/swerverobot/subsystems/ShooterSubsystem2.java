@@ -30,11 +30,6 @@ public class ShooterSubsystem2 extends SubsystemBase {
             double[][] MotorSpeedHighGoal = {
                 //Cant make it into high goal from 100 distance
                 
-                //Test 132,140,160
-                //Then Test 140-160
-                //Test a couple of Golden Zone Values
-                //Then Test 200+
-                
                 //Distance, Top Motor, Bottom Motor, Feed Motor
 
                 //Golden Zone = 160-190
@@ -122,9 +117,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
                 SpeedsToSet[i] = lerp(lowDistance[i+1], highDistance[i+1], progress);
             }
         }
-        SmartDashboard.putNumber("Top Motor Calculated Speed", SpeedsToSet[0]);
-        SmartDashboard.putNumber("Bottom Motor Calculated Speed", SpeedsToSet[1]);
-        SmartDashboard.putNumber("Feed Motor Calculated Speed", SpeedsToSet[2]);
+        SmartDashboard.putNumberArray("Calculated Speeds", SpeedsToSet);
         return SpeedsToSet;
     }
 
