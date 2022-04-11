@@ -81,8 +81,8 @@ public class RobotMap {
     
     //Shooter/Climber Controller (Noah)
     public static final Controller Shooter_controller = new XboxController(1);                  //[Shooter's Controller]
-    public static final Button ManualShoot = Shooter_controller.getXButton();                   //[Shooter Subsystem] (X|Manual Shoot)
-    public static final Button DropBallBTN = Shooter_controller.getBButton();                   //[Shooter Subsystem] (B|Drop Ball)
+    public static final Button ManualLowShoot = Shooter_controller.getXButton();                //[Shooter Subsystem] (X|Manual Low Shoot)
+    public static final Button ManualHighShoot = Shooter_controller.getBButton();               //[Shooter Subsystem] (B|Drop High Ball)
     public static final Axis AimShootHigh = Shooter_controller.getRightTriggerAxis();           //[Shooter Subsystem] (R-Trigger|Aim & Shoot High Goal) 
     public static final Axis AimShootLow = Shooter_controller.getLeftTriggerAxis();             //[Shooter Subsystem] (L-Trigger|Aim & Shoot Low Goal)
     public static final Button ClimbOut = Shooter_controller.getDPadButton(Direction.LEFT);     //[Climber Subsystem] (DPad-Left|Climber Out)

@@ -235,19 +235,15 @@ public class RobotContainer {
                 // WinchUnlock.whenPressed(
                 //         new WinchLockCommand(climb, States.UNLOCKED)
                 // );
-/*
--0.65, 0.825, -1
-Miss - 7
-Hit  - 13
+                
 
-*/
+
                 //        [Shooter Subsystem]
-                DropBallBTN.whenPressed(
+                ManualHighShoot.whenPressed(
                         //High Goal Manual Shoot
-//                        new DropBall(shooter)
-                        new ManualShoot(shooter, -0.7625, 0.7625, -1) // -0.7625, 0.7625, -1
+                        new ManualShoot(shooter, -0.7625, 0.7625, -1) //Default Values (-0.7625, 0.7625, -1)
                 );
-                ManualShoot.whenPressed(
+                ManualLowShoot.whenPressed(
                         //Gets into low goal from 77 visual distance (77 is as close as we can get and still have a distance reading)
                         new ManualShoot(shooter, -0.45, 0.45, -1)
                 );
