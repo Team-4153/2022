@@ -613,7 +613,6 @@ public class LEDSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
 
     //Set LED's
-    //Worm
     // colorPositionLED();
 
     //Change Positions
