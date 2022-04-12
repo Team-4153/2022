@@ -114,27 +114,27 @@ public class RobotContainer {
 
                 switch(choice) {
                         case "LOW_ONE":
-                                return new LowOneBall(drivetrain, shooter, intake);
+                                return new LowOneBall(drivetrain, shooter, intake, LED);
                         case "LOW_TWO":
-                                return new LowTwoBall(drivetrain, shooter, intake);
+                                return new LowTwoBall(drivetrain, shooter, intake, LED);
                         case "LOW_THREE":
-                                return new LowThreeBall(drivetrain, shooter, intake);
+                                return new LowThreeBall(drivetrain, shooter, intake, LED);
                         case "LO_HI_TWO":
-                                return new LowHighTwoBall(drivetrain, shooter, intake);
+                                return new LowHighTwoBall(drivetrain, shooter, intake, LED);
                         case "LO_HI_THREE":
-                                return new LowThreeBall(drivetrain, shooter, intake);
+                                return new LowThreeBall(drivetrain, shooter, intake, LED);
                         case "HIGH_TWO":
-                                return new HighTwoBall(drivetrain, shooter, intake);
+                                return new HighTwoBall(drivetrain, shooter, intake, LED);
                         case "HIGH_THREE":
-                                return new HighThreeBall(drivetrain, shooter, intake);
+                                return new HighThreeBall(drivetrain, shooter, intake, LED);
                         case "FAST_THREE":
-                                return new HighThreeBall(drivetrain, shooter, intake);
+                                return new HighThreeBall(drivetrain, shooter, intake, LED);
                         // case "THREE_BALL":
                                 // return new ThreeBallAuto(drivetrain, shooter, intake);
                         // case "FOUR_BALL":
                         //         return new FourBallAuto(drivetrain, shooter, intake);
                         default:
-                                return new Drive(drivetrain, shooter, intake);
+                                return new Drive(drivetrain, shooter, intake, LED);
                 }
         }
 
@@ -259,17 +259,27 @@ public class RobotContainer {
                         // new ShootCommand(shooter, -0.7, 1.0, -0.4)
                 );
 
+                //LED Subsystem
+                FancyLEDSButton.whenPressed(
+                        //Sets the LEDs to fancy mode
+                        new SetFancy(LED)
+                );
+                FancyLEDSButton2.whenPressed(
+                        //Sets the LEDs to fancy mode
+                        new SetHighGoalAuto(LED)
+                );
+
 
                 
                 //        [Intake Subsystem]
-                // Intake_Extension.whenPressed(
-                //         //Run the intake (It will autofeed the first ball and stop the motor when both balls are detected)
-                //         new IntakeSequence(intake, shooter)
-                // );
-                // Intake_Retract.whenPressed(
-                //         //Retracts intake 
-                //         new IntakeCommand(intake, true)
-                // );
+                Intake_Extension.whenPressed(
+                        //Run the intake (It will autofeed the first ball and stop the motor when both balls are detected)
+                        new IntakeSequence(intake, shooter)
+                );
+                Intake_Retract.whenPressed(
+                        //Retracts intake 
+                        new IntakeCommand(intake, true)
+                );
         }
 
         //Add options for different start positions

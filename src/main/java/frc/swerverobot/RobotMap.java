@@ -72,12 +72,14 @@ public class RobotMap {
 
 //Controls
     //DriveTrain Controller (Kendall)
-    public static final Controller Driver_controller = new XboxController(0);               //[Driver's Controller]
-    public static final Axis Speed_Increase = Driver_controller.getLeftTriggerAxis();       //[DriveTrain Subsystem](L-Trigger|Increase Speed)
-    public static final Axis Speed_Decrease = Driver_controller.getRightTriggerAxis();      //[DriveTrain Subsystem](R-Trigger|Decrease Speed)
-    public static final Button Intake_Extension = Driver_controller.getLeftBumperButton();  //[Intake Subsystem](L-Bumper|Extend Intake)
-    public static final Button Intake_Retract = Driver_controller.getRightBumperButton();   //[Intake Subsystem](R-Bumper|Retract Intake)
-    public static final Button ResetGyro = Driver_controller.getBackButton();               //[DriveTrain Subsystem](Back-Button|Reset Gyro)
+    public static final Controller Driver_controller = new XboxController(0);                   //[Driver's Controller]
+    public static final Axis Speed_Increase = Driver_controller.getLeftTriggerAxis();           //[DriveTrain Subsystem](L-Trigger|Increase Speed)
+    public static final Axis Speed_Decrease = Driver_controller.getRightTriggerAxis();          //[DriveTrain Subsystem](R-Trigger|Decrease Speed)
+    public static final Button Intake_Extension = Driver_controller.getLeftBumperButton();      //[Intake Subsystem](L-Bumper|Extend Intake)
+    public static final Button Intake_Retract = Driver_controller.getRightBumperButton();       //[Intake Subsystem](R-Bumper|Retract Intake)
+    public static final Button ResetGyro = Driver_controller.getBackButton();                   //[DriveTrain Subsystem](Back-Button|Reset Gyro)
+    public static final Button FancyLEDSButton = Driver_controller.getDPadButton(Direction.UP); //[DriveTrain Subsystem](DPad-Up|Toggel Fancy LEDS)
+    public static final Button FancyLEDSButton2 = Driver_controller.getDPadButton(Direction.UP); //[DriveTrain Subsystem](DPad-Up|Toggel Fancy LEDS)
     
     //Shooter/Climber Controller (Noah)
     public static final Controller Shooter_controller = new XboxController(1);                  //[Shooter's Controller]
@@ -94,8 +96,8 @@ public class RobotMap {
     public static final Button WinchLock = Shooter_controller.getDPadButton(Direction.UP);      //[Climber Subsystem] (DPad-Up|Lock Winch)
     public static final Button WinchUnlock = Shooter_controller.getDPadButton(Direction.DOWN);  //[Climber Subsystem] (DPad-Down|Lock Unwinch)
     public static final Button GetToNextRung = Shooter_controller.getStartButton();             //[Climber Subsystem] (Start|GetToNextRung Command)
-    // public static final Button PullAndGrab = Shooter_controller.getBackButton();                //[Climber Subsystem] (Back|PullAndGrab Command)
-    public static final Button TestButton = Shooter_controller.getBackButton();                //[Climber Subsystem] (Back|PullAndGrab Command)
+    // public static final Button PullAndGrab = Shooter_controller.getBackButton();             //[Climber Subsystem] (Back|PullAndGrab Command)
+    public static final Button TestButton = Shooter_controller.getBackButton();                 //[Climber Subsystem] (Back|Test Command)
 
 
     /* Example Analog Trigger Code NOTE: put this inside your subsystem
