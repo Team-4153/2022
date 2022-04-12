@@ -105,26 +105,20 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   private void rainbow(int startPos, int Length) {
-    int m_rainbowFirstPixelHue = 1;
     if (startPos + Length < m_ledBuffer.getLength()) {
       for (var i = startPos; i < startPos + Length; i++) {
-        final int hue = (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180;
+        final int hue = ((i * 180) / Length) % 180;
         m_ledBuffer.setHSV(i, hue, 255, 128);
       }
-      m_rainbowFirstPixelHue += 3;
-      m_rainbowFirstPixelHue %= 180;
+    }
+    else {
+      startPos = startPos-1;
+      rainbow(startPos, Length);
     }
   }
 
   public int ledFillWhenChanged(int pos) {
-    if (fancyLEDS) {
-      rainbow(lengthstrand1, lengthstrandrighty/2);//First Part of Right Y
-      rainbow(lengthstrand1 + lengthstrandrighty/2, lengthstrandrighty/2);//Second Part of Right Y
-      
-      rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2, lengthstrandlefty/2);//First Part of Left Y
-      rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandlefty/2, lengthstrandlefty/2);//Second Part of Left Y
-    }
-    else if (leftypluggedin && rightypluggedin) {
+    if (leftypluggedin && rightypluggedin && !fancyLEDS) {
       //Both Y's plugged in
       if (climberLockedR != climberLockedR2) {
         //Third Strand & Right Y
@@ -155,7 +149,7 @@ public class LEDSubsystem extends SubsystemBase {
         }
       }
     }
-    else if (leftypluggedin) {
+    else if (leftypluggedin && !fancyLEDS) {
       //Only Left Y Plugged in
       if (climberLockedR != climberLockedR2) {
         //Third Strand
@@ -186,7 +180,7 @@ public class LEDSubsystem extends SubsystemBase {
         }
       }
     }
-    else if (rightypluggedin) {
+    else if (rightypluggedin && !fancyLEDS) {
       //Only Right Y Plugged in
       if (climberLockedR != climberLockedR2) {
         //Third Strand & Right Y
@@ -217,7 +211,7 @@ public class LEDSubsystem extends SubsystemBase {
         }
       }
     }
-    else {
+    else if (!fancyLEDS) {
       if (climberLockedR != climberLockedR2) {
         //Third Strand
         for (int i = 0; i < lengthstrand3; i++) {
@@ -408,6 +402,10 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   public void bothLEDYs(int pos) {
+    if (fancyLEDS) {
+      rainbow(lengthstrand1 + 1, lengthstrandlefty);
+      rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2, lengthstrandrighty);
+    }
     if (allianceColor) {
       m_ledBuffer.setRGB(pos, 175, 0, 0);//Red
     }
@@ -450,19 +448,18 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
 
-  public void fancyWormLED(int pos) {
-    if (winch) {
-      //If Robot is Winching
-      m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
-    }
-    else if (shooting) {
-      //else if robot is shooting
-      m_ledBuffer.setRGB(pos, 100, 100, 0);//Orange
-    }
-    else {
-      //Idle
-      m_ledBuffer.setRGB(pos, 60, 60, 60);//White
-    }
+  public void toggleFancy() {
+    boolean old = SmartDashboard.getBoolean("fancyLEDS", false);
+    SmartDashboard.putBoolean("fancyLEDS", !old);
+  }
+  public void setHighAuto() {
+    SmartDashboard.putString("Mode", "auto-high");
+  }
+  public void setLowAuto() {
+    SmartDashboard.putString("Mode", "auto-low");
+  }
+  public void setTele() {
+    SmartDashboard.putString("Mode", "tele");
   }
 
   /*
@@ -492,6 +489,7 @@ public class LEDSubsystem extends SubsystemBase {
     allianceColor = SmartDashboard.getNumber("IntakeBall/BallColor", 1) == 1;//Ball Color (1=red|2=blue)
     distance = SmartDashboard.getNumber("ShooterTarget/TargetDistance", 1);
     goldenZone = (distance < RobotMap.AutoAimMaxDistance && distance > RobotMap.AutoAimMinDistance);
+    fancyLEDS = SmartDashboard.getBoolean("fancyLEDS", false);
 
     if (leftypluggedin && rightypluggedin) {
       //Both LEDs are plugged in
@@ -606,14 +604,20 @@ public class LEDSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    rainbow(lengthstrand1 + 1, lengthstrandlefty);//Left Y
+    rainbow(0, lengthstrand1);//First Strand
+
+    rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + 1, lengthstrandrighty);//Right Y
+    rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty + 1, lengthstrand3);//Third Strand
+
     // This method will be called once per scheduler run
 
     //Set LED's
     //Worm
-    colorPositionLED();
+    // colorPositionLED();
 
     //Change Positions
-    running_LED = ledFillWhenChanged(running_LED);
+    // running_LED = ledFillWhenChanged(running_LED);
 
     climberLockedR2 = climberLockedR;
     climberLockedL2 = climberLockedL;
