@@ -26,24 +26,26 @@ public class TwoBallAuto extends SequentialCommandGroup{
     private final DrivetrainSubsystem drivetrain;
     private final ShooterSubsystem2 shooter;
     private final IntakeSubsystem intake;
+    private final LEDSubsystem LED;
     private double angle;
 
-    public TwoBallAuto(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake) {
+    public TwoBallAuto(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake, LEDSubsystem LED) {
         this.drivetrain = drivetrain;
         this.shooter = shooter;
         this.intake = intake;
+        this.LED = LED;
 
         addRequirements(drivetrain, shooter, intake);
 
         addCommands(
-            new SetHighGoalAuto(),                                                                      //Set the LED's to High goal colors
+            new SetHighGoalAuto(LED),                                                                   //Set the LED's to High goal colors
             new IntakeCommand(intake, false).withTimeout(0.3),                                          //Extend Intake
             new WaitCommand(0.5),                                                                       //Wait 0.5s
             new FollowBallCommand(drivetrain, () -> 0.3),                                               //Turn to the ball
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5), //Drive to the ball
             new IntakeCommand(intake, true),                                                            //Retract Intake
             new AutoAim(shooter, drivetrain, true),                                                     //Auto aim and shoot for the high goal
-            new SetT()                                                                                  //Change Auto LED's to tele Mode
+            new SetT(LED)                                                                               //Change Auto LED's to tele Mode
         );
 
     }

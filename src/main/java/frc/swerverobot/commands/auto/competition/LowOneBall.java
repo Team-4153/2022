@@ -11,6 +11,7 @@ import frc.swerverobot.commands.shooter.ManualShoot;
 import frc.swerverobot.commands.shooter.ShootCommand;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import frc.swerverobot.subsystems.IntakeSubsystem;
+import frc.swerverobot.subsystems.LEDSubsystem;
 import frc.swerverobot.subsystems.ShooterSubsystem2;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -25,20 +26,22 @@ public class LowOneBall extends SequentialCommandGroup{
     private final DrivetrainSubsystem drivetrain;
     private final ShooterSubsystem2 shooter;
     private final IntakeSubsystem intake;
+    private final LEDSubsystem LED;
     private double angle;
 
-    public LowOneBall(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake) {
+    public LowOneBall(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake, LEDSubsystem LED) {
         this.drivetrain = drivetrain;
         this.shooter = shooter;
         this.intake = intake;
+        this.LED = LED;
 
         addRequirements(drivetrain);
 
         addCommands(
-            new SetLowGoalAuto(),                                                                           //Set the LED's to low goal colors
-            new ManualShoot(shooter, -0.45, 0.45, -1),                                                        //Shoot first ball into low goal
+            new SetLowGoalAuto(LED),                                                                        //Set the LED's to low goal colors
+            new ManualShoot(shooter, -0.45, 0.45, -1),                                                      //Shoot first ball into low goal
             new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),  //Drive backwards
-            new SetT()                                                                                      //Change Auto LED's to tele Mode
+            new SetT(LED)                                                                                   //Change Auto LED's to tele Mode
         );
     }
 

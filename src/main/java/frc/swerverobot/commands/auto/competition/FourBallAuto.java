@@ -25,19 +25,21 @@ public class FourBallAuto extends SequentialCommandGroup{
     private final DrivetrainSubsystem drivetrain;
     private final ShooterSubsystem2 shooter;
     private final IntakeSubsystem intake;
+    private final LEDSubsystem LED;
     private double angle;
 
-    public FourBallAuto(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake) {
+    public FourBallAuto(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake, LEDSubsystem LED) {
         this.drivetrain = drivetrain;
         this.shooter = shooter;
         this.intake = intake;
+        this.LED = LED;
 
         addRequirements(drivetrain, shooter, intake);
 
         //Didn't add comments to this one because I have no idea what is going on
 
         addCommands(
-            new SetHighGoalAuto(),                                                                               //Set the LED's to High goal colors
+            new SetHighGoalAuto(LED),                                                                               //Set the LED's to High goal colors
             new IntakeCommand(intake, false).withTimeout(0.3),
             new WaitCommand(0.5),
             new FollowBallCommand(drivetrain, () -> 0.3),

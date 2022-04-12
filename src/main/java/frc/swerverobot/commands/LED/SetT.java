@@ -1,17 +1,21 @@
 package frc.swerverobot.commands.LED;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.swerverobot.subsystems.LEDSubsystem;
 
 public class SetT extends CommandBase{
-  // Called every time the scheduler runs while the command is scheduled.
+  private final LEDSubsystem ledSubsystem;
+
+  public SetT(LEDSubsystem ledSubsystem) {
+      this.ledSubsystem = ledSubsystem;
+  }
 
   @Override
   public void initialize() {}
 
   @Override
   public void execute() {
-    SmartDashboard.putString("Mode", "tele");
+    ledSubsystem.setTele);
   }
 
   @Override

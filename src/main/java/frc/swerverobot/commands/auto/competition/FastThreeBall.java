@@ -13,7 +13,11 @@ import frc.swerverobot.commands.shooter.ManualShoot;
 import frc.swerverobot.commands.shooter.ShootCommand;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import frc.swerverobot.subsystems.IntakeSubsystem;
+import frc.swerverobot.subsystems.LEDSubsystem;
 import frc.swerverobot.subsystems.ShooterSubsystem2;
+
+import org.frcteam2910.common.robot.drivers.Limelight.LedMode;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -27,17 +31,19 @@ public class FastThreeBall extends SequentialCommandGroup{
     private final DrivetrainSubsystem drivetrain;
     private final ShooterSubsystem2 shooter;
     private final IntakeSubsystem intake;
+    private final LEDSubsystem LED;
     private double angle;
 
-    public FastThreeBall(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake) {
+    public FastThreeBall(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake, LEDSubsystem LED) {
         this.drivetrain = drivetrain;
         this.shooter = shooter;
         this.intake = intake;
+        this.LED = LED;
 
         addRequirements(drivetrain);
 
         addCommands(
-            new SetLowGoalAuto(),                                                                                   //Set the LED's to low goal colors
+            new SetLowGoalAuto(LED),                                                                                   //Set the LED's to low goal colors
             new ManualShoot(shooter, -0.425, 0.425, -1).withTimeout(1.5),                                           //Shoot 1st ball
             new IntakeCommand(intake, false).withTimeout(0.1),                                                      //Extend Intake
             new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.9),          //Drive Backwards
@@ -53,7 +59,7 @@ public class FastThreeBall extends SequentialCommandGroup{
             new AutoAim(shooter, drivetrain, true).withTimeout(3),
             // new GoToAngleCommand(drivetrain, () -> 0, () -> 0, Math.PI/2.25).withTimeout(1.3),                      //Turn to hub
             // new ManualShoot(shooter, -0.62, 0.75, -1).withTimeout(1.3),                                             //Shoot 3rd ball into low goal
-            new SetT()                                                                                              //Change Auto LED's to tele Mode
+            new SetT(LED)                                                                                              //Change Auto LED's to tele Mode
         );
     }
 

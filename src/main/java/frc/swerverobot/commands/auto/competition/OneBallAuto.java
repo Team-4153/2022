@@ -25,20 +25,22 @@ public class OneBallAuto extends SequentialCommandGroup{
     private final DrivetrainSubsystem drivetrain;
     private final ShooterSubsystem2 shooter;
     private final IntakeSubsystem intake;
+    private final LEDSubsystem LED;
     private double angle;
 
-    public OneBallAuto(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake) {
+    public OneBallAuto(DrivetrainSubsystem drivetrain, ShooterSubsystem2 shooter, IntakeSubsystem intake, LEDSubsystem LED) {
         this.drivetrain = drivetrain;
         this.shooter = shooter;
         this.intake = intake;
+        this.LED = LED;
 
         addRequirements(drivetrain, shooter, intake);
 
         addCommands(
-            new SetHighGoalAuto(),                                                                          //Set the LED's to High goal colors
+            new SetHighGoalAuto(LED),                                                                       //Set the LED's to High goal colors
             new DriveCommand(drivetrain, () -> -0.3, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.2),  //Drive Backwards
             new AutoAim(shooter, drivetrain, true),                                                         //Auto aim and shoot to the high goal
-            new SetT()                                                                                      //Change Auto LED's to tele Mode
+            new SetT(LED)                                                                                   //Change Auto LED's to tele Mode
         );
 
     }
