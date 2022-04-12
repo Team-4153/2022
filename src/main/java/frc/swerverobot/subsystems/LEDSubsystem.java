@@ -48,6 +48,7 @@ public class LEDSubsystem extends SubsystemBase {
   boolean shooting = false;         //When the robot is shooting (false = not shooting, true = shooting)
   boolean winch = false;            //When the winch is active (false = not active, true = active)
   boolean intake = false;           //When the intake is extended (false = retracted, true = extended)
+  boolean fancyLEDS = false;    //Can be activated anytime for style
   boolean climberExtended = false;  //When the climber is extended (false = retracted, true = extended)
   boolean climberLockedR = false;   //When the right static hook is locked (false = Unlocked, true = Locked)
   boolean climberLockedL = false;   //When the left static hook is locked (false = Unlocked, true = Locked)
@@ -103,8 +104,27 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
 
+  private void rainbow(int startPos, int Length) {
+    int m_rainbowFirstPixelHue = 1;
+    if (startPos + Length < m_ledBuffer.getLength()) {
+      for (var i = startPos; i < startPos + Length; i++) {
+        final int hue = (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180;
+        m_ledBuffer.setHSV(i, hue, 255, 128);
+      }
+      m_rainbowFirstPixelHue += 3;
+      m_rainbowFirstPixelHue %= 180;
+    }
+  }
+
   public int ledFillWhenChanged(int pos) {
-    if (leftypluggedin && rightypluggedin) {
+    if (fancyLEDS) {
+      rainbow(lengthstrand1, lengthstrandrighty/2);//First Part of Right Y
+      rainbow(lengthstrand1 + lengthstrandrighty/2, lengthstrandrighty/2);//Second Part of Right Y
+      
+      rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2, lengthstrandlefty/2);//First Part of Left Y
+      rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandlefty/2, lengthstrandlefty/2);//Second Part of Left Y
+    }
+    else if (leftypluggedin && rightypluggedin) {
       //Both Y's plugged in
       if (climberLockedR != climberLockedR2) {
         //Third Strand & Right Y
@@ -416,6 +436,21 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   public void wormLED(int pos) {
+    if (winch) {
+      //If Robot is Winching
+      m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
+    }
+    else if (shooting) {
+      //else if robot is shooting
+      m_ledBuffer.setRGB(pos, 100, 100, 0);//Orange
+    }
+    else {
+      //Idle
+      m_ledBuffer.setRGB(pos, 60, 60, 60);//White
+    }
+  }
+
+  public void fancyWormLED(int pos) {
     if (winch) {
       //If Robot is Winching
       m_ledBuffer.setRGB(pos, 0, 150, 0);//Green
