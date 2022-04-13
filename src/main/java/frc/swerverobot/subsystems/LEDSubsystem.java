@@ -57,6 +57,7 @@ public class LEDSubsystem extends SubsystemBase {
   String mode = "null";             //What mode the robot is in (null, auto-high, auto-low, tele)
   double distance = 0;                 //How far the robot is from the target (132-250)
   boolean goldenZone = false;
+  double tick = 1;
 
   boolean shooting2 = false;        //The second variable is to check for changes since the led's were last changed
   boolean winch2 = false;           //The second variable is to check for changes since the led's were last changed
@@ -104,21 +105,21 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
 
-  private void rainbow(int startPos, int Length) {
+  private void rainbow(int startPos, int Length, double rainbowOffset) {
     if (startPos + Length < m_ledBuffer.getLength()) {
       for (var i = startPos; i < startPos + Length; i++) {
-        final int hue = ((i * 180) / Length) % 180;
+        final int hue = (int) ((((rainbowOffset + i) * 180) / Length) % 180);
         m_ledBuffer.setHSV(i, hue, 255, 128);
       }
     }
     else {
       startPos = startPos-1;
-      rainbow(startPos, Length);
+      rainbow(startPos, Length, rainbowOffset);
     }
   }
 
   public int ledFillWhenChanged(int pos) {
-    if (leftypluggedin && rightypluggedin && !fancyLEDS) {
+    if (leftypluggedin && rightypluggedin) {
       //Both Y's plugged in
       if (climberLockedR != climberLockedR2) {
         //Third Strand & Right Y
@@ -149,7 +150,7 @@ public class LEDSubsystem extends SubsystemBase {
         }
       }
     }
-    else if (leftypluggedin && !fancyLEDS) {
+    else if (leftypluggedin) {
       //Only Left Y Plugged in
       if (climberLockedR != climberLockedR2) {
         //Third Strand
@@ -180,7 +181,7 @@ public class LEDSubsystem extends SubsystemBase {
         }
       }
     }
-    else if (rightypluggedin && !fancyLEDS) {
+    else if (rightypluggedin) {
       //Only Right Y Plugged in
       if (climberLockedR != climberLockedR2) {
         //Third Strand & Right Y
@@ -211,7 +212,7 @@ public class LEDSubsystem extends SubsystemBase {
         }
       }
     }
-    else if (!fancyLEDS) {
+    else {
       if (climberLockedR != climberLockedR2) {
         //Third Strand
         for (int i = 0; i < lengthstrand3; i++) {
@@ -402,10 +403,6 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   public void bothLEDYs(int pos) {
-    if (fancyLEDS) {
-      rainbow(lengthstrand1 + 1, lengthstrandlefty);
-      rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2, lengthstrandrighty);
-    }
     if (allianceColor) {
       m_ledBuffer.setRGB(pos, 175, 0, 0);//Red
     }
@@ -602,21 +599,49 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
 
+  public void fancyDisplay(double posModifier) {
+    double posSlow = Math.round(posModifier/3);
+    double posFast = Math.round(posModifier);
+    if (leftypluggedin && rightypluggedin) {
+      rainbow(0, lengthstrand1, posSlow);//First Strand
+      rainbow(lengthstrand1 + 1, lengthstrandlefty, 11 + posSlow);//Left Y
+      
+      rainbow(lengthstrand1 + lengthstrandlefty + 1, lengthstrand2, -5 + posSlow);//Second Strand
+  
+      rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + 1, lengthstrandrighty,19 + posSlow);//Right Y
+      rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty + 1, lengthstrand3,19 + posFast);//Third Strand
+    }
+    else if (rightypluggedin) {
+      rainbow(0, lengthstrand1, 0);//First Strand
+      
+      rainbow(lengthstrand1 + 1, lengthstrand2, 3);//Second Strand
+  
+      rainbow(lengthstrand1 + lengthstrand2 + 1, lengthstrandrighty,19);//Right Y
+      rainbow(lengthstrand1 + lengthstrand2 + lengthstrandrighty + 1, lengthstrand3,0);//Third Strand
+    }
+    else if (leftypluggedin) {
+      rainbow(0, lengthstrand1, 0);//First Strand
+      rainbow(lengthstrand1 + 1, lengthstrandlefty, 11);//Left Y
+
+      rainbow(lengthstrand1 + lengthstrandlefty, lengthstrand2, 0);//Second Strand
+
+      rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + 1, lengthstrand3,0);//Third Strand
+    }
+  }
+
   @Override
   public void periodic() {
-    rainbow(lengthstrand1 + 1, lengthstrandlefty);//Left Y
-    rainbow(0, lengthstrand1);//First Strand
-
-    rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + 1, lengthstrandrighty);//Right Y
-    rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty + 1, lengthstrand3);//Third Strand
-
     // This method will be called once per scheduler run
 
     //Set LED's
-    // colorPositionLED();
-
-    //Change Positions
-    // running_LED = ledFillWhenChanged(running_LED);
+    if (!fancyLEDS) {
+      fancyDisplay(tick);
+    }
+    else {
+      colorPositionLED();
+      //Change Positions
+      running_LED = ledFillWhenChanged(running_LED);
+    }
 
     climberLockedR2 = climberLockedR;
     climberLockedL2 = climberLockedL;
@@ -625,6 +650,7 @@ public class LEDSubsystem extends SubsystemBase {
     count2 = count;
     shooting2 = shooting;
     goldenZone2 = goldenZone;
+    tick = tick + 2;
 
     if (running_LED >= m_ledBuffer.getLength()) { //reset the position back to start
       running_LED = 0;
