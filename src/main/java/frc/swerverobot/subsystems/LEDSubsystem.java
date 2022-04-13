@@ -634,7 +634,7 @@ public class LEDSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
 
     //Set LED's
-    if (!fancyLEDS) {
+    if (fancyLEDS) {
       fancyDisplay(tick);
     }
     else {
