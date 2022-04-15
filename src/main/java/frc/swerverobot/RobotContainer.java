@@ -264,10 +264,6 @@ public class RobotContainer {
                         //Sets the LEDs to fancy mode
                         new SetFancy(LED)
                 );
-                FancyLEDSButton2.whenPressed(
-                        //Sets the LEDs to fancy mode
-                        new SetHighGoalAuto(LED)
-                );
 
 
                 
