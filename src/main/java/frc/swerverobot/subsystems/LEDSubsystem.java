@@ -446,17 +446,20 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   public void toggleFancy() {
-    boolean old = SmartDashboard.getBoolean("fancyLEDS", false);
-    SmartDashboard.putBoolean("fancyLEDS", !old);
+    boolean oldfancyLEDS = fancyLEDS;
+    fancyLEDS = !oldfancyLEDS;
   }
   public void setHighAuto() {
     SmartDashboard.putString("Mode", "auto-high");
+    mode = "auto-high";
   }
   public void setLowAuto() {
     SmartDashboard.putString("Mode", "auto-low");
+    mode = "auto-low";
   }
   public void setTele() {
     SmartDashboard.putString("Mode", "tele");
+    mode = "tele";
   }
 
   /*
@@ -482,7 +485,6 @@ public class LEDSubsystem extends SubsystemBase {
     climberLockedL = !StatHook2.get();//Left Static Arm (true|false)
     intake = Intake_Motor.get() != 0;//Intake Motor (true|false)
     count = SmartDashboard.getNumber("Ball Count", 0);//Ball Count (0|1|2)
-    mode = SmartDashboard.getString("Mode", "null");//Mode (auto-high|auto-low|tele)
     allianceColor = SmartDashboard.getNumber("IntakeBall/BallColor", 1) == 1;//Ball Color (1=red|2=blue)
     distance = SmartDashboard.getNumber("ShooterTarget/TargetDistance", 1);
     goldenZone = (distance < RobotMap.AutoAimMaxDistance && distance > RobotMap.AutoAimMinDistance);
@@ -629,6 +631,12 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
 
+  public void moveRainbow() {
+    if (fancyLEDS) {
+      tick = tick + 1; 
+    }
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -636,28 +644,27 @@ public class LEDSubsystem extends SubsystemBase {
     //Set LED's
     if (fancyLEDS) {
       fancyDisplay(tick);
+      moveRainbow();
     }
     else {
       colorPositionLED();
       //Change Positions
       running_LED = ledFillWhenChanged(running_LED);
-    }
+      climberLockedR2 = climberLockedR;
+      climberLockedL2 = climberLockedL;
+      intake2 = intake;
+      winch2 = winch;
+      count2 = count;
+      shooting2 = shooting;
+      goldenZone2 = goldenZone;
 
-    climberLockedR2 = climberLockedR;
-    climberLockedL2 = climberLockedL;
-    intake2 = intake;
-    winch2 = winch;
-    count2 = count;
-    shooting2 = shooting;
-    goldenZone2 = goldenZone;
-    tick = tick + 2;
-
-    if (running_LED >= m_ledBuffer.getLength()) { //reset the position back to start
-      running_LED = 0;
-    }
-    chasingLED = running_LED-length;
-    if (chasingLED < 0) {
-      chasingLED = m_ledBuffer.getLength()+chasingLED;
+      if (running_LED >= m_ledBuffer.getLength()) { //reset the position back to start
+        running_LED = 0;
+      }
+      chasingLED = running_LED-length;
+      if (chasingLED < 0) {
+        chasingLED = m_ledBuffer.getLength()+chasingLED;
+      }
     }
 
     m_led.setData(m_ledBuffer);
