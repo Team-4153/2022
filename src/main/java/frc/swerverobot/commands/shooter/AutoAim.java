@@ -29,7 +29,7 @@ public class AutoAim extends SequentialCommandGroup{
 
         addCommands(
             runShootMotors,//Starts the shooting motors early
-            new FollowHubCommand(drivetrain).withTimeout(2),//Points robot at hub 
+            new FollowHubCommand(drivetrain).withTimeout(1),//Points robot at hub 
             new WaitCommand(0.3),//Give Extra Time for Motors to Spool Up
             new AutoShoot(shooter, drivetrain, highLow).withTimeout(4)
         );
