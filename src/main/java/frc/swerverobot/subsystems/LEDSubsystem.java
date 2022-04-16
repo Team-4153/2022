@@ -120,32 +120,40 @@ public class LEDSubsystem extends SubsystemBase {
 
   public int ledFillWhenChanged(int pos) {
     if (leftypluggedin && rightypluggedin) {
+      if (goldenZone != goldenZone2) {
+        for (int i = 0; i < lengthstrand3 + lengthstrandrighty; i++) {
+          posledFunctions(lengthstrand1 + lengthstrandlefty + lengthstrand2 + i);
+        }
+        for (int i = 0; i < lengthstrand1 + lengthstrandlefty; i++) {
+          posledFunctions(i);
+        }
+      }
       //Both Y's plugged in
       if (climberLockedR != climberLockedR2) {
         //Third Strand & Right Y
-        for (int i = 1; i < lengthstrand3 + lengthstrandrighty - 1; i++) {
+        for (int i = 0; i < lengthstrand3 + lengthstrandrighty; i++) {
           posledFunctions(lengthstrand1 + lengthstrandlefty + lengthstrand2 + i);
         }
       }
       else if (climberLockedL != climberLockedL2) {
         //First Strand & Left Y
-        for (int i = 1; i < lengthstrand1 + lengthstrandlefty - 1; i++) {
+        for (int i = 0; i < lengthstrand1 + lengthstrandlefty; i++) {
           posledFunctions(i);
         }
       }
-      else if (intake != intake2 || winch != winch2 || goldenZone != goldenZone2) {
+      else if (intake != intake2 || winch != winch2) {
         //First Strand
-        for (int i = 1; i < lengthstrand1 - 1; i++) {
+        for (int i = 0; i < lengthstrand1; i++) {
           posledFunctions(i);
         }
         //Third Strand
-        for (int i = 1; i < lengthstrand3 - 1; i++) {
+        for (int i = 0; i < lengthstrand3; i++) {
           posledFunctions(lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty + i);
         }
       }
       else if (count != count2 || shooting != shooting2) {
         //Second Strand
-        for (int i = 1; i < lengthstrand2; i++) {
+        for (int i = 0; i < lengthstrand2; i++) {
           posledFunctions(lengthstrand1 + lengthstrandlefty + i);
         }
       }
@@ -334,12 +342,12 @@ public class LEDSubsystem extends SubsystemBase {
       m_ledBuffer.setRGB(pos, 50, 50, 0);//Orange
     }
     else if (count == 1) {
-      //esle if there is 1 Ball
+      //else if there is 1 Ball
       m_ledBuffer.setRGB(pos, 50, 0, 0);//Red 
     }
     else if (goldenZone) {
       //else if Robot is in Golden Zone
-      m_ledBuffer.setRGB(pos, 143, 50, 168);//Purple
+      m_ledBuffer.setRGB(pos, 123, 30, 148);//Purple
     }
     else {
       //Idle
@@ -349,31 +357,19 @@ public class LEDSubsystem extends SubsystemBase {
   public void climberLEDS(int pos) {
     if (winch) {
       //else if Robot is Winching
-      m_ledBuffer.setRGB(pos, 100, 100, 0);//Orange
+      m_ledBuffer.setRGB(pos, 75, 75, 0);//Orange
     }
     else if (climberExtended) {
       //else if Climber Is Extended
-      m_ledBuffer.setRGB(pos, 100, 0, 0);//Red
+      m_ledBuffer.setRGB(pos, 75, 0, 0);//Red
     }
     else if (intake) {
       //else if Robot is Running Intake
-      m_ledBuffer.setRGB(pos, 125, 75, 0);//Red-Orange
+      m_ledBuffer.setRGB(pos, 100, 50, 0);//Red-Orange
     }
     else if (goldenZone) {
       //else if Robot is outside of Auto-Aim shooting zone
-      m_ledBuffer.setRGB(pos, 143, 50, 168);//Purple
-    }
-    else if (mode == "auto-high") {
-      //else if Robot is in Auto
-      m_ledBuffer.setRGB(pos, 143, 50, 168);//Purple
-    }
-    else if (mode == "auto-low") {
-      //else if Robot is in Auto
-      m_ledBuffer.setRGB(pos, 0, 56, 153);//Dark-Blue
-    }
-    else if (mode == "tele") {
-      //else if Robot is in Tele
-      m_ledBuffer.setRGB(pos, 0, 176, 170);//Teal
+      m_ledBuffer.setRGB(pos, 123, 30, 148);//Purple
     }
     else {
       //Idle
@@ -403,11 +399,14 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   public void bothLEDYs(int pos) {
-    if (allianceColor) {
-      m_ledBuffer.setRGB(pos, 175, 0, 0);//Red
+    if (goldenZone) {
+      m_ledBuffer.setRGB(pos, 123, 30, 148);//Purple
+    }
+    else if (allianceColor) {
+      m_ledBuffer.setRGB(pos, 150, 0, 0);//Red
     }
     else {
-      m_ledBuffer.setRGB(pos, 0, 156, 150);//Blue
+      m_ledBuffer.setRGB(pos, 0, 150, 145);//Blue
     }
   }
   
