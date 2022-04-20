@@ -25,7 +25,6 @@ public class AutoShoot extends SequentialCommandGroup{
         this.drivetrain = drivetrain;
         this.highLow = highLow;
         this.shootCommand = new ShootCommand(shooter, 0, 0, 0);
-        this.runShootMotors = new RunShootMotors(shooter, 0, 0);
 
         addCommands(
             shootCommand//Shoots at the power defined in initalization

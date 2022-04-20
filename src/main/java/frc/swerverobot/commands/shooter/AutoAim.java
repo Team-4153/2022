@@ -1,5 +1,6 @@
 package frc.swerverobot.commands.shooter;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -18,6 +19,9 @@ public class AutoAim extends SequentialCommandGroup{
     private double[] powers;
     private ShootCommand shootCommand;
     private RunShootMotors runShootMotors;
+    private double firstBallMultipler;
+    private double secondBallMultipler;
+    private double distance;
 
 
     public AutoAim(ShooterSubsystem2 shooter, DrivetrainSubsystem drivetrain, boolean highLow) {
@@ -29,14 +33,19 @@ public class AutoAim extends SequentialCommandGroup{
 
         addCommands(
             runShootMotors,//Starts the shooting motors early
-            new FollowHubCommand(drivetrain).withTimeout(1),//Points robot at hub 
-            new WaitCommand(0.3),//Give Extra Time for Motors to Spool Up
-            new AutoShoot(shooter, drivetrain, highLow).withTimeout(4)
+            new FollowHubCommand(drivetrain).withTimeout(1.6),//Points robot at hub 
+            new AutoShoot(shooter, drivetrain, highLow).withTimeout(5)
         );
+    }
+
+    public static double lerp(double from, double to, double progress) {
+        return from + ((to - from) * progress);
     }
 
     public void initialize() {
         super.initialize();
+
+        distance = SmartDashboard.getNumber("ShooterTarget/TargetDistance", 0);
 
         //Initalize Powers
         powers = shooter.SetMotorDistance(highLow);
@@ -46,8 +55,11 @@ public class AutoAim extends SequentialCommandGroup{
             return;
         }
 
+        firstBallMultipler = lerp(RobotMap.firstBallPowerMultiplierMin, RobotMap.firstBallPowerMultiplierMax, ((distance-RobotMap.AutoAimMinDistance)/(RobotMap.AutoAimMaxDistance-RobotMap.AutoAimMinDistance)));
+        secondBallMultipler = lerp(RobotMap.secondBallPowerMultiplierMin, RobotMap.secondBallPowerMultiplierMax, ((distance-RobotMap.AutoAimMinDistance)/(RobotMap.AutoAimMaxDistance-RobotMap.AutoAimMinDistance)));
+
         //Used for early motor spinup
-        runShootMotors.setSpeeds(powers[0]*RobotMap.autoAimTopMotorPowerMultipler*RobotMap.firstBallPowerMultiplier, powers[1]*RobotMap.autoAimBottomMotorPowerMultipler*RobotMap.firstBallPowerMultiplier);
+        runShootMotors.setSpeeds(powers[0]*RobotMap.autoAimTopMotorPowerMultipler*firstBallMultipler, powers[1]*RobotMap.autoAimBottomMotorPowerMultipler*firstBallMultipler);
     }
 
 }
