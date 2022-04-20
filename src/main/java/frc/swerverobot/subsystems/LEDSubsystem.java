@@ -153,7 +153,7 @@ public class LEDSubsystem extends SubsystemBase {
       }
       else if (count != count2 || shooting != shooting2) {
         //Second Strand
-        for (int i = 0; i < lengthstrand2; i++) {
+        for (int i = 1; i < lengthstrand2; i++) {
           posledFunctions(lengthstrand1 + lengthstrandlefty + i);
         }
       }
