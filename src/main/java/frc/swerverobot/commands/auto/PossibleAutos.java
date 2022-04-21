@@ -3,7 +3,7 @@ package frc.swerverobot.commands.auto;
 public enum PossibleAutos {
     LOW_ONE,
     LOW_TWO,
-    LOW_THREE,
+    // LOW_THREE,
     LO_HI_TWO,
     LO_HI_THREE,
     HIGH_TWO,
