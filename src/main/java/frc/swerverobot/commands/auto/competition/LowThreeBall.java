@@ -41,7 +41,7 @@ public class LowThreeBall extends SequentialCommandGroup{
             new SetLowGoalAuto(LED),                                                                        //Set the LED's to low goal colors
             new ManualShoot(shooter, -0.45, 0.45, -1).withTimeout(1.3),                                     //Shoot 1st ball
             new IntakeCommand(intake, false).withTimeout(0.1),                                              //Extend Intake
-            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.0),  //Drive Backwards
+            new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.85),  //Drive Backwards
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),     //Stop Driving
             new IntakeCommand(intake, true).withTimeout(0.5),                                               //Retract Intake
             new WaitCommand(0.3),                                                                           //Wait 0.3s
