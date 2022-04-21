@@ -34,23 +34,25 @@ public class RobotMap {
 //Define all ports and constants of a component, put in correct catagory, label subsystem(s) used
 
 //Config Variables
-    public static final double firstBallPowerMultiplierMin = 1;
-    public static final double firstBallPowerMultiplierMax = 1.05;
+    public static final double firstBallPowerMultiplierMin = 0.95;
+    public static final double firstBallPowerMultiplierMax = 1;
     
     public static final double secondBallPowerMultiplierMin = 1;
     public static final double secondBallPowerMultiplierMax = 1;
 
-    public static final double autoAimTopMotorPowerMultipler = 1.13; //1.125
-    public static final double autoAimBottomMotorPowerMultipler = 1.13; //1.125
+    public static final double autoAimTopMotorPowerMultipler = 1.12; //1.12
+    public static final double autoAimBottomMotorPowerMultipler = 1.12; //1.12
     public static final double autoAimFeedMotorPowerMultipler = 1;
     public static final int driveCurrent = 30;
+
+    public static final boolean fieldOriented = true; //True = Enable Gyro False = Disable Gyro
 
 //LEDS 
     public static final int LEDPWMPort = 5;                                     //[LED Subsystem] Port for the LED's
     public static final boolean RightYLEDS = true;                                 //[LED Subsystem] Right Y plugged into the LED strip
     public static final boolean LeftYLEDS = true;                                  //[LED Subsystem] Left Y plugged into the LED strip
     public static final double AutoAimMinDistance = 160;                                  //[LED Subsystem] Left Y plugged into the LED strip
-    public static final double AutoAimMaxDistance = 180;                                  //[LED Subsystem] Left Y plugged into the LED strip
+    public static final double AutoAimMaxDistance = 190;                                  //[LED Subsystem] Left Y plugged into the LED strip
 
 //Sensors
     public static final ADIS16470_IMU imu = new ADIS16470_IMU();                //[DriveTrain Subsystem]Gyro and acceleration sensor
