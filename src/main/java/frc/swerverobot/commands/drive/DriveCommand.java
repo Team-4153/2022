@@ -2,6 +2,7 @@ package frc.swerverobot.commands.drive;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.swerverobot.RobotMap;
 import frc.swerverobot.subsystems.DrivetrainSubsystem;
 import org.frcteam2910.common.math.Vector2;
 import org.frcteam2910.common.control.PidConstants;
@@ -69,7 +70,7 @@ public class DriveCommand extends CommandBase {
         }
         else if (rightTrigger.getAsDouble() > 0.05) {
             speed = 1;
-            rot_speed = 2.0;
+            rot_speed = 4.0;
         }
         else {
             speed = 1;
@@ -116,7 +117,7 @@ public class DriveCommand extends CommandBase {
                             stf * speed
                     ),
                     -rotationOutput * rot_speed,
-                    true
+                    RobotMap.fieldOriented
             );
         }
 
@@ -126,7 +127,7 @@ public class DriveCommand extends CommandBase {
             drivetrain.drive(
                     new Vector2(fw * speed, stf * speed),
                     rot/(2*DrivetrainSubsystem.WHEELBASE) * rot_speed,
-                    true
+                    RobotMap.fieldOriented
             );
         }
 
