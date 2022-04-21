@@ -60,7 +60,7 @@ public class FollowHubCommand extends CommandBase {
     }
 
     public boolean isFinished() {
-        return (Math.abs(rotationOutput) < 0.07); // && Math.abs(rotationOutput) < 0.02;
+        return (Math.abs(rotationOutput) < 0.05); // && Math.abs(rotationOutput) < 0.02;
         // return false;
     }
 
