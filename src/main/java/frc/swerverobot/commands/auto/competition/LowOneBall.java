@@ -39,7 +39,7 @@ public class LowOneBall extends SequentialCommandGroup{
 
         addCommands(
             new SetLowGoalAuto(LED),                                                                        //Set the LED's to low goal colors
-            new ManualShoot(shooter, -0.45, 0.45, -1),                                                      //Shoot first ball into low goal
+            new ManualShoot(shooter, -0.425, 0.425, -1),                                                    //Shoot 1st ball
             new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),  //Drive backwards
             new SetT(LED)                                                                                   //Change Auto LED's to tele Mode
         );
