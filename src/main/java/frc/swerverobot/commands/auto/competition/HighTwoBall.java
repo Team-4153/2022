@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 @Deprecated
 @SuppressWarnings("unused")
 
-//Hard Coded 2 Ball Auto High Goal
+//Hard Coded 1 Ball Low 1 Ball High Goal
 
 public class HighTwoBall extends SequentialCommandGroup{
     private final DrivetrainSubsystem drivetrain;
@@ -43,9 +43,9 @@ public class HighTwoBall extends SequentialCommandGroup{
             new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.1),  //Drive Backwards
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.0),     //Stop Driving
             new IntakeCommand(intake, true).withTimeout(1.0),                                               //Retract Intake
-            new ManualShoot(shooter, -0.65, 0.76, -1),                                                      //Shoot 2nd ball
+            new ManualShoot(shooter, -0.75, 0.77, -1),                                                      //Shoot 2nd ball
             new SetT(LED)                                                                                   //Change Auto LED's to tele Mode
         );
     }
-
+ 
 }
