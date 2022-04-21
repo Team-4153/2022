@@ -120,6 +120,7 @@ public class LEDSubsystem extends SubsystemBase {
 
   public int ledFillWhenChanged(int pos) {
     if (leftypluggedin && rightypluggedin) {
+      //Both Y's plugged in
       if (goldenZone != goldenZone2) {
         for (int i = 0; i < lengthstrand3 + lengthstrandrighty; i++) {
           posledFunctions(lengthstrand1 + lengthstrandlefty + lengthstrand2 + i);
@@ -128,8 +129,7 @@ public class LEDSubsystem extends SubsystemBase {
           posledFunctions(i);
         }
       }
-      //Both Y's plugged in
-      if (climberLockedR != climberLockedR2) {
+      else if (climberLockedR != climberLockedR2) {
         //Third Strand & Right Y
         for (int i = 0; i < lengthstrand3 + lengthstrandrighty; i++) {
           posledFunctions(lengthstrand1 + lengthstrandlefty + lengthstrand2 + i);
@@ -160,8 +160,16 @@ public class LEDSubsystem extends SubsystemBase {
     }
     else if (leftypluggedin) {
       //Only Left Y Plugged in
-      if (climberLockedR != climberLockedR2) {
-        //Third Strand
+      if (goldenZone != goldenZone2) {
+        for (int i = 0; i < lengthstrand3; i++) {
+          posledFunctions(lengthstrand1 + lengthstrandlefty + lengthstrand2 + i);
+        }
+        for (int i = 0; i < lengthstrand1 + lengthstrandlefty; i++) {
+          posledFunctions(i);
+        }
+      }
+      else if (climberLockedR != climberLockedR2) {
+        //Third Strand & Right Y
         for (int i = 0; i < lengthstrand3; i++) {
           posledFunctions(lengthstrand1 + lengthstrandlefty + lengthstrand2 + i);
         }
@@ -174,7 +182,7 @@ public class LEDSubsystem extends SubsystemBase {
       }
       else if (intake != intake2 || winch != winch2) {
         //First Strand
-        for (int i = 0; i < lengthstrand1 + lengthstrandlefty; i++) {
+        for (int i = 0; i < lengthstrand1; i++) {
           posledFunctions(i);
         }
         //Third Strand
@@ -184,21 +192,29 @@ public class LEDSubsystem extends SubsystemBase {
       }
       else if (count != count2 || shooting != shooting2) {
         //Second Strand
-        for (int i = 0; i < lengthstrand2; i++) {
+        for (int i = 1; i < lengthstrand2; i++) {
           posledFunctions(lengthstrand1 + lengthstrandlefty + i);
         }
       }
     }
     else if (rightypluggedin) {
       //Only Right Y Plugged in
-      if (climberLockedR != climberLockedR2) {
+      if (goldenZone != goldenZone2) {
+        for (int i = 0; i < lengthstrand3 + lengthstrandrighty; i++) {
+          posledFunctions(lengthstrand1 + lengthstrand2 + i);
+        }
+        for (int i = 0; i < lengthstrand1 ; i++) {
+          posledFunctions(i);
+        }
+      }
+      else if (climberLockedR != climberLockedR2) {
         //Third Strand & Right Y
         for (int i = 0; i < lengthstrand3 + lengthstrandrighty; i++) {
           posledFunctions(lengthstrand1 + lengthstrand2 + i);
         }
       }
       else if (climberLockedL != climberLockedL2) {
-        //First Strand
+        //First Strand & Left Y
         for (int i = 0; i < lengthstrand1; i++) {
           posledFunctions(i);
         }
@@ -215,20 +231,29 @@ public class LEDSubsystem extends SubsystemBase {
       }
       else if (count != count2 || shooting != shooting2) {
         //Second Strand
-        for (int i = 0; i < lengthstrand2; i++) {
-          posledFunctions(lengthstrand1 + i + 1);
+        for (int i = 1; i < lengthstrand2; i++) {
+          posledFunctions(lengthstrand1 + i);
         }
       }
     }
     else {
-      if (climberLockedR != climberLockedR2) {
-        //Third Strand
+      //No LEDS Plugged In
+      if (goldenZone != goldenZone2) {
+        for (int i = 0; i < lengthstrand3; i++) {
+          posledFunctions(lengthstrand1 + lengthstrand2 + i);
+        }
+        for (int i = 0; i < lengthstrand1; i++) {
+          posledFunctions(i);
+        }
+      }
+      else if (climberLockedR != climberLockedR2) {
+        //Third Strand & Right Y
         for (int i = 0; i < lengthstrand3; i++) {
           posledFunctions(lengthstrand1 + lengthstrand2 + i);
         }
       }
       else if (climberLockedL != climberLockedL2) {
-        //First Strand
+        //First Strand & Left Y
         for (int i = 0; i < lengthstrand1; i++) {
           posledFunctions(i);
         }
@@ -245,7 +270,7 @@ public class LEDSubsystem extends SubsystemBase {
       }
       else if (count != count2 || shooting != shooting2) {
         //Second Strand
-        for (int i = 0; i < lengthstrand2; i++) {
+        for (int i = 1; i < lengthstrand2; i++) {
           posledFunctions(lengthstrand1 + i);
         }
       }
@@ -449,15 +474,12 @@ public class LEDSubsystem extends SubsystemBase {
     fancyLEDS = !oldfancyLEDS;
   }
   public void setHighAuto() {
-    SmartDashboard.putString("Mode", "auto-high");
     mode = "auto-high";
   }
   public void setLowAuto() {
-    SmartDashboard.putString("Mode", "auto-low");
     mode = "auto-low";
   }
   public void setTele() {
-    SmartDashboard.putString("Mode", "tele");
     mode = "tele";
   }
 
@@ -493,11 +515,31 @@ public class LEDSubsystem extends SubsystemBase {
       //Both LEDs are plugged in
       if (running_LED <= lengthstrand1 + lengthstrandlefty && running_LED > lengthstrand1) {
         //The Left Y
-        leftyLED(running_LED);
+        if (mode == "auto-high") {
+          //if Auto-High Goal then Set Left Y to Rainbow
+          rainbow(lengthstrand1 + 1, lengthstrandlefty, 11);//Left Y
+        }
+        else if (mode == "auto-low") {
+          //if Auto-High Goal then Set Left Y to Rainbow
+          rainbow(lengthstrand1 + 1, lengthstrandlefty, 11);//Left Y
+        }
+        else {
+          leftyLED(running_LED);
+        }
       }
       else if (running_LED <= lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty && running_LED > lengthstrand1 + lengthstrandlefty + lengthstrand2) {
         //The Right Y
-        rightyLED(running_LED);
+        if (mode == "auto-high") {
+          //if Auto-High Goal then Set Right Y to Rainbow
+          rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + 1, lengthstrandrighty,19);//Right Y
+        }
+        else if (mode == "auto-low") {
+          //if Auto-High Goal then Set Right Y to Rainbow
+          rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + 1, lengthstrandrighty,19);//Right Y
+        }
+        else {
+          rightyLED(running_LED);
+        }
       }
       else {
         //Everything Else
