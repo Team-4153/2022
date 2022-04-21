@@ -48,7 +48,7 @@ public class ShooterSubsystem2 extends SubsystemBase {
                 //Gap of 11
                 {183,-0.75,0.77,-1},//Old (Comp|#5)
                 //Gap of 7
-                {190,-0.85,0.88,-1},//New (Comp|#6)
+                {190,-0.845,0.855,-1},//New (Comp|#6)
 
                 //Gap of 10
                 {200,-0.875, 0.91,-1},//New (Comp|#3)
