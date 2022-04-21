@@ -34,48 +34,45 @@ public class RobotMap {
 //Define all ports and constants of a component, put in correct catagory, label subsystem(s) used
 
 //Config Variables
-    public static final double firstBallPowerMultiplierMin = 0.95;
-    public static final double firstBallPowerMultiplierMax = 1;
-    
-    public static final double secondBallPowerMultiplierMin = 1;
-    public static final double secondBallPowerMultiplierMax = 1;
-
-    public static final double autoAimTopMotorPowerMultipler = 1.12; //1.12
-    public static final double autoAimBottomMotorPowerMultipler = 1.12; //1.12
-    public static final double autoAimFeedMotorPowerMultipler = 1;
-    public static final int driveCurrent = 30;
-
-    public static final boolean fieldOriented = true; //True = Enable Gyro False = Disable Gyro
+    public static final double firstBallPowerMultiplierMin = 0.95;      //[Shooter Subsystem] Changes the modifier at the Auto-Aim Min Distance for the first ball  (0.95)
+    public static final double firstBallPowerMultiplierMax = 1;         //[Shooter Subsystem] Changes the modifier at the Auto-Aim Max Distance for the first ball  (1)
+    public static final double secondBallPowerMultiplierMin = 1;        //[Shooter Subsystem] Changes the modifier at the Auto-Aim Min Distance for the second ball (1)
+    public static final double secondBallPowerMultiplierMax = 1;        //[Shooter Subsystem] Changes the modifier at the Auto-Aim Max Distance for the second ball (1)
+    public static final double autoAimTopMotorPowerMultipler = 1.12;    //[Shooter Subsystem] Modifies the top motor for auto-aim (1.12)
+    public static final double autoAimBottomMotorPowerMultipler = 1.12; //[Shooter Subsystem] Modifies the bottom motor for auto-aim (1.12)
+    public static final double autoAimFeedMotorPowerMultipler = 1;      //[Shooter Subsystem] Modifies the bottom motor for auto-aim (1)
+    public static final int driveCurrent = 40;                          //[DriveTrain Subsystem]Chnages power to motors (30)
+    public static final boolean fieldOriented = true;                   //[DriveTrain Subsystem]True = Enable Gyro || False = Disable Gyro
 
 //LEDS 
     public static final int LEDPWMPort = 5;                                     //[LED Subsystem] Port for the LED's
-    public static final boolean RightYLEDS = true;                                 //[LED Subsystem] Right Y plugged into the LED strip
-    public static final boolean LeftYLEDS = true;                                  //[LED Subsystem] Left Y plugged into the LED strip
-    public static final double AutoAimMinDistance = 160;                                  //[LED Subsystem] Left Y plugged into the LED strip
-    public static final double AutoAimMaxDistance = 190;                                  //[LED Subsystem] Left Y plugged into the LED strip
+    public static final boolean RightYLEDS = true;                              //[LED Subsystem] Right Y plugged into the LED strip
+    public static final boolean LeftYLEDS = false;                               //[LED Subsystem] Left Y plugged into the LED strip
+    public static final double AutoAimMinDistance = 160;                        //[LED Subsystem] Left Y plugged into the LED strip
+    public static final double AutoAimMaxDistance = 190;                        //[LED Subsystem] Left Y plugged into the LED strip
 
 //Sensors
-    public static final ADIS16470_IMU imu = new ADIS16470_IMU();                //[DriveTrain Subsystem]Gyro and acceleration sensor
-    public static final int PhotoEyePort = 0;                                   //[Shooter Subsystem] The Number is the RIO DIO port (Outputs a Digital Input|Like a Limit Switch)
-    public static final int PhotoEye2Port = 3;                                  //[Shooter Subsystem] The Photoeye below the color sensor
-    // public static final I2C.Port i2cPort = I2C.Port.kOnboard;                   //[Shooter Subsystem] Color Sensor (Only one I2C port on the robot)
-    // public static final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort); //[Shooter/Intake Subsystem] The Number is the I2C port from the RobotMap.java
-    public static final int colorSensorDistance = 100;                          //[Shooter/Intake Subsystem] The Number is the distance from the sensor to the target (Small=Close, Big=Far)
-    public static final DigitalInput photoEye = new DigitalInput(PhotoEyePort); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
-    public static final DigitalInput photoEye2 = new DigitalInput(PhotoEye2Port); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
+    public static final ADIS16470_IMU imu = new ADIS16470_IMU();                    //[DriveTrain Subsystem]Gyro and acceleration sensor
+    public static final int PhotoEyePort = 0;                                       //[Shooter Subsystem] The Number is the RIO DIO port (Outputs a Digital Input|Like a Limit Switch)
+    public static final int PhotoEye2Port = 3;                                      //[Shooter Subsystem] The Photoeye below the color sensor
+    // public static final I2C.Port i2cPort = I2C.Port.kOnboard;                    //[Shooter Subsystem] Color Sensor (Only one I2C port on the robot)
+    // public static final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);  //[Shooter/Intake Subsystem] The Number is the I2C port from the RobotMap.java
+    public static final int colorSensorDistance = 100;                              //[Shooter/Intake Subsystem] The Number is the distance from the sensor to the target (Small=Close, Big=Far)
+    public static final DigitalInput photoEye = new DigitalInput(PhotoEyePort);     //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
+    public static final DigitalInput photoEye2 = new DigitalInput(PhotoEye2Port);   //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
     public static final int StatHook1Port = 1;
     public static final int StatHook2Port = 2;
-    public static final DigitalInput StatHook1 = new DigitalInput(StatHook1Port);//[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
-   public static final DigitalInput StatHook2 = new DigitalInput(StatHook2Port); //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
+    public static final DigitalInput StatHook1 = new DigitalInput(StatHook1Port);   //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
+   public static final DigitalInput StatHook2 = new DigitalInput(StatHook2Port);    //[Shooter/Intake Subsystems] Photo Eye (Digital Input|Boolean)
 
 //PWM Motors
-    public static final int TopMotorPort = 1;                                   //[Shooter Subsystem] The Number is the RIO DIO port 
-    public static final int BottomMotorPort = 2;                                //[Shooter Subsystem] The Number is the RIO DIO port
-    public static final int FeedMotorPort = 0;                                  //[Shooter Subsystem] The Number is the RIO DIO port
-    public static final Spark feedMotor = new Spark(FeedMotorPort);             //[Shooter / Intake Subsystems]
-    public static final int Intake_Motor_PWM = 3;                               //[Intake Subsystem] PWM for intake motor
+    public static final int TopMotorPort = 1;                                               //[Shooter Subsystem] The Number is the RIO DIO port 
+    public static final int BottomMotorPort = 2;                                            //[Shooter Subsystem] The Number is the RIO DIO port
+    public static final int FeedMotorPort = 0;                                              //[Shooter Subsystem] The Number is the RIO DIO port
+    public static final Spark feedMotor = new Spark(FeedMotorPort);                         //[Shooter / Intake Subsystems]
+    public static final int Intake_Motor_PWM = 3;                                           //[Intake Subsystem] PWM for intake motor
     public static final PWMVictorSPX Intake_Motor = new PWMVictorSPX(Intake_Motor_PWM);     //[Intake Subsystem] PWM for intake motor
-    // public static final int CLIMBER_MOTOR = 4;                                  //[Climber Subsystem] The Number is the RIO DIO port (Winch)
+    // public static final int CLIMBER_MOTOR = 4;                                           //[Climber Subsystem] The Number is the RIO DIO port (Winch)
 
 //Controls
     //DriveTrain Controller (Kendall)
@@ -86,7 +83,7 @@ public class RobotMap {
     public static final Button Intake_Retract = Driver_controller.getRightBumperButton();       //[Intake Subsystem](R-Bumper|Retract Intake)
     public static final Button ResetGyro = Driver_controller.getBackButton();                   //[DriveTrain Subsystem](Back-Button|Reset Gyro)
     public static final Button FancyLEDSButton = Driver_controller.getDPadButton(Direction.UP); //[DriveTrain Subsystem](DPad-Up|Toggel Fancy LEDS)
-    public static final Button FancyLEDSButton2 = Driver_controller.getDPadButton(Direction.UP); //[DriveTrain Subsystem](DPad-Up|Toggel Fancy LEDS)
+    public static final Button FancyLEDSButton2 = Driver_controller.getDPadButton(Direction.UP);//[DriveTrain Subsystem](DPad-Up|Toggel Fancy LEDS)
     
     //Shooter/Climber Controller (Noah)
     public static final Controller Shooter_controller = new XboxController(1);                  //[Shooter's Controller]
