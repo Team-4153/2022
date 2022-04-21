@@ -7,7 +7,7 @@ public enum PossibleAutos {
     LO_HI_TWO,
     LO_HI_THREE,
     HIGH_TWO,
-    HIGH_THREE,
+    // HIGH_THREE,
     FAST_THREE
     // ONE_BALL,
     // TWO_BALL,
