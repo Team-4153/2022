@@ -515,31 +515,31 @@ public class LEDSubsystem extends SubsystemBase {
       //Both LEDs are plugged in
       if (running_LED <= lengthstrand1 + lengthstrandlefty && running_LED > lengthstrand1) {
         //The Left Y
-        if (mode == "auto-high") {
-          //if Auto-High Goal then Set Left Y to Rainbow
-          rainbow(lengthstrand1 + 1, lengthstrandlefty, 11);//Left Y
-        }
-        else if (mode == "auto-low") {
-          //if Auto-High Goal then Set Left Y to Rainbow
-          rainbow(lengthstrand1 + 1, lengthstrandlefty, 11);//Left Y
-        }
-        else {
+        // if (mode == "auto-high") {
+        //   //if Auto-High Goal then Set Left Y to Rainbow
+        //   rainbow(lengthstrand1 + 1, lengthstrandlefty, 11);//Left Y
+        // }
+        // else if (mode == "auto-low") {
+        //   //if Auto-High Goal then Set Left Y to Rainbow
+        //   rainbow(lengthstrand1 + 1, lengthstrandlefty, 11);//Left Y
+        // }
+        // else {
           leftyLED(running_LED);
-        }
+        // }
       }
       else if (running_LED <= lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty && running_LED > lengthstrand1 + lengthstrandlefty + lengthstrand2) {
         //The Right Y
-        if (mode == "auto-high") {
-          //if Auto-High Goal then Set Right Y to Rainbow
-          rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + 1, lengthstrandrighty,19);//Right Y
-        }
-        else if (mode == "auto-low") {
-          //if Auto-High Goal then Set Right Y to Rainbow
-          rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + 1, lengthstrandrighty,19);//Right Y
-        }
-        else {
+        // if (mode == "auto-high") {
+        //   //if Auto-High Goal then Set Right Y to Rainbow
+        //   rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + 1, lengthstrandrighty,19);//Right Y
+        // }
+        // else if (mode == "auto-low") {
+        //   //if Auto-High Goal then Set Right Y to Rainbow
+        //   rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + 1, lengthstrandrighty,19);//Right Y
+        // }
+        // else {
           rightyLED(running_LED);
-        }
+        // }
       }
       else {
         //Everything Else
