@@ -41,7 +41,7 @@ public class RobotMap {
     public static final double autoAimTopMotorPowerMultipler = 1.12;    //[Shooter Subsystem] Modifies the top motor for auto-aim (1.12)
     public static final double autoAimBottomMotorPowerMultipler = 1.12; //[Shooter Subsystem] Modifies the bottom motor for auto-aim (1.12)
     public static final double autoAimFeedMotorPowerMultipler = 1;      //[Shooter Subsystem] Modifies the bottom motor for auto-aim (1)
-    public static final int driveCurrent = 40;                          //[DriveTrain Subsystem]Chnages power to motors (30)
+    public static final int driveCurrent = 60;                          //[DriveTrain Subsystem]Chnages power to motors (30)
     public static final boolean fieldOriented = true;                   //[DriveTrain Subsystem]True = Enable Gyro || False = Disable Gyro
 
 //LEDS 
