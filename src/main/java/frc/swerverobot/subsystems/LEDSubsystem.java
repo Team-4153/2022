@@ -14,7 +14,7 @@ import static frc.swerverobot.RobotMap.*;
 
 public class LEDSubsystem extends SubsystemBase {
   private int lengthstrand1 = 30;//Left Climber
-  private int lengthstrandlefty = 42;//Length of the left Y
+  private int lengthstrandlefty = 29;//Length of the left Y
   private int lengthstrand2 = 34;//Shooter
   private int lengthstrandrighty = 42;//Length of the left Y
   private int lengthstrand3 = 84;//Right CLimber
