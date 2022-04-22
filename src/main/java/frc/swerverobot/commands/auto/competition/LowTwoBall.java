@@ -44,7 +44,7 @@ public class LowTwoBall extends SequentialCommandGroup{
             new DriveCommand(drivetrain, () -> -0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),  //Drive Backwards
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),     //Stop Driving
             new IntakeCommand(intake, true).withTimeout(0.2),                                               //Retract Intake
-            new DriveCommand(drivetrain, () -> 0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.4),   //Drive Forwards to hub
+            new DriveCommand(drivetrain, () -> 0.5, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(1.5),   //Drive Forwards to hub
             new DriveCommand(drivetrain, () -> 0, () -> 0, () -> 0, () -> 0, () -> 0).withTimeout(0.5),     //Stop Driving
             new ManualShoot(shooter, -0.45, 0.45, -1),                                                      //Shoot 2nd ball
             new SetT(LED)                                                                                   //Change Auto LED's to tele Mode
