@@ -680,7 +680,6 @@ public class LEDSubsystem extends SubsystemBase {
         tick = 0;
       }
       tick = tick + (1 * LEDspeed);
-      SmartDashboard.putNumber("Tick", tick);
     }
   }
 
