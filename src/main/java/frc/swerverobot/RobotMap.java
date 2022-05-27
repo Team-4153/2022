@@ -47,6 +47,7 @@ public class RobotMap {
 
 //LEDS 
     public static final int LEDPWMPort = 5;                                     //[LED Subsystem] Port for the LED's
+    public static final int LEDSpeed = 2;
     public static final boolean RightYLEDS = true;                              //[LED Subsystem] Right Y plugged into the LED strip
     public static final boolean LeftYLEDS = true;                               //[LED Subsystem] Left Y plugged into the LED strip
     public static final double AutoAimMinDistance = 160;                        //[LED Subsystem] Left Y plugged into the LED strip

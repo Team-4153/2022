@@ -14,7 +14,7 @@ import static frc.swerverobot.RobotMap.*;
 
 public class LEDSubsystem extends SubsystemBase {
   private int lengthstrand1 = 33;//Left Climber
-  private int lengthstrandlefty = 29;//Length of the left Y
+  private int lengthstrandlefty = 28;//Length of the left Y
   private int lengthstrand2 = 34;//Shooter
   private int lengthstrandrighty = 42;//Length of the left Y
   private int lengthstrand3 = 84;//Right CLimber
@@ -57,7 +57,8 @@ public class LEDSubsystem extends SubsystemBase {
   String mode = "null";             //What mode the robot is in (null, auto-high, auto-low, tele)
   double distance = 0;                 //How far the robot is from the target (132-250)
   boolean goldenZone = false;
-  double tick = 1;
+  int tick = 1;
+  int LEDspeed = RobotMap.LEDSpeed;
 
   boolean shooting2 = false;        //The second variable is to check for changes since the led's were last changed
   boolean winch2 = false;           //The second variable is to check for changes since the led's were last changed
@@ -105,16 +106,16 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
 
-  private void rainbow(int startPos, int Length, double rainbowOffset) {
+  private void rainbow(int startPos, int Length, double rainbowOffset, double hueModdifier) {
     if (startPos + Length < m_ledBuffer.getLength()) {
       for (var i = startPos; i < startPos + Length; i++) {
-        final int hue = (int) ((((rainbowOffset + i) * 180) / Length) % 180);
-        m_ledBuffer.setHSV(i, hue, 255, 128);
+        final int hue = (int) (((((rainbowOffset + i) * 180) / Length) + hueModdifier) % 180);
+        m_ledBuffer.setHSV(i, (hue), 255, 128);
       }
     }
     else {
       startPos = startPos-1;
-      rainbow(startPos, Length, rainbowOffset);
+      rainbow(startPos, Length, rainbowOffset, 0);
     }
   }
 
@@ -642,39 +643,44 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
 
-  public void fancyDisplay(double posModifier) {
+  public void fancyDisplay(double hueModdifier) {
+    double posModifier = 0;
     double posSlow = Math.round(posModifier/3);
     double posFast = Math.round(posModifier);
     if (leftypluggedin && rightypluggedin) {
-      rainbow(0, lengthstrand1, posSlow);//First Strand
-      rainbow(lengthstrand1 + 1, lengthstrandlefty, 11 + posSlow);//Left Y
+      rainbow(0, lengthstrand1, posSlow, hueModdifier);//First Strand
+      rainbow(lengthstrand1 + 1, lengthstrandlefty, 11 + posSlow, hueModdifier);//Left Y
       
-      rainbow(lengthstrand1 + lengthstrandlefty + 1, lengthstrand2, -5 + posSlow);//Second Strand
+      rainbow(lengthstrand1 + lengthstrandlefty + 1, lengthstrand2, -5 + posSlow, hueModdifier);//Second Strand
   
-      rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + 1, lengthstrandrighty,19 + posSlow);//Right Y
-      rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty + 1, lengthstrand3,19 + posFast);//Third Strand
+      rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + 1, lengthstrandrighty,19 + posSlow, hueModdifier);//Right Y
+      rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + lengthstrandrighty + 1, lengthstrand3,19 + posFast, hueModdifier);//Third Strand
     }
     else if (rightypluggedin) {
-      rainbow(0, lengthstrand1, 0);//First Strand
+      rainbow(0, lengthstrand1, 0, hueModdifier);//First Strand
       
-      rainbow(lengthstrand1 + 1, lengthstrand2, 3);//Second Strand
+      rainbow(lengthstrand1 + 1, lengthstrand2, 3, hueModdifier);//Second Strand
   
-      rainbow(lengthstrand1 + lengthstrand2 + 1, lengthstrandrighty,19);//Right Y
-      rainbow(lengthstrand1 + lengthstrand2 + lengthstrandrighty + 1, lengthstrand3,0);//Third Strand
+      rainbow(lengthstrand1 + lengthstrand2 + 1, lengthstrandrighty, 19, hueModdifier);//Right Y
+      rainbow(lengthstrand1 + lengthstrand2 + lengthstrandrighty + 1, lengthstrand3, 0, hueModdifier);//Third Strand
     }
     else if (leftypluggedin) {
-      rainbow(0, lengthstrand1, 0);//First Strand
-      rainbow(lengthstrand1 + 1, lengthstrandlefty, 11);//Left Y
+      rainbow(0, lengthstrand1, 0, hueModdifier);//First Strand
+      rainbow(lengthstrand1 + 1, lengthstrandlefty, 11, hueModdifier);//Left Y
 
-      rainbow(lengthstrand1 + lengthstrandlefty, lengthstrand2, 0);//Second Strand
+      rainbow(lengthstrand1 + lengthstrandlefty, lengthstrand2, 0, hueModdifier);//Second Strand
 
-      rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + 1, lengthstrand3,0);//Third Strand
+      rainbow(lengthstrand1 + lengthstrandlefty + lengthstrand2 + 1, lengthstrand3, 0, hueModdifier);//Third Strand
     }
   }
 
   public void moveRainbow() {
     if (fancyLEDS) {
-      tick = tick + 1; 
+      if (tick > 360) {
+        tick = 0;
+      }
+      tick = tick + (1 * LEDspeed);
+      SmartDashboard.putNumber("Tick", tick);
     }
   }
 
