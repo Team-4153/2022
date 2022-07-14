@@ -247,7 +247,7 @@ public class RobotContainer {
                         //Gets into low goal from 77 visual distance (77 is as close as we can get and still have a distance reading)
                         new ManualShoot(shooter, -0.45, 0.45, -1)
                 );
-                if (targetAvailible) { 
+                if (rasPIwokring) { 
                         AimShootHigh.getButton(0.1).whenPressed(
                                 //Autoaim to the high goal and then shoot
                                 //Last boolean determines which dataset to use, true = high, false = low.

@@ -38,7 +38,7 @@ public class RobotMap {
     public static final double firstBallPowerMultiplierMax = 1;         //[Shooter Subsystem] Changes the modifier at the Auto-Aim Max Distance for the first ball  (1)
     public static final double secondBallPowerMultiplierMin = 1;        //[Shooter Subsystem] Changes the modifier at the Auto-Aim Min Distance for the second ball (1)
     public static final double secondBallPowerMultiplierMax = 1;        //[Shooter Subsystem] Changes the modifier at the Auto-Aim Max Distance for the second ball (1)
-    public static final boolean targetAvailible = true;                 //[Shooter Subsystem] True = Use Auto-Aim for Shooting || False = Use Manual Shooting Values
+    public static final boolean = true;                                 //[Shooter Subsystem] True = Use Auto-Aim for Shooting || False = Use Manual Shooting Values
     public static final double autoAimTopMotorPowerMultipler = 1.12;    //[Shooter Subsystem] Modifies the top motor for auto-aim (1.12)
     public static final double autoAimBottomMotorPowerMultipler = 1.12; //[Shooter Subsystem] Modifies the bottom motor for auto-aim (1.12)
     public static final double autoAimFeedMotorPowerMultipler = 1;      //[Shooter Subsystem] Modifies the bottom motor for auto-aim (1)
