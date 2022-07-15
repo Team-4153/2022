@@ -38,14 +38,17 @@ public class RobotMap {
     public static final double firstBallPowerMultiplierMax = 1;         //[Shooter Subsystem] Changes the modifier at the Auto-Aim Max Distance for the first ball  (1)
     public static final double secondBallPowerMultiplierMin = 1;        //[Shooter Subsystem] Changes the modifier at the Auto-Aim Min Distance for the second ball (1)
     public static final double secondBallPowerMultiplierMax = 1;        //[Shooter Subsystem] Changes the modifier at the Auto-Aim Max Distance for the second ball (1)
+    public static final boolean rasPIwokring = true;                                 //[Shooter Subsystem] True = Use Auto-Aim for Shooting || False = Use Manual Shooting Values
     public static final double autoAimTopMotorPowerMultipler = 1.12;    //[Shooter Subsystem] Modifies the top motor for auto-aim (1.12)
     public static final double autoAimBottomMotorPowerMultipler = 1.12; //[Shooter Subsystem] Modifies the bottom motor for auto-aim (1.12)
     public static final double autoAimFeedMotorPowerMultipler = 1;      //[Shooter Subsystem] Modifies the bottom motor for auto-aim (1)
-    public static final int driveCurrent = 60;                          //[DriveTrain Subsystem]Chnages power to motors (30)
-    public static final boolean fieldOriented = true;                   //[DriveTrain Subsystem]True = Enable Gyro || False = Disable Gyro
+    public static final int driveCurrent = 30;                          //[DriveTrain Subsystem] Chnages power to motors (30)
+    public static final boolean fieldOriented = true;                   //[DriveTrain Subsystem] True = Enable Gyro || False = Disable Gyro
 
 //LEDS 
     public static final int LEDPWMPort = 5;                                     //[LED Subsystem] Port for the LED's
+    public static final int LEDSpeed = 2;
+    public static final boolean FancyLEDMove = true;
     public static final boolean RightYLEDS = true;                              //[LED Subsystem] Right Y plugged into the LED strip
     public static final boolean LeftYLEDS = true;                               //[LED Subsystem] Left Y plugged into the LED strip
     public static final double AutoAimMinDistance = 160;                        //[LED Subsystem] Left Y plugged into the LED strip
@@ -72,7 +75,7 @@ public class RobotMap {
     public static final Spark feedMotor = new Spark(FeedMotorPort);                         //[Shooter / Intake Subsystems]
     public static final int Intake_Motor_PWM = 3;                                           //[Intake Subsystem] PWM for intake motor
     public static final PWMVictorSPX Intake_Motor = new PWMVictorSPX(Intake_Motor_PWM);     //[Intake Subsystem] PWM for intake motor
-    // public static final int CLIMBER_MOTOR = 4;                                           //[Climber Subsystem] The Number is the RIO DIO port (Winch)
+    public static final int CLIMBER_MOTOR = 9;                                              //[Climber Subsystem] The Number is the RIO DIO port (Winch)
 
 //Controls
     //DriveTrain Controller (Kendall)
@@ -161,8 +164,6 @@ public class RobotMap {
     public static final double DRIVETRAIN_BACK_LEFT_MODULE_ANGLE_OFFSET = -Math.toRadians(301-180);
     public static final int DRIVETRAIN_BACK_LEFT_MODULE_DRIVE_MOTOR = 7;
     public static final double DRIVETRAIN_BACK_LEFT_MODULE_ENCODER_VOLTAGE_MAX = 3.256;
-
-    public static final int CLIMBER_MOTOR = 9;
 
 //Shooter constants
 // Defaults are used for shooting during the autonomous period (distance tuned for preplaced cargo to hub)
